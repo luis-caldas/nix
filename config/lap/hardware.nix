@@ -9,19 +9,19 @@
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
 
-  boot.initrd.availableKernelModules = [ "usbhid" ];
+  boot.initrd.availableKernelModules = [ "nvme" "usbhid" ];
 
   nixpkgs.config.allowUnfree = true;
  
-  boot.initrd.luks.devices."chest".device = "/dev/disk/by-uuid/624c6b9c-1f0b-429e-a84f-eab22254217b";
+  boot.initrd.luks.devices."chesto".device = "/dev/disk/by-uuid/433b78d2-9fe4-4e9a-b881-9901a23ec27d";
 
   fileSystems."/" =
-    { device = "coro/root";
+    { device = "lappy/root";
       fsType = "zfs";
     };
 
   fileSystems."/home" =
-    { device = "coro/home";
+    { device = "lappy/home";
       fsType = "zfs";
     };
 
