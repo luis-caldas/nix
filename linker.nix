@@ -18,8 +18,8 @@ in
 
   # Linker for all submodules
 
-  # All the specific system hardware imports
-  imports = map (x: ./hardware + ("/" + configgo.hardware.folder) + ("/" + x)) [ "boot.nix" "disks.nix" "cpu.nix" ]
+  # System specific hardware configuration
+  imports = [ (./hardware + ("/" + configgo.hardware.folder) + "/hardware-configuration.nix") ]
   ++
   # All the system modules
   [
@@ -41,7 +41,7 @@ in
   # Check whether we should import the graphical tools
   mfunc.useDefault configgo.graphical [
     # Add the hardware configuration as well
-    (./hardware + ("/" + configgo.hardware.folder) + "/video/video.nix")
+    (./hardware + ("/" + configgo.hardware.folder) + "/hardware-configuration-video.nix")
     # Normal user graphical config
     ./common/user/display/xorg.nix
   ] [];
