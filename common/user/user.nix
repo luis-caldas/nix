@@ -1,6 +1,7 @@
-{ ... }:
+{ lib, ... }:
 let
   my = import ../../config.nix;
+  mfunc = import ../../functions/func.nix;
 in
 {
 
@@ -8,7 +9,7 @@ in
   users.mutableUsers = true;
 
   # Automatic login
-  services.mingetty.autologinUser = my.config.user.name;
+  services.mingetty.autologinUser = mfunc.useDefault my.config.user.autologin my.config.user.name null;
 
   # My user
   users.groups."${my.config.user.name}".gid = 1000;
@@ -32,6 +33,10 @@ in
     initialPassword = my.config.user.pass;
   
   };
+
+  # Add custom mingetty message
+  services.mingetty.greetingLine = my.config.system.getty.greeting;
+  services.mingetty.helpLine = lib.mkOverride 70 ("\n" + my.config.system.getty.help);
 
   # Add my custom motd
   users.motd = my.config.system.motd;
