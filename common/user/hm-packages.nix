@@ -1,16 +1,16 @@
 { pkgs, ... }:
+let
+  configgo = import ../../config.nix;
+in
 {
 
   home.packages = with pkgs; [
-    # Basic tools that I use
+    # Basic tools that I use that are non graphical
 
     ## Dev
     
     # Shell
     shellcheck
-
-    # Haskell
-    haskellPackages.xmonad-entryhelper
 
     # C
     gcc
@@ -27,6 +27,6 @@
     # Fetching packages
     neofetch
     screenfetch
-  ];
+  ] ++ configgo.packages.user.normal;
 
 }

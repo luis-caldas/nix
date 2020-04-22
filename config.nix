@@ -34,6 +34,21 @@
     pass = "functional";
   };
 
+  # Extra set of packages that can be added easly
+  # throught here
+  # system = system wide; user = for user
+  # normal = non graphical tools; video = gui tools and programs
+  packages = {
+    system = {
+      normal = [];
+      video = [];
+    };
+    user = {
+      normal = [];
+      video = [];
+    };
+  };
+
   # Base git configuration
   # Add the keys manually
   git = {

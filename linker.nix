@@ -35,15 +35,19 @@ in
   ] ++
   # User config that does not use home manager
   [
+    # User data such as password and name
     ./common/user/user.nix
-    ./common/user/home.nix
+    # The ecosystem I use
+    ./common/user/ecosystem.nix
   ] ++
   # Check whether we should import the graphical tools
   mfunc.useDefault configgo.graphical [
-    # Add the hardware configuration as well
+    # Install Xorg if graphics are on
+    ./common/system/video/video.nix
+    # Install preferred system wide gui applications
+    ./common/system/video/packages.nix
+    # Add the video hardware configuration as well
     (./hardware + ("/" + configgo.hardware.folder) + "/hardware-configuration-video.nix")
-    # Normal user graphical config
-    ./common/user/display/xorg.nix
   ] [];
 
   # Import the files needed for the home-manager package 
@@ -51,13 +55,15 @@ in
   {
 
     imports = [
-      ./common/user/packages.nix
+      # Non graphical packages I use
+      ./common/user/hm-packages.nix
     ] ++
     # Visual imports for home-manager
     mfunc.useDefault configgo.graphical [
-      ./common/user/display/home.nix
-      ./common/user/display/video.nix
-      ./common/user/display/packages.nix
+      # The visual ecosystem use
+      ./common/user/video/hm-ecosystem.nix
+      # Extra custom gui packages
+      ./common/user/video/hm-packages.nix
     ] [];
 
   };
