@@ -4,9 +4,6 @@ let
 in
 {
 
-  # System version
-  system.stateVersion = configgo.version;
-
   # Needed for ZFS to work
   networking.hostId = configgo.net.id;
 

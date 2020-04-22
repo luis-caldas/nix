@@ -1,8 +1,5 @@
 {
 
-  # Config
-  version = "19.09";
-
   # Name of the folder inside the hardware folder containing the
   # system's hardware configuration
   # normally generated on install
