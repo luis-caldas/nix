@@ -25,17 +25,17 @@ let
   textXInit = { ".xinitrc" = { text = "exec bash" + " " + packages.desktop + "/entrypoint.bash"; }; };
 
   # Check if we should link the custom monitor configuration
-  linkMonitors = mfunc.useDefault configgo.cmonitor {
-    "mymonitors" = {
-      source = ../../../hardware + ("/" + configgo.hardware) + ("/" + "monitors");
-    };
-  } {};
+  #linkMonitors = mfunc.useDefault configgo.hardware.cmonitor {
+  #  "mymonitors" = {
+  #    source = ../../../hardware + ("/" + configgo.hardware.folder) + ("/" + "monitors");
+  #  };
+  #} {};
 
   # XMonad Configuration
   # linkXMonad = { ".xmonad/xmonad.hs" = { source = packages.desktop + "/wm/xmonad/xmonad.hs"; }; };
 
   # Put all the sets together
-  linkSets = linkThemes // linkFonts // linkCursors // linkIcons // linkXMonad //
+  linkSets = linkThemes // linkFonts // linkCursors // linkIcons // 
              textXInit;
 
 in
@@ -47,9 +47,9 @@ in
     "fontconfig/30-mine.conf" = { source = packages.fonts + "/30-my-substitutions.conf"; };
     # Link the conky project
     "conky" = { source = packages.conky; };
-  } // 
+  }; # // 
   # Link the monitor folder if it was set
-  linkMonitors;
+  # linkMonitors;
 
   # Add all the acquired link sets to the config
   home.file = linkSets;

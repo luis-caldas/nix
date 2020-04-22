@@ -4,7 +4,10 @@ let
 in
 {
 
-   # SSH mate
-   services.openssh.enable = configgo.services.ssh;
+  # SSH mate
+  services.openssh.enable = configgo.services.ssh;
+
+  # Docker for my servers
+  virtualisation.docker.enable = configgo.services.docker;
   
 }

@@ -34,6 +34,6 @@ in
   };
 
   # Add my custom motd
-  users.motd = configgo.motd;
+  users.motd = configgo.system.motd;
 
 }
