@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  configgo = import ../../config.nix;
+  my = import ../../config.nix;
 in
 {
 
@@ -27,6 +27,6 @@ in
     # Fetching packages
     neofetch
     screenfetch
-  ] ++ configgo.packages.user.normal;
+  ] ++ my.config.packages.user.normal;
 
 }

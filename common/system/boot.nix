@@ -1,6 +1,6 @@
 { ... }:
 let
-  configgo = import ../../config.nix;
+  my = import ../../config.nix;
 in
 {
 
@@ -8,7 +8,7 @@ in
   boot = { 
 
     # Force kernel support for zfs
-    kernelParams = ["zfs_force=1"] ++ configgo.kernel.params;
+    kernelParams = ["zfs_force=1"] ++ my.config.kernel.params;
     supportedFilesystems = ["zfs"];
 
     # Don't force import zfs pool
@@ -21,7 +21,7 @@ in
     loader = {
 
       # Just for fast bois
-      timeout = configgo.boot.timeout;
+      timeout = my.config.boot.timeout;
       
       # Set GRUB
       grub = {
@@ -34,17 +34,17 @@ in
         useOSProber = true;
 
         # EFI support
-        efiInstallAsRemovable = configgo.boot.efi;
-        efiSupport = configgo.boot.efi;
+        efiInstallAsRemovable = my.config.boot.efi;
+        efiSupport = my.config.boot.efi;
 
         # Which GRUB entry should be booted first
-        default = configgo.boot.default;
+        default = my.config.boot.default;
 
         # Eye candy
         splashImage = null;
 
         # Specify the devices
-        devices = [configgo.boot.device];
+        devices = [my.config.boot.device];
 
       };
 

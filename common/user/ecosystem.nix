@@ -1,7 +1,7 @@
 { ... }:
 let
 
-  configgo = import ../../config.nix;
+  my = import ../../config.nix;
 
   # Get my wanted packages
   packages = {
@@ -26,12 +26,12 @@ in
   home-manager.users.root.home.file = filesToLink;
 
   # Configure packages for main user
-  home-manager.users."${configgo.user.name}" = { ... }: {
+  home-manager.users."${my.config.user.name}" = { ... }: {
     # Configure Git
     programs.git = {
       enable = true;
-      userName = configgo.git.name;
-      userEmail = configgo.git.email;
+      userName = my.config.git.name;
+      userEmail = my.config.git.email;
     };
     # Configure the base packages for the user
     home.file = filesToLink;

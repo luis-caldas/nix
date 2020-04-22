@@ -2,7 +2,7 @@
 let
 
   # My main config
-  configgo = import ./config.nix;
+  my = import ./config.nix;
 
   # My functions
   mfunc = import ./functions/func.nix;
@@ -12,13 +12,16 @@ let
     url = "https://github.com/rycee/home-manager.git";
   };
 
+  # Generate the hardware folder location
+  hardware-folder = ./systems + ("/" + my.path) + "/hardware";
+
 in
 {
 
   # Linker for all submodules
 
   # System specific hardware configuration
-  imports = [ (./hardware + ("/" + configgo.hardware.folder) + "/hardware-configuration.nix") ]
+  imports = [ (hardware-folder + "/hardware-configuration.nix") ]
   ++
   # All the system modules
   [
@@ -40,17 +43,17 @@ in
     ./common/user/ecosystem.nix
   ] ++
   # Check whether we should import the graphical tools
-  mfunc.useDefault configgo.graphical [
+  mfunc.useDefault my.config.graphical [
     # Install Xorg if graphics are on
     ./common/system/video/video.nix
     # Install preferred system wide gui applications
     ./common/system/video/packages.nix
     # Add the video hardware configuration as well
-    (./hardware + ("/" + configgo.hardware.folder) + "/hardware-configuration-video.nix")
+    (hardware-folder + "/hardware-configuration-video.nix")
   ] [];
 
   # Import the files needed for the home-manager package 
-  home-manager.users."${configgo.user.name}" = { ... }:
+  home-manager.users."${my.config.user.name}" = { ... }:
   {
 
     imports = [
@@ -58,7 +61,7 @@ in
       ./common/user/hm-packages.nix
     ] ++
     # Visual imports for home-manager
-    mfunc.useDefault configgo.graphical [
+    mfunc.useDefault my.config.graphical [
       # The visual ecosystem use
       ./common/user/video/hm-ecosystem.nix
       # Extra custom gui packages

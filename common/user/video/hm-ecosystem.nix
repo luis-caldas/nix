@@ -1,7 +1,7 @@
 { lib, pkgs, ... }:
 let
 
-  configgo = import ../../../config.nix;
+  my = import ../../../config.nix;
   mfunc = import ../../../functions/func.nix;
 
   packages = {
@@ -25,9 +25,9 @@ let
   textXInit = { ".xinitrc" = { text = "exec bash" + " " + packages.desktop + "/entrypoint.bash"; }; };
 
   # Check if we should link the custom monitor configuration
-  #linkMonitors = mfunc.useDefault configgo.hardware.cmonitor {
+  #linkMonitors = mfunc.useDefault my.config.hardware.cmonitor {
   #  "mymonitors" = {
-  #    source = ../../../hardware + ("/" + configgo.hardware.folder) + ("/" + "monitors");
+  #    source = ../../../hardware + ("/" + my.config.hardware.folder) + ("/" + "monitors");
   #  };
   #} {};
 

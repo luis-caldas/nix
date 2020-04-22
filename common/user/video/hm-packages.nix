@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  configgo = import ../../../config.nix;
+  my = import ../../../config.nix;
 in
 {
 
@@ -23,6 +23,6 @@ in
     # Video player
     mpv
 
-  ] ++ configgo.packages.user.video;
+  ] ++ my.config.packages.user.video;
 
 }

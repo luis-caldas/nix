@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  configgo = import ../../config.nix;
+  my = import ../../config.nix;
 in
 {
 
@@ -22,6 +22,6 @@ in
     # Passwork hash generator
     mkpasswd
 
-  ] ++ configgo.packages.system.normal;
+  ] ++ my.config.packages.system.normal;
 
 }
