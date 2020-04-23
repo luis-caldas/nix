@@ -14,6 +14,7 @@ in
     bash
     tree
     w3m
+    file
     less
 
     # Some tools

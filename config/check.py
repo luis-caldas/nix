@@ -26,9 +26,12 @@ def list_em_items(data_in):
 def get_its_item(structure, object_in):
     neopointer = object_in
     for each_struct in structure:
-        if (each_struct not in neopointer):
+        try:
+            _ = neopointer[each_struct]
+        except:
             return False
-        neopointer = neopointer[each_struct]
+        else:
+            neopointer = neopointer[each_struct]
     return True
 
 def object_compare(object_master, object_sub, previous_path=None):

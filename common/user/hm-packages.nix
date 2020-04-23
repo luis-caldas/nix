@@ -24,6 +24,9 @@ in
     # Network 
     nmap
 
+    # Image viewer
+    jp2a
+
     # Fetching packages
     neofetch
     screenfetch
