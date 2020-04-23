@@ -44,7 +44,7 @@ in
   # Some XDG links
   xdg.configFile = {
     # Link the fontconfig conf file
-    "fontconfig/30-mine.conf" = { source = packages.fonts + "/30-my-substitutions.conf"; };
+    "fontconfig/fonts.conf" = { source = packages.fonts + "/fonts.conf"; };
     # Link the conky project
     "conky" = { source = packages.conky; };
   }; # // 
