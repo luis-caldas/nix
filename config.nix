@@ -1,13 +1,13 @@
 let
 
+  # import library
+  libr = (import <nixpkgs> {}).pkgs.lib;
+
   # Default path for the chosen system
-
-  system-path = "box";
-
-  #####
+  system-path = libr.replaceStrings ["\n" " "] ["" ""] (builtins.readFile ./system);
 
   # Import the chosen config file
-  config-obj = (import <nixpkgs> {}).pkgs.lib.recursiveUpdate
+  config-obj = libr.recursiveUpdate
     (builtins.fromJSON (
        builtins.readFile (./config + "/default.json"))
     )          
