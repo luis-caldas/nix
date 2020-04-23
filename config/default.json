@@ -1,0 +1,48 @@
+{
+  "boot": {
+    "timeout": 60,
+    "default": 0,
+    "efi": true,
+    "device": "nodev"
+  },
+  "kernel": {"params": []},
+  "user": {
+    "name": "majora",
+    "desc": "bossu",
+    "groups": ["sudo"],
+    "pass": "functional",
+    "autologin": true
+  },
+  "packages": {
+    "system": {
+      "normal": [],
+      "video": []
+    },
+    "user": {
+      "normal": [],
+      "video": []
+    }
+  },
+  "git": {
+    "name": "Luis",
+    "email": "admin@luiscaldas.com"
+  },
+  "system": {
+    "hostname": "unnamed",
+    "timezone": "Europe/Dublin",
+    "getty": {
+      "greeting": "Whenever there is a meeting, a parting is sure to follow. But that parting needs not last forever. Whether a parting be forever or merely for a short while... That is up to you.",
+      "help": "If you don't get that mask back soon, something terrible will happen!"
+    },
+    "motd": "You've met with a terrible fate, haven't you?"
+  },
+  "net": {
+    "interface": {"main": "eth0"},
+    "id": "ffffffff"
+  },
+  "services": {
+    "ssh": false,
+    "docker": false
+  },
+  "graphical": false
+}
