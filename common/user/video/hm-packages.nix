@@ -9,6 +9,7 @@ in
     # Basic graphics tools that I use
     
     # Desktop
+    openbox
     conky
     rofi
 

@@ -7,15 +7,19 @@ in
   environment.systemPackages = with pkgs; [
 
     # System management packages
-    wget
+    bc
     vim
-    tmux
     git
+    w3m
+    tmux
+    wget
     bash
     tree
-    w3m
     file
     less
+    p7zip
+    hexedit
+    binutils
 
     # Some tools
     python
