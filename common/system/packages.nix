@@ -16,6 +16,9 @@ in
     w3m
     less
 
+    # Some tools
+    python
+
     # Shell scripting
     envsubst
 

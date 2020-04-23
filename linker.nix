@@ -13,7 +13,7 @@ let
   };
 
   # Generate the hardware folder location
-  hardware-folder = ./systems + ("/" + my.path) + "/hardware";
+  hardware-folder = ./config + ("/" + my.path) + "/hardware";
 
 in
 {

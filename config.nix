@@ -8,8 +8,12 @@ let
 
   # Import the chosen config file
   config-obj = (import <nixpkgs> {}).pkgs.lib.recursiveUpdate
-    (import (./systems + "/default.nix"))
-    (import (./systems + ("/" + system-path) + "/config.nix"));
+    (builtins.fromJSON (
+       builtins.readFile (./config + "/default.json"))
+    )          
+    (builtins.fromJSON (
+       builtins.readFile (./config + ("/" + system-path) + "/config.json"))
+    );
 
 in
 {
