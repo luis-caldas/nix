@@ -21,6 +21,9 @@ in
     gimp
     inkscape
 
+    # Voip
+    mumble
+
     # Testing
     glxinfo
 
