@@ -1,6 +1,7 @@
 { pkgs, ... }:
 let
   my = import ../../config.nix;
+  mfunc = import ../../functions/func.nix;
 in
 {
 
@@ -16,6 +17,7 @@ in
     tree
     file
     less
+    bind
     p7zip
     hexedit
     binutils
@@ -29,6 +31,8 @@ in
     # Passwork hash generator
     mkpasswd
 
-  ] ++ my.config.packages.system.normal;
+  ] ++
+  mfunc.useDefault my.config.services.docker [ docker_compose ] [] ++
+  my.config.packages.system.normal;
 
 }
