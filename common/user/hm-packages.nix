@@ -24,12 +24,6 @@ in
 
     ##
 
-    # System
-    htop
-
-    # Network 
-    nmap
-
     # User tools
     mutt
     irssi

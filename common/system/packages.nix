@@ -18,7 +18,10 @@ in
     file
     less
     bind
+    htop
+    nmap
     p7zip
+    samba
     hexedit
     binutils
 

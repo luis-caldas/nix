@@ -23,7 +23,10 @@ in
 
     # Testing
     glxinfo
- 
+
+    # Video Recording
+    obs-studio
+
     # Video player
     mpv
 

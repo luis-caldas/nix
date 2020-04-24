@@ -38,7 +38,11 @@
   },
   "net": {
     "interface": {"main": "eth0"},
-    "id": "ffffffff"
+    "id": "ffffffff",
+    "firewall": {
+        "enable": false,
+        "ping": true
+    }
   },
   "services": {
     "ssh": false,

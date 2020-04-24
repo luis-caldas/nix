@@ -14,6 +14,10 @@ in
   networking.useDHCP = false;
   networking.interfaces."${my.config.net.interface.main}".useDHCP = true;
 
+  # Firewall configuration
+  networking.firewall.enable = my.config.net.firewall.enable;
+  networking.firewall.allowPing = my.config.net.firewall.ping;
+
   # My timezone
   time.timeZone = my.config.system.timezone;
 
