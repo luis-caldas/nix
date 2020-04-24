@@ -16,6 +16,9 @@ in
     gcc
     gnumake
 
+    # Haskell
+    ghc
+
     ##
 
     # System

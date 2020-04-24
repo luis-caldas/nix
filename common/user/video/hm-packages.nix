@@ -10,13 +10,12 @@ in
     
     # Desktop
     openbox
+    compton
     conky
     rofi
 
-    # Functional autism
-    haskellPackages.xmonad
+    # Functional
     haskellPackages.xmobar
-    haskellPackages.xmonad-entryhelper
 
     # Image editing
     gimp

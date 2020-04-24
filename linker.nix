@@ -66,6 +66,8 @@ in
       ./common/user/video/hm-ecosystem.nix
       # Extra custom gui packages
       ./common/user/video/hm-packages.nix
+      # Window manager configs
+      ./common/user/video/hm-window-managers.nix
     ] [];
 
   };
