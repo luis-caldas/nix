@@ -18,6 +18,10 @@ in
     haskellPackages.xmobar
     haskellPackages.xmonad-entryhelper
 
+    # Image editing
+    gimp
+    inkscape
+
     # Testing
     glxinfo
  

@@ -24,6 +24,10 @@ in
     # Network 
     nmap
 
+    # User tools
+    mutt
+    irssi
+
     # Image viewer
     jp2a
 
