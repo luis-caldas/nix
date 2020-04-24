@@ -19,6 +19,9 @@ in
     # Haskell
     ghc
 
+    # JSON
+    jq
+
     ##
 
     # System
