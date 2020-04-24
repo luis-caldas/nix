@@ -13,7 +13,6 @@ in
     w3m
     tmux
     wget
-    bash
     tree
     file
     less
