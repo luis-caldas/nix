@@ -21,6 +21,9 @@ in
     gimp
     inkscape
 
+    # Wallpaper
+    feh
+
     # Voip
     mumble
 
