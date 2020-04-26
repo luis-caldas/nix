@@ -22,6 +22,7 @@ in
     nmap
     p7zip
     samba
+    ffmpeg
     hexedit
     binutils
 

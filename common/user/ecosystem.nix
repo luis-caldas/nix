@@ -6,7 +6,10 @@ let
   # Get my wanted packages
   packages = {
     shell = builtins.fetchGit "https://github.com/luis-caldas/myshell";
-    vim = builtins.fetchGit "https://github.com/luis-caldas/myvim";
+    vim = builtins.fetchGit {
+      url = "https://github.com/luis-caldas/myvim";
+      # submodules = true;
+    };
   };
 
   # Create a set with the proper files
