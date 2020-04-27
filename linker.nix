@@ -43,7 +43,7 @@ in
     ./common/user/ecosystem.nix
   ] ++
   # Check whether we should import the graphical tools
-  mfunc.useDefault my.config.graphical [
+  mfunc.useDefault my.config.graphical.enable [
     # Install Xorg if graphics are on
     ./common/system/video/video.nix
     # Install preferred system wide gui applications
@@ -61,7 +61,7 @@ in
       ./common/user/hm-packages.nix
     ] ++
     # Visual imports for home-manager
-    mfunc.useDefault my.config.graphical [
+    mfunc.useDefault my.config.graphical.enable [
       # The visual ecosystem use
       ./common/user/video/hm-ecosystem.nix
       # Extra custom gui packages

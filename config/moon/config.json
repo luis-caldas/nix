@@ -11,5 +11,9 @@
     "id": "19709431"
   },
   "services": {"ssh": true},
-  "graphical": true
+  "graphical": {
+    "enable": true,
+    "cursor": "hacked-white",
+    "icons": "Mint-Y"
+  }
 }

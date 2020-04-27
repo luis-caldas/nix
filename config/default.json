@@ -48,5 +48,9 @@
     "ssh": false,
     "docker": false
   },
-  "graphical": false
+  "graphical": {
+    "enable": false,
+    "cursor": "windows-white",
+    "icons": "Mint-Y"
+  }
 }
