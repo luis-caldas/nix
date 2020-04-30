@@ -14,6 +14,10 @@ in
     conky
     rofi
 
+    # Key reassignment
+    xorg.xmodmap
+    xorg.xev
+
     # Functional
     haskellPackages.xmobar
 

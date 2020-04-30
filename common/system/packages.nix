@@ -25,6 +25,7 @@ in
     ffmpeg
     hexedit
     binutils
+    imagemagick
 
     # Some tools
     python
