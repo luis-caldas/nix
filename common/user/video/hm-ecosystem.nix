@@ -46,6 +46,7 @@ let
       eachDisplay.extraCommands + "\n" + # add the users custom command
       "nitrogen --restore" + "\n" +
       my.config.graphical.wm + " " + "&" + "\n" +
+      "picom &" + "\n" + 
       "wait" + "\n" ;};
   }) my.config.graphical.displays);
 
@@ -89,7 +90,7 @@ in
     # Link the conky project
     "conky" = { source = packages.conky; };
     # Link the xmobar configs
-    "xmobar" = { source = packages.desktop + "/bar/xmobar"; };
+    #"xmobar" = { source = packages.desktop + "/bar/xmobar"; };
   } // 
   # Link the created monitor configs
   linkDisplays;
