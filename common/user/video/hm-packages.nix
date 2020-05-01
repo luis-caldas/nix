@@ -10,7 +10,7 @@ in
     
     # Desktop
     openbox
-    compton
+    picom
     conky
     rofi
 

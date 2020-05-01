@@ -46,7 +46,6 @@ let
       eachDisplay.extraCommands + "\n" + # add the users custom command
       "nitrogen --restore" + "\n" +
       my.config.graphical.wm + " " + "&" + "\n" +
-      "picom &" + "\n" + 
       "wait" + "\n" ;};
   }) my.config.graphical.displays);
 
