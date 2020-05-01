@@ -26,7 +26,7 @@ in
     inkscape
 
     # Wallpaper
-    feh
+    nitrogen
 
     # Voip
     mumble
