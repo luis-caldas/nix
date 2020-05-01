@@ -49,6 +49,9 @@ let
       "wait" + "\n" ;};
   }) my.config.graphical.displays);
 
+  # Create a alias for the neox startx command
+  neoxAlias = { neox = packages.desktop + "/programs/init/neox"; };
+
   # XMonad Configuration
   # linkXMonad = { ".xmonad/xmonad.hs" = { source = packages.desktop + "/wm/xmonad/xmonad.hs"; }; };
 
@@ -58,6 +61,9 @@ let
 
 in
 {
+
+  # Add my bash aliases
+  programs.bash.shellAliases = neoxAlias;
 
   # Add patches and configs to the suckless tools
   nixpkgs.config.packageOverrides = pkgs:
