@@ -13,7 +13,21 @@
   "services": {"ssh": true},
   "graphical": {
     "enable": true,
+    "wm": "xmonad",
     "cursor": "hacked-white",
-    "icons": "Mint-Y"
+    "icons": "Mint-Y",
+    "displays": [
+      { 
+        "scale": 1, "display": ":0.0", 
+        "extraCommands": "xrandr --rate 144 \n xrandr --dpi 96x96" 
+      },
+      { 
+        "scale": 2, "display": ":0.1",
+        "extraCommands": "xrandr --dpi 192x192"
+      },
+      { "scale": 1, "display": ":0.2",
+        "extraCommands": "xrandr --orientation left --rate 75 \n xrandr --dpi 96x96"
+      }
+    ]
   }
 }

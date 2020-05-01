@@ -50,7 +50,11 @@
   },
   "graphical": {
     "enable": false,
+    "wm": "xmonad",
     "cursor": "windows-white",
-    "icons": "Mint-Y"
+    "icons": "Mint-Y",
+    "displays": [
+      { "scale": 1, "display": ":0", "extraCommands": "" }
+    ]
   }
 }

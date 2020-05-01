@@ -31,6 +31,19 @@ let
     Comment = Default theme linker
     Inherits = '' + my.config.graphical.cursor + "," + my.config.graphical.icons; };
 
+  # Create a script for each monitor
+  textDisplays = builtins.listToAttrs (map (eachDisplay: { 
+    name = ".config/my-displays" + "/display" + (builtins.replaceStrings [":"] ["-"] eachDisplay.display);
+    value = { text = "" +
+      "export DISPLAY=" + eachDisplay.display + "\n" +
+      "export GDK_SCALE=" + (toString eachDisplay.scale) + "\n" +
+      "export ELM_SCALE=" + (toString eachDisplay.scale) + "\n" +
+      "export QT_AUTO_SCREEN_SCALE_FACTOR=" + (toString eachDisplay.scale) + "\n" +
+      eachDisplay.extraCommands + "\n" + # add the users custom command
+      my.config.graphical.wm + " " + "&" + "\n" +
+      "wait" + "\n" ;};
+  }) my.config.graphical.displays);
+
   # Check if we should link the custom monitor configuration
   #linkMonitors = mfunc.useDefault my.config.hardware.cmonitor {
   #  "mymonitors" = {
@@ -43,7 +56,7 @@ let
 
   # Put all the sets together
   linkSets = linkThemes // linkFonts // linkCursors // linkIcons // 
-             textXInit // textIconsCursor;
+             textXInit // textIconsCursor // textDisplays;
 
 in
 {
