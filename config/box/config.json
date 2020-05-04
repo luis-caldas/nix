@@ -19,5 +19,7 @@
     "ssh": true,
     "docker": true
   },
-  "graphical": false
+  "graphical": {
+      "enable": false
+  }
 }
