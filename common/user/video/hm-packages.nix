@@ -1,6 +1,7 @@
 { pkgs, ... }:
 let
   my = import ../../../config.nix;
+  mfunc = import ../../../functions/func.nix;
 in
 {
 
@@ -40,6 +41,8 @@ in
     # Video player
     mpv
 
-  ] ++ my.config.packages.user.video;
+  ] ++ 
+  mfunc.useDefault my.config.audio [ pavucontrol ] [] ++
+  my.config.packages.user.video;
 
 }

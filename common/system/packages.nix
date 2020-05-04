@@ -8,29 +8,39 @@ in
   environment.systemPackages = with pkgs; [
 
     # System management packages
-    bc
+
+    # Basic
     vim
     git
-    w3m
     tmux
-    wget
-    tree
-    file
-    less
-    bind
     htop
-    nmap
-    p7zip
-    samba
-    ffmpeg
+    less
+
+    # Bin manipulation
     hexedit
     binutils
+
+    # Web tools
+    w3m
+    wget
+    nmap
+    bind
+
+    # File manipulation
+    tree
+    file
+    p7zip
+    samba
+
+    # Audio & Video manipulation
+    ffmpeg
     imagemagick
 
-    # Some tools
+    # Scripting general
     python
 
     # Shell scripting
+    bc
     envsubst
 
     # Passwork hash generator
@@ -38,6 +48,7 @@ in
 
   ] ++
   mfunc.useDefault my.config.services.docker [ docker_compose ] [] ++
+  mfunc.useDefault my.config.audio [ ncpamixer ] [] ++
   my.config.packages.system.normal;
 
 }

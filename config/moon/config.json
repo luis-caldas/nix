@@ -5,6 +5,7 @@
     "efi": true,
     "device": "nodev"
   },
+  "user" : {"groups": ["sudo", "audio"]},
   "system": {"hostname": "moon"},
   "net": {
     "interface": {"main": "enp4s0"},
@@ -29,5 +30,7 @@
         "extraCommands": "xrandr --orientation left --rate 75 \n xrandr --dpi 96x96"
       }
     ]
-  }
+  },
+  "audio": true,
+  "bluetooth": true
 }

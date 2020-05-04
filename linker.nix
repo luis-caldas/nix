@@ -50,7 +50,18 @@ in
     ./common/system/video/packages.nix
     # Add the video hardware configuration as well
     (hardware-folder + "/hardware-configuration-video.nix")
-  ] [];
+  ] [] ++ 
+  # Check if audio is supported
+  mfunc.useDefault my.config.audio [ ./common/system/audio.nix ] [] ++
+  # Check if bluetooth is supported 
+  mfunc.useDefault my.config.bluetooth ([ 
+    ./common/system/bluetooth.nix 
+  ] ++ 
+  # Check if video is enabled
+  mfunc.useDefault my.config.graphical.enable [ 
+    ./common/system/video/bluetooth.nix 
+  ] [])
+  [];
 
   # Import the files needed for the home-manager package 
   home-manager.users."${my.config.user.name}" = { ... }:
@@ -68,6 +79,9 @@ in
       ./common/user/video/hm-packages.nix
       # Window manager configs
       ./common/user/video/hm-window-managers.nix
+    ] [] ++ 
+    mfunc.useDefault my.config.bluetooth [ 
+      ./common/user/video/hm-bluetooth.nix 
     ] [];
 
   };
