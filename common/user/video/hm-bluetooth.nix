@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
 
-# Also add a service to manager mpris headset support
+  # Add a service to manage mpris headset support
   systemd.user.services.mpris-proxy = {
     Unit.Description = "Mpris proxy";
     Unit.After = [ "network.target" "sound.target" ];

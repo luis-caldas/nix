@@ -1,6 +1,36 @@
 { ... }:
 let
+
   my = import ../../config.nix;
+  mfunc = import ../../functions/func.nix;
+
+  # Set GRUB
+  tempGrub = {
+
+    # Basic
+    enable = true;
+    version = 2;
+
+    # Try to identify other systems
+    useOSProber = true;
+
+    # EFI support
+    efiInstallAsRemovable = my.config.boot.efi;
+    efiSupport = my.config.boot.efi;
+
+    # Which GRUB entry should be booted first
+    default = my.config.boot.default;
+
+    # Eye candy
+    splashImage = null;
+
+    # Specify the devices
+    devices = [my.config.boot.device];
+  };
+
+  # Check if the user configuration overrides boot information
+  realGrub = mfunc.useDefault my.config.boot.override {} tempGrub;
+
 in
 {
 
@@ -22,31 +52,9 @@ in
 
       # Just for fast bois
       timeout = my.config.boot.timeout;
-      
-      # Set GRUB
-      grub = {
 
-        # Basic
-        enable = true;
-        version = 2;
-
-        # Try to identify other systems
-        useOSProber = true;
-
-        # EFI support
-        efiInstallAsRemovable = my.config.boot.efi;
-        efiSupport = my.config.boot.efi;
-
-        # Which GRUB entry should be booted first
-        default = my.config.boot.default;
-
-        # Eye candy
-        splashImage = null;
-
-        # Specify the devices
-        devices = [my.config.boot.device];
-
-      };
+      # Set the grub if configured to do so
+      grub = realGrub;
 
     };
 

@@ -3,7 +3,8 @@
     "timeout": 60,
     "default": 0,
     "efi": true,
-    "device": "nodev"
+    "device": "nodev",
+    "override": false
   },
   "kernel": {"params": []},
   "user": {
@@ -56,5 +57,7 @@
     "displays": [
       { "scale": 1, "display": ":0", "extraCommands": "" }
     ]
-  }
+  },
+  "audio": false,
+  "bluetooth": false
 }

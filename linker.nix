@@ -54,14 +54,12 @@ in
   # Check if audio is supported
   mfunc.useDefault my.config.audio [ ./common/system/audio.nix ] [] ++
   # Check if bluetooth is supported 
-  mfunc.useDefault my.config.bluetooth ([ 
-    ./common/system/bluetooth.nix 
-  ] ++ 
-  # Check if video is enabled
-  mfunc.useDefault my.config.graphical.enable [ 
-    ./common/system/video/bluetooth.nix 
-  ] [])
-  [];
+  mfunc.useDefault my.config.bluetooth (
+    [ ./common/system/bluetooth.nix ] ++ 
+    # Bluetooth and video are enabled
+    mfunc.useDefault my.config.graphical.enable 
+      [ ./common/system/video/bluetooth.nix ] []
+  ) [];
 
   # Import the files needed for the home-manager package 
   home-manager.users."${my.config.user.name}" = { ... }:
