@@ -22,6 +22,9 @@ in
     # Functional
     haskellPackages.xmobar
 
+    # Web
+    firefox
+
     # Image editing
     gimp
     inkscape

@@ -41,6 +41,7 @@ let
     value = { text = "" +
       "export DISPLAY=" + eachDisplay.display + "\n" +
       "export GDK_SCALE=" + (toString eachDisplay.scale) + "\n" +
+      "export GDK_DPI_SCALE=" + (toString (1.0 / eachDisplay.scale)) + "\n" +
       "export ELM_SCALE=" + (toString eachDisplay.scale) + "\n" +
       "export QT_AUTO_SCREEN_SCALE_FACTOR=" + (toString eachDisplay.scale) + "\n" +
       (builtins.concatStringsSep "\n" eachDisplay.extraCommands) + "\n" + # add the users custom command
@@ -69,8 +70,8 @@ in
   nixpkgs.config.packageOverrides = pkgs:
   {
     st = pkgs.st.override {
-      conf = builtins.readFile (packages.desktop + "/suckless/st/config.h");
-      patches = mfunc.listFullFilesInFolder mfunc lib (packages.desktop + "/suckless/st/patches");
+      conf = builtins.readFile (packages.desktop + "/term/st/config.h");
+      patches = mfunc.listFullFilesInFolder mfunc lib (packages.desktop + "/term/st/patches");
       extraLibs = [ pkgs.xorg.libXcursor ];
     };
   };
@@ -78,8 +79,6 @@ in
   # Add suckless tools that have been configured
   home.packages = with pkgs; [
     st
-    tabbed
-    surf
   ];
 
   # Some XDG links

@@ -26,6 +26,4 @@
       }) listFiles
     );
 
-  # Checks if a file exists and if so return its contents
-
 }
