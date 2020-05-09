@@ -44,6 +44,9 @@ in
     # Video player
     mpv
 
+    # Screeshot
+    scrot
+
   ] ++ 
   mfunc.useDefault my.config.audio [ pavucontrol ] [] ++
   my.config.packages.user.video;

@@ -54,6 +54,7 @@
     "wm": "xmonad",
     "cursor": "windows-white",
     "icons": "Mint-Y",
+    "theme": "AdwaitaDark",
     "displays": [
       { "scale": 1, "display": ":0", "extraCommands": [""] }
     ]

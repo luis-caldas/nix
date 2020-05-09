@@ -21,6 +21,14 @@ let
   linkCursors = (mfunc.listCreateLinks mfunc lib (packages.cursors + "/my-x11-cursors") ".local/share/icons");
   linkIcons   = (mfunc.listCreateLinks mfunc lib (packages.icons + "/my-icons-collection") ".local/share/icons");
 
+  # Create the file containg the selected theme and icons
+  themeString = "" +
+    "gtk-icon-theme-name = " + my.config.graphical.icons + "\n" +
+    "gtk-theme-name = " + my.config.graphical.theme;
+  fileTheme = { 
+    "gtk-3.0/settings.ini".text = "" + "[Settings]" + "\n" + themeString;
+  };
+
   # Create the .xinitrc link file
   textXInit = { ".xinitrc" = { 
     text = "" + 
@@ -90,6 +98,8 @@ in
     # Link the xmobar configs
     #"xmobar" = { source = packages.desktop + "/bar/xmobar"; };
   } // 
+  # Link the file with the gtk theme configurations
+  fileTheme //
   # Link the created monitor configs
   linkDisplays;
 

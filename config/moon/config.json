@@ -16,7 +16,8 @@
     "enable": true,
     "wm": "xmonad",
     "cursor": "hacked-white",
-    "icons": "Mint-Y",
+    "icons": "Mint-Y-Dark-Grey",
+    "theme": "AdwaitaDark",
     "displays": [
       { 
         "scale": 2, "display": ":0",
