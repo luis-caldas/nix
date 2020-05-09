@@ -43,7 +43,7 @@ let
       "export GDK_SCALE=" + (toString eachDisplay.scale) + "\n" +
       "export ELM_SCALE=" + (toString eachDisplay.scale) + "\n" +
       "export QT_AUTO_SCREEN_SCALE_FACTOR=" + (toString eachDisplay.scale) + "\n" +
-      eachDisplay.extraCommands + "\n" + # add the users custom command
+      (builtins.concatStringsSep "\n" eachDisplay.extraCommands) + "\n" + # add the users custom command
       "nitrogen --restore" + "\n" +
       my.config.graphical.wm + " " + "&" + "\n" +
       "wait" + "\n" ;};

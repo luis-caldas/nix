@@ -19,15 +19,13 @@
     "icons": "Mint-Y",
     "displays": [
       { 
-        "scale": 1, "display": ":0.0", 
-        "extraCommands": "xrandr --rate 144 \n xrandr --dpi 96x96" 
-      },
-      { 
-        "scale": 2, "display": ":0.1",
-        "extraCommands": "xrandr --dpi 192x192"
-      },
-      { "scale": 1, "display": ":0.2",
-        "extraCommands": "xrandr --orientation left --rate 75 \n xrandr --dpi 96x96"
+        "scale": 2, "display": ":0",
+        "extraCommands": [
+          "xrandr --dpi 192x192",
+          "xrandr --output DisplayPort-0 --mode 3840x2160 --rate 60 --scale 1.13x1.13 --pos 0x0",
+          "xrandr --output DisplayPort-1 --mode 1920x1080 --rate 144 --scale 2x2 --pos 4339x315 --primary",
+          "xrandr --output HDMI-A-0 --mode 1280x1024 --rate 75 --scale 2x2 --pos 8179x-85 --rotate left"
+        ]
       }
     ]
   },

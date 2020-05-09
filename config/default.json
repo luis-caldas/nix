@@ -55,7 +55,7 @@
     "cursor": "windows-white",
     "icons": "Mint-Y",
     "displays": [
-      { "scale": 1, "display": ":0", "extraCommands": "" }
+      { "scale": 1, "display": ":0", "extraCommands": [""] }
     ]
   },
   "audio": false,
