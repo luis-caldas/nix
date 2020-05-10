@@ -24,8 +24,8 @@
         "extraCommands": [
           "xrandr --dpi 192x192",
           "xrandr --output DisplayPort-0 --mode 3840x2160 --rate 60 --scale 1.13x1.13 --pos 0x0",
-          "xrandr --output DisplayPort-1 --mode 1920x1080 --rate 144 --scale 2x2 --pos 4339x315 --primary",
-          "xrandr --output HDMI-A-0 --mode 1280x1024 --rate 75 --scale 2x2 --pos 8179x-85 --rotate left"
+          "xrandr --output DisplayPort-1 --mode 1920x1080 --rate 144 --scale 2x2 --pos 4340x315 --primary",
+          "xrandr --output HDMI-A-0 --mode 1280x1024 --rate 75 --scale 2x2 --pos 8180x-85 --rotate left"
         ]
       }
     ]
