@@ -15,6 +15,7 @@ in
     tmux
     htop
     less
+    screen
 
     # Bin manipulation
     hexedit
@@ -25,6 +26,14 @@ in
     wget
     nmap
     bind
+
+    # Serial
+    picocom
+    minicom
+
+    # System monitoring
+    usbutils
+    pciutils
 
     # File manipulation
     tree
