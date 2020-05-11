@@ -39,6 +39,9 @@ in
     # Scripting general
     python
 
+    # Encryption
+    cryptsetup
+
     # Shell scripting
     bc
     envsubst

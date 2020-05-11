@@ -25,6 +25,9 @@ in
     # Web
     firefox
 
+    # Visual calculator
+    qalculate-gtk
+
     # Image editing
     gimp
     inkscape
