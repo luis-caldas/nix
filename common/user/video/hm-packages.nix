@@ -15,6 +15,12 @@ in
     conky
     rofi
 
+    # Terminal emulator
+    kitty
+    # alacritty
+    # termite
+    # rxvt-unicode
+
     # Key reassignment
     xorg.xmodmap
     xorg.xev

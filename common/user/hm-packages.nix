@@ -1,6 +1,7 @@
 { pkgs, ... }:
 let
   my = import ../../config.nix;
+  mfunc = import ../../functions/func.nix;
 in
 {
 
@@ -34,6 +35,7 @@ in
     # Fetching packages
     neofetch
     screenfetch
-  ] ++ my.config.packages.user.normal;
+  ] ++ mfunc.useDefault my.config.audio [ ncspot ] [] 
+  ++ my.config.packages.user.normal;
 
 }
