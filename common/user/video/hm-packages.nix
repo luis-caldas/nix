@@ -16,8 +16,8 @@ in
     rofi
 
     # Terminal emulator
-    kitty
     # alacritty
+    # kitty
     # termite
     # rxvt-unicode
 
