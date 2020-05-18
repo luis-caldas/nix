@@ -80,7 +80,7 @@ in
     st = pkgs.st.override {
       conf = builtins.readFile (packages.desktop + "/term/st/config.h");
       patches = mfunc.listFullFilesInFolder mfunc lib (packages.desktop + "/term/st/patches");
-      extraLibs = [ pkgs.xorg.libXcursor ];
+      extraLibs = [ pkgs.xorg.libXcursor pkgs.harfbuzz ];
     };
   };
 
@@ -88,6 +88,9 @@ in
   home.packages = with pkgs; [
     st
   ];
+
+  # Add custom XResources file
+  xresources.extraConfig = builtins.readFile (packages.desktop + "/xresources/XResources"); 
 
   # Some XDG links
   xdg.configFile = {

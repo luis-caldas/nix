@@ -47,6 +47,7 @@ in
 
     # Scripting general
     python
+    nodejs
 
     # Encryption
     cryptsetup

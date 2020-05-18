@@ -8,7 +8,7 @@ let
     shell = builtins.fetchGit "https://github.com/luis-caldas/myshell";
     vim = builtins.fetchGit {
       url = "https://github.com/luis-caldas/myvim";
-      # submodules = true;
+      # fetchSubmodules = true;
     };
   };
 
