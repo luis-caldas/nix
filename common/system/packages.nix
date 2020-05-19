@@ -58,6 +58,7 @@ in
     qemu
 
     # Encryption
+    gnupg
     cryptsetup
 
     # Shell scripting
