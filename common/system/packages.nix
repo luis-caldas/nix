@@ -50,6 +50,9 @@ in
     nodejs
     yarn
 
+    # Dev
+    adoptopenjdk-jre-bin
+
     # Android
     gitRepo
     simg2img
