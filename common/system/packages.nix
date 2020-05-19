@@ -48,6 +48,14 @@ in
     # Scripting general
     python
     nodejs
+    yarn
+
+    # Android
+    gitRepo
+    simg2img
+
+    # Emulation
+    qemu
 
     # Encryption
     cryptsetup

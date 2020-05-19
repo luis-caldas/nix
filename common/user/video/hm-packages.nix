@@ -30,6 +30,7 @@ in
 
     # Web
     firefox
+    electron
 
     # Visual calculator
     qalculate-gtk
