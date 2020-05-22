@@ -15,6 +15,7 @@ in
 
     # C
     gcc
+    cmake
     gnumake
 
     # Haskell
@@ -35,7 +36,7 @@ in
     # Fetching packages
     neofetch
     screenfetch
-  ] ++ mfunc.useDefault my.config.audio [ ncspot ] [] 
+  ] ++ mfunc.useDefault my.config.audio [ ncspot playerctl ] [] 
   ++ my.config.packages.user.normal;
 
 }

@@ -20,6 +20,7 @@ in
     # Bin manipulation
     hexedit
     binutils
+    flashrom
 
     # Web tools
     w3m
@@ -40,6 +41,9 @@ in
     file
     p7zip
     samba
+
+    # Net tools
+    ethtool
 
     # Audio & Video manipulation
     ffmpeg
