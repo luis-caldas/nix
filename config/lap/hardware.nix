@@ -3,7 +3,7 @@
   imports = [ 
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
   ] ++ [
-    ../custom/pinebook_pro.nix 
+    ./custom/pinebook_pro.nix 
   ];
  
   boot.loader.grub.enable = false;

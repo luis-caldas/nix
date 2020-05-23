@@ -13,7 +13,7 @@ let
   };
 
   # Generate the hardware folder location
-  hardware-folder = ./config + ("/" + my.path) + "/hardware";
+  hardware-folder = ./config + ("/" + my.path);
 
 in
 {
@@ -21,7 +21,7 @@ in
   # Linker for all submodules
 
   # System specific hardware configuration
-  imports = [ (hardware-folder + "/hardware-configuration.nix") ]
+  imports = [ (hardware-folder + "/hardware.nix") ]
   ++
   # All the system modules
   [
@@ -48,8 +48,6 @@ in
     ./common/system/video/video.nix
     # Install preferred system wide gui applications
     ./common/system/video/packages.nix
-    # Add the video hardware configuration as well
-    (hardware-folder + "/hardware-configuration-video.nix")
   ] [] ++ 
   # Check if audio is supported
   mfunc.useDefault my.config.audio [ ./common/system/audio.nix ] [] ++
