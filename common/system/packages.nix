@@ -20,7 +20,7 @@ in
     # Bin manipulation
     hexedit
     binutils
-    flashrom
+    # flashrom # needs to be fixed for arm
 
     # Web tools
     w3m

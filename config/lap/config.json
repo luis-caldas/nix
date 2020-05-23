@@ -1,5 +1,6 @@
 {
-  "boot": { "override": true },
+  "boot": { "override": true, "timeout": 1 },
+  "kernel": { "params": ["console=tty0"] },
   "system": { "hostname": "lap" },
   "net": { "id": "29387412" },
   "services": { "ssh": true },
