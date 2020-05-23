@@ -43,12 +43,15 @@ in
     ./common/user/ecosystem.nix
   ] ++
   # Check whether we should import the graphical tools
-  mfunc.useDefault my.config.graphical.enable [
+  mfunc.useDefault my.config.graphical.enable ([
     # Install Xorg if graphics are on
     ./common/system/video/video.nix
     # Install preferred system wide gui applications
     ./common/system/video/packages.nix
-  ] [] ++ 
+  # Check if there is touchpad and graphical support
+  ] ++ mfunc.useDefault my.config.graphical.touchpad [
+    ./common/syste/video/touchpad.nix
+  ] []) [] ++ 
   # Check if audio is supported
   mfunc.useDefault my.config.audio [ ./common/system/audio.nix ] [] ++
   # Check if bluetooth is supported 
