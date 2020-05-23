@@ -10,15 +10,10 @@
   boot.loader.generic-extlinux-compatible.enable = true;
 
   boot.initrd.availableKernelModules = [ "usbhid" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
-  boot.extraModulePackages = [ ];
 
   nixpkgs.config.allowUnfree = true;
  
-  networking.hostId = "12345678";
- 
-  boot.initrd.luks.devices."chest".device = "/dev/disk/by-uuid/6a5e57a2-5b12-4776-b945-b5126403cc60";
+  boot.initrd.luks.devices."chest".device = "/dev/disk/by-uuid/624c6b9c-1f0b-429e-a84f-eab22254217b";
 
   fileSystems."/" =
     { device = "coro/root";
@@ -31,11 +26,12 @@
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/9EF9-607D";
+    { device = "/dev/disk/by-uuid/C1F0-D964";
       fsType = "vfat";
     };
 
-  swapDevices = [{device = "/dev/zvol/coro/swap";}];
+  # swapDevices = [{device = "/dev/zvol/coro/swap";}];
+  # dont know if ill need this yet
 
   nix.maxJobs = lib.mkDefault 6;
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";

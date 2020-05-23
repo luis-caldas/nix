@@ -2,6 +2,6 @@
 {
 
   # Add custom drivers and xorg files
-  services.xserver.videoDrivers = ["nouveau"];
+  services.xserver.videoDrivers = ["panfrost"];
 
 }
