@@ -4,7 +4,7 @@
     "timeout": 1 
   },
   "kernel": { 
-      "params": ["console=tty0"] 
+    "params": ["console=tty0"]
   },
   "user" : {
     "groups": ["sudo", "audio"]
