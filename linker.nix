@@ -50,7 +50,7 @@ in
     ./common/system/video/packages.nix
   # Check if there is touchpad and graphical support
   ] ++ mfunc.useDefault my.config.graphical.touchpad [
-    ./common/syste/video/touchpad.nix
+    ./common/system/video/touchpad.nix
   ] []) [] ++ 
   # Check if audio is supported
   mfunc.useDefault my.config.audio [ ./common/system/audio.nix ] [] ++

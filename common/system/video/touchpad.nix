@@ -2,9 +2,9 @@
 {
 
   # Enable libinput
-  xserver.libinput = {
+  services.xserver.libinput = {
     enable = true;
-    natualScrolling = true;
+    naturalScrolling = true;
   };
 
 }

@@ -20,7 +20,7 @@
   },
   "graphical": {
     "enable": true,
-    "driver": ["panfrost"],
+    "drivers": ["panfrost"],
     "touchpad": true
   },
   "audio": false,
