@@ -5,6 +5,8 @@ let
 in
 {
 
+  nixpkgs.config.allowUnsupportedSystem = true;
+
   home.packages = with pkgs; [
 
     # Basic graphics tools that I use
@@ -49,7 +51,7 @@ in
     glxinfo
 
     # Video Recording
-    obs-studio
+    #obs-studio
 
     # Video player
     mpv

@@ -54,6 +54,9 @@ in
     nodejs
     yarn
 
+    # Haskell
+    llvm
+
     # Dev
     adoptopenjdk-jre-bin
 
