@@ -60,7 +60,6 @@ in
     scrot
 
   ] ++ 
-  mfunc.useDefault my.config.audio [ pavucontrol ] [] ++
-  my.config.packages.user.video;
+  mfunc.useDefault my.config.audio [ pavucontrol ] [];
 
 }

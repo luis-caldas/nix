@@ -36,7 +36,6 @@ in
     # Fetching packages
     neofetch
     screenfetch
-  ] ++ mfunc.useDefault my.config.audio [ ncspot playerctl ] [] 
-  ++ my.config.packages.user.normal;
+  ] ++ mfunc.useDefault my.config.audio [ ncspot playerctl ] []; 
 
 }

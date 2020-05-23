@@ -14,16 +14,6 @@
     "pass": "functional",
     "autologin": true
   },
-  "packages": {
-    "system": {
-      "normal": [],
-      "video": []
-    },
-    "user": {
-      "normal": [],
-      "video": []
-    }
-  },
   "git": {
     "name": "Luis",
     "email": "admin@luiscaldas.com"

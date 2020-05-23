@@ -4,8 +4,6 @@ let
 in
 {
 
-  environment.systemPackages = with pkgs; [
-
-  ] ++ my.config.packages.system.video;
+  environment.systemPackages = with pkgs; [];
 
 }

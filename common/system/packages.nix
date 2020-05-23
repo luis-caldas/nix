@@ -80,7 +80,6 @@ in
 
   ] ++
   mfunc.useDefault my.config.services.docker [ docker_compose ] [] ++
-  mfunc.useDefault my.config.audio [ ncpamixer ] [] ++
-  my.config.packages.system.normal;
+  mfunc.useDefault my.config.audio [ ncpamixer ] [];
 
 }
