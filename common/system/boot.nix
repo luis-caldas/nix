@@ -34,6 +34,9 @@ let
 in
 {
 
+  # Unset the nixos font
+  console.font = "";
+
   # Main boot configuration
   boot = { 
 
