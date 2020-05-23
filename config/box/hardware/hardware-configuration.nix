@@ -14,21 +14,16 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "dater/root";
+    { device = "boxy/root";
       fsType = "zfs";
     };
 
   fileSystems."/home" =
-    { device = "dater/home";
+    { device = "boxy/home";
       fsType = "zfs";
     };
 
-  fileSystems."/data" =
-    { device = "dater/data";
-      fsType = "zfs";
-    };
-
-  swapDevices = [{device = "/dev/zvol/dater/swap";}];
+  # swapDevices = [{device = "/dev/zvol/boxy/swap";}];
 
   nix.maxJobs = lib.mkDefault 4;
 }
