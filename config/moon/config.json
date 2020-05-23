@@ -5,19 +5,24 @@
     "efi": true,
     "device": "nodev"
   },
-  "user" : {"groups": ["sudo", "audio"]},
-  "system": {"hostname": "moon"},
+  "user" : {
+    "groups": ["sudo", "audio"]
+  },
+  "system": {
+    "hostname": "moon"
+  },
   "net": {
-    "interface": {"main": "enp4s0"},
+    "interface": {
+      "main": "enp4s0"
+    },
     "id": "19709431"
   },
-  "services": {"ssh": true},
+  "services": {
+    "ssh": true
+  },
   "graphical": {
     "enable": true,
-    "wm": "xmonad",
-    "cursor": "hacked-white",
-    "icons": "Mint-Y-Dark-Grey",
-    "theme": "AdwaitaDark",
+    "drivers": ["amdgpu"],
     "displays": [
       { 
         "scale": 2, "display": ":0",

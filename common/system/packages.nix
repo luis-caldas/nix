@@ -48,6 +48,7 @@ in
     # Audio & Video manipulation
     ffmpeg
     imagemagick
+    waifu2x-converter-cpp
 
     # Scripting general
     python

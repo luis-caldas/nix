@@ -20,16 +20,8 @@
   },
   "graphical": {
     "enable": true,
-    "wm": "xmonad",
-    "cursor": "hacked-white",
-    "icons": "Mint-Y-Dark-Grey",
-    "theme": "AdwaitaDark",
-    "displays": [
-      { 
-        "scale": 1, "display": ":0",
-        "extraCommands": []
-      }
-    ]
+    "driver": ["panfrost"],
+    "touchpad": true
   },
   "audio": false,
   "bluetooth": false

@@ -41,10 +41,12 @@
   },
   "graphical": {
     "enable": false,
+    "drivers": ["nouveau"],
     "wm": "xmonad",
-    "cursor": "windows-white",
-    "icons": "Mint-Y",
+    "cursor": "hacked-white",
+    "icons": "Mint-Y-Dark-Grey",
     "theme": "AdwaitaDark",
+    "touchpad": false,
     "displays": [
       { "scale": 1, "display": ":0", "extraCommands": [""] }
     ]
