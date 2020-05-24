@@ -12,7 +12,9 @@ in
 
   # Force the use of DHCP on the proper interface
   networking.useDHCP = false;
-  networking.interfaces."${my.config.net.interface.main}".useDHCP = true;
+
+  # Use networkmanager
+  networking.networkmanager.enable = true;
 
   # Firewall configuration
   networking.firewall.enable = my.config.net.firewall.enable;

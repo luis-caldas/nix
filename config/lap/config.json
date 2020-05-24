@@ -7,7 +7,7 @@
       "params": ["console=tty0"] 
   },
   "user" : {
-    "groups": ["sudo", "audio"]
+    "groups": ["sudo"]
   },
   "system": { 
       "hostname": "lap" 

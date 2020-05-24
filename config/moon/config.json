@@ -6,7 +6,7 @@
     "device": "nodev"
   },
   "user" : {
-    "groups": ["sudo", "audio"]
+    "groups": ["sudo"]
   },
   "system": {
     "hostname": "moon"
