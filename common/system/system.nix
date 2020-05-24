@@ -16,6 +16,9 @@ in
   # Use networkmanager
   networking.networkmanager.enable = true;
 
+  # Disable ipv6
+  networking.enableIPv6 = false;
+
   # Firewall configuration
   networking.firewall.enable = my.config.net.firewall.enable;
   networking.firewall.allowPing = my.config.net.firewall.ping;
