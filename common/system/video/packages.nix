@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
 
-  environment.systemPackages = with pkgs; [ light ];
+  environment.systemPackages = with pkgs; [];
 
 }

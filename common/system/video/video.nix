@@ -14,4 +14,7 @@ in
   # Set graphics drivers
   services.xserver.videoDrivers = my.config.graphical.drivers;
 
+  # Set program to change backlight
+  programs.light.enable = true;
+
 }

@@ -26,6 +26,7 @@ in
     # Give extra groups to the user
     extraGroups = ["networkmanager"] ++
                   mfunc.useDefault my.config.audio ["audio"] [] ++
+                  mfunc.useDefault my.config.graphical.enable ["video"] [] ++
                   mfunc.useDefault my.config.services.docker ["docker"] [] ++
                   my.config.user.groups;
 
