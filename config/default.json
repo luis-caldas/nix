@@ -28,7 +28,6 @@
     "motd": "You've met with a terrible fate, haven't you?"
   },
   "net": {
-    "interface": {"main": "eth0"},
     "id": "ffffffff",
     "firewall": {
         "enable": false,

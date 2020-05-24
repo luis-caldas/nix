@@ -12,9 +12,6 @@
     "hostname": "moon"
   },
   "net": {
-    "interface": {
-      "main": "enp4s0"
-    },
     "id": "19709431"
   },
   "services": {

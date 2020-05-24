@@ -16,9 +16,6 @@
     "hostname": "box"
   },
   "net": {
-    "interface": {
-      "main": "enp3s0"
-    },
     "id": "19719431"
   },
   "services": {
