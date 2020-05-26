@@ -52,6 +52,7 @@ let
       "export GDK_DPI_SCALE=" + (toString (1.0 / eachDisplay.scale)) + "\n" +
       "export ELM_SCALE=" + (toString eachDisplay.scale) + "\n" +
       "export QT_AUTO_SCREEN_SCALE_FACTOR=" + (toString eachDisplay.scale) + "\n" +
+      "export _JAVA_AWT_WM_NONREPARENTING=1" + "\n" + # needed for java applications on tiling wm
       (builtins.concatStringsSep "\n" eachDisplay.extraCommands) + "\n" + # add the users custom command
       "nitrogen --restore" + "\n" +
       my.config.graphical.wm + " " + "&" + "\n" +
@@ -60,9 +61,6 @@ let
 
   # Create a alias for the neox startx command
   neoxAlias = { neox = packages.desktop + "/programs/init/neox"; };
-
-  # XMonad Configuration
-  # linkXMonad = { ".xmonad/xmonad.hs" = { source = packages.desktop + "/wm/xmonad/xmonad.hs"; }; };
 
   # Put all the sets together
   linkSets = linkThemes // linkFonts // linkCursors // linkIcons // # linkXMonad // 
@@ -92,6 +90,9 @@ in
   # Add custom XResources file
   xresources.extraConfig = builtins.readFile (packages.desktop + "/xresources/XResources"); 
 
+  # Add xmonad config file
+  xsession.windowManager.xmonad.config = (packages.desktop + "/wm/xmonad/xmonad.hs");
+
   # Some XDG links
   xdg.configFile = {
     # Link the fontconfig conf file
@@ -99,7 +100,7 @@ in
     # Link the conky project
     "conky" = { source = packages.conky; };
     # Link the xmobar configs
-    #"xmobar" = { source = packages.desktop + "/bar/xmobar"; };
+    "xmobar" = { source = packages.desktop + "/bar/xmobar"; };
   } // 
   # Link the file with the gtk theme configurations
   fileTheme //
