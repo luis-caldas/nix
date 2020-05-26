@@ -17,14 +17,11 @@ in
     conky
     rofi
 
-    # Terminal emulator
-    # alacritty
-    # kitty
-    # termite
-    # rxvt-unicode
+    # Electronics
+    kicad
+    logisim
 
     # Key reassignment
-    xorg.xmodmap
     xorg.xev
 
     # Functional
@@ -60,6 +57,6 @@ in
     scrot
 
   ] ++ 
-  mfunc.useDefault my.config.audio [ pavucontrol ] [];
+  mfunc.useDefault my.config.audio [] [];
 
 }

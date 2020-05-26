@@ -6,11 +6,84 @@ in
 {
 
   home.packages = with pkgs; [
-    # Basic tools that I use that are non graphical
 
-    ## Dev
+    # Basic
+    tmux
+    htop
+    less
+    screen
+
+    # Bin manipulation
+    hexedit
+    binutils
+    # flashrom # needs to be fixed for arm
+
+    # Web tools
+    w3m
+    wget
+    nmap
+    bind
+
+    # Keyboard
+    xorg.xmodmap
+
+    # Serial
+    picocom
+    minicom
+
+    # System monitoring
+    usbutils
+    pciutils
+
+    # File manipulation
+    tree
+    file
+    p7zip
+    samba
+
+    # Net tools
+    ethtool
+
+    # Audio & Video manipulation
+    ffmpeg
+    imagemagick
+    waifu2x-converter-cpp
+
+
+    # Android
+    gitRepo
+    simg2img
+
+    # Emulation
+    qemu
+
+    # Encryption
+    gnupg
+    cryptsetup
+
+    # Passwork hash generator
+    mkpasswd
+
+    # User tools
+    mutt
+    irssi
+
+    # Image viewer
+    jp2a
+
+    # Fetching packages
+    neofetch
+    screenfetch
+
+    # LLVM
+    llvm
+
+    #######
+    # Dev #
+    #######
     
     # Shell
+    bc
     shellcheck
 
     # C
@@ -24,18 +97,18 @@ in
     # JSON
     jq
 
-    ##
+    # Scripting general
+    python
+    nodejs
+    yarn
 
-    # User tools
-    mutt
-    irssi
+    # Java
+    adoptopenjdk-jre-bin
 
-    # Image viewer
-    jp2a
+    #######
 
-    # Fetching packages
-    neofetch
-    screenfetch
-  ] ++ mfunc.useDefault my.config.audio [ ncspot playerctl ] []; 
+  ] ++  
+  mfunc.useDefault my.config.services.docker [ docker_compose ] [] ++
+  mfunc.useDefault my.config.audio [ ncpamixer ncspot playerctl ] [];
 
 }

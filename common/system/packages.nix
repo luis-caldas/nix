@@ -5,82 +5,17 @@ let
 in
 {
 
+  # Simple packages to get any user going
   environment.systemPackages = with pkgs; [
-
-    # System management packages
 
     # Basic
     vim
     git
     tmux
-    htop
-    less
-    screen
 
-    # Bin manipulation
-    hexedit
-    binutils
-    # flashrom # needs to be fixed for arm
-
-    # Web tools
-    w3m
-    wget
-    nmap
-    bind
-
-    # Serial
-    picocom
-    minicom
-
-    # System monitoring
-    usbutils
-    pciutils
-
-    # File manipulation
-    tree
-    file
-    p7zip
-    samba
-
-    # Net tools
-    ethtool
-
-    # Audio & Video manipulation
-    ffmpeg
-    imagemagick
-    waifu2x-converter-cpp
-
-    # Scripting general
-    python
-    nodejs
-    yarn
-
-    # Haskell
-    llvm
-
-    # Dev
-    adoptopenjdk-jre-bin
-
-    # Android
-    gitRepo
-    simg2img
-
-    # Emulation
-    qemu
-
-    # Encryption
-    gnupg
-    cryptsetup
-
-    # Shell scripting
-    bc
+    # Compatibility
     envsubst
 
-    # Passwork hash generator
-    mkpasswd
-
-  ] ++
-  mfunc.useDefault my.config.services.docker [ docker_compose ] [] ++
-  mfunc.useDefault my.config.audio [ ncpamixer ] [];
+  ];
 
 }
