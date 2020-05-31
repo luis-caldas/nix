@@ -16,7 +16,6 @@ in
     # Bin manipulation
     hexedit
     binutils
-    # flashrom # needs to be fixed for arm
 
     # Web tools
     w3m
@@ -48,7 +47,6 @@ in
     ffmpeg
     imagemagick
     waifu2x-converter-cpp
-
 
     # Android
     gitRepo
@@ -107,7 +105,8 @@ in
 
     #######
 
-  ] ++  
+  ] ++ 
+  mfunc.useDefault my.config.x86_64 [ flashrom ] [] ++
   mfunc.useDefault my.config.services.docker [ docker_compose ] [] ++
   mfunc.useDefault my.config.audio [ ncpamixer ncspot playerctl ] [];
 

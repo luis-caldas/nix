@@ -6,6 +6,7 @@
     "device": "nodev",
     "override": false
   },
+  "x86_64": true,
   "kernel": {"params": []},
   "user": {
     "name": "majora",
