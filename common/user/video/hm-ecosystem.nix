@@ -65,7 +65,7 @@ let
       # Restore the wallpapers
       "nitrogen --restore" + "\n" +
       # Set the lock program to stay listening on lock events
-      "xss-lock neolock" + "&" + "\n" +
+      "xss-lock neolock" + " " + "&" + "\n" +
       # Call the preferred window manager
       my.config.graphical.wm + " " + "&" + "\n" +
       # Run custom script to run picom if the config for it is set
