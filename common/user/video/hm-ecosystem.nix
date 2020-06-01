@@ -58,6 +58,7 @@ let
       "export _JAVA_AWT_WM_NONREPARENTING=1" + "\n" +
       # Dont blank screen with DPMS
       "xset s off" + "\n" +
+      "xset dmps 0 0 0" + "\n" +
       # Change Caps to Ctrl
       "remap-caps-to-ctrl" + "\n" +
       # Extra commands from the config to be added
