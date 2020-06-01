@@ -1,6 +1,9 @@
-{ ... }:
+{ config, pkgs, ... }:
 let
   my = import ../../../config.nix;
+  upkgs = import
+    (builtins.fetchTarball "https://github.com/nixos/nixpkgs/tarball/master")
+    { config = config.nixpkgs.config; };
 in
 {
 
@@ -19,5 +22,11 @@ in
 
   # Program to lock the screen
   programs.slock.enable = true;
+
+  # Force the latest mesa drivers
+  hardware.opengl = {
+    enable = true;
+    package = upkgs.mesa.drivers;
+  };
 
 }
