@@ -56,6 +56,8 @@ let
       "export QT_AUTO_SCREEN_SCALE_FACTOR=" + (toString eachDisplay.scale) + "\n" +
       # Fix for java applications on tiling window managers
       "export _JAVA_AWT_WM_NONREPARENTING=1" + "\n" +
+      # Change Caps to Ctrl
+      "remap-caps-to-ctrl" + "\n" +
       # Extra commands from the config to be added
       (builtins.concatStringsSep "\n" eachDisplay.extraCommands) + "\n" +
       # Restore the wallpapers

@@ -23,7 +23,10 @@
     "enable": true,
     "drivers": ["panfrost"],
     "touchpad": true,
-    "compositor": false
+    "compositor": false,
+    "displays": [
+      { "scale": 1, "display": ":0", "extraCommands": ["swap-back-and-slash"] }
+    ]
   },
   "audio": true,
   "bluetooth": false
