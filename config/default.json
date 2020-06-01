@@ -13,7 +13,7 @@
     "desc": "bossu",
     "groups": ["sudo"],
     "pass": "functional",
-    "autologin": true
+    "autologin": false
   },
   "git": {
     "name": "Luis",

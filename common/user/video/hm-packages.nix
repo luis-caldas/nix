@@ -17,6 +17,9 @@ in
     conky
     rofi
 
+    # Desktop lock
+    xss-lock
+
     # Electronics
     kicad
     logisim

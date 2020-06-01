@@ -17,4 +17,7 @@ in
   # Set program to change backlight
   programs.light.enable = true;
 
+  # Program to lock the screen
+  programs.slock.enable = true;
+
 }

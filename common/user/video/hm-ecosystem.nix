@@ -56,12 +56,16 @@ let
       "export QT_AUTO_SCREEN_SCALE_FACTOR=" + (toString eachDisplay.scale) + "\n" +
       # Fix for java applications on tiling window managers
       "export _JAVA_AWT_WM_NONREPARENTING=1" + "\n" +
+      # Dont blank screen with DPMS
+      "xset s off" + "\n" +
       # Change Caps to Ctrl
       "remap-caps-to-ctrl" + "\n" +
       # Extra commands from the config to be added
       (builtins.concatStringsSep "\n" eachDisplay.extraCommands) + "\n" +
       # Restore the wallpapers
       "nitrogen --restore" + "\n" +
+      # Set the lock program to stay listening on lock events
+      "xss-lock neolock" + "&" + "\n" +
       # Call the preferred window manager
       my.config.graphical.wm + " " + "&" + "\n" +
       # Run custom script to run picom if the config for it is set

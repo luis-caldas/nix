@@ -26,4 +26,14 @@ in
   # My timezone
   time.timeZone = my.config.system.timezone;
 
+  # Set hardware switches
+  services.logind.lidSwitch = "lock";
+  services.logind.lidSwitchDocked = "lock";
+  services.logind.lidSwitchExternalPower = "lock";
+  services.logind.extraConfig = ''
+    HandlePowerKey=ignore
+    HandleSuspendKey=ignore
+    HandleHibernateKey=ignore
+  '';
+
 }
