@@ -47,6 +47,7 @@
     "icons": "Mint-Y-Dark-Grey",
     "theme": "AdwaitaDark",
     "touchpad": false,
+    "compositor": true,
     "displays": [
       { "scale": 1, "display": ":0", "extraCommands": [""] }
     ]

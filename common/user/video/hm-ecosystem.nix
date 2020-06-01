@@ -47,15 +47,24 @@ let
   linkDisplays = builtins.listToAttrs (map (eachDisplay: { 
     name = "my-displays" + "/display" + (builtins.replaceStrings [":"] ["-"] eachDisplay.display);
     value = { text = "" +
+      # We set the display variable here
       "export DISPLAY=" + eachDisplay.display + "\n" +
+      # Scaling variables
       "export GDK_SCALE=" + (toString eachDisplay.scale) + "\n" +
       "export GDK_DPI_SCALE=" + (toString (1.0 / eachDisplay.scale)) + "\n" +
       "export ELM_SCALE=" + (toString eachDisplay.scale) + "\n" +
       "export QT_AUTO_SCREEN_SCALE_FACTOR=" + (toString eachDisplay.scale) + "\n" +
-      "export _JAVA_AWT_WM_NONREPARENTING=1" + "\n" + # needed for java applications on tiling wm
-      (builtins.concatStringsSep "\n" eachDisplay.extraCommands) + "\n" + # add the users custom command
+      # Fix for java applications on tiling window managers
+      "export _JAVA_AWT_WM_NONREPARENTING=1" + "\n" +
+      # Extra commands from the config to be added
+      (builtins.concatStringsSep "\n" eachDisplay.extraCommands) + "\n" +
+      # Run custom script to run picom if the config for it is set
+      mfunc.useDefault my.config.graphical.compositor ("neopicom" + "\n") "" +
+      # Restore the wallpapers
       "nitrogen --restore" + "\n" +
+      # Call the preferred window manager
       my.config.graphical.wm + " " + "&" + "\n" +
+      # Wait for all programs to exit
       "wait" + "\n" ;};
   }) my.config.graphical.displays);
 
