@@ -22,7 +22,8 @@
   "graphical": {
     "enable": true,
     "drivers": ["panfrost"],
-    "touchpad": true
+    "touchpad": true,
+    "compositor": false
   },
   "audio": true,
   "bluetooth": false
