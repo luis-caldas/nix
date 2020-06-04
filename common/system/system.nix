@@ -24,7 +24,7 @@ in
   networking.firewall.allowPing = my.config.net.firewall.ping;
 
   # Enable adb debugging
-  programs.adb.enable = true;
+  programs.adb.enable = my.config.x86_64;
 
   # My timezone
   time.timeZone = my.config.system.timezone;

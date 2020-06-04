@@ -24,7 +24,8 @@ in
     group = my.config.user.name;
 
     # Give extra groups to the user
-    extraGroups = ["networkmanager" "adbusers"] ++
+    extraGroups = ["networkmanager"] ++
+                  mfunc.useDefault my.config.x86_64 ["adbusers"] [] ++
                   mfunc.useDefault my.config.audio ["audio"] [] ++
                   mfunc.useDefault my.config.graphical.enable ["video"] [] ++
                   mfunc.useDefault my.config.services.docker ["docker"] [] ++
