@@ -53,6 +53,9 @@ in
     # Video player
     mpv
 
+    # Casting
+    catt
+
     # Screeshot
     scrot
 
