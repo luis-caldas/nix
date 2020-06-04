@@ -21,6 +21,7 @@ in
     w3m
     wget
     nmap
+    nload
     bind
 
     # Keyboard

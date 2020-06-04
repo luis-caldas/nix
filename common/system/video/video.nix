@@ -2,7 +2,7 @@
 let
   my = import ../../../config.nix;
   upkgs = import
-    (builtins.fetchTarball "https://github.com/nixos/nixpkgs/tarball/master")
+    (builtins.fetchGit "https://github.com/nixos/nixpkgs")
     { config = config.nixpkgs.config; };
 in
 {
