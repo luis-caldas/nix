@@ -85,6 +85,7 @@ in
     # Shell
     bc
     shellcheck
+    inotify-tools
 
     # C
     gcc
