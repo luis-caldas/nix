@@ -46,7 +46,7 @@ in
     ethtool
 
     # Audio & Video manipulation
-    ffmpeg
+    ffmpeg-full
     imagemagick
     waifu2x-converter-cpp
 
