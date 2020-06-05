@@ -16,6 +16,7 @@ in
     # Bin manipulation
     hexedit
     binutils
+    python38Packages.binwalk-full
 
     # Web tools
     w3m
