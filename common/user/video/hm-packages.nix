@@ -51,6 +51,9 @@ in
     # Image viewer
     sxiv
 
+    # Email
+    thunderbird
+
     # Wallpaper
     nitrogen
 
