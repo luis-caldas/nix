@@ -8,15 +8,21 @@ let
   mfunc = import ./functions/func.nix;
 
   # Home manager
-  home-manager = builtins.fetchGit {
-    url = "https://github.com/rycee/home-manager.git";
-  };
+  home-manager = builtins.fetchGit "https://github.com/rycee/home-manager.git";
+
+  # NixOS user repository
+  nurGit = builtins.fetchGit "https://github.com/nix-community/NUR";
 
   # Generate the hardware folder location
   hardware-folder = ./config + ("/" + my.path);
 
 in
 {
+
+  # Import NUR
+  nixpkgs.config.packageOverrides = pkgs: {
+    nur = import nurGit { inherit pkgs; };
+  };
 
   # Linker for all submodules
 
