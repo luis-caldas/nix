@@ -45,7 +45,7 @@
     "wm": "xmonad",
     "cursor": "hacked-white",
     "icons": "Mint-Y-Dark-Grey",
-    "theme": "AdwaitaDark",
+    "theme": "Adwaita-dark",
     "touchpad": false,
     "compositor": true,
     "displays": [

@@ -21,12 +21,10 @@ let
   linkCursors = (mfunc.listCreateLinks mfunc lib (packages.cursors + "/my-x11-cursors") ".local/share/icons");
   linkIcons   = (mfunc.listCreateLinks mfunc lib (packages.icons + "/my-icons-collection") ".local/share/icons");
 
-  # Create the file containg the selected theme and icons
-  themeString = "" +
-    "gtk-icon-theme-name = " + my.config.graphical.icons + "\n" +
-    "gtk-theme-name = " + my.config.graphical.theme;
-  fileTheme = { 
-    "gtk-3.0/settings.ini".text = "" + "[Settings]" + "\n" + themeString;
+  # List of default programs
+  defaultPrograms = {
+    "directory" = "pcmanfm";
+    "image"     = "sxiv"; 
   };
 
   # Create the .xinitrc link file
@@ -118,10 +116,29 @@ in
     # Link the xmobar configs
     "xmobar" = { source = packages.desktop + "/bar/xmobar"; };
   } // 
-  # Link the file with the gtk theme configurations
-  fileTheme //
   # Link the created monitor configs
   linkDisplays;
+
+  # Set icons and themes
+  gtk.enable = true;
+  gtk.iconTheme.name = my.config.graphical.icons;
+  gtk.theme.name     = my.config.graphical.theme;
+  
+  # Default XDG applications
+  xdg.mimeApps.enable = true;
+  xdg.mimeApps.defaultApplications = {
+    # Directories
+    "inode/directory" = [ (defaultPrograms.directory + ".desktop") ];
+    # Images
+    "image/bmp"                = [ (defaultPrograms.image + ".desktop") ];
+    "image/gif"                = [ (defaultPrograms.image + ".desktop") ];
+    "image/vnd.microsoft.icon" = [ (defaultPrograms.image + ".desktop") ];
+    "image/jpeg"               = [ (defaultPrograms.image + ".desktop") ];
+    "image/png"                = [ (defaultPrograms.image + ".desktop") ];
+    "image/svg+xml"            = [ (defaultPrograms.image + ".desktop") ];
+    "image/tiff"               = [ (defaultPrograms.image + ".desktop") ];
+    "image/webp"               = [ (defaultPrograms.image + ".desktop") ];
+  };
 
   # Add all the acquired link sets to the config
   home.file = linkSets;

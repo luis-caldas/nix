@@ -17,6 +17,13 @@ in
     conky
     rofi
 
+    # XDG
+    dconf
+    gnome-themes-extra
+
+    # File manager
+    gnome3.nautilus
+
     # Desktop lock
     xss-lock
 
@@ -34,12 +41,15 @@ in
     firefox
     electron
 
-    # Visual calculator
-    qalculate-gtk
+    # Calculator
+    gnome3.gnome-calculator
 
     # Image editing
     gimp
     inkscape
+
+    # Image viewer
+    sxiv
 
     # Wallpaper
     nitrogen
