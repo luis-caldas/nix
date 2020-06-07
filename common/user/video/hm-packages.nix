@@ -1,7 +1,10 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 let
   my = import ../../../config.nix;
   mfunc = import ../../../functions/func.nix;
+  upkgs = import
+    (builtins.fetchGit "https://github.com/nixos/nixpkgs")
+    { config = config.nixpkgs.config; };
 in
 {
 
@@ -13,7 +16,6 @@ in
     
     # Desktop
     openbox
-    picom
     conky
     rofi
 
@@ -71,6 +73,10 @@ in
     # Screeshot
     scrot
 
+  ] ++
+  # Unsable packages
+  [
+    upkgs.picom
   ] ++
   mfunc.useDefault my.config.x86_64 [ obs-studio blender ] [] ++
   mfunc.useDefault my.config.audio [] [];
