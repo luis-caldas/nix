@@ -4,6 +4,9 @@ let
   my = import ../../../config.nix;
   mfunc = import ../../../functions/func.nix;
 
+  # Import NUR
+  nur = import (builtins.fetchGit "https://github.com/nix-community/NUR") { inherit pkgs; };
+
   packages = {
     # My own packages
     desktop = builtins.fetchGit "https://github.com/luis-caldas/mydesktop";
@@ -138,6 +141,22 @@ in
     "image/svg+xml"            = [ (defaultPrograms.image + ".desktop") ];
     "image/tiff"               = [ (defaultPrograms.image + ".desktop") ];
     "image/webp"               = [ (defaultPrograms.image + ".desktop") ];
+  };
+
+  # Enable firefox and set its configs
+  programs.firefox = {
+    enable = true;
+    extensions = lib.attrVals my.config.graphical.firefox.extensions nur.repos.rycee.firefox-addons;
+    profiles.main = {
+      settings = {
+        "browser.download.dir" = "/home/" + my.config.user.name + "/downloads";
+        "browser.download.lastDir" = "/home/" + my.config.user.name + " /downloads";
+      } //
+      my.firefox //
+      my.config.graphical.firefox.settings;
+      userChrome  = builtins.readFile (packages.desktop + "/browser/firefox" + "/userChrome.css");
+      userContent = builtins.readFile (packages.desktop + "/browser/firefox" + "/userContent.css");
+    };
   };
 
   # Add all the acquired link sets to the config

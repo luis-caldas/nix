@@ -38,7 +38,6 @@ in
     haskellPackages.xmobar
 
     # Web
-    firefox
     electron
 
     # Calculator
