@@ -57,6 +57,9 @@ in
     # Emulation
     qemu
 
+    # HDD
+    hdparm
+
     # Encryption
     gnupg
     cryptsetup
@@ -100,6 +103,7 @@ in
 
     # Scripting general
     python
+    ruby
     nodejs
     yarn
 
@@ -111,6 +115,6 @@ in
   ] ++ 
   mfunc.useDefault my.config.x86_64 [ flashrom ] [] ++
   mfunc.useDefault my.config.services.docker [ docker_compose ] [] ++
-  mfunc.useDefault my.config.audio [ ncpamixer ncspot playerctl ] [];
+  mfunc.useDefault my.config.audio [ alsaUtils ncpamixer ncspot playerctl ] [];
 
 }

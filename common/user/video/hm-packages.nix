@@ -79,6 +79,6 @@ in
     upkgs.picom
   ] ++
   mfunc.useDefault my.config.x86_64 [ obs-studio blender ] [] ++
-  mfunc.useDefault my.config.audio [] [];
+  mfunc.useDefault my.config.audio [ pavucontrol ] [];
 
 }
