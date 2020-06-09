@@ -9,7 +9,7 @@
     "params": ["vga=normal", "nomodeset"]
   },
   "user": {
-    "groups": [],
+    "groups": []
   },
   "system": {
     "hostname": "box"

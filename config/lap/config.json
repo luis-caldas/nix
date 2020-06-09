@@ -7,6 +7,7 @@
   "kernel": { 
     "params": ["console=tty0"]
   },
+  "zram": true,
   "user" : {
     "groups": ["sudo"]
   },

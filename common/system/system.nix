@@ -29,6 +29,10 @@ in
   # My timezone
   time.timeZone = my.config.system.timezone;
 
+  # Enable ZRam if set
+  zramSwap.enable = my.config.zram;
+  zramSwap.memoryPercent = 50;
+
   # Set hardware switches
   services.logind.lidSwitch = "lock";
   services.logind.lidSwitchDocked = "lock";
