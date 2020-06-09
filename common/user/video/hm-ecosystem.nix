@@ -28,7 +28,7 @@ let
 
   # List of default programs
   defaultPrograms = {
-    "directory" = "pcmanfm";
+    "directory" = "nautilus";
     "image"     = "sxiv"; 
   };
 

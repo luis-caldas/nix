@@ -1,7 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
   my = import ../../config.nix;
   mfunc = import ../../functions/func.nix;
+  upkgs = import
+    (builtins.fetchGit "https://github.com/nixos/nixpkgs")
+    { config = config.nixpkgs.config; };
 in
 {
 
@@ -113,8 +116,12 @@ in
     #######
 
   ] ++ 
+  # Unsable packages
+  [
+    upkgs.ncspot
+  ] ++
   mfunc.useDefault my.config.x86_64 [ flashrom ] [] ++
   mfunc.useDefault my.config.services.docker [ docker_compose ] [] ++
-  mfunc.useDefault my.config.audio [ alsaUtils cli-visualizer ncpamixer ncspot playerctl ] [];
+  mfunc.useDefault my.config.audio [ alsaUtils cli-visualizer ncpamixer playerctl ] [];
 
 }
