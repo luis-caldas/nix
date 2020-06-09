@@ -1,6 +1,9 @@
 { pkgs, ... }:
 {
 
+  # Store audio cards states
+  sound.enable = true;
+
   # Enable pulseaudio and all the supported codecs
   hardware.pulseaudio = {
     enable = true;

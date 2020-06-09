@@ -85,6 +85,9 @@ in
     # LLVM
     llvm
 
+    # System
+    evtest
+
     #######
     # Dev #
     #######
