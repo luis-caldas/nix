@@ -30,8 +30,7 @@
       fsType = "vfat";
     };
 
-  # swapDevices = [{device = "/dev/zvol/coro/swap";}];
-  # dont know if ill need this yet
+  swapDevices = [{ device = "/dev/zvol/lappy/swap"; }];
 
   nix.maxJobs = lib.mkDefault 6;
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
