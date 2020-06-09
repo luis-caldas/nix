@@ -65,6 +65,7 @@ in
 
     # Encryption
     gnupg
+    openssl
     cryptsetup
 
     # Passwork hash generator
