@@ -15,6 +15,7 @@ let
     fonts   = builtins.fetchGit "https://github.com/luis-caldas/myfonts";
     cursors = builtins.fetchGit "https://github.com/luis-caldas/mycursors";
     icons   = builtins.fetchGit "https://github.com/luis-caldas/myicons";
+    papes   = builtins.fetchGit "https://github.com/luis-caldas/mywallpapers";
   };
 
   # Link all the themes
@@ -23,6 +24,7 @@ let
   linkFonts   = (mfunc.listCreateLinks mfunc lib (packages.fonts + "/my-custom-fonts") ".local/share/fonts");
   linkCursors = (mfunc.listCreateLinks mfunc lib (packages.cursors + "/my-x11-cursors") ".local/share/icons");
   linkIcons   = (mfunc.listCreateLinks mfunc lib (packages.icons + "/my-icons-collection") ".local/share/icons");
+  linkPapes   = { ".local/share/backgrounds/papes" = { source = (packages.papes + "/papes"); }; };
 
   # List of default programs
   defaultPrograms = {
@@ -65,7 +67,7 @@ let
       # Extra commands from the config to be added
       (builtins.concatStringsSep "\n" eachDisplay.extraCommands) + "\n" +
       # Restore the wallpapers
-      "nitrogen --restore" + "\n" +
+      "neotrogen restore" + "\n" +
       # Set the lock program to stay listening on lock events
       "xss-lock neolock" + " " + "&" + "\n" +
       # Call the preferred window manager
@@ -80,7 +82,7 @@ let
   neoxAlias = { neox = packages.desktop + "/programs/init/neox"; };
 
   # Put all the sets together
-  linkSets = linkThemes // linkFonts // linkCursors // linkIcons // # linkXMonad // 
+  linkSets = linkThemes // linkFonts // linkCursors // linkIcons // linkPapes //
              textXInit // textIconsCursor;
 
 in
