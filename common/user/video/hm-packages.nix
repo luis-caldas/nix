@@ -73,6 +73,9 @@ in
     # Screeshot
     scrot
 
+    # Streaming
+    streamlink
+
   ] ++
   # Unsable packages
   [
