@@ -110,9 +110,16 @@ in
     # JSON
     jq
 
-    # Scripting general
-    python
+    # Python
+    python27Full
+    python27Packages.pip
+    python38Full
+    python38Packages.pip
+
+    # Ruby
     ruby
+
+    # Javascript
     nodejs
     yarn
 
