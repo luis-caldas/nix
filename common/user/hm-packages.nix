@@ -45,6 +45,7 @@ in
     file
     p7zip
     samba
+    archivemount
 
     # Net tools
     ethtool
