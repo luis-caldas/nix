@@ -17,6 +17,7 @@ in
     screen
 
     # Bin manipulation
+    radare2
     hexedit
     binutils
     python38Packages.binwalk-full
