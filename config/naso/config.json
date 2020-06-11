@@ -1,0 +1,23 @@
+{
+  "boot": {
+    "timeout": 5,
+    "efi": false,
+    "device": "/dev/sda"
+  },
+  "kernel": {
+    "params": ["vga=normal", "nomodeset"]
+  },
+  "user": {
+    "groups": []
+  },
+  "system": {
+    "hostname": "naso"
+  },
+  "net": {
+    "id": "19719432"
+  },
+  "services": {
+    "ssh": true,
+    "docker": true
+  }
+}
