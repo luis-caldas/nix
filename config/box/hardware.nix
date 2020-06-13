@@ -23,7 +23,12 @@
       fsType = "zfs";
     };
 
-  # swapDevices = [{device = "/dev/zvol/boxy/swap";}];
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/B0C3-ED9F";
+      fsType = "vfat";
+    };
+
+  # swapDevices = [ ];
 
   nix.maxJobs = lib.mkDefault 4;
 }
