@@ -20,8 +20,5 @@
   "services": {
     "ssh": true,
     "docker": true
-  },
-  "graphical": {
-    "enable": false
   }
 }
