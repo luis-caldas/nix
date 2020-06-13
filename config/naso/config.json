@@ -1,6 +1,6 @@
 {
   "boot": {
-    "timeout": 5,
+    "timeout": 1,
     "efi": false,
     "device": "/dev/sda"
   },
