@@ -1,24 +1,24 @@
 {
-  "boot": { 
-    "override": true, 
-    "timeout": 1 
+  "boot": {
+    "override": true,
+    "timeout": 1
   },
   "x86_64": false,
-  "kernel": { 
+  "kernel": {
     "params": ["console=tty0"]
   },
   "zram": true,
   "user" : {
     "groups": ["sudo"]
   },
-  "system": { 
-      "hostname": "lap" 
+  "system": {
+      "hostname": "lap"
   },
-  "net": { 
-    "id": "29387412" 
+  "net": {
+    "id": "29387412"
   },
-  "services": { 
-    "ssh": true 
+  "services": {
+    "ssh": true
   },
   "graphical": {
     "enable": true,

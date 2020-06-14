@@ -1,7 +1,5 @@
-{ ... }:
+{ my, ... }:
 let
-
-  my = import ../../config.nix;
 
   # Get my wanted packages
   packages = {
@@ -24,10 +22,10 @@ let
 
   # Create the programs set for users
   programsSet = {
-    bash = { 
+    bash = {
       enable = true;
       bashrcExtra = configFiles.bash;
-    }; 
+    };
     vim = {
       enable = true;
       extraConfig = configFiles.vim;
@@ -44,7 +42,7 @@ in
 
   # Configure packages for main user
   home-manager.users."${my.config.user.name}" = { ... }: {
-    
+
     programs = programsSet //
     # Configure Git
     { git = {

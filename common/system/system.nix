@@ -1,7 +1,4 @@
-{ ... }:
-let
-  my = import ../../config.nix;
-in
+{ my, ... }:
 {
 
   # Needed for ZFS to work

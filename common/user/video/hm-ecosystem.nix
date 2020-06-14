@@ -1,14 +1,8 @@
-{ lib, pkgs, ... }:
+{ my, mfunc, nur, lib, pkgs, ... }:
 let
 
-  my = import ../../../config.nix;
-  mfunc = import ../../../functions/func.nix;
-
-  # Import NUR
-  nur = import (builtins.fetchGit "https://github.com/nix-community/NUR") { inherit pkgs; };
-
+  # My own packages
   packages = {
-    # My own packages
     desktop = builtins.fetchGit "https://github.com/luis-caldas/mydesktop";
     conky   = builtins.fetchGit "https://github.com/luis-caldas/myconky";
     themes  = builtins.fetchGit "https://github.com/luis-caldas/mythemes";
@@ -19,23 +13,23 @@ let
   };
 
   # Link all the themes
-  linkThemes  = (mfunc.listCreateLinks mfunc lib (packages.themes + "/collection") ".local/share/themes") //
-                (mfunc.listCreateLinks mfunc lib (packages.themes + "/openbox") ".local/share/themes");
-  linkFonts   = (mfunc.listCreateLinks mfunc lib (packages.fonts + "/my-custom-fonts") ".local/share/fonts");
-  linkCursors = (mfunc.listCreateLinks mfunc lib (packages.cursors + "/my-x11-cursors") ".local/share/icons");
-  linkIcons   = (mfunc.listCreateLinks mfunc lib (packages.icons + "/my-icons-collection") ".local/share/icons");
+  linkThemes  = (mfunc.listCreateLinks (packages.themes + "/collection") ".local/share/themes") //
+                (mfunc.listCreateLinks (packages.themes + "/openbox") ".local/share/themes");
+  linkFonts   = (mfunc.listCreateLinks (packages.fonts + "/my-custom-fonts") ".local/share/fonts");
+  linkCursors = (mfunc.listCreateLinks (packages.cursors + "/my-x11-cursors") ".local/share/icons");
+  linkIcons   = (mfunc.listCreateLinks (packages.icons + "/my-icons-collection") ".local/share/icons");
   linkPapes   = { ".local/share/backgrounds/papes" = { source = (packages.papes + "/papes"); }; };
 
   # List of default programs
   defaultPrograms = {
     "directory" = "nautilus";
-    "image"     = "sxiv"; 
+    "image"     = "sxiv";
   };
 
   # Create the .xinitrc link file
-  textXInit = { ".xinitrc" = { 
-    text = "" + 
-      ''xrdb -load "''${HOME}""/.Xresources"'' + "\n" +  
+  textXInit = { ".xinitrc" = {
+    text = "" +
+      ''xrdb -load "''${HOME}""/.Xresources"'' + "\n" +
       "exec bash" + " " + packages.desktop + "/entrypoint.bash" + "\n";
   }; };
 
@@ -47,7 +41,7 @@ let
     Inherits = '' + my.config.graphical.cursor + "," + my.config.graphical.icons; };
 
   # Create a script for each monitor
-  linkDisplays = builtins.listToAttrs (map (eachDisplay: { 
+  linkDisplays = builtins.listToAttrs (map (eachDisplay: {
     name = "my-displays" + "/display" + (builtins.replaceStrings [":"] ["-"] eachDisplay.display);
     value = { text = "" +
       # We set the display variable here
@@ -96,7 +90,7 @@ in
   {
     st = pkgs.st.override {
       conf = builtins.readFile (packages.desktop + "/term/st/config.h");
-      patches = mfunc.listFullFilesInFolder mfunc lib (packages.desktop + "/term/st/patches");
+      patches = mfunc.listFullFilesInFolder (packages.desktop + "/term/st/patches");
       extraLibs = [ pkgs.xorg.libXcursor pkgs.harfbuzz ];
     };
   };
@@ -107,7 +101,7 @@ in
   ];
 
   # Add custom XResources file
-  xresources.extraConfig = builtins.readFile (packages.desktop + "/xresources/XResources"); 
+  xresources.extraConfig = builtins.readFile (packages.desktop + "/xresources/XResources");
 
   # Add xmonad config file
   xsession.windowManager.xmonad.config = (packages.desktop + "/wm/xmonad/xmonad.hs");
@@ -120,7 +114,7 @@ in
     "conky" = { source = packages.conky; };
     # Link the xmobar configs
     "xmobar" = { source = packages.desktop + "/bar/xmobar"; };
-  } // 
+  } //
   # Link the created monitor configs
   linkDisplays;
 
@@ -128,7 +122,7 @@ in
   gtk.enable = true;
   gtk.iconTheme.name = my.config.graphical.icons;
   gtk.theme.name     = my.config.graphical.theme;
-  
+
   # Default XDG applications
   xdg.mimeApps.enable = true;
   xdg.mimeApps.defaultApplications = {

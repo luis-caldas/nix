@@ -1,8 +1,5 @@
-{ ... }:
+{ my, mfunc, ... }:
 let
-
-  my = import ../../config.nix;
-  mfunc = import ../../functions/func.nix;
 
   # Set GRUB
   tempGrub = {
@@ -38,7 +35,7 @@ in
   console.font = "";
 
   # Main boot configuration
-  boot = { 
+  boot = {
 
     # Disable pesky kernel messages at boot
     consoleLogLevel = 0;

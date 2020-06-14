@@ -1,11 +1,4 @@
-{ config, pkgs, ... }:
-let
-  my = import ../../../config.nix;
-  mfunc = import ../../../functions/func.nix;
-  upkgs = import
-    (builtins.fetchGit "https://github.com/nixos/nixpkgs")
-    { config = config.nixpkgs.config; };
-in
+{ my, mfunc, upkgs, config, pkgs, ... }:
 {
 
   nixpkgs.config.allowUnsupportedSystem = true;
@@ -13,7 +6,7 @@ in
   home.packages = with pkgs; [
 
     # Basic graphics tools that I use
-    
+
     # Desktop
     openbox
     conky

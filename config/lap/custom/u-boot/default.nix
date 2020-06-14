@@ -7,7 +7,6 @@
 , fetchFromGitHub
 , externalFirst ? false
 }:
-
 let
   pw = id: sha256: fetchpatch {
     inherit sha256;

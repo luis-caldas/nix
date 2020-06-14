@@ -1,6 +1,5 @@
-{ ... }:
+{ my, ... }:
 let
-  my = import ../../config.nix;
 in
 {
 
@@ -9,5 +8,5 @@ in
 
   # Docker for my servers
   virtualisation.docker.enable = my.config.services.docker;
-  
+
 }

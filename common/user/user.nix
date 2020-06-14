@@ -1,8 +1,4 @@
-{ lib, ... }:
-let
-  my = import ../../config.nix;
-  mfunc = import ../../functions/func.nix;
-in
+{ my, mfunc, lib, ... }:
 {
 
   # Make users mutable
@@ -36,7 +32,7 @@ in
 
     # Set the user to the first default uid
     initialPassword = my.config.user.pass;
-  
+
   };
 
   # Add custom mingetty message

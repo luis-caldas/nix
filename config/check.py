@@ -76,7 +76,7 @@ def load_json(file_in_path):
 
 
 def main():
-   
+
     # some path fixing
     base_folder = os.path.dirname(os.path.realpath(__file__))
 
@@ -98,7 +98,7 @@ def main():
             if loaded_config is None:
                 return None
             list_configs.append({
-                "path": file_path_json, 
+                "path": file_path_json,
                 "data": loaded_config
             })
 
@@ -119,7 +119,7 @@ def main():
         # Show each entry missing
         for each_entry in each_miss["miss"]:
             quoted_list = [
-                "\"%s\"" % miss_item 
+                "\"%s\"" % miss_item
                 if "." in miss_item else miss_item
                 for miss_item in each_entry
             ]

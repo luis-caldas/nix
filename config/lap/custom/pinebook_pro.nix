@@ -1,6 +1,4 @@
-# This configuration file can be safely imported in your system configuration.
 { config, pkgs, lib, ... }:
-
 {
   nixpkgs.overlays = [
     (import ./overlay.nix)
@@ -46,7 +44,7 @@
     evdev:input:b0003v258Ap001E*
       KEYBOARD_KEY_700a5=brightnessdown
       KEYBOARD_KEY_700a6=brightnessup
-      KEYBOARD_KEY_70066=sleep 
+      KEYBOARD_KEY_70066=sleep
   '';
 
   hardware.enableRedistributableFirmware = true;

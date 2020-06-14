@@ -1,5 +1,4 @@
 final: super:
-
 let
   inherit (final) callPackage kernelPatches linuxPackagesFor;
 in

@@ -1,5 +1,4 @@
 { stdenv, fetchFromGitHub, xxd, libusb }:
-
 stdenv.mkDerivation {
   pname = "pinebook-pro-keyboard-updater";
   version = "2020-01-22";

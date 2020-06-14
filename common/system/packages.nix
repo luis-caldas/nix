@@ -1,8 +1,4 @@
 { pkgs, ... }:
-let
-  my = import ../../config.nix;
-  mfunc = import ../../functions/func.nix;
-in
 {
 
   # Simple packages to get any user going

@@ -5,7 +5,6 @@
 , buildLinux
 , modDirVersionArg ? null
 , ... } @ args:
-
 let
   inherit (stdenv.lib)
     concatStrings

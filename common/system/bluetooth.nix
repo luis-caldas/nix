@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
 
   # Allow bluetooth

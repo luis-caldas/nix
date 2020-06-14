@@ -1,25 +1,36 @@
-{ lib, ... }:
+args@{ lib, config, pkgs, ... }:
 let
 
   # My main config
-  my = import ./config.nix;
+  my = import ./config.nix { lib = lib; } ;
 
   # My functions
-  mfunc = import ./functions/func.nix;
+  mfunc = import ./functions/func.nix { lib = lib; };
 
   # Home manager
   home-manager = builtins.fetchGit "https://github.com/rycee/home-manager.git";
 
+  # Unstable packages
+  upkgs = import
+    (builtins.fetchGit "https://github.com/nixos/nixpkgs")
+    { config = config.nixpkgs.config; };
+
+  # User repos
+  nur = import (builtins.fetchGit "https://github.com/nix-community/NUR") { inherit pkgs; };
+
   # Generate the hardware folder location
   hardware-folder = ./config + ("/" + my.path);
 
-in
-{
-
-  # Linker for all submodules
+  # Function for importing with all arguments
+  impall = path: (import path (args // {
+    my = my;
+    mfunc = mfunc;
+    upkgs = upkgs;
+    nur = nur;
+  }));
 
   # System specific hardware configuration
-  imports = [ (hardware-folder + "/hardware.nix") ]
+  un-imports-list = [ (hardware-folder + "/hardware.nix") ]
   ++
   # All the system modules
   [
@@ -28,10 +39,6 @@ in
     ./common/system/security.nix
     ./common/system/services.nix
     ./common/system/system.nix
-  ] ++ 
-  # Home user inclusion
-  [
-    (import "${home-manager}/nixos")
   ] ++
   # User config that does not use home manager
   [
@@ -49,38 +56,48 @@ in
   # Check if there is touchpad and graphical support
   ] ++ mfunc.useDefault my.config.graphical.touchpad [
     ./common/system/video/touchpad.nix
-  ] []) [] ++ 
+  ] []) [] ++
   # Check if audio is supported
   mfunc.useDefault my.config.audio [ ./common/system/audio.nix ] [] ++
-  # Check if bluetooth is supported 
+  # Check if bluetooth is supported
   mfunc.useDefault my.config.bluetooth (
-    [ ./common/system/bluetooth.nix ] ++ 
+    [ ./common/system/bluetooth.nix ] ++
     # Bluetooth and video are enabled
-    mfunc.useDefault my.config.graphical.enable 
+    mfunc.useDefault my.config.graphical.enable
       [ ./common/system/video/bluetooth.nix ] []
   ) [];
 
-  # Import the files needed for the home-manager package 
-  home-manager.users."${my.config.user.name}" = { ... }:
-  {
+  # Home manager importing list
+  un-home-manager-imports-list = [
+    # Non graphical packages I use
+    ./common/user/hm-packages.nix
+  ] ++
+  # Visual imports for home-manager
+  mfunc.useDefault my.config.graphical.enable [
+    # The visual ecosystem use
+    ./common/user/video/hm-ecosystem.nix
+    # Extra custom gui packages
+    ./common/user/video/hm-packages.nix
+    # Window manager configs
+    ./common/user/video/hm-window-managers.nix
+  ] [] ++
+  mfunc.useDefault my.config.bluetooth [
+    ./common/user/video/hm-bluetooth.nix
+  ] [];
 
-    imports = [
-      # Non graphical packages I use
-      ./common/user/hm-packages.nix
-    ] ++
-    # Visual imports for home-manager
-    mfunc.useDefault my.config.graphical.enable [
-      # The visual ecosystem use
-      ./common/user/video/hm-ecosystem.nix
-      # Extra custom gui packages
-      ./common/user/video/hm-packages.nix
-      # Window manager configs
-      ./common/user/video/hm-window-managers.nix
-    ] [] ++ 
-    mfunc.useDefault my.config.bluetooth [ 
-      ./common/user/video/hm-bluetooth.nix 
-    ] [];
+  # Add all the custom imports
+  imports-list = (map (x: impall x) un-imports-list) ++
+  [(import "${home-manager}/nixos")];
+  home-manager-imports-list = map (x: impall x) un-home-manager-imports-list;
 
+in {
+
+  # Add the system import list
+  imports = imports-list;
+
+  # Import the files needed for the home-manager package
+  home-manager.users."${my.config.user.name}" = { ... }: {
+    imports = home-manager-imports-list;
   };
 
 }

@@ -1,18 +1,18 @@
 { lib, ... }:
 {
-  imports = [ 
+  imports = [
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
   ] ++ [
-    ./custom/pinebook_pro.nix 
+    ./custom/pinebook_pro.nix
   ];
- 
+
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
 
   boot.initrd.availableKernelModules = [ "nvme" "usbhid" ];
 
   nixpkgs.config.allowUnfree = true;
- 
+
   boot.initrd.luks.devices."chest".device = "/dev/disk/by-uuid/433b78d2-9fe4-4e9a-b881-9901a23ec27d";
 
   fileSystems."/" =

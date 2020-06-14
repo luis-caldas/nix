@@ -1,10 +1,4 @@
-{ config, pkgs, ... }:
-let
-  my = import ../../../config.nix;
-  upkgs = import
-    (builtins.fetchGit "https://github.com/nixos/nixpkgs")
-    { config = config.nixpkgs.config; };
-in
+{ my, config, upkgs, ... }:
 {
 
   # Allow xorg and the whole lot

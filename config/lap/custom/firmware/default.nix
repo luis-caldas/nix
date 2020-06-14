@@ -2,7 +2,6 @@
 , fetchFromGitLab
 , runCommandNoCC
 }:
-
 let
   pinebook-firmware = fetchFromGitLab {
     domain = "gitlab.manjaro.org";

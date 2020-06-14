@@ -1,4 +1,5 @@
-{
+{ lib, ... }:
+let
 
   # useDefault -> Bool -> Any -> Any
   useDefault = should: default: nondefault:
@@ -8,16 +9,16 @@
       nondefault;
 
   # Returns a list of the items inside a folder
-  listFilesInFolder = libr: directorySource: libr.mapAttrsToList (name: value: name) (builtins.readDir directorySource);
+  listFilesInFolder = directorySource: lib.mapAttrsToList (name: value: name) (builtins.readDir directorySource);
 
   # Returns a list of the items inside a folder with the full path
-  listFullFilesInFolder = mfuns: libr: directorySource: map (strin: directorySource + ("/" + strin)) (mfuns.listFilesInFolder libr directorySource);
+  listFullFilesInFolder = directorySource: map (strin: directorySource + ("/" + strin)) (listFilesInFolder directorySource);
 
   # Lists the contents of a folder and creates
   # their respective attributes
-  listCreateLinks = mfuns: libr: directorySource: directoryDest:
-    let 
-      listFiles = mfuns.listFilesInFolder libr directorySource;
+  listCreateLinks = directorySource: directoryDest:
+    let
+      listFiles = listFilesInFolder directorySource;
     in
     builtins.listToAttrs (
       map ( topName: {
@@ -26,4 +27,9 @@
       }) listFiles
     );
 
+in {
+  useDefault = useDefault;
+  listFilesInFolder = listFilesInFolder;
+  listFullFilesInFolder = listFullFilesInFolder;
+  listCreateLinks = listCreateLinks;
 }

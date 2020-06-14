@@ -21,7 +21,7 @@
     "enable": true,
     "drivers": ["amdgpu"],
     "displays": [
-      { 
+      {
         "scale": 2, "display": ":0",
         "extraCommands": [
           "xrandr --dpi 192x192",
