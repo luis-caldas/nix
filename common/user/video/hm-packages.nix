@@ -23,6 +23,9 @@ in
     dconf
     gnome-themes-extra
 
+    # Monitors
+    arandr
+
     # File manager
     gnome3.nautilus
 
