@@ -64,6 +64,7 @@
       { "scale": 1, "display": ":0", "extraCommands": [""] }
     ]
   },
+  "games": false,
   "audio": false,
   "bluetooth": false
 }
