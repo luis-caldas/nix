@@ -1,4 +1,4 @@
-args@{ lib, config, pkgs, ... }:
+args@{ lib, config, pkgs, utils, ... }:
 let
 
   # My main config
@@ -39,6 +39,10 @@ let
     ./common/system/security.nix
     ./common/system/services.nix
     ./common/system/system.nix
+  ] ++
+  # Home manager
+  [
+    "${home-manager}/nixos"
   ] ++
   # User config that does not use home manager
   [
@@ -86,8 +90,7 @@ let
   ] [];
 
   # Add all the custom imports
-  imports-list = (map (x: impall x) un-imports-list) ++
-  [(import "${home-manager}/nixos")];
+  imports-list = (map (x: impall x) un-imports-list);
   home-manager-imports-list = map (x: impall x) un-home-manager-imports-list;
 
 in {
@@ -96,7 +99,7 @@ in {
   imports = imports-list;
 
   # Import the files needed for the home-manager package
-  home-manager.users."${my.config.user.name}" = { ... }: {
+  home-manager.users."${my.config.user.name}" = {
     imports = home-manager-imports-list;
   };
 
