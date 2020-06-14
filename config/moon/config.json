@@ -34,5 +34,6 @@
       }
     }
   },
-  "audio": true
+  "audio": true,
+  "bluetooth": true
 }

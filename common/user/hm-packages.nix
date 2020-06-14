@@ -55,8 +55,9 @@
     # Emulation
     qemu
 
-    # HDD
+    # Drives
     hdparm
+    nvme-cli
 
     # Encryption
     gnupg
@@ -67,7 +68,7 @@
     mkpasswd
 
     # User tools
-    mutt
+    neomutt
     irssi
 
     # Image viewer
