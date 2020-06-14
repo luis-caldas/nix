@@ -13,6 +13,7 @@
     radare2
     hexedit
     binutils
+    steghide
     python38Packages.binwalk-full
 
     # Web tools
