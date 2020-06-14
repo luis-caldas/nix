@@ -22,7 +22,7 @@ let
   hardware-folder = ./config + ("/" + my.path);
 
   # Function for importing with all arguments
-  impall = path: (import path (args // {
+  impall = path: argolis: (import path (argolis // {
     my = my;
     mfunc = mfunc;
     upkgs = upkgs;
@@ -89,18 +89,14 @@ let
     ./common/user/video/hm-bluetooth.nix
   ] [];
 
-  # Add all the custom imports
-  imports-list = (map (x: impall x) un-imports-list);
-  home-manager-imports-list = map (x: impall x) un-home-manager-imports-list;
-
 in {
 
   # Add the system import list
-  imports = imports-list;
+  imports = map (x: impall x args) un-imports-list;
 
   # Import the files needed for the home-manager package
-  home-manager.users."${my.config.user.name}" = {
-    imports = home-manager-imports-list;
+  home-manager.users."${my.config.user.name}" = args@{ lib, config, pkgs, ... }: {
+    imports = map (x: impall x args) un-home-manager-imports-list;
   };
 
 }
