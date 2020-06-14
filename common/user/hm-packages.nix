@@ -10,6 +10,8 @@
     screen
 
     # Bin manipulation
+    john
+    hashcat
     radare2
     hexedit
     binutils
