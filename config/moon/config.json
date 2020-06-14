@@ -33,7 +33,9 @@
     ],
     "firefox": {
       "settings": {
-        "layout.frame_rate": 144
+        "extra": [{
+          "layout.frame_rate": 144
+        }]
       }
     }
   },

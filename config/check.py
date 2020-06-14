@@ -12,7 +12,6 @@ from os import listdir
 DEFAULT_FILE = "default.json"
 CONFIG_FILE = "config.json"
 
-
 def neoprint(string_in, type=2):
     visual = "[ %s ]" % ["✗", "!", "✓"][type]
     print "[ Check ] %s %s" % (visual, string_in)
