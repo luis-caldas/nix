@@ -11,10 +11,14 @@ from os import listdir
 
 DEFAULT_FILE = "default.json"
 CONFIG_FILE = "config.json"
+SPACINGS = {
+    "info": 4,
+    "item": 8
+}
 
 def neoprint(string_in, type=2):
-    visual = "[ %s ]" % ["✗", "!", "✓"][type]
-    print "[ Check ] %s %s" % (visual, string_in)
+    visual = "%s " % ["✗", "!", "✓"][type]
+    print "%s %s %s" % (SPACINGS["info"] * " ", visual, string_in)
 
 def list_em_items(data_in):
     if isinstance(data_in, (set, list, tuple)):
@@ -33,7 +37,22 @@ def get_its_item(structure, object_in):
             neopointer = neopointer[each_struct]
     return True
 
-def object_compare(object_master, object_sub, previous_path=None):
+def get_its_item_redundant(structure, object_original, object_now):
+    neopointer = object_original
+    for each_struct in structure:
+        try:
+            _ = neopointer[each_struct]
+        except:
+            return True
+        else:
+            neopointer = neopointer[each_struct]
+
+    if neopointer == object_now:
+        return False
+
+    return True
+
+def object_compare(object_master, object_sub, previous_path=None, check_value=False):
     # Check if we have a previous path
     if not isinstance(previous_path, list):
         safe_previous_path = list()
@@ -49,15 +68,21 @@ def object_compare(object_master, object_sub, previous_path=None):
         # Check if the data is still iterable
         if isinstance(value, dict) and value:
             # Recurse the function again to search for mismatches
-            found_miss = object_compare(object_master, value, inside_path)
+            found_miss = object_compare(object_master, value, inside_path, check_value)
             # If the recursive function found any missmathes add it to the root
             if found_miss is not None:
                 root_list.extend(found_miss)
         else:
-            # If the data is not iterable compare it to the master object
-            if not get_its_item(inside_path, object_master):
-                # Add it to the root list to be returned
-                root_list.append(inside_path)
+            # Should we check for irregularities or redundancy
+            if check_value:
+                # List items that are reduntant
+                if not get_its_item_redundant(inside_path, object_master, value):
+                    root_list.append(inside_path)
+            else:
+                # If the data is not iterable compare it to the master object
+                if not get_its_item(inside_path, object_master):
+                    # Add it to the root list to be returned
+                    root_list.append(inside_path)
     # Return the root list if it is not empty else return the list
     if root_list:
         return root_list
@@ -101,28 +126,45 @@ def main():
                 "data": loaded_config
             })
 
-    # Save the mismatches
+    # Save the mismatches and redundancies
     mismatches = list()
+    redundant  = list()
 
+    # Check the configuration for irregular items
     for each_config in list_configs:
-        # Check the configuration
+        
+        # Show which config we are parsing
+        print("-> %s <-" % each_config["path"])
+
+        # Mismatch check
         check = object_compare(default_config, each_config["data"])
         if check is None:
-            neoprint("Config match in %s" % each_config["path"])
+            neoprint("No mismatches")
 	else:
-            mismatches.append({"path": each_config["path"], "miss": check})
+            neoprint("Mismatch", 0)
+            # Show each entry missing
+            for each_entry in check:
+                quoted_list = [
+                    "\"%s\"" % miss_item
+                    if "." in miss_item else miss_item
+                    for miss_item in each_entry
+                ]
+                print("%s | %s" % (" " * SPACINGS["item"], ".".join(quoted_list)))
 
-    # Show the mismatches
-    for each_miss in mismatches:
-        neoprint("Mismatch in %s" % each_miss["path"], 1)
-        # Show each entry missing
-        for each_entry in each_miss["miss"]:
-            quoted_list = [
-                "\"%s\"" % miss_item
-                if "." in miss_item else miss_item
-                for miss_item in each_entry
-            ]
-            print("%s | %s" % (" " * 20, ".".join(quoted_list)))
+        # Redundancy check
+        check_redundant = object_compare(default_config, each_config["data"], check_value=True)
+        if check_redundant is None:
+            neoprint("No redundancy")
+        else:
+            neoprint("Redundancy", 0)
+            # Show each entry missing
+            for each_entry in check_redundant:
+                quoted_list = [
+                    "\"%s\"" % miss_item
+                    if "." in miss_item else miss_item
+                    for miss_item in each_entry
+                ]
+                print("%s | %s" % (" " * SPACINGS["item"], ".".join(quoted_list)))
 
 if __name__ == "__main__":
     main()

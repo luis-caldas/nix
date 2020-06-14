@@ -8,9 +8,6 @@
     "params": ["console=tty0"]
   },
   "zram": true,
-  "user" : {
-    "groups": ["sudo"]
-  },
   "system": {
       "hostname": "lap"
   },
@@ -29,6 +26,5 @@
       { "scale": 1, "display": ":0", "extraCommands": ["swap-back-and-slash"] }
     ]
   },
-  "audio": true,
-  "bluetooth": false
+  "audio": true
 }

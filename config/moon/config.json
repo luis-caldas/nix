@@ -1,12 +1,7 @@
 {
   "boot": {
     "timeout": 1,
-    "default": 2,
-    "efi": true,
-    "device": "nodev"
-  },
-  "user" : {
-    "groups": ["sudo"]
+    "default": 2
   },
   "system": {
     "hostname": "moon"
@@ -39,6 +34,5 @@
       }
     }
   },
-  "audio": true,
-  "bluetooth": true
+  "audio": true
 }
