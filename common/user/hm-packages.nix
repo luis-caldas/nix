@@ -8,6 +8,7 @@
     htop
     less
     screen
+    parallel
 
     # Bin manipulation
     john
@@ -22,8 +23,10 @@
     w3m
     wget
     nmap
-    nload
+    aria
     bind
+    nload
+    inetutils
 
     # Keyboard
     xorg.xmodmap
