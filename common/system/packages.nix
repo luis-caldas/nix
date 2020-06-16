@@ -5,9 +5,9 @@
   environment.systemPackages = with pkgs; [
 
     # Basic
-    vim
     git
     tmux
+    neovim
 
     # Compatibility
     envsubst

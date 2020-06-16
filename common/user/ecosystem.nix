@@ -26,9 +26,12 @@ let
       enable = true;
       bashrcExtra = configFiles.bash;
     };
-    vim = {
+    neovim = {
       enable = true;
       extraConfig = configFiles.vim;
+      viAlias = true;
+      vimAlias = true;
+      vimdiffAlias = true;
     };
   };
 
