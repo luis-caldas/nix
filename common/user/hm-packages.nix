@@ -71,11 +71,15 @@
     mkpasswd
 
     # User tools
-    neomutt
     irssi
+    neomutt
 
-    # Image viewer
+    # Clipboard
+    xclip
+
+    # Image
     jp2a
+    libqrencode
 
     # Fetching packages
     neofetch
