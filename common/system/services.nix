@@ -1,6 +1,4 @@
 { my, ... }:
-let
-in
 {
 
   # SSH mate
@@ -8,5 +6,8 @@ in
 
   # Docker for my servers
   virtualisation.docker.enable = my.config.services.docker;
+
+  # DBus session sockets
+  services.dbus.socketActivated = true;
 
 }
