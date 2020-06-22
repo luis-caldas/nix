@@ -1,0 +1,27 @@
+{
+  "boot": {
+    "timeout": 1,
+    "efi": false,
+    "device": "/dev/sda"
+  },
+  "zram": true,
+  "system": {
+    "hostname": "note"
+  },
+  "net": {
+    "id": "43387412"
+  },
+  "services": {
+    "ssh": true
+  },
+  "graphical": {
+    "enable": true,
+    "drivers": ["nouveau"],
+    "touchpad": true,
+    "compositor": true,
+    "displays": [
+      { "scale": 1, "display": ":0", "extraCommands": ["swap-back-and-slash"] }
+    ]
+  },
+  "audio": true
+}
