@@ -16,9 +16,7 @@
   },
   "graphical": {
     "enable": true,
-    "drivers": ["nouveau"],
     "touchpad": true,
-    "compositor": true,
     "displays": [
       { "scale": 1, "display": ":0", "extraCommands": ["swap-back-and-slash"] }
     ]
