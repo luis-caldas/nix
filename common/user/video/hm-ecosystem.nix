@@ -66,8 +66,6 @@ let
       "xss-lock neolock" + " " + "&" + "\n" +
       # Call the preferred window manager
       my.config.graphical.wm + " " + "&" + "\n" +
-      # Run custom script to run picom if the config for it is set
-      mfunc.useDefault my.config.graphical.compositor ("neopicom" + " " + "&" + "\n") "" +
       # Wait for all programs to exit
       "wait" + "\n" ;};
   }) my.config.graphical.displays);
