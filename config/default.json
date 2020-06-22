@@ -42,7 +42,7 @@
   },
   "graphical": {
     "enable": false,
-    "drivers": ["nouveau"],
+    "drivers": [],
     "wm": "xmonad",
     "cursor": "hacked-white",
     "icons": "Mint-Y-Dark-Grey",
