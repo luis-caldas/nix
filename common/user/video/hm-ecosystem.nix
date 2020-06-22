@@ -7,15 +7,18 @@ let
     conky   = builtins.fetchGit "https://github.com/luis-caldas/myconky";
     themes  = builtins.fetchGit "https://github.com/luis-caldas/mythemes";
     fonts   = builtins.fetchGit "https://github.com/luis-caldas/myfonts";
+    cursors = builtins.fetchGit "https://github.com/luis-caldas/mycursors";
     icons   = builtins.fetchGit "https://github.com/luis-caldas/myicons";
     papes   = builtins.fetchGit "https://github.com/luis-caldas/mywallpapers";
   };
 
   # Link all the themes
-  linkThemes = { ".local/share/themes" = { source = (packages.themes + "/collection"); }; };
-  linkFonts  = { ".local/share/fonts" = { source = (packages.fonts + "/my-custom-fonts"); }; };
-  linkIcons  = { ".local/share/icons" = { source = (packages.icons + "/my-icons-collection"); }; };
-  linkPapes  = { ".local/share/backgrounds/papes" = { source = (packages.papes + "/papes"); }; };
+  linkThemes  = (mfunc.listCreateLinks (packages.themes + "/collection") ".local/share/themes") //
+                (mfunc.listCreateLinks (packages.themes + "/openbox") ".local/share/themes");
+  linkFonts   = (mfunc.listCreateLinks (packages.fonts + "/my-custom-fonts") ".local/share/fonts");
+  linkCursors = (mfunc.listCreateLinks (packages.cursors + "/my-x11-cursors") ".local/share/icons");
+  linkIcons   = (mfunc.listCreateLinks (packages.icons + "/my-icons-collection") ".local/share/icons");
+  linkPapes   = { ".local/share/backgrounds/papes" = { source = (packages.papes + "/papes"); }; };
 
   # List of default programs
   defaultPrograms = {
@@ -31,7 +34,7 @@ let
   }; };
 
   # Create the default icons file
-  textIconsCursor = { ".icons/default/index.theme".text = ''
+  textIconsCursor = { ".local/share/icons/default/index.theme".text = ''
     [Icon Theme]
     Name = default
     Comment = Default theme linker
@@ -73,7 +76,7 @@ let
   neoxAlias = { neox = packages.desktop + "/programs/init/neox"; };
 
   # Put all the sets together
-  linkSets = linkThemes // linkFonts // linkIcons // linkPapes //
+  linkSets = linkThemes // linkFonts // linkCursors // linkIcons // linkPapes //
              textXInit // textIconsCursor;
 
 in
