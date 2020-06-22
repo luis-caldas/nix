@@ -16,8 +16,8 @@ let
   linkThemes  = (mfunc.listCreateLinks (packages.themes + "/collection") ".local/share/themes") //
                 (mfunc.listCreateLinks (packages.themes + "/openbox") ".local/share/themes");
   linkFonts   = (mfunc.listCreateLinks (packages.fonts + "/my-custom-fonts") ".local/share/fonts");
-  linkCursors = (mfunc.listCreateLinks (packages.cursors + "/my-x11-cursors") ".local/share/icons");
-  #linkIcons   = (mfunc.listCreateLinks (packages.icons + "/my-icons-collection") ".local/share/icons");
+  #linkCursors = (mfunc.listCreateLinks (packages.cursors + "/my-x11-cursors") ".local/share/icons");
+  linkIcons   = (mfunc.listCreateLinks (packages.icons + "/my-icons-collection") ".local/share/icons");
   linkPapes   = { ".local/share/backgrounds/papes" = { source = (packages.papes + "/papes"); }; };
 
   # List of default programs
@@ -74,7 +74,7 @@ let
   neoxAlias = { neox = packages.desktop + "/programs/init/neox"; };
 
   # Put all the sets together
-  linkSets = linkThemes // linkFonts // linkCursors // linkPapes //
+  linkSets = linkThemes // linkFonts // linkIcons // linkPapes //
              textXInit // textIconsCursor;
 
 in
