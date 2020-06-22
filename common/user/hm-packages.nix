@@ -92,6 +92,7 @@
     llvm
 
     # System
+    stress
     evtest
 
     #######
