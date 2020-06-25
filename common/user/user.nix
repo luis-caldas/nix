@@ -20,7 +20,7 @@
     group = my.config.user.name;
 
     # Give extra groups to the user
-    extraGroups = ["networkmanager"] ++
+    extraGroups = ["networkmanager" "power"] ++
                   mfunc.useDefault my.config.x86_64 ["adbusers"] [] ++
                   mfunc.useDefault my.config.audio ["audio"] [] ++
                   mfunc.useDefault my.config.graphical.enable ["video"] [] ++

@@ -40,4 +40,7 @@
     HandleHibernateKey=ignore
   '';
 
+  # Set custom udev rules
+
+
 }

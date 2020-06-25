@@ -77,7 +77,6 @@
   [
     upkgs.picom
   ] ++
-  mfunc.useDefault my.config.games [ multimc mednafen mednaffe mupen64plus ] [] ++
   mfunc.useDefault my.config.x86_64 [ obs-studio blender ] [] ++
   mfunc.useDefault my.config.audio [ pavucontrol ] [];
 

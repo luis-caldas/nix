@@ -77,14 +77,17 @@ let
     ./common/user/hm-packages.nix
   ] ++
   # Visual imports for home-manager
-  mfunc.useDefault my.config.graphical.enable [
+  mfunc.useDefault my.config.graphical.enable ([
     # The visual ecosystem use
     ./common/user/video/hm-ecosystem.nix
     # Extra custom gui packages
     ./common/user/video/hm-packages.nix
     # Window manager configs
     ./common/user/video/hm-window-managers.nix
-  ] [] ++
+    # Games
+  ] ++ mfunc.useDefault my.config.games [
+    ./common/user/video/hm-games.nix
+  ] []) [] ++
   mfunc.useDefault my.config.bluetooth [
     ./common/user/video/hm-bluetooth.nix
   ] [];
