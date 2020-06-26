@@ -14,9 +14,6 @@
     mednaffe
     mupen64plus
 
-    # Dwarf Fortress
-    dwarf-fortress
-
   ];
 
 }

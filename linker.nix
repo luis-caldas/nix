@@ -76,6 +76,10 @@ let
     # Non graphical packages I use
     ./common/user/hm-packages.nix
   ] ++
+  # Text based games
+  mfunc.useDefault my.config.games [
+    ./common/user/hm-games.nix
+  ] [] ++
   # Visual imports for home-manager
   mfunc.useDefault my.config.graphical.enable ([
     # The visual ecosystem use
