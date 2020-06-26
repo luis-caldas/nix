@@ -1,5 +1,7 @@
-{ ... }:
+{ pkgs, ... }:
 {
+
+  nixpkgs.config.allowUnfree = true;
 
   # Games
   home.packages = with pkgs; [
@@ -13,7 +15,7 @@
     mupen64plus
 
     # Dwarf Fortress
-    dwarf-fortress-full
+    dwarf-fortress
 
   ];
 
