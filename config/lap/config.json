@@ -17,6 +17,7 @@
   "services": {
     "ssh": true
   },
+  "games": true,
   "graphical": {
     "enable": true,
     "drivers": ["panfrost"],
