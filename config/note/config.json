@@ -21,5 +21,6 @@
       { "scale": 1, "display": ":0", "extraCommands": ["swap-back-and-slash"] }
     ]
   },
-  "audio": true
+  "audio": true,
+  "bluetooth": true
 }

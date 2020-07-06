@@ -30,6 +30,7 @@
 
     # Keyboard
     xorg.xmodmap
+    xdotool
 
     # Serial
     picocom

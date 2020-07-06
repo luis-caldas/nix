@@ -62,12 +62,9 @@ let
       (builtins.concatStringsSep "\n" eachDisplay.extraCommands) + "\n" +
       # Restore the wallpapers
       "neotrogen restore" + "\n" +
-      # Set the lock program to stay listening on lock events
-      "xss-lock neolock" + " " + "&" + "\n" +
       # Call the preferred window manager
-      my.config.graphical.wm + " " + "&" + "\n" +
-      # Wait for all programs to exit
-      "wait" + "\n" ;};
+      my.config.graphical.wm + "\n";
+    };
   }) my.config.graphical.displays);
 
   # Create a alias for the neox startx command
