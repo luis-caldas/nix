@@ -12,6 +12,9 @@
     # Compatibility
     envsubst
 
+    # System monitor
+    dmidecode
+
   ];
 
 }
