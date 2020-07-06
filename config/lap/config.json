@@ -5,7 +5,7 @@
   },
   "x86_64": false,
   "kernel": {
-    "params": ["console=tty0"]
+    "params": ["console=ttyS2,1500000n8", "console=tty0"]
   },
   "zram": true,
   "system": {
