@@ -29,7 +29,5 @@
       fsType = "vfat";
     };
 
-  swapDevices = [ { device = "/dev/zvol/boxy/swap"; } ];
-
   nix.maxJobs = lib.mkDefault 4;
 }
