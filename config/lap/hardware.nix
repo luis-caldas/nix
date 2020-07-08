@@ -30,16 +30,6 @@
       fsType = "vfat";
     };
 
-  fileSystems."/emcol" =
-    { device = "emco";
-      fsType = "zfs";
-      encrypted = { enable = true;
-                    blkDev = "/dev/disk/by-uuid/b41b6c61-719d-44a1-989a-92a3a77268ea";
-                    label = "emmm";
-                    keyFile = "/mnt-root/keys/emmc.key";
-                  };
-    };
-
   swapDevices = [{ device = "/dev/zvol/lappy/swap"; }];
 
   nix.maxJobs = lib.mkDefault 6;
