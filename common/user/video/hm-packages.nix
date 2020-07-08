@@ -45,6 +45,9 @@
     gimp
     inkscape
 
+    # Document viewer
+    evince
+
     # Image viewer
     sxiv
 

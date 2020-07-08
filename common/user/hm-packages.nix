@@ -59,8 +59,9 @@
     gitRepo
     simg2img
 
-    # Emulation
+    # KVM & Virt
     qemu
+    OVMF
 
     # Drives
     hdparm
