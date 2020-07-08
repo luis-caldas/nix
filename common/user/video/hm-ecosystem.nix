@@ -22,8 +22,9 @@ let
 
   # List of default programs
   defaultPrograms = {
-    "directory" = "nautilus";
+    "directory" = "org.gnome.Nautilus";
     "image"     = "sxiv";
+    "pdf"       = "org.gnome.Evince";
   };
 
   # Create the .xinitrc link file
@@ -132,6 +133,8 @@ in
     "image/svg+xml"            = [ (defaultPrograms.image + ".desktop") ];
     "image/tiff"               = [ (defaultPrograms.image + ".desktop") ];
     "image/webp"               = [ (defaultPrograms.image + ".desktop") ];
+    # PDF
+    "application/pdf"          = [ (defaultPrograms.pdf + ".desktop") ];
   };
 
   # Enable firefox and set its configs
