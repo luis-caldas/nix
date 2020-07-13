@@ -1,0 +1,21 @@
+{
+  "boot": {
+    "timeout": 1
+  },
+  "kernel": {
+    "params": ["vga=normal", "nomodeset"]
+  },
+  "user": {
+    "groups": []
+  },
+  "system": {
+    "hostname": "opti"
+  },
+  "net": {
+    "id": "19719123"
+  },
+  "services": {
+    "ssh": true,
+    "docker": true
+  }
+}
