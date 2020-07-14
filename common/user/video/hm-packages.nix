@@ -61,6 +61,7 @@
     mumble
 
     # Testing
+    gource
     glxinfo
 
     # Video player
