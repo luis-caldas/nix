@@ -64,6 +64,9 @@
     gource
     glxinfo
 
+    # Virtualization
+    spice-gtk
+
     # Video player
     mpv
 
@@ -81,7 +84,7 @@
   [
     upkgs.picom
   ] ++
-  mfunc.useDefault my.config.x86_64 [ obs-studio blender ] [] ++
+  mfunc.useDefault my.config.x86_64 [ obs-studio blender looking-glass-client ] [] ++ 
   mfunc.useDefault my.config.audio [ pavucontrol ] [];
 
 }
