@@ -18,8 +18,8 @@
     "ssh": true,
     "startup": {
       "permit": [
-        "/sys/class/devfreq/*/{,scaling_}governor",
-        "/sys/devices/system/cpu/cpu*/cpufreq/{,scaling_}governor"
+        "/sys/class/devfreq/*/*governor",
+        "/sys/devices/system/cpu/cpu*/cpufreq/*governor"
       ]
     }
   },
