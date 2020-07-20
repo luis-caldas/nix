@@ -9,17 +9,19 @@
   },
   "zram": true,
   "system": {
-    "hostname": "lap",
-    "permit": [
-      "/sys/class/devfreq/*/{,scaling_}governor",
-      "/sys/devices/system/cpu/cpu*/cpufreq/{,scaling_}governor"
-    ]
+    "hostname": "lap"
   },
   "net": {
     "id": "29387412"
   },
   "services": {
-    "ssh": true
+    "ssh": true,
+    "startup": {
+      "permit": [
+        "/sys/class/devfreq/*/{,scaling_}governor",
+        "/sys/devices/system/cpu/cpu*/cpufreq/{,scaling_}governor"
+      ]
+    }
   },
   "games": true,
   "graphical": {

@@ -4,21 +4,23 @@
     "default": 2
   },
   "system": {
-    "hostname": "moon",
-    "permit": [
-      "/dev/input/by-id/usb-Logitech_USB_Receiver-if02-event-mouse",
-      "/dev/input/by-id/usb-Topre_Corporation_HHKB_Professional-event-kbd",
-      "/dev/nvme1n1"
-    ],
-    "start": [
-      "touch /dev/shm/looking-glass"
-    ]
+    "hostname": "moon"
   },
   "net": {
     "id": "19709431"
   },
   "services": {
-    "ssh": true
+    "ssh": true,
+    "startup": {
+      "permit": [
+        "/dev/input/by-id/usb-Logitech_USB_Receiver-if02-event-mouse",
+        "/dev/input/by-id/usb-Topre_Corporation_HHKB_Professional-event-kbd",
+        "/dev/nvme1n1"
+      ],
+      "create": [
+        "/dev/shm/looking-glass"
+      ]
+    }
   },
   "graphical": {
     "enable": true,
