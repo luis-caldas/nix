@@ -1,4 +1,4 @@
-{ my, ... }:
+{ my, lib, ... }:
 {
 
   # Needed for ZFS to work
@@ -40,7 +40,19 @@
     HandleHibernateKey=ignore
   '';
 
-  # Set custom udev rules
+  # Auto start stuff
+  systemd.services.starter = {
+    script = lib.concatStrings (map (s: s + "\n") my.config.system.start);
+    wantedBy = [ "multi-user.target" ];
+  };
 
+  # Files permissions
+  systemd.services.filer = {
+    script = lib.concatStrings (
+      map (s: "chown :${my.config.system.filer} ${s}" + "\n")
+      my.config.system.permit
+    );
+    wantedBy = [ "multi-user.target" ];
+  };
 
 }

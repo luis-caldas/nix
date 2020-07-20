@@ -7,6 +7,9 @@
   # Automatic login
   services.mingetty.autologinUser = mfunc.useDefault my.config.user.autologin my.config.user.name null;
 
+  # Add user to file permission group
+  users.groups."${my.config.system.filer}" = {};
+
   # My user
   users.groups."${my.config.user.name}".gid = 1000;
   users.users."${my.config.user.name}" = {
@@ -20,7 +23,7 @@
     group = my.config.user.name;
 
     # Give extra groups to the user
-    extraGroups = [ "networkmanager" ] ++
+    extraGroups = [ "networkmanager" "${my.config.system.filer}" ] ++
                   mfunc.useDefault my.config.x86_64 ["adbusers"] [] ++
                   mfunc.useDefault my.config.audio ["audio"] [] ++
                   mfunc.useDefault my.config.graphical.enable ["video"] [] ++

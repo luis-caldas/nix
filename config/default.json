@@ -7,7 +7,7 @@
     "override": false
   },
   "x86_64": true,
-  "kernel": {"params": []},
+  "kernel": { "params": [] },
   "zram": false,
   "user": {
     "name": "majora",
@@ -23,6 +23,9 @@
   "system": {
     "hostname": "unnamed",
     "timezone": "Europe/Dublin",
+    "filer": "filer",
+    "permit": [],
+    "start": [],
     "getty": {
       "greeting": "Whenever there is a meeting, a parting is sure to follow. But that parting needs not last forever. Whether a parting be forever or merely for a short while... That is up to you.",
       "help": "If you don't get that mask back soon, something terrible will happen!"
