@@ -133,6 +133,9 @@
     # Java
     adoptopenjdk-jre-bin
 
+    # Markdown
+    python38Packages.grip
+
     #######
 
   ] ++
