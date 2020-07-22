@@ -43,7 +43,8 @@
           "layout.frame_rate": 144
         }]
       }
-    }
+    },
+    "production": true
   },
   "games": true,
   "audio": true,

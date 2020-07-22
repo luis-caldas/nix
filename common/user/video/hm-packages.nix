@@ -85,6 +85,6 @@
     upkgs.picom
   ] ++
   mfunc.useDefault my.config.x86_64 [ obs-studio blender looking-glass-client ] [] ++
-  mfunc.useDefault my.config.audio [ pavucontrol ] [];
-
+  mfunc.useDefault my.config.audio [ pavucontrol ] [] ++
+  mfunc.useDefault my.config.graphical.production [ jack2 cadence reaper calf guitarix ] [];
 }
