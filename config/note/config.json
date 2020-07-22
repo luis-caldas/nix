@@ -12,7 +12,8 @@
     "id": "43387412"
   },
   "services": {
-    "ssh": true
+    "ssh": true,
+    "printing": true
   },
   "graphical": {
     "enable": true,

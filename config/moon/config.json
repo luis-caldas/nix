@@ -1,7 +1,6 @@
 {
   "boot": {
-    "timeout": 1,
-    "default": 2
+    "timeout": 1
   },
   "system": {
     "hostname": "moon"
@@ -11,6 +10,7 @@
   },
   "services": {
     "ssh": true,
+    "printing": true,
     "startup": {
       "permit": [
         "/dev/input/by-id/usb-Logitech_USB_Receiver-if02-event-mouse",

@@ -1,4 +1,4 @@
-{ my, lib, ... }:
+{ my, mfunc, lib, pkgs, ... }:
 {
 
   # SSH mate
@@ -15,6 +15,12 @@
     script = lib.concatStrings (map (s: s + "\n") my.config.services.startup.start);
     wantedBy = [ "multi-user.target" ];
   };
+
+  # Printing
+  services.printing = mfunc.useDefault my.config.services.printing {
+    enable = true;
+    drivers = with pkgs; [ gutenprint gutenprintBin brlaser ];
+  } {};
 
   # Create and permit files
   systemd.services.createer = {

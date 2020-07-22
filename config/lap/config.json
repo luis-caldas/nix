@@ -16,6 +16,7 @@
   },
   "services": {
     "ssh": true,
+    "printing": true,
     "startup": {
       "permit": [
         "/sys/class/devfreq/*/*governor",
