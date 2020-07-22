@@ -15,6 +15,7 @@
     "ssh": true,
     "printing": true
   },
+  "games": true,
   "graphical": {
     "enable": true,
     "touchpad": true,
