@@ -9,6 +9,7 @@
     # Emulators
     mednafen
     mednaffe
+    retroarch
 
   ] ++
   # amd64 only games
