@@ -7,8 +7,14 @@ let
   # My functions
   mfunc = import ./functions/func.nix { lib = lib; };
 
+  # System Version
+  version = "20.03";
+
   # Home manager
-  home-manager = builtins.fetchGit "https://github.com/rycee/home-manager.git";
+  home-manager = builtins.fetchGit {
+    url = "https://github.com/rycee/home-manager.git";
+    ref = ("release-" + version);
+  };
 
   # Unstable packages
   upkgs = import
