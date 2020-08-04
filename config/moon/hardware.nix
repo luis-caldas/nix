@@ -31,6 +31,7 @@
 
   # Set the proper number of the max jobs
   nix.maxJobs = lib.mkDefault 16;
+  powerManagement.cpuFreqGovernor = lib.mkDefault "schedutil";
 
   # Tell the system that this luks device exists
   boot.initrd.luks.devices."nixor".device = "/dev/disk/by-uuid/2afde2a8-0d37-4fa5-a20d-c63ef994381f";

@@ -13,6 +13,7 @@
     "printing": true,
     "startup": {
       "permit": [
+        "/sys/devices/system/cpu/cpu*/cpufreq/*governor",
         "/dev/input/by-id/usb-Logitech_USB_Receiver-if02-event-mouse",
         "/dev/input/by-id/usb-Topre_Corporation_HHKB_Professional-event-kbd",
         "/dev/nvme1n1"
