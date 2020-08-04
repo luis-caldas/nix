@@ -21,6 +21,10 @@
     enable = true;
     drivers = with pkgs; [ gutenprint brlaser ] ++
       (mfunc.useDefault my.config.x86_64 [ gutenprintBin ] []);
+    } {};
+  services.avahi = mfunc.useDefault my.config.services.printing {
+    enable = true;
+    nssmdns = true;
   } {};
 
   # Create and permit files

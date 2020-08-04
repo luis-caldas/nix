@@ -48,6 +48,9 @@
     # Document viewer
     evince
 
+    # Office
+    libreoffice
+
     # Image viewer
     sxiv
 
