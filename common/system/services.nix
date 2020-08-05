@@ -16,11 +16,27 @@
     wantedBy = [ "multi-user.target" ];
   };
 
+  # Non free printer drivers
+  nixpkgs.config.allowUnfree = true;
+
   # Printing
   services.printing = mfunc.useDefault my.config.services.printing {
     enable = true;
-    drivers = with pkgs; [ gutenprint brlaser ] ++
+    drivers = with pkgs; [
+        gutenprint
+        hplip
+        hplipWithPlugin
+        samsungUnifiedLinuxDriver
+        splix
+        brlaser
+        brgenml1lpr
+        brgenml1cupswrapper
+      ] ++
       (mfunc.useDefault my.config.x86_64 [ gutenprintBin ] []);
+    browsedConf = "
+      CreateIPPPrinterQueues All
+      CreateIPPPrinterQueues Driverless
+    ";
     } {};
   services.avahi = mfunc.useDefault my.config.services.printing {
     enable = true;
