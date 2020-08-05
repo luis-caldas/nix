@@ -29,10 +29,12 @@
         samsungUnifiedLinuxDriver
         splix
         brlaser
+      ] ++
+      (mfunc.useDefault my.config.x86_64 [
+        gutenprintBin
         brgenml1lpr
         brgenml1cupswrapper
-      ] ++
-      (mfunc.useDefault my.config.x86_64 [ gutenprintBin ] []);
+      ] []);
     browsedConf = "
       CreateIPPPrinterQueues All
       CreateIPPPrinterQueues Driverless
