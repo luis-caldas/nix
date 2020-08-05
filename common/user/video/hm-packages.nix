@@ -12,6 +12,9 @@
     conky
     rofi
 
+    # GTK
+    upkgs.gtk3
+
     # XDG
     dconf
     gnome-themes-extra
