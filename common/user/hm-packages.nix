@@ -98,6 +98,9 @@
     stress
     evtest
 
+    # Sensors
+    lm_sensors
+
     #######
     # Dev #
     #######
