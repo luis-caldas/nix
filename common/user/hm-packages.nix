@@ -31,6 +31,7 @@
     # Keyboard
     xorg.xmodmap
     xdotool
+    numlockx
 
     # Serial
     picocom

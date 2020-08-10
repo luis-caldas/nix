@@ -57,6 +57,8 @@ let
       # Dont blank screen with DPMS
       "xset s off" + "\n" +
       "xset dpms 0 0 0" + "\n" +
+      # Boot up numlock
+      "numlockx on" + "\n" +
       # Change Caps to Ctrl
       "remap-caps-to-ctrl" + "\n" +
       # Extra commands from the config to be added
