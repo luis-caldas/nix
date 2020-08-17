@@ -1,4 +1,4 @@
-{ my, mfunc, nur, lib, pkgs, ... }:
+{ my, mfunc, nur, lib, pkgs, upkgs, ... }:
 let
 
   # My own packages
@@ -164,6 +164,13 @@ in
       userChrome  = builtins.readFile (packages.desktop + "/browser/firefox" + "/userChrome.css");
       userContent = builtins.readFile (packages.desktop + "/browser/firefox" + "/userContent.css");
     };
+  };
+
+  # Enable chromium (ungoogled) and set its extensions
+  programs.chromium = {
+    enable = true;
+    package = upkgs.ungoogled-chromium;
+    extensions = [];
   };
 
   # Add all the acquired link sets to the config
