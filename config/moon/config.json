@@ -12,6 +12,7 @@
   "services": {
     "ssh": true,
     "printing": true,
+    "numlock": true,
     "startup": {
       "permit": [
         "/sys/devices/system/cpu/cpu*/cpufreq/*governor",

@@ -59,7 +59,7 @@ let
       "xset s off" + "\n" +
       "xset dpms 0 0 0" + "\n" +
       # Boot up numlock
-      "numlockx on" + "\n" +
+      "numlockx" + " " + (if my.config.system.numlock then "on" else "off") + "\n" +
       # Change Caps to Ctrl
       "remap-caps-to-ctrl" + "\n" +
       # Extra commands from the config to be added
