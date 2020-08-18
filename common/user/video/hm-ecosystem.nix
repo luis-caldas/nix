@@ -22,6 +22,7 @@ let
 
   # List of default programs
   defaultPrograms = {
+    "browser"   = "firefox";
     "directory" = "org.gnome.Nautilus";
     "image"     = "sxiv";
     "pdf"       = "org.gnome.Evince";
@@ -143,6 +144,12 @@ in
     "image/webp"               = [ (defaultPrograms.image + ".desktop") ];
     # PDF
     "application/pdf"          = [ (defaultPrograms.pdf + ".desktop") ];
+    # Browser
+    "text/html"                = [ (defaultPrograms.browser + ".desktop") ];
+    "x-scheme-handler/http"    = [ (defaultPrograms.browser + ".desktop") ];
+    "x-scheme-handler/https"   = [ (defaultPrograms.browser + ".desktop") ];
+    "x-scheme-handler/about"   = [ (defaultPrograms.browser + ".desktop") ];
+    "x-scheme-handler/unknown" = [ (defaultPrograms.browser + ".desktop") ];
   };
 
   # Enable firefox and set its configs
