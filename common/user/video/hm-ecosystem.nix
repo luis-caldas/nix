@@ -1,4 +1,4 @@
-{ my, mfunc, lib, pkgs, upkgs, ... }:
+{ my, mfunc, nur, lib, pkgs, upkgs, ... }:
 let
 
   # My own packages
