@@ -54,6 +54,17 @@
     "cursor": "hacked-white",
     "icons": "Mint-Y-Dark-Grey",
     "theme": "Adwaita-dark",
+    "firefox": { 
+      "settings": { "extra": [] },
+      "extensions": {
+        "base": [
+          "ublock-origin",
+          "https-everywhere",
+          "i-dont-care-about-cookies"
+        ],
+        "extra": []
+      }
+    },
     "production": false,
     "touchpad": false,
     "displays": [

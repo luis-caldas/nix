@@ -145,6 +145,27 @@ in
     "application/pdf"          = [ (defaultPrograms.pdf + ".desktop") ];
   };
 
+  # Enable firefox and set its configs
+  programs.firefox = {
+    enable = true;
+    extensions = lib.attrVals
+      (
+        my.config.graphical.firefox.extensions.base ++
+        my.config.graphical.firefox.extensions.extra
+      )
+      nur.repos.rycee.firefox-addons;
+    profiles.main = {
+      settings = {
+        "browser.download.dir" = "/home/" + my.config.user.name + "/downloads";
+        "browser.download.lastDir" = "/home/" + my.config.user.name + " /downloads";
+      } //
+      my.firefox //
+      (lib.foldr (x: y: x // y) {} my.config.graphical.firefox.settings.extra);
+      userChrome  = builtins.readFile (packages.desktop + "/browser/firefox" + "/userChrome.css");
+      userContent = builtins.readFile (packages.desktop + "/browser/firefox" + "/userContent.css");
+    };
+  };
+
   # Enable chromium (ungoogled) and set its extensions
   programs.chromium = {
     enable = true;

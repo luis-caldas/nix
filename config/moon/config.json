@@ -39,6 +39,13 @@
         ]
       }
     ],
+    "firefox": {
+      "settings": {
+        "extra": [{
+          "layout.frame_rate": 144
+        }]
+      }
+    },
     "production": true
   },
   "games": true,

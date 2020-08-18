@@ -13,8 +13,12 @@ let
        builtins.readFile (./config + ("/" + system-path) + "/config.json"))
     );
 
+  # Import the firefox config
+  firefox-obj = builtins.fromJSON (builtins.readFile (./config + "/firefox.json"));
+
 in
 {
   path = system-path;
   config = config-obj;
+  firefox = firefox-obj;
 }
