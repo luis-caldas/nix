@@ -19,6 +19,9 @@
   # Non free printer drivers
   nixpkgs.config.allowUnfree = true;
 
+  # Udev configuration
+  services.udev.packages = [ pkgs.rtl-sdr ];
+
   # Printing
   services.printing = mfunc.useDefault my.config.services.printing {
     enable = true;
