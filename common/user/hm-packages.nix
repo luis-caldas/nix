@@ -87,6 +87,9 @@
     jp2a
     libqrencode
 
+    # Radio
+    rtl-sdr
+
     # Fetching packages
     neofetch
     screenfetch

@@ -44,6 +44,9 @@ in
     kernelParams = ["zfs_force=1"] ++ my.config.kernel.params;
     supportedFilesystems = ["zfs"];
 
+    # For RTL-SDR
+    blacklistedKernelModules = [ "dvb_usb_rtl28xxu" ];
+
     # Don't force import zfs pool
     zfs = {
       forceImportRoot = false;
