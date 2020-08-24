@@ -85,6 +85,9 @@
     # Streaming
     streamlink
 
+    # Radio
+    gqrx
+
   ] ++
   # Unsable packages
   [
@@ -96,7 +99,7 @@
   mfunc.useDefault my.config.x86_64 [
 
     # Video Apps
-    upkgs.obs-studio
+    obs-studio
     upkgs.blender
     upkgs.looking-glass-client
 
@@ -111,7 +114,7 @@
 
     # Music production
     jack2
-    upkgs.cadence
+    cadence
     reaper
     calf
     guitarix

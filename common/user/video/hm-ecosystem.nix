@@ -174,11 +174,11 @@ in
   };
 
   # Enable chromium (ungoogled) and set its extensions
-  programs.chromium = {
-    enable = true;
-    package = upkgs.ungoogled-chromium;
-    extensions = [];
-  };
+  #programs.chromium = {
+  #  enable = true;
+  #  package = upkgs.ungoogled-chromium;
+  #  extensions = [];
+  #};
 
   # Add all the acquired link sets to the config
   home.file = linkSets;
