@@ -75,6 +75,7 @@
 
     # Video player
     mpv
+    vlc
 
     # Casting
     catt
