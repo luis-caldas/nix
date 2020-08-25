@@ -18,7 +18,10 @@
   "games": true,
   "graphical": {
     "enable": true,
-    "touchpad": true,
+    "touchpad": {
+      "enable": true,
+      "accel": "0.1"
+    },
     "displays": [
       { "scale": 1, "display": ":0", "extraCommands": ["swap-back-and-slash"] }
     ]
