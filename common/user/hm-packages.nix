@@ -90,6 +90,10 @@
     # Radio
     rtl-sdr
 
+    # NFC
+    pcsctools
+    pcsclite
+
     # Fetching packages
     neofetch
     screenfetch

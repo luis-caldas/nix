@@ -16,6 +16,9 @@
     wantedBy = [ "multi-user.target" ];
   };
 
+  # PCSC
+  services.pcscd.enable = true;
+
   # Non free printer drivers
   nixpkgs.config.allowUnfree = true;
 
