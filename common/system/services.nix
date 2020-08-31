@@ -17,7 +17,10 @@
   };
 
   # PCSC
-  services.pcscd.enable = true;
+  services.pcscd = {
+    enable = true;
+    plugins = [ pkgs.acsccid ];
+  };
 
   # Non free printer drivers
   nixpkgs.config.allowUnfree = true;
