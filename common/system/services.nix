@@ -33,10 +33,6 @@
     enable = true;
     drivers = with pkgs; [
         gutenprint
-        hplip
-        hplipWithPlugin
-        samsungUnifiedLinuxDriver
-        splix
         brlaser
       ] ++
       (mfunc.useDefault my.config.x86_64 [

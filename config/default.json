@@ -67,7 +67,10 @@
       }
     },
     "production": false,
-    "touchpad": false,
+    "touchpad": {
+      "enable": false,
+      "accel": "0.5"
+    },
     "displays": [
       { "scale": 1, "display": ":0", "extraCommands": [""] }
     ]

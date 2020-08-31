@@ -64,7 +64,7 @@ let
     # Install preferred system wide gui applications
     ./common/system/video/packages.nix
   # Check if there is touchpad and graphical support
-  ] ++ mfunc.useDefault my.config.graphical.touchpad [
+  ] ++ mfunc.useDefault my.config.graphical.touchpad.enable [
     ./common/system/video/touchpad.nix
   ] []) [] ++
   # Check if audio is supported

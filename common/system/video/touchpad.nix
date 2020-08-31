@@ -1,4 +1,4 @@
-{ ... }:
+{ my, ... }:
 {
 
   # Enable libinput
@@ -6,7 +6,7 @@
     enable = true;
     naturalScrolling = false;
     disableWhileTyping = true;
-    accelSpeed = "0.5";
+    accelSpeed = my.config.graphical.touchpad.accel;
   };
 
 }
