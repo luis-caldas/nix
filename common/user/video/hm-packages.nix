@@ -115,7 +115,7 @@
 
     # Music production
     jack2
-    cadence
+    upkgs.cadence
     reaper
     calf
     guitarix
