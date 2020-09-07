@@ -37,6 +37,10 @@
     picocom
     minicom
 
+    # Boot management
+    grub2
+    efibootmgr
+
     # System monitoring
     usbutils
     pciutils
