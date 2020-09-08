@@ -37,8 +37,7 @@
     picocom
     minicom
 
-    # Boot management
-    grub2
+    # Boot tools
     efibootmgr
 
     # System monitoring
