@@ -54,6 +54,9 @@
     # Office
     libreoffice
 
+    # Money
+    gnucash
+
     # Image viewer
     sxiv
 
