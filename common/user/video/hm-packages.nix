@@ -48,6 +48,9 @@
     gimp
     inkscape
 
+    # Scan
+    gnome3.simple-scan
+
     # Document viewer
     evince
 
