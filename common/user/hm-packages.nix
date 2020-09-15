@@ -6,6 +6,7 @@
     # Basic
     tmux
     htop
+    gotop
     less
     screen
     parallel
