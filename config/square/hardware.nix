@@ -10,24 +10,26 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "boxy/root";
+    { device = "circle/root";
       fsType = "zfs";
     };
 
   fileSystems."/home" =
-    { device = "boxy/home";
+    { device = "circle/home";
       fsType = "zfs";
     };
 
   fileSystems."/data" =
-    { device = "boxy/data";
+    { device = "circle/data";
       fsType = "zfs";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/B0C3-ED9F";
+    { device = "/dev/disk/by-uuid/62A4-F0F5";
       fsType = "vfat";
     };
+
+  swapDevices = [ ];
 
   nix.maxJobs = lib.mkDefault 4;
 }
