@@ -1,0 +1,22 @@
+{
+  "boot": {
+    "timeout": 1,
+    "efi": false,
+    "device": "/dev/sda"
+  },
+  "system": {
+    "hostname": "square"
+  },
+  "net": {
+    "id": "1ff19431"
+  },
+  "services": {
+    "ssh": true,
+    "printing": true
+  },
+  "graphical": {
+    "enable": true,
+    "drivers": ["nouveau"]
+  },
+  "audio": true
+}
