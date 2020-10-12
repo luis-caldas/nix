@@ -1,4 +1,4 @@
-{ my, config, upkgs, ... }:
+{ my, mfunc, config, upkgs, ... }:
 {
 
   # Allow xorg and the whole lot
@@ -16,5 +16,11 @@
 
   # Program to lock the screen
   programs.slock.enable = true;
+
+  # Force the latest mesa drivers
+  hardware.opengl = mfunc.useDefault my.config.graphical.latest {
+    enable = true;
+    package = upkgs.mesa.drivers;
+  } {};
 
 }

@@ -18,6 +18,7 @@
   "graphical": {
     "enable": true,
     "drivers": [ "nouveau" ],
+    "latest": false,
     "displays": [
       {
         "scale": 1, "display": ":0",
