@@ -33,6 +33,10 @@
   },
   "net": {
     "id": "ffffffff",
+    "mac": {
+      "cable": "permanent",
+      "wifi": "permanent"
+    },
     "firewall": {
         "enable": false,
         "ping": true

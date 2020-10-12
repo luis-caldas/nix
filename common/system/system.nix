@@ -13,6 +13,10 @@
   # Use networkmanager
   networking.networkmanager.enable = true;
 
+  # Use custom mac for cable
+  networking.networkmanager.ethernet.macAddress = my.config.net.mac.cable;
+  networking.networkmanager.wifi.macAddress = my.config.net.mac.wifi;
+
   # Disable ipv6
   networking.enableIPv6 = false;
 
