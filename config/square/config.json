@@ -8,7 +8,8 @@
     "hostname": "square"
   },
   "net": {
-    "id": "1ff19431"
+    "id": "1ff19431",
+    "mac": { "cable": "1C:6F:65:F5:18:D0" }
   },
   "services": {
     "ssh": true,
@@ -16,7 +17,17 @@
   },
   "graphical": {
     "enable": true,
-    "drivers": ["nouveau"]
+    "drivers": ["nouveau"],
+    "displays": [
+      {
+        "scale": 1, "display": ":0",
+        "extraCommands": [
+          "xrandr --newmode 1280x1024_60.00 108.88 1280 1360 1496 1712 1024 1025 1028 1060 -HSync +Vsync",
+          "xrandr --addmode VGA-1 1280x1024_60.00",
+          "xrandr --output VGA-1 --mode 1280x1024_60.00"
+        ]
+      }
+    ]
   },
   "audio": true
 }
