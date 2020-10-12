@@ -17,10 +17,4 @@
   # Program to lock the screen
   programs.slock.enable = true;
 
-  # Force the latest mesa drivers
-  hardware.opengl = {
-    enable = true;
-    package = upkgs.mesa.drivers;
-  };
-
 }

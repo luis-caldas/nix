@@ -17,7 +17,7 @@
   },
   "graphical": {
     "enable": true,
-    "drivers": ["nouveau"],
+    "drivers": [ "nouveau" ],
     "displays": [
       {
         "scale": 1, "display": ":0",
@@ -29,5 +29,6 @@
       }
     ]
   },
-  "audio": true
+  "audio": true,
+  "games": true
 }
