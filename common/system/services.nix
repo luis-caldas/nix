@@ -32,6 +32,7 @@
   services.printing = mfunc.useDefault my.config.services.printing {
     enable = true;
     drivers = with pkgs; [
+        cups-zj-58
         gutenprint
         brlaser
       ] ++

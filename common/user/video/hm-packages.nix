@@ -57,6 +57,9 @@
     # Office
     libreoffice
 
+    # Printers
+    system-config-printer
+
     # Money
     gnucash
 
