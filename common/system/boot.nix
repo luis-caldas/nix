@@ -58,8 +58,8 @@ in
     consoleLogLevel = 0;
 
     # Force kernel support for zfs
-    kernelParams = ["zfs_force=1"] ++ my.config.kernel.params;
-    supportedFilesystems = ["zfs"];
+    kernelParams = [ "zfs_force=1" ] ++ my.config.kernel.params;
+    supportedFilesystems = [ "zfs" ];
 
     # For RTL-SDR
     blacklistedKernelModules = [ "dvb_usb_rtl28xxu" ];
