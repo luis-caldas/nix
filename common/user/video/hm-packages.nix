@@ -38,6 +38,9 @@
     # Functional
     haskellPackages.xmobar
 
+    # Graph plotting
+    gnuplot
+
     # Web
     electron
 
