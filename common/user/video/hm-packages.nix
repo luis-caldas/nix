@@ -44,6 +44,9 @@
     # Web
     electron
 
+    # Torrenting
+    deluge
+
     # Calculator
     gnome3.gnome-calculator
 

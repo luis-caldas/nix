@@ -144,6 +144,7 @@
     # Javascript
     nodejs
     yarn
+    nodePackages.http-server
 
     # Java
     adoptopenjdk-jre-bin

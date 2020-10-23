@@ -12,8 +12,8 @@
     retroarch
 
     # Proper games
-    upkgs.0ad
-    upkgs.sm64ex
+    #{ "0ad" }@args: args."0ad"
+    #upkgs.sm64ex
 
   ] ++
   # amd64 only games
