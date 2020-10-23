@@ -11,6 +11,10 @@
     mednaffe
     retroarch
 
+    # Proper games
+    upkgs.0ad
+    upkgs.sm64ex
+
   ] ++
   # amd64 only games
   mfunc.useDefault my.config.x86_64 [
