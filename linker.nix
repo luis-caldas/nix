@@ -21,6 +21,9 @@ let
     (builtins.fetchGit "https://github.com/nixos/nixpkgs")
     { config = config.nixpkgs.config; };
 
+  # NUR user repos
+  nur = import (builtins.fetchGit "https://github.com/nix-community/NUR") { inherit pkgs; };
+
   # Generate the hardware folder location
   hardware-folder = ./config + ("/" + my.path);
 
@@ -29,6 +32,7 @@ let
     my = my;
     mfunc = mfunc;
     upkgs = upkgs;
+    nur = nur;
   }));
 
   # System specific hardware configuration

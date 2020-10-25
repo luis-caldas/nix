@@ -1,4 +1,4 @@
-{ my, mfunc, lib, pkgs, upkgs, ... }:
+{ my, mfunc, nur, lib, pkgs, upkgs, ... }:
 let
 
   # My own packages
@@ -155,6 +155,12 @@ in
   # Enable firefox and set its configs
   programs.firefox = {
     enable = true;
+    extensions = lib.attrVals
+      (
+        my.config.graphical.firefox.extensions.base ++
+        my.config.graphical.firefox.extensions.extra
+      )
+      nur.repos.rycee.firefox-addons;
     profiles.main = {
       settings = {
         "browser.download.dir" = "/home/" + my.config.user.name + "/downloads";

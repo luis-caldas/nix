@@ -66,7 +66,9 @@
         "base": [
           "ublock-origin",
           "https-everywhere",
-          "i-dont-care-about-cookies"
+          "i-dont-care-about-cookies",
+          "foxyproxy-standard",
+          "umatrix"
         ],
         "extra": []
       }
