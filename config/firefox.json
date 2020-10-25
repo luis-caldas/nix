@@ -50,5 +50,25 @@
   "signon.importedFromSqlite": true,
   "signon.management.page.breach-alerts.enabled": false,
   "signon.rememberSignons": false,
-  "toolkit.legacyUserProfileCustomizations.stylesheets": true
+  "toolkit.legacyUserProfileCustomizations.stylesheets": true,
+
+  "__comment": "Privacy recommendations from https://www.privacytools.io/browsers/#about_config",
+  "privacy.firstparty.isolate": true,
+  "privacy.resistFingerprinting": true,
+  "privacy.trackingprotection.fingerprinting.enabled": true,
+  "privacy.trackingprotection.cryptomining.enabled": true,
+  "privacy.trackingprotection.enabled": true,
+  "browser.send_pings": false,
+  "browser.urlbar.speculativeConnect.enabled": false,
+  "dom.event.clipboardevents.enabled": false,
+  "media.eme.enabled": false,
+  "media.gmp-widevinecdm.enabled": false,
+  "media.navigator.enabled": false,
+  "network.cookie.cookieBehavior": 1,
+  "network.http.referer.XOriginPolicy": 2,
+  "network.http.referer.XOriginTrimmingPolicy": 2,
+  "webgl.disabled": true,
+  "browser.sessionstore.privacy_level": 2,
+  "network.IDN_show_punycode": true
+
 }
