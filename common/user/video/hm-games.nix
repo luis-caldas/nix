@@ -1,4 +1,4 @@
-{ my, mfunc, pkgs, upkgs, ... }:
+{ my, mfunc, pkgs, mpkgs, upkgs, ... }:
 {
 
   nixpkgs.config.allowUnfree = true;
@@ -21,6 +21,9 @@
 
     # Minecraft
     multimc
+
+    # Sonic Robo Blast 2
+    mpkgs.srb2full.srb2
 
     # N64
     mupen64plus

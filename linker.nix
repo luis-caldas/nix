@@ -21,6 +21,9 @@ let
     (builtins.fetchGit "https://github.com/nixos/nixpkgs")
     { config = config.nixpkgs.config; };
 
+  # My packages
+  mpkgs = import ./pkgs/all.nix { inherit pkgs; };
+
   # NUR user repos
   nur = import (builtins.fetchGit "https://github.com/nix-community/NUR") { inherit pkgs; };
 
@@ -31,6 +34,7 @@ let
   impall = path: argolis: (import path (argolis // {
     my = my;
     mfunc = mfunc;
+    mpkgs = mpkgs;
     upkgs = upkgs;
     nur = nur;
   }));
