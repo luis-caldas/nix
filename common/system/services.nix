@@ -33,8 +33,8 @@
     enable = true;
     drivers = with pkgs; [
         cups-zj-58
-        gutenprint
         brlaser
+        gutenprint
       ] ++
       (mfunc.useDefault my.config.x86_64 [
         gutenprintBin
@@ -43,9 +43,14 @@
       ] []);
     browsedConf = "
       CreateIPPPrinterQueues All
-      CreateIPPPrinterQueues Driverless
     ";
-    } {};
+  } {};
+
+  # Printer applets
+  programs.system-config-printer.enable =
+    my.config.graphical.enable && my.config.services.printing;
+
+  # Avahi for printer discovery
   services.avahi = mfunc.useDefault my.config.services.printing {
     enable = true;
     nssmdns = true;
