@@ -12,8 +12,8 @@
     retroarch
 
     # Proper games
-    #{ "0ad" }@args: args."0ad"
-    #upkgs.sm64ex
+    zeroad
+    mpkgs.srb2full.srb2
 
   ] ++
   # amd64 only games
@@ -21,9 +21,6 @@
 
     # Minecraft
     multimc
-
-    # Sonic Robo Blast 2
-    mpkgs.srb2full.srb2
 
     # N64
     mupen64plus
