@@ -103,6 +103,7 @@
 
     # Radio
     gqrx
+    chirp
 
   ] ++
   # Unsable packages
