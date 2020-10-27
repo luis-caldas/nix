@@ -1,4 +1,4 @@
-{ my, mfunc, upkgs, pkgs, config, ... }:
+{ my, mfunc, pkgs, config, ... }:
 {
 
   home.packages = with pkgs; [
@@ -59,6 +59,9 @@
     ffmpeg-full
     imagemagick
     waifu2x-converter-cpp
+
+    # Documents manipulation
+    #texlive.combined.scheme-medium
 
     # Android
     gitRepo
@@ -163,8 +166,7 @@
     cli-visualizer
     ncpamixer
     playerctl
-    # Unstable (for mpris support)
-    upkgs.ncspot
+    ncspot
   ] [];
 
 }

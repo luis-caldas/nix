@@ -24,6 +24,7 @@
 
     # N64
     mupen64plus
+    wxmupen64plus
 
   ] [];
 
