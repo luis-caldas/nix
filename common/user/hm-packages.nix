@@ -61,7 +61,7 @@
     waifu2x-converter-cpp
 
     # Documents manipulation
-    #texlive.combined.scheme-medium
+    texlive.combined.scheme-medium
 
     # Android
     gitRepo
