@@ -63,13 +63,8 @@
     "firefox": { 
       "settings": { "extra": [] },
       "extensions": {
-        "base": [
-          "ublock-origin",
-          "https-everywhere",
-          "i-dont-care-about-cookies",
-          "foxyproxy-standard"
-        ],
-        "extra": []
+        "extra": [],
+        "mine": []
       }
     },
     "production": false,
