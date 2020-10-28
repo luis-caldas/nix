@@ -7,8 +7,16 @@ let
   # My functions
   mfunc = import ./functions/func.nix { lib = lib; };
 
+  # Extract this version from nixpkgs
+  versionList = lib.splitString "." lib.version;
+  versionConcatenated = (
+    builtins.elemAt versionList 0 +
+    "." +
+    builtins.elemAt versionList 1
+  );
+
   # System Version
-  version = "20.03";
+  version = versionConcatenated;
 
   # Home manager
   home-manager = builtins.fetchGit {

@@ -176,7 +176,7 @@ in
   # Enable chromium (ungoogled) and set its extensions
   #programs.chromium = {
   #  enable = true;
-  #  package = upkgs.ungoogled-chromium;
+  #  package = ungoogled-chromium;
   #  extensions = [];
   #};
 

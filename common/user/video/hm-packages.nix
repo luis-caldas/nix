@@ -104,20 +104,20 @@
   [
 
     # Window Composer
-    upkgs.picom
+    picom
 
   ] ++
   mfunc.useDefault my.config.x86_64 [
 
     # Video Apps
     obs-studio
-    upkgs.looking-glass-client
+    looking-glass-client
 
   ] [] ++
   mfunc.useDefault (my.config.x86_64 && my.config.graphical.prod3d) [
 
     # Latest blender if 3d production is set
-    upkgs.blender
+    blender
 
   ] [] ++
   mfunc.useDefault my.config.audio [
@@ -130,7 +130,7 @@
 
     # Music production
     jack2
-    upkgs.cadence
+    cadence
     reaper
     calf
     guitarix

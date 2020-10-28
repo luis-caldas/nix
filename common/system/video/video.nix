@@ -18,9 +18,9 @@
   programs.slock.enable = true;
 
   # Force the latest mesa drivers
-  hardware.opengl = mfunc.useDefault my.config.graphical.latest {
-    enable = true;
-    package = upkgs.mesa.drivers;
-  } {};
+  #hardware.opengl = mfunc.useDefault my.config.graphical.latest {
+  #  enable = true;
+  #  package = upkgs.mesa.drivers;
+  #} {};
 
 }

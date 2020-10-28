@@ -7,7 +7,7 @@
   home.packages = with pkgs; [
 
     # Emulators
-    upkgs.mednafen
+    mednafen
     mednaffe
     retroarch
 

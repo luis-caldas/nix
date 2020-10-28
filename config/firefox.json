@@ -16,6 +16,7 @@
   "browser.newtabpage.activity-stream.feeds.section.highlights": false,
   "browser.newtabpage.activity-stream.feeds.snippets": false,
   "browser.newtabpage.activity-stream.feeds.topsites": false,
+  "browser.newtabpage.activity-stream.section.highlights.includePocket": false,
   "browser.newtabpage.activity-stream.section.highlights.includeDownloads": false,
   "browser.newtabpage.activity-stream.section.highlights.includePocket": false,
   "browser.newtabpage.activity-stream.section.highlights.includeVisited": false,
