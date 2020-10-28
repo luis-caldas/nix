@@ -168,7 +168,9 @@ in
       [
         "google-translate"
         "old-youtube"
+        "search-image"
         "h264ify"
+        "dark-theme"
       ] ++ my.config.graphical.firefox.extensions.mine
     ) mpkgs.firefox-addons);
     profiles.main = {

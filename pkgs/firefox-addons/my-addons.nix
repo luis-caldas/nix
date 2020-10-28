@@ -50,4 +50,24 @@
       platforms = platforms.all;
     };
   };
+  "search-image" = buildFirefoxXpiAddon {
+    pname = "search-image";
+    version = "3.1.0";
+    addonId = "{2e5ff8c8-32fe-46d0-9fc8-6b8986621f3c}";
+    url = "https://addons.mozilla.org/firefox/downloads/file/3641782/search_by_image-3.1.0-an+fx.xpi"
+    sha256 = "193934y6qbmmlkmdkwqjqv5py3xlc0hap7clpzlynk0ccz10zyv8";
+    meta = with stdenv.lib; {
+      platforms = platforms.all;
+    };
+  };
+  "dark-theme" = buildFirefoxXpiAddon {
+    pname = "dark-theme";
+    version = "1.0.2.0";
+    addonId = "{1afaee19-8dde-4b0e-8c84-f46ca0f02f06}";
+    url = "https://addons.mozilla.org/firefox/downloads/file/1697943/dark_theme_for_firefox-1.0.2.0-an+fx.xpi";
+    sha256 = "0qfm4pwy9cwa1scir703d4ap3gfxndaahrqhysb69glp1zyjffzn";
+    meta = with stdenv.lib; {
+      platforms = platforms.all;
+    };
+  };
 }
