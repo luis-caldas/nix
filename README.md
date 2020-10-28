@@ -30,15 +30,23 @@ The `check.py` file inside the `config/` folder is a python script used to check
 
 These are the common configurations between all my systems
 
-They are separated between `system` and `user` and makes use of the keys set in the `config.json`
+They are separated between `system` and `user` and makes use of the configuration keys set in the `config.json`
+
+### `system`
+
+Common configuration files for the whole system
 
 ### `user`
 
-The user configuration has its files separated between the `home-manager` files and normal files
+Commo user configuration files, also has its files separated between the `home-manager` files and normal files
 
 ## `functions`
 
 The files inside this folder are **nix** functions used throughout the project
+
+## `pkgs`
+
+My own collection of packages, made in the same format as `nixpkgs`
 
 ## `linker.nix`
 
