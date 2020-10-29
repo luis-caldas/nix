@@ -25,7 +25,12 @@ let
     folderName: pkgs.lib.callPackageWith pkgs (./. + ("/" + folderName)) { }
   );
 
+  # Manally reassign some of the names
+  manualNames = {
+    srb2 = packageSet.srb2full.srb2;
+  };
+
   # Set this object to be the package set
-  self = packageSet;
+  self = packageSet // manualNames;
 
 in self

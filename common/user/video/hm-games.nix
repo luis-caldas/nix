@@ -7,13 +7,14 @@
   home.packages = with pkgs; [
 
     # Emulators
-    mednafen
+    upkgs.mednafen
     mednaffe
     retroarch
 
     # Proper games
     zeroad
-    mpkgs.srb2full.srb2
+    crispyDoom
+    mpkgs.srb2
 
   ] ++
   # amd64 only games
