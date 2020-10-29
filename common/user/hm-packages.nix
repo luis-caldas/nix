@@ -50,6 +50,7 @@
     tree
     file
     p7zip
+    unrar
     samba
     archivemount
 
