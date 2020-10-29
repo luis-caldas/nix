@@ -8,11 +8,12 @@
 
     # Emulators
     upkgs.mednafen
-    mednaffe
+    upkgs.mednaffe
     retroarch
 
     # Proper games
     zeroad
+    chocolateDoom
     crispyDoom
     mpkgs.srb2
 

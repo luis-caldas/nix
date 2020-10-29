@@ -10,6 +10,7 @@
     less
     screen
     parallel
+    nix-tree
 
     # Bin manipulation
     john
