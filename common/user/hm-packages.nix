@@ -35,6 +35,9 @@
     xdotool
     numlockx
 
+    # Window manager manipulation
+    wmctrl
+
     # Serial
     picocom
     minicom

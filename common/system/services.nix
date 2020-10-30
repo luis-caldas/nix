@@ -46,6 +46,14 @@
     ";
   } {};
 
+  # Scanning
+  hardware.sane = mfunc.useDefault my.config.services.printing {
+    enable = true;
+    extraBackends = with pkgs; [
+      sane-airscan
+    ];
+  } {};
+
   # Printer applets
   programs.system-config-printer.enable =
     my.config.graphical.enable && my.config.services.printing;
