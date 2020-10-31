@@ -78,6 +78,21 @@ let
   # Create a alias for the neox startx command
   neoxAlias = { neox = packages.desktop + "/programs/init/neox"; };
 
+  # Some firefox profile variables
+  firefoxFullSettings = {
+    "browser.download.dir" = "/home/" + my.config.user.name + "/downloads";
+    "browser.download.lastDir" = "/home/" + my.config.user.name + " /downloads";
+  } //
+  my.firefox.default //
+  # Folding so we can leave the config in a json list
+  # with this the scanner leaves the specific configurations alone
+  (lib.foldr (x: y: x // y) {} my.config.graphical.firefox.settings.extra);
+
+  firefoxUserCustom = {
+    userChrome  = builtins.readFile (packages.desktop + "/browser/firefox" + "/userChrome.css");
+    userContent = builtins.readFile (packages.desktop + "/browser/firefox" + "/userContent.css");
+  };
+
   # Put all the sets together
   linkSets = linkThemes // linkFonts // linkIcons // linkCursors // linkPapes //
              textXInit // textIconsCursor;
@@ -173,15 +188,18 @@ in
         "dark-theme"
       ] ++ my.config.graphical.firefox.extensions.mine
     ) mpkgs.firefox-addons);
-    profiles.main = {
-      settings = {
-        "browser.download.dir" = "/home/" + my.config.user.name + "/downloads";
-        "browser.download.lastDir" = "/home/" + my.config.user.name + " /downloads";
-      } //
-      my.firefox //
-      (lib.foldr (x: y: x // y) {} my.config.graphical.firefox.settings.extra);
-      userChrome  = builtins.readFile (packages.desktop + "/browser/firefox" + "/userChrome.css");
-      userContent = builtins.readFile (packages.desktop + "/browser/firefox" + "/userContent.css");
+    profiles = {
+        main = {
+          settings = firefoxFullSettings;
+          userChrome = firefoxUserCustom.userChrome;
+          userContent = firefoxUserCustom.userContent;
+        };
+        persistent = {
+          settings = lib.overrideExisting my.firefox.default my.firefox.persistent;
+          userChrome = firefoxUserCustom.userChrome;
+          userContent = firefoxUserCustom.userContent;
+          id = 1;
+        };
     };
   };
 
