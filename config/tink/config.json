@@ -15,7 +15,7 @@
     "printing": true
   },
   "graphical": {
-    "enable": false,
+    "enable": true,
     "displays": [
       {
         "scale": 1, "display": ":0", "extraCommands": []
