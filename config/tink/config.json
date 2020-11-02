@@ -1,0 +1,27 @@
+{
+  "boot": {
+    "timeout": 1,
+    "efi": false,
+    "device": "/dev/sda"
+  },
+  "system": {
+    "hostname": "tink"
+  },
+  "net": {
+    "id": "1ff19666"
+  },
+  "services": {
+    "ssh": true,
+    "printing": true
+  },
+  "graphical": {
+    "enable": false,
+    "displays": [
+      {
+        "scale": 1, "display": ":0", "extraCommands": []
+      }
+    ]
+  },
+  "audio": true,
+  "games": true
+}
