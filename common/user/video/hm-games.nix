@@ -1,4 +1,4 @@
-{ my, mfunc, pkgs, mpkgs, upkgs, ... }:
+{ my, mfunc, pkgs, mpkgs, ... }:
 {
 
   nixpkgs.config.allowUnfree = true;
@@ -7,8 +7,8 @@
   home.packages = with pkgs; [
 
     # Emulators
-    upkgs.mednafen
-    upkgs.mednaffe
+    mednafen
+    mednaffe
     retroarch
 
     # Proper games

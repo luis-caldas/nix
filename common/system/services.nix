@@ -1,4 +1,4 @@
-{ my, mfunc, lib, pkgs, upkgs, ... }:
+{ my, mfunc, lib, pkgs, ... }:
 {
 
   # SSH mate
@@ -25,7 +25,7 @@
   # Fingerprint
   services.fprintd = mfunc.useDefault my.config.services.fingerprint {
     enable = true;
-    package = upkgs.fprintd;
+    #package = pkgs.fprintd;
   } {};
 
   # Non free printer drivers

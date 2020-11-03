@@ -1,4 +1,4 @@
-{ my, mfunc, pkgs, config, ... }:
+{ my, mfunc, pkgs, mpkgs, config, ... }:
 {
 
   home.packages = with pkgs; [
@@ -19,7 +19,7 @@
     hexedit
     binutils
     steghide
-    python38Packages.binwalk-full
+    python3Packages.binwalk-full
 
     # Web tools
     w3m
@@ -29,6 +29,7 @@
     bind
     nload
     inetutils
+    # mpkgs.python3Packages.anime-downloader
 
     # Keyboard
     xorg.xmodmap
@@ -141,10 +142,9 @@
     jq
 
     # Python
-    python27Full
-    python27Packages.pip
-    python38Full
-    python38Packages.pip
+    python2Full
+    python3Full
+    python3Packages.pip
 
     # Ruby
     ruby
@@ -158,7 +158,7 @@
     adoptopenjdk-jre-bin
 
     # Markdown
-    python38Packages.grip
+    python3Packages.grip
 
     #######
 

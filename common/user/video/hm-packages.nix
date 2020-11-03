@@ -1,4 +1,4 @@
-{ my, mfunc, upkgs, config, pkgs, ... }:
+{ my, mfunc, config, pkgs, ... }:
 {
 
   nixpkgs.config.allowUnsupportedSystem = true;

@@ -1,4 +1,4 @@
-{ my, mfunc, config, upkgs, ... }:
+{ my, mfunc, config, ... }:
 {
 
   # Allow xorg and the whole lot
@@ -20,7 +20,7 @@
   # Force the latest mesa drivers
   #hardware.opengl = mfunc.useDefault my.config.graphical.latest {
   #  enable = true;
-  #  package = upkgs.mesa.drivers;
+  #  package = pkgs.mesa.drivers;
   #} {};
 
 }
