@@ -46,6 +46,7 @@
     "ssh": false,
     "docker": false,
     "printing": false,
+    "fingerprint": false,
     "startup": {
       "permit": [],
       "create": [],

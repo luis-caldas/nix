@@ -1,4 +1,4 @@
-{ my, mfunc, lib, pkgs, ... }:
+{ my, mfunc, lib, pkgs, upkgs, ... }:
 {
 
   # SSH mate
@@ -21,6 +21,12 @@
     enable = true;
     plugins = [ pkgs.acsccid ];
   };
+
+  # Fingerprint
+  services.fprintd = mfunc.useDefault my.config.services.fingerprint {
+    enable = true;
+    package = upkgs.fprintd;
+  } {};
 
   # Non free printer drivers
   nixpkgs.config.allowUnfree = true;

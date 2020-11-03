@@ -12,7 +12,8 @@
   },
   "services": {
     "ssh": true,
-    "printing": true
+    "printing": true,
+    "fingerprint": true
   },
   "graphical": {
     "enable": true,
