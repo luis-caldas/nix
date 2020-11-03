@@ -69,6 +69,7 @@
     },
     "production": false,
     "prod3d": false,
+    "trackpoint": false,
     "touchpad": {
       "enable": false,
       "accel": "0.5"

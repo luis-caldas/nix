@@ -35,6 +35,8 @@
   swapDevices = [ { device = "/dev/disk/by-uuid/d0257465-4d20-4412-acd7-c2ec84d9f98a"; } ];
 
   nix.maxJobs = lib.mkDefault 2;
-  networking.enableIntel3945ABGFirmware = true;
+
+  hardware.enableRedistributableFirmware = true;
+  # networking.enableIntel3945ABGFirmware = true;
 
 }

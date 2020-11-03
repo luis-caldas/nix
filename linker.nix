@@ -70,24 +70,28 @@ let
     ./common/user/ecosystem.nix
   ] ++
   # Check whether we should import the graphical tools
-  mfunc.useDefault my.config.graphical.enable ([
+  mfunc.useDefault my.config.graphical.enable [
     # Install Xorg if graphics are on
     ./common/system/video/video.nix
     # Install preferred system wide gui applications
     ./common/system/video/packages.nix
+  ] [] ++
   # Check if there is touchpad and graphical support
-  ] ++ mfunc.useDefault my.config.graphical.touchpad.enable [
+  mfunc.useDefault (my.config.graphical.enable && my.config.graphical.touchpad.enable) [
     ./common/system/video/touchpad.nix
-  ] []) [] ++
+  ] [] ++
+  # Check if there is trackpoint
+  mfunc.useDefault (my.config.graphical.enable && my.config.graphical.trackpoint) [
+    ./common/system/video/trackpoint.nix
+  ] [] ++
   # Check if audio is supported
   mfunc.useDefault my.config.audio [ ./common/system/audio.nix ] [] ++
   # Check if bluetooth is supported
-  mfunc.useDefault my.config.bluetooth (
-    [ ./common/system/bluetooth.nix ] ++
-    # Bluetooth and video are enabled
-    mfunc.useDefault my.config.graphical.enable
-      [ ./common/system/video/bluetooth.nix ] []
-  ) [];
+  mfunc.useDefault my.config.bluetooth [ ./common/system/bluetooth.nix ] [] ++
+  # Bluetooth and video are enabled
+  mfunc.useDefault (my.config.bluetooth && my.config.graphical.enable) [
+    ./common/system/video/bluetooth.nix
+  ] [];
 
   # Home manager importing list
   un-home-manager-imports-list = [
@@ -99,17 +103,18 @@ let
     ./common/user/hm-games.nix
   ] [] ++
   # Visual imports for home-manager
-  mfunc.useDefault my.config.graphical.enable ([
+  mfunc.useDefault my.config.graphical.enable [
     # The visual ecosystem use
     ./common/user/video/hm-ecosystem.nix
     # Extra custom gui packages
     ./common/user/video/hm-packages.nix
     # Window manager configs
     ./common/user/video/hm-window-managers.nix
-    # Games
-  ] ++ mfunc.useDefault my.config.games [
+  ] [] ++ 
+  # Games
+  mfunc.useDefault (my.config.graphical.enable && my.config.games) [
     ./common/user/video/hm-games.nix
-  ] []) [] ++
+  ] [] ++
   mfunc.useDefault my.config.bluetooth [
     ./common/user/video/hm-bluetooth.nix
   ] [];
