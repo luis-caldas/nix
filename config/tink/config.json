@@ -12,6 +12,7 @@
   },
   "services": {
     "ssh": true,
+    "docker": true,
     "printing": true,
     "fingerprint": true
   },
@@ -25,5 +26,6 @@
     ]
   },
   "audio": true,
+  "bluetooth": true,
   "games": true
 }
