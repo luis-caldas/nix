@@ -79,14 +79,15 @@ let
   neoxAlias = { neox = packages.desktop + "/programs/init/neox"; };
 
   # Some firefox profile variables
-  firefoxFullSettings = {
+  nonDefaultFirefoxSettings = {
     "browser.download.dir" = "/home/" + my.config.user.name + "/downloads";
     "browser.download.lastDir" = "/home/" + my.config.user.name + " /downloads";
   } //
-  my.firefox.default //
   # Folding so we can leave the config in a json list
   # with this the scanner leaves the specific configurations alone
   (lib.foldr (x: y: x // y) {} my.config.graphical.firefox.settings.extra);
+  # Join all configurations
+  firefoxFullSettings = my.firefox.default // nonDefaultFirefoxSettings;
 
   firefoxUserCustom = {
     userChrome  = builtins.readFile (packages.desktop + "/browser/firefox" + "/userChrome.css");
@@ -199,6 +200,12 @@ in
           userChrome = firefoxUserCustom.userChrome;
           userContent = firefoxUserCustom.userContent;
           id = 1;
+        };
+        basic = {
+          settings = nonDefaultFirefoxSettings;
+          userChrome = firefoxUserCustom.userChrome;
+          userContent = firefoxUserCustom.userContent;
+          id = 2;
         };
     };
   };
