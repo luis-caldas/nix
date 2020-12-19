@@ -19,10 +19,9 @@
   "graphical": {
     "enable": true,
     "trackpoint": true,
+    "production": true,
     "displays": [
-      {
-        "scale": 1, "display": ":0", "extraCommands": []
-      }
+      { "scale": 1, "display": ":0", "extraCommands": ["swap-back-and-slash"] }
     ]
   },
   "audio": true,
