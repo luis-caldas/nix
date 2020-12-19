@@ -35,10 +35,6 @@ let
   # NUR user repos
   nur = import (builtins.fetchGit "https://github.com/nix-community/NUR") { inherit pkgs; };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-  upkgs.config.allowUnfree = true;
-
   # Generate the hardware folder location
   hardware-folder = ./config + ("/" + my.path);
 
@@ -125,12 +121,21 @@ let
 
 in {
 
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
   # Add the system import list
   imports = map (x: impall x args) un-imports-list;
 
   # Import the files needed for the home-manager package
-  home-manager.users."${my.config.user.name}" = args@{ lib, config, pkgs, ... }: {
+  home-manager.users."${my.config.user.name}" = args@{ lib, config, pkgs, nixpkgs, ... }: {
+
+    # Allow unfree packages on home-manager as well
+    nixpkgs.config.allowUnfree = true;
+
+    # Import all home-manager files
     imports = map (x: impall x args) un-home-manager-imports-list;
+
   };
 
 }
