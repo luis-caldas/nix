@@ -18,9 +18,6 @@ let
   # System Version
   version = versionConcatenated;
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   # Home manager
   home-manager = builtins.fetchGit {
     url = "https://github.com/rycee/home-manager.git";
@@ -37,6 +34,10 @@ let
 
   # NUR user repos
   nur = import (builtins.fetchGit "https://github.com/nix-community/NUR") { inherit pkgs; };
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+  upkgs.config.allowUnfree = true;
 
   # Generate the hardware folder location
   hardware-folder = ./config + ("/" + my.path);
