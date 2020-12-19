@@ -1,8 +1,6 @@
 { my, mfunc, pkgs, mpkgs, ... }:
 {
 
-  nixpkgs.config.allowUnfree = true;
-
   # Games
   home.packages = with pkgs; [
 

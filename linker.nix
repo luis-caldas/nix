@@ -18,6 +18,9 @@ let
   # System Version
   version = versionConcatenated;
 
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
   # Home manager
   home-manager = builtins.fetchGit {
     url = "https://github.com/rycee/home-manager.git";

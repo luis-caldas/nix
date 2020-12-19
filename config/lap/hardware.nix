@@ -11,8 +11,6 @@
 
   boot.initrd.availableKernelModules = [ "nvme" "usbhid" ];
 
-  nixpkgs.config.allowUnfree = true;
-
   boot.initrd.luks.devices."emmm".device = "/dev/disk/by-uuid/b41b6c61-719d-44a1-989a-92a3a77268ea";
 
   fileSystems."/" =

@@ -28,9 +28,6 @@
     #package = pkgs.fprintd;
   } {};
 
-  # Non free printer drivers
-  nixpkgs.config.allowUnfree = true;
-
   # Udev configuration
   services.udev.packages = [ pkgs.rtl-sdr ];
 
