@@ -27,6 +27,7 @@
     nmap
     aria
     bind
+    atftp
     nload
     inetutils
     # mpkgs.python3Packages.anime-downloader
