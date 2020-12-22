@@ -61,6 +61,7 @@
 
     # Net tools
     ethtool
+    shadowsocks-libev
 
     # Audio & Video manipulation
     ffmpeg-full
