@@ -29,6 +29,7 @@
     bind
     atftp
     nload
+    socat
     inetutils
     # mpkgs.python3Packages.anime-downloader
 
