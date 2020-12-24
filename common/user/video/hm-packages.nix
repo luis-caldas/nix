@@ -113,6 +113,9 @@
     obs-studio
     looking-glass-client
 
+    # Reverse engineering
+    ghidra-bin
+
   ] [] ++
   mfunc.useDefault (my.config.x86_64 && my.config.graphical.prod3d) [
 

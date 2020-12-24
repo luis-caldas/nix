@@ -183,7 +183,6 @@ in
     (lib.attrVals (
       [
         "google-translate"
-        "old-youtube"
         "search-image"
         "h264ify"
         "dark-theme"
