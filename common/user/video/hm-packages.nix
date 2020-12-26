@@ -82,6 +82,9 @@
     # Virtualization
     spice-gtk
 
+    # Wine
+    wineWowPackages.staging
+
     # Video player
     mpv
     vlc
