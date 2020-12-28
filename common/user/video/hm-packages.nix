@@ -83,6 +83,8 @@
     spice-gtk
 
     # Wine
+    winetricks
+    protontricks
     wineWowPackages.staging
 
     # Video player
