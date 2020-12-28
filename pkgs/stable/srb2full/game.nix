@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
 
   ];
 
-  configurePhase = ''
+  patchPhase = ''
     sed 's/-DCOMPVERSION//' -i src/Makefile
     sed 's/illegal/NixOS/' -i src/comptime.c
   '';

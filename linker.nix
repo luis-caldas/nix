@@ -2,10 +2,10 @@ args@{ lib, config, pkgs, utils, ... }:
 let
 
   # My main config
-  my = import ./config.nix { lib = lib; } ;
+  my = import ./config.nix { inherit lib; } ;
 
   # My functions
-  mfunc = import ./functions/func.nix { lib = lib; };
+  mfunc = import ./functions/func.nix { inherit lib; };
 
   # Extract this version from nixpkgs
   versionList = lib.splitString "." lib.version;
@@ -30,7 +30,7 @@ let
     { config = config.nixpkgs.config; };
 
   # My packages
-  mpkgs = import ./pkgs/all.nix { inherit pkgs; };
+  mpkgs = import ./pkgs/all.nix { inherit pkgs upkgs; };
 
   # NUR user repos
   nur = import (builtins.fetchGit "https://github.com/nix-community/NUR") { inherit pkgs; };

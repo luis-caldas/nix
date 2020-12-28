@@ -25,7 +25,6 @@
   # Fingerprint
   services.fprintd = mfunc.useDefault my.config.services.fingerprint {
     enable = true;
-    #package = pkgs.fprintd;
   } {};
 
   # Udev configuration

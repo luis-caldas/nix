@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, upkgs, ... }:
 
 let
 
@@ -17,12 +17,19 @@ let
         name: name != ""
       ) allNameList;
 
-  # List packages in this folder
-  herePackages = listDirs ./.;
+  # List packages in folders
+  stablePackages = listDirs ./stable;
+  unstablePackages = listDirs ./unstable;
 
   # create set of package names and calls
-  packageSet = pkgs.lib.genAttrs herePackages (
-    folderName: pkgs.lib.callPackageWith pkgs (./. + ("/" + folderName)) { }
+  packageSet = (
+    pkgs.lib.genAttrs stablePackages (
+      folderName: pkgs.lib.callPackageWith pkgs (./stable + ("/" + folderName)) { }
+    )
+  ) // (
+    pkgs.lib.genAttrs unstablePackages (
+      folderName: pkgs.lib.callPackageWith upkgs (./unstable + ("/" + folderName)) { }
+    )
   );
 
   # Manally reassign some of the names
