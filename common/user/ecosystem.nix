@@ -48,11 +48,14 @@ in
 
     programs = programsSet //
     # Configure Git
-    { git = {
-      enable = true;
-      userName = my.config.git.name;
-      userEmail = my.config.git.email;
-    };};
+    { 
+      git = {
+        enable = true;
+        userName = my.config.git.name;
+        userEmail = my.config.git.email;
+        extraConfig = { pull = { rebase = false; }; };
+      };}
+    ;
 
   };
 
