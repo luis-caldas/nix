@@ -18,6 +18,7 @@
   },
   "graphical": {
     "enable": true,
+    "drivers": [ "intel" ],
     "trackpoint": true,
     "production": true,
     "displays": [
