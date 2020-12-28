@@ -1,4 +1,4 @@
-{ my, mfunc, config, ... }:
+{ my, mfunc, config, pkgs, ... }:
 {
 
   # Allow xorg and the whole lot
@@ -17,10 +17,13 @@
   # Program to lock the screen
   programs.slock.enable = true;
 
-  # Force the latest mesa drivers
-  #hardware.opengl = mfunc.useDefault my.config.graphical.latest {
-  #  enable = true;
-  #  package = pkgs.mesa.drivers;
-  #} {};
+  # Add 32 bit support
+  hardware.opengl = {
+    enable = true;
+    driSupport32Bit = true;
+    extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
+    # Select custom version of mesa drivers
+    #package = pkgs.mesa.drivers;
+  };
 
 }
