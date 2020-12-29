@@ -100,6 +100,9 @@
     jp2a
     libqrencode
 
+    # Banner
+    figlet
+
     # Radio
     rtl-sdr
 
