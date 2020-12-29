@@ -62,6 +62,8 @@ let
       "numlockx" + " " + (if my.config.system.numlock then "on" else "off") + "\n" +
       # Change Caps to Ctrl
       "remap-caps-to-ctrl" + "\n" +
+      # Start bluetooth if present
+      (mfunc.useDefault my.config.bluetooth ("blueman-applet" + " " + "&" + "\n") "") +
       # Extra commands from the config to be added
       (builtins.concatStringsSep "\n" eachDisplay.extraCommands) + "\n" +
       # Restore the wallpapers
