@@ -13,7 +13,6 @@
     zeroad
     chocolateDoom
     crispyDoom
-    ioquake3
     mpkgs.srb2
 
   ] ++
