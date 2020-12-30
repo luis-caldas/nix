@@ -13,6 +13,7 @@
     zeroad
     chocolateDoom
     crispyDoom
+    xonotic
     mpkgs.srb2
 
   ] ++
@@ -21,6 +22,9 @@
 
     # Minecraft
     multimc
+
+    # FPS
+    openarena
 
     # N64
     mupen64plus
