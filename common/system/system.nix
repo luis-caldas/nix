@@ -30,6 +30,9 @@
   # My timezone
   time.timeZone = my.config.system.timezone;
 
+  # Set locale
+  i18n.defaultLocale = my.config.system.locale;
+
   # Enable ZRam if set
   zramSwap.enable = my.config.zram;
   zramSwap.memoryPercent = 50;
