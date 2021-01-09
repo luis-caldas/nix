@@ -130,6 +130,9 @@
   ] [] ++
   mfunc.useDefault my.config.audio [
 
+    # Online radio
+    icecast
+
     # Audio Control
     pavucontrol
 
