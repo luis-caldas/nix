@@ -23,8 +23,7 @@
     "production": true,
     "displays": [{
       "scale": 1, "display": ":0", "extraCommands": [
-        "swap-back-and-slash",
-        "xrandr --output LVDS1 --scale 1.5x1.5"
+        "swap-back-and-slash"
       ]
     }]
   },
