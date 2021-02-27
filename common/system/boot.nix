@@ -62,7 +62,9 @@ in
     supportedFilesystems = [ "zfs" ];
 
     # For RTL-SDR
-    blacklistedKernelModules = [ "dvb_usb_rtl28xxu" ];
+    blacklistedKernelModules = [ "dvb_usb_rtl28xxu" ] ++
+    # For NFC
+    [ "pn533" "pn533_usb" "nfc" ];
 
     # Don't force import zfs pool
     zfs = {
