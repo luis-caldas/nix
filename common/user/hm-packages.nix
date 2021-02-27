@@ -19,6 +19,7 @@
     hexedit
     binutils
     steghide
+    unixtools.xxd
     python3Packages.binwalk-full
 
     # Web tools
@@ -148,6 +149,8 @@
     python2Full
     python3Full
     python3Packages.pip
+    python3Packages.pyusb
+    libusb
 
     # Ruby
     ruby
@@ -156,6 +159,7 @@
     nodejs
     yarn
     nodePackages.http-server
+    nodePackages.node2nix
 
     # Java
     adoptopenjdk-jre-bin
