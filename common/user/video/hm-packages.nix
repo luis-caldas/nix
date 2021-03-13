@@ -134,6 +134,7 @@
     icecast
 
     # Audio Control
+    paprefs
     pavucontrol
 
   ] [] ++
