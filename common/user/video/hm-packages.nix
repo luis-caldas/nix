@@ -99,6 +99,7 @@
 
     # Streaming
     streamlink
+    nodePackages.peerflix
 
     # Radio
     gqrx
