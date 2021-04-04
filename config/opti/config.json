@@ -1,9 +1,7 @@
 {
   "boot": {
-    "timeout": 1
-  },
-  "kernel": {
-    "params": ["vga=normal", "nomodeset"]
+    "timeout": 1,
+    "text": true
   },
   "user": {
     "groups": []

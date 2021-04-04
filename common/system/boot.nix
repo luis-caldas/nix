@@ -54,17 +54,8 @@ in
   # Main boot configuration
   boot = {
 
-    # Disable pesky kernel messages at boot
-    consoleLogLevel = 0;
-
-    # Force kernel support for zfs
-    kernelParams = [ "zfs_force=1" ] ++ my.config.kernel.params;
+    # Support for zfs
     supportedFilesystems = [ "zfs" ];
-
-    # For RTL-SDR
-    blacklistedKernelModules = [ "dvb_usb_rtl28xxu" ] ++
-    # For NFC
-    [ "pn533" "pn533_usb" "nfc" ];
 
     # Don't force import zfs pool
     zfs = {

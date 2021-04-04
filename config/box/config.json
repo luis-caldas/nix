@@ -1,11 +1,9 @@
 {
   "boot": {
     "timeout": 1,
+    "text": true,
     "efi": false,
     "device": "/dev/sda"
-  },
-  "kernel": {
-    "params": ["vga=normal", "nomodeset"]
   },
   "user": {
     "groups": []
