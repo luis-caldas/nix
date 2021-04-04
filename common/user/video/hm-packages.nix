@@ -78,6 +78,7 @@
     # Testing
     gource
     glxinfo
+    sdl-jstest
 
     # Virtualization
     spice-gtk
