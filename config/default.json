@@ -60,7 +60,7 @@
     "drivers": [],
     "latest": true,
     "wm": "xmonad",
-    "cursor": "hacked-white",
+    "cursor": "hacked-black",
     "icons": "Mint-Y-Dark-Grey",
     "theme": "Adwaita-dark",
     "firefox": { 
