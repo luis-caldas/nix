@@ -83,6 +83,9 @@
     # Virtualization
     spice-gtk
 
+    # Emulation
+    dosbox
+
     # Wine
     winetricks
     protontricks

@@ -5,6 +5,9 @@
   home.packages = with pkgs; [
 
     # Emulators
+    pcsxr
+    # pcsx2  # Needs to compile
+    desmume
     mednafen
     mednaffe
     retroarch
