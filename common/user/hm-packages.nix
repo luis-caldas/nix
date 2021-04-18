@@ -59,6 +59,7 @@
     p7zip
     unrar
     samba
+    jmtpfs
     archivemount
 
     # Net tools
