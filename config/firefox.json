@@ -77,7 +77,7 @@
     "network.cookie.cookieBehavior": 1,
     "network.http.referer.XOriginPolicy": 2,
     "network.http.referer.XOriginTrimmingPolicy": 2,
-    "webgl.disabled": true,
+    "webgl.disabled": false,
     "browser.sessionstore.privacy_level": 2,
     "network.IDN_show_punycode": true
   },
