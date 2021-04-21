@@ -64,7 +64,7 @@ Reference file set as an example for the `system` file
 
 A file named `system` in the root of the project is needed in order to select the system that is going to be built, it is a simple plain text file with the systems name inside
 
-For the commands `nixos-rebuild` or `nixos-install` to work the file `linker.nix` must be imported from your `/etc/nixos/configuration.nix` file±
+For the commands `nixos-rebuild` or `nixos-install` to work the file `linker.nix` must be imported from your `/etc/nixos/configuration.nix` file
 
 # Warnings
 
