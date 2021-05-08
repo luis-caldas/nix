@@ -1,7 +1,6 @@
 {
   "boot": {
-    "timeout": 1,
-    "default": 2
+    "timeout": 1
   },
   "system": {
     "hostname": "moon",
@@ -16,8 +15,6 @@
     "startup": {
       "permit": [
         "/sys/devices/system/cpu/cpu*/cpufreq/*governor",
-        "/dev/input/by-id/usb-Logitech_USB_Receiver-if02-event-mouse",
-        "/dev/input/by-id/usb-Topre_Corporation_HHKB_Professional-event-kbd",
         "/dev/nvme1n1"
       ],
       "create": [
@@ -33,10 +30,8 @@
         "scale": 2, "display": ":0",
         "extraCommands": [
           "xrandr --dpi 192x192",
-          "xrandr --output DisplayPort-0 --mode 3840x2160 --rate 60 --scale 1.13x1.13 --pos 0x0 --primary",
-          "xrandr --output DisplayPort-1 --mode 1920x1080 --rate 144 --scale 2x2 --pos 4340x315",
-          "xrandr --output HDMI-A-0 --mode 1280x1024 --rate 75 --scale 2x2 --pos 6440x-2245 --rotate left",
-          "xrandr --output HDMI-A-1 --mode 1280x1024 --rate 60 --scale 2x2 --pos -2560x2440"
+          "xrandr --output DisplayPort-0 --mode 1920x1080 --rate 144 --scale 2x2 --pos 0x0 --primary",
+          "xrandr --output DisplayPort-1 --mode 3840x2160 --rate 60 --scale 1x1 --pos 3840x0"
         ]
       }
     ],
