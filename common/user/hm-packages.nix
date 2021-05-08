@@ -74,6 +74,7 @@
     ffmpeg-full
     imagemagick
     waifu2x-converter-cpp
+    python3Packages.pywal
 
     # Android
     gitRepo
