@@ -10,6 +10,9 @@
   # Add user to file permission group
   users.groups."${my.config.system.filer}" = {};
 
+  # Add wireshark group
+  users.groups.wireshark = {};
+
   # My user
   users.groups."${my.config.user.name}".gid = 1000;
   users.users."${my.config.user.name}" = {
