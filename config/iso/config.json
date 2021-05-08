@@ -1,15 +1,21 @@
 {
   "boot": { "override": true },  
-  "system": {
-    "hostname": "live"
-  },
-  "net": {
-    "id": "1ff194ee"
-  },
+  "system": { "hostname": "live" },
+  "net": { "id": "1ff194ee" },
   "services": {
-    "ssh": true
+    "ssh": true,
+    "docker": true,
+    "printing": true
   },
   "graphical": {
-    "enable": false
-  }
+    "enable": true,
+    "displays": [
+      { "scale": 1, "display": ":0", "extraCommands": ["swap-back-and-slash", "remap-caps-to-ctrl"]}
+    ],
+    "production": true,
+    "prod3d": true
+  },
+  "games": true,
+  "audio": true,
+  "bluetooth": true
 }
