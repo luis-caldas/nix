@@ -48,6 +48,14 @@ The files inside this folder are **nix** functions used throughout the project
 
 My own collection of packages, made in the same format as `nixpkgs`
 
+## `iso`
+
+This folder contains files used to create a bootable nixos iso (made with my configurations)
+
+This ISO will use the `iso` configuration scheme found in the `config` folder at the root directory
+
+There is a bash script also with the proper command to generate the iso
+
 ## `linker.nix`
 
 This file links all the projects file into a single point so it can be easily referenced later

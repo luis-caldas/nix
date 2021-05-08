@@ -1,0 +1,15 @@
+{
+  "boot": { "override": true },  
+  "system": {
+    "hostname": "live"
+  },
+  "net": {
+    "id": "1ff194ee"
+  },
+  "services": {
+    "ssh": true
+  },
+  "graphical": {
+    "enable": false
+  }
+}
