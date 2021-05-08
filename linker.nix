@@ -1,8 +1,5 @@
-args@{ lib, config, pkgs, utils, ... }:
+args@{ my, lib, config, pkgs, utils, ... }:
 let
-
-  # My main config
-  my = import ./config.nix { inherit lib; } ;
 
   # My functions
   mfunc = import ./functions/func.nix { inherit lib; };
@@ -40,11 +37,7 @@ let
 
   # Function for importing with all arguments
   impall = path: argolis: (import path (argolis // {
-    my = my;
-    mfunc = mfunc;
-    mpkgs = mpkgs;
-    upkgs = upkgs;
-    nur = nur;
+    inherit my mfunc mpkgs upkgs nur;
   }));
 
   # System specific hardware configuration

@@ -1,8 +1,14 @@
-{ lib, ... }:
+{ lib, iso, ... }:
 let
 
-  # Default path for the chosen system
-  system-path = lib.replaceStrings ["\n" " "] ["" ""] (builtins.readFile ./system);
+  # Default path for the chosen system that was set on a file
+  path-file = lib.replaceStrings ["\n" " "] ["" ""] (builtins.readFile ./system);
+
+  # Check if it is a iso and set the correct path then
+  system-path = if iso then
+    "iso"
+  else
+    path-file;
 
   # Import the chosen config file
   config-obj = lib.recursiveUpdate
