@@ -17,6 +17,7 @@
     hashcat
     radare2
     hexedit
+    apktool
     binutils
     steghide
     unixtools.xxd
