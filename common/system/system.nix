@@ -27,6 +27,9 @@
   # Enable adb debugging
   programs.adb.enable = my.config.x86_64;
 
+  # Add wireshark
+  programs.wireshark.enable = true;
+
   # My timezone
   time.timeZone = my.config.system.timezone;
 
