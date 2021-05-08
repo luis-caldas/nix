@@ -23,12 +23,12 @@
     group = my.config.user.name;
 
     # Give extra groups to the user
-    extraGroups = [ "networkmanager" "${my.config.system.filer}" ] ++
-                  mfunc.useDefault my.config.x86_64 ["adbusers"] [] ++
-                  mfunc.useDefault my.config.audio ["audio"] [] ++
-                  mfunc.useDefault my.config.graphical.enable ["video"] [] ++
-                  mfunc.useDefault my.config.services.docker ["docker"] [] ++
-                  mfunc.useDefault my.config.services.printing ["scanner" "lp"] [] ++
+    extraGroups = [ "networkmanager" "wireshark" "${my.config.system.filer}" ] ++
+                  mfunc.useDefault my.config.x86_64 [ "adbusers" ] [] ++
+                  mfunc.useDefault my.config.audio [ "audio" ] [] ++
+                  mfunc.useDefault my.config.graphical.enable [ "video" ] [] ++
+                  mfunc.useDefault my.config.services.docker [ "docker" ] [] ++
+                  mfunc.useDefault my.config.services.printing [ "scanner" "lp" ] [] ++
                   my.config.user.groups;
 
     # Set out custom uid

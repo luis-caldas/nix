@@ -35,6 +35,9 @@
     inetutils
     # mpkgs.python3Packages.anime-downloader
 
+    # Sniffer
+    wireshark
+
     # Keyboard
     xorg.xmodmap
     xdotool
