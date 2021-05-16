@@ -28,10 +28,10 @@
     "filer": "filer",
     "numlock": false,
     "getty": {
-      "greeting": "Whenever there is a meeting, a parting is sure to follow. But that parting needs not last forever. Whether a parting be forever or merely for a short while... That is up to you.",
-      "help": "If you don't get that mask back soon, something terrible will happen!"
+      "greeting": "You must treat your comrades and those with whom you come into contact, whether on operations or not, with dignity, respect, tolerance and understanding -- You must be loyal to your commanders and your subordinates and your team -- Your personal interests must come after the needs of the mission and your team/unit -- You must have the physical courage to persevere with the mission regardless of dangers and difficulties. Physical Courage comes with commitment and professionalism -- You must do what you know is right, not what is easier or popular",
+      "help": "Glaine ár gcroí, Neart ár ngéag, Agus beart de réir ár mbriathar"
     },
-    "motd": "You've met with a terrible fate, haven't you?"
+    "motd": "Strengthen the Nation"
   },
   "net": {
     "id": "ffffffff",
