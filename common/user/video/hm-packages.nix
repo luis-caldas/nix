@@ -143,7 +143,7 @@
     pavucontrol
 
   ] [] ++
-  mfunc.useDefault my.config.graphical.production [
+  mfunc.useDefault (my.config.audio && my.config.graphical.production) [
 
     # Music production
     jack2
