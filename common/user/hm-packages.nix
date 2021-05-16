@@ -180,12 +180,28 @@
   mfunc.useDefault my.config.tex [ texlive.combined.scheme-medium ] [] ++
   mfunc.useDefault my.config.services.docker [ docker_compose ] [] ++
   mfunc.useDefault my.config.audio [
+
+    # Local player
     cmus
+
+    # Alsa tools
     alsaUtils
+
+    # Visualizer
     cli-visualizer
+
+    # TUI mixer
     ncpamixer
+
+    # MPRIS controller
     playerctl
+
+    # Spotify
     ncspot
+
+    # Morse code training
+    aldo
+
   ] [];
 
 }
