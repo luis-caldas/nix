@@ -29,7 +29,10 @@
       fsType = "vfat";
     };
 
-  swapDevices = [ ];
+  swapDevices = [
+    { device = "/dev/zvol/circle/swap"; }
+  ];
+
 
   nix.maxJobs = lib.mkDefault 4;
 }

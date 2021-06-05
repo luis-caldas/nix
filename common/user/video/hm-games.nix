@@ -13,7 +13,7 @@
     retroarch
 
     # Proper games
-    # zeroad
+    zeroad
     chocolateDoom
     crispyDoom
     xonotic
