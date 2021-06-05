@@ -5,7 +5,7 @@
   home.packages = with pkgs; [
 
     # Emulators
-    pcsxr
+    # pcsxr  # Uses unsafe ffmpeg
     # pcsx2  # Needs to compile
     desmume
     mednafen
@@ -13,7 +13,7 @@
     retroarch
 
     # Proper games
-    zeroad
+    # zeroad
     chocolateDoom
     crispyDoom
     xonotic

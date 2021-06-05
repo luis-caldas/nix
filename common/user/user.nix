@@ -5,7 +5,7 @@
   users.mutableUsers = true;
 
   # Automatic login
-  services.mingetty.autologinUser = mfunc.useDefault my.config.user.autologin my.config.user.name null;
+  services.getty.autologinUser = mfunc.useDefault my.config.user.autologin my.config.user.name null;
 
   # Add user to file permission group
   users.groups."${my.config.system.filer}" = {};
@@ -39,9 +39,9 @@
 
   };
 
-  # Add custom mingetty message
-  services.mingetty.greetingLine = my.config.system.getty.greeting;
-  services.mingetty.helpLine = lib.mkOverride 70 ("\n" + my.config.system.getty.help);
+  # Add custom getty message
+  services.getty.greetingLine = my.config.system.getty.greeting;
+  services.getty.helpLine = lib.mkOverride 70 ("\n" + my.config.system.getty.help);
 
   # Add my custom motd
   users.motd = my.config.system.motd;

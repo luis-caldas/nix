@@ -7,9 +7,6 @@
   # Docker for my servers
   virtualisation.docker.enable = my.config.services.docker;
 
-  # DBus session sockets
-  services.dbus.socketActivated = true;
-
   # Auto start stuff
   systemd.services.starter = {
     script = lib.concatStrings (map (s: s + "\n") my.config.services.startup.start);

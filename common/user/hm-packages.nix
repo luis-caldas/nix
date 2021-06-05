@@ -19,7 +19,6 @@
     hexedit
     apktool
     binutils
-    steghide
     unixtools.xxd
     python3Packages.binwalk-full
 

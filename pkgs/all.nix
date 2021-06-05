@@ -21,7 +21,7 @@ let
   stablePackages = listDirs ./stable;
   unstablePackages = listDirs ./unstable;
 
-  # create set of package names and calls
+  # Create set of package names and calls
   packageSet = (
     pkgs.lib.genAttrs stablePackages (
       folderName: pkgs.lib.callPackageWith pkgs (./stable + ("/" + folderName)) { }

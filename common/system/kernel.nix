@@ -31,7 +31,7 @@ in
     consoleLogLevel = 0;
 
     # Use custom kernel
-    kernelPackages = pkgs.linuxPackages_latest;
+    #kernelPackages = pkgs.linuxPackages_latest;
 
     # Force kernel support for zfs and add user params
     kernelParams = defaultKernelParams ++ my.config.kernel.params ++
