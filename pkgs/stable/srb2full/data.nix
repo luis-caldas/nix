@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, srb2-unwrapped, unzip }:
+{ stdenv, lib, fetchurl, srb2-unwrapped, unzip }:
 
 stdenv.mkDerivation rec {
 
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
     cp -r *pk3 *dta *dat models/ $out/share/srb2/
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Sonic Robo Blast 2 is a 3D open-source Sonic the Hedgehog fangame -- data files";
     homepage = "https://www.srb2.org/";
     platforms = platforms.linux;

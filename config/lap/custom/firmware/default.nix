@@ -1,4 +1,5 @@
 { stdenv
+, lib
 , fetchFromGitLab
 , runCommandNoCC
 }:

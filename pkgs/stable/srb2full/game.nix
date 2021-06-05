@@ -1,4 +1,5 @@
 { stdenv
+, lib
 , gcc, curl, pkg-config
 , nasm
 , libpng, libupnp, zlib, libgme, openmpt123
@@ -62,7 +63,7 @@ stdenv.mkDerivation rec {
     strip $out/bin/srb2
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Sonic Robo Blast 2 is a 3D open-source Sonic the Hedgehog fangame";
     homepage = "https://www.srb2.org/";
     platforms = allowedPlatforms;

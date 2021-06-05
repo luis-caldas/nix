@@ -1,4 +1,4 @@
-{ fetchurl, stdenv, ... }:
+{ fetchurl, stdenv, lib, ... }:
 
 let
 
@@ -22,7 +22,7 @@ let
     };
 
   packages = import ./my-addons.nix {
-    inherit buildFirefoxXpiAddon fetchurl stdenv;
+    inherit buildFirefoxXpiAddon fetchurl stdenv lib;
   };
 
 in packages // { inherit buildFirefoxXpiAddon; }
