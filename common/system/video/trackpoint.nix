@@ -4,7 +4,7 @@
   # Enable libinput
   services.xserver.libinput = {
     enable = true;
-    scrollButton = 2;
+    touchpad.scrollButton = 2;
   };
 
 }
