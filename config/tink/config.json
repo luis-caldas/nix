@@ -27,6 +27,7 @@
       ]
     }]
   },
+  "games": true,
   "audio": true,
   "bluetooth": true
 }
