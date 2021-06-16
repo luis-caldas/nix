@@ -3,7 +3,6 @@
     "timeout": 60,
     "default": 0,
     "efi": true,
-    "text": false,
     "device": "nodev",
     "override": false
   },
