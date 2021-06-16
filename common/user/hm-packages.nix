@@ -20,6 +20,7 @@
     apktool
     binutils
     unixtools.xxd
+    mpkgs.steghide
     python3Packages.binwalk-full
 
     # Web tools
