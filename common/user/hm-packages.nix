@@ -33,7 +33,11 @@
     nload
     socat
     inetutils
-    # mpkgs.python3Packages.anime-downloader
+    youtube-dl
+    mpkgs.python3Packages.anime-downloader
+
+    # Pen
+    sqlmap
 
     # Sniffer
     wireshark
