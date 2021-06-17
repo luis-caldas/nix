@@ -17,6 +17,7 @@ buildPythonPackage rec {
   };
 
   buildInputs = [ requests ];
+  propagatedBuildInputs = [ requests ];
 
   # No tests in archive
   doCheck = false;

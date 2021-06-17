@@ -17,6 +17,7 @@ buildPythonPackage rec {
   };
 
   buildInputs = [ sphinx ];
+  propagatedBuildInputs = [ sphinx ];
 
   # No tests in archive
   doCheck = false;

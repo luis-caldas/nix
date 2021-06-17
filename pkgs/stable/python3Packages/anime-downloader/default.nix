@@ -38,7 +38,7 @@ buildPythonPackage rec {
     pycryptodome
   ];
 
-  propagateBuildInputs = [
+  propagatedBuildInputs = [
     pysmartdl
     beautifulsoup4
     requests
