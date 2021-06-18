@@ -23,6 +23,10 @@
     mpkgs.steghide
     python3Packages.binwalk-full
 
+    # Flashing tools
+    avrdude
+    heimdall
+
     # Web tools
     w3m
     wget
