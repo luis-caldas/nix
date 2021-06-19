@@ -2,12 +2,18 @@
   "boot": {
     "timeout": 1,
     "efi": false,
-    "device": "/dev/sdc"
+    "device": "/dev/sda"
   },
-  "system": { "hostname": "live" },
+  "system": { "hostname": "survivor" },
   "net": { "id": "1ff1fecc" },
   "services": {
     "ssh": true,
-    "docker": true
-  }
+    "docker": true,
+    "printing": true
+  },
+  "graphical": {
+    "enable": true
+  },
+  "audio": true,
+  "bluetooth": true
 }
