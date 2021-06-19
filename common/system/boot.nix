@@ -9,7 +9,7 @@ let
     version = 2;
 
     # Try to identify other systems
-    useOSProber = true;
+    useOSProber = my.config.boot.prober;
 
     # Enable Memtest
     memtest86.enable = true;
