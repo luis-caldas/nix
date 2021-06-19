@@ -21,6 +21,12 @@
       fsType = "vfat";
     };
 
+  fileSystems."/data" =
+    { device = "/dev/disk/by-uuid/9A19-A1D9";
+      fsType = "vfat";
+      options = [ "uid=1000" "gid=1000" ];
+    };
+
   fileSystems."/home" =
     { device = "survivor/home";
       fsType = "zfs";
