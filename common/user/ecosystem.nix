@@ -53,8 +53,8 @@ in
         enable = true;
         userName = my.config.git.name;
         userEmail = my.config.git.email;
-        program = pkgs.gitAndTools.gitFull;
-        extraConfig = { pull = { rebase = false; }; init = { defaultBranch = master; }; };
+        package = pkgs.gitAndTools.gitFull;
+        extraConfig = { pull = { rebase = false; }; init = { defaultBranch = "master"; }; };
       };}
     ;
 
