@@ -1,4 +1,4 @@
-{ my, ... }:
+{ my, pkgs, ... }:
 let
 
   # Get my wanted packages
@@ -53,7 +53,8 @@ in
         enable = true;
         userName = my.config.git.name;
         userEmail = my.config.git.email;
-        extraConfig = { pull = { rebase = false; }; };
+        program = pkgs.gitAndTools.gitFull;
+        extraConfig = { pull = { rebase = false; }; init = { defaultBranch = master; }; };
       };}
     ;
 
