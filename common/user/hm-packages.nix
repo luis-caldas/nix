@@ -113,7 +113,6 @@
 
     # Image
     jp2a
-    pywal
     libqrencode
 
     # Banner
