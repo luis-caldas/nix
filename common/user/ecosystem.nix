@@ -38,6 +38,15 @@ let
 in
 {
 
+  # Enable adb debugging
+  programs.adb.enable = my.config.x86_64;
+
+  # Add wireshark
+  programs.wireshark.enable = true;
+
+  # Enable bash auto completion
+  programs.bash.enableCompletion = true;
+
   # Configure base packages for the root user as well
   home-manager.users.root = { ... }: {
     programs = programsSet;

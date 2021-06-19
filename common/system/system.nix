@@ -24,12 +24,6 @@
   networking.firewall.enable = my.config.net.firewall.enable;
   networking.firewall.allowPing = my.config.net.firewall.ping;
 
-  # Enable adb debugging
-  programs.adb.enable = my.config.x86_64;
-
-  # Add wireshark
-  programs.wireshark.enable = true;
-
   # My timezone
   time.timeZone = my.config.system.timezone;
 
