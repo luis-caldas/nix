@@ -23,6 +23,9 @@
     mpkgs.steghide
     python3Packages.binwalk-full
 
+    # Disk
+    parted
+
     # Flashing tools
     avrdude
     heimdall
