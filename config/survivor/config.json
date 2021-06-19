@@ -12,8 +12,10 @@
     "printing": true
   },
   "graphical": {
-    "enable": true
+    "enable": true,
+    "production": true
   },
+  "games": true,
   "audio": true,
   "bluetooth": true
 }
