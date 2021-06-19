@@ -44,6 +44,7 @@
     mpkgs.python3Packages.anime-downloader
 
     # Pen
+    ncrack
     sqlmap
 
     # Sniffer
