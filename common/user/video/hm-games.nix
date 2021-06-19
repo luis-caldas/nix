@@ -25,6 +25,7 @@
 
     # Minecraft
     multimc
+    minecraft
 
     # FPS
     openarena
