@@ -12,7 +12,12 @@
   },
   "graphical": {
     "enable": true,
-    "production": true
+    "production": true,
+    "displays": [{
+      "scale": 1, "display": ":0", "extraCommands": [
+        "swap-back-and-slash"
+      ]
+    }]
   },
   "games": true,
   "audio": true,
