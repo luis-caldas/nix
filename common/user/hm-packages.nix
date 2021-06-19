@@ -176,7 +176,7 @@
     nodePackages.node2nix
 
     # Java
-    adoptopenjdk-jre-bin
+    adoptopenjdk-jre-openj9-bin-16
 
     # Markdown
     python3Packages.grip
