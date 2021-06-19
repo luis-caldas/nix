@@ -1,0 +1,13 @@
+{
+  "boot": {
+    "timeout": 1,
+    "efi": false,
+    "device": "/dev/sdc"
+  },
+  "system": { "hostname": "live" },
+  "net": { "id": "1ff1fecc" },
+  "services": {
+    "ssh": true,
+    "docker": true
+  }
+}
