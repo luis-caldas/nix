@@ -24,7 +24,7 @@ in {
   # Override some of the iso configurations
   # So my ones may work on top
   networking.wireless.enable = false;
-  services.mingetty.autologinUser = lib.mkForce null;
+  services.getty.autologinUser = lib.mkForce null;
   # Boot loader configs should follow the iso
   boot.loader.timeout = lib.mkForce null;
 
