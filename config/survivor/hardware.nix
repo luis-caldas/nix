@@ -9,6 +9,8 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
+  boot.initrd.luks.devices."survivor".device = "/dev/disk/by-uuid/31d1f937-8f73-40ec-a8d1-cfc8fc13d5dd";
+
   fileSystems."/" =
     { device = "survivor/root";
       fsType = "zfs";
