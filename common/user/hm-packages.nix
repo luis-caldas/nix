@@ -46,6 +46,7 @@
     # Pen
     ncrack
     sqlmap
+    thc-hydra
 
     # Sniffer
     wireshark
