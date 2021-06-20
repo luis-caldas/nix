@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ config, ... }:
 {
 
   # Drivers to install on the system
-  environment.systemPackages = with pkgs.linuxPackages; [
+  boot.extraModulePackages = with config.boot.kernelPackages; [
 
       # Wifi
       rtl8821cu
