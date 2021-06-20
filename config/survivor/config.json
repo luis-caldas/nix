@@ -1,7 +1,6 @@
 {
   "boot": {
     "timeout": 1,
-    "prober": false,
     "device": "/dev/sda"
   },
   "system": { "hostname": "survivor" },

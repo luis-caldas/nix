@@ -4,7 +4,7 @@
     "default": 0,
     "efi": true,
     "device": "nodev",
-    "prober": true,
+    "prober": false,
     "override": false
   },
   "x86_64": true,
