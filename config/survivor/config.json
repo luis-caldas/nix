@@ -12,12 +12,8 @@
   },
   "graphical": {
     "enable": true,
-    "production": true,
-    "displays": [{
-      "scale": 1, "display": ":0", "extraCommands": [
-        "swap-back-and-slash"
-      ]
-    }]
+    "touchpad": { "enable": true },
+    "production": true
   },
   "games": true,
   "audio": true,
