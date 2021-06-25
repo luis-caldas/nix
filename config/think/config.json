@@ -15,7 +15,7 @@
     "fingerprint": true
   },
   "graphical": {
-    "enable": false,
+    "enable": true,
     "drivers": [ "intel" ],
     "trackpoint": true,
     "production": true
