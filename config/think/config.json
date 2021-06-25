@@ -1,0 +1,26 @@
+{
+  "boot": {
+    "timeout": 1
+  },
+  "system": {
+    "hostname": "tink"
+  },
+  "net": {
+    "id": "1ff99666"
+  },
+  "services": {
+    "ssh": true,
+    "docker": true,
+    "printing": true,
+    "fingerprint": true
+  },
+  "graphical": {
+    "enable": false,
+    "drivers": [ "intel" ],
+    "trackpoint": true,
+    "production": true
+  },
+  "games": true,
+  "audio": true,
+  "bluetooth": true
+}
