@@ -191,6 +191,7 @@
 
   ] ++
   mfunc.useDefault my.config.x86_64 [ flashrom ] [] ++
+  mfunc.useDefault my.config.services.fingerprint [ fwupd ] [] ++
   mfunc.useDefault my.config.tex [ texlive.combined.scheme-medium ] [] ++
   mfunc.useDefault my.config.services.docker [ docker_compose ] [] ++
   mfunc.useDefault my.config.audio [
