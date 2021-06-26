@@ -72,7 +72,11 @@
     },
     "production": false,
     "prod3d": false,
-    "trackpoint": false,
+    "trackpoint": {
+      "enable": false,
+      "speed": 97,
+      "sense": 128
+    },
     "touchpad": {
       "enable": false,
       "accel": "0.5"

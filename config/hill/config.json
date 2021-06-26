@@ -22,7 +22,8 @@
   "graphical": {
     "enable": true,
     "drivers": [ "intel" ],
-    "trackpoint": true,
+    "trackpoint": { "enable": true },
+    "touchpad": { "enable": true },
     "production": true
   },
   "games": true,

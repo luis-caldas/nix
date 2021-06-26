@@ -1,10 +1,17 @@
 { my, ... }:
 {
 
-  # Enable libinput
+  # Enable libinput for trackpoint
   services.xserver.libinput = {
     enable = true;
-    touchpad.scrollButton = 2;
+  };
+
+  # Enable hardware trackpoint
+  hardware.trackpoint = {
+      enable = true;
+      emulateWheel = true;
+      speed = my.config.graphical.trackpoint.speed;
+      sensitivity = my.config.graphical.trackpoint.sense;
   };
 
 }

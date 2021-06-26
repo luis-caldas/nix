@@ -76,7 +76,7 @@ let
     ./common/system/video/touchpad.nix
   ] [] ++
   # Check if there is trackpoint
-  mfunc.useDefault (my.config.graphical.enable && my.config.graphical.trackpoint) [
+  mfunc.useDefault (my.config.graphical.enable && my.config.graphical.trackpoint.enable) [
     ./common/system/video/trackpoint.nix
   ] [] ++
   # Check if audio is supported

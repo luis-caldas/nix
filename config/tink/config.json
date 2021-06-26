@@ -19,7 +19,7 @@
   "graphical": {
     "enable": true,
     "drivers": [ "intel" ],
-    "trackpoint": true,
+    "trackpoint": { "enable": true },
     "production": true,
     "displays": [{
       "scale": 1, "display": ":0", "extraCommands": [
