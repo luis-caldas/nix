@@ -54,6 +54,9 @@
     # Scan
     gnome3.simple-scan
 
+    # Camera
+    webcamoid
+
     # Document viewer
     evince
 
