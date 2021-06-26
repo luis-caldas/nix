@@ -65,6 +65,8 @@
     minicom
 
     # Boot tools
+    grub2
+    (pkgs.writeShellScriptBin "grub-install-efi" "exec -a $0 ${grub2_efi}/bin/grub-install $@")
     efibootmgr
 
     # System monitoring
