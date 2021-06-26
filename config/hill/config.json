@@ -15,7 +15,6 @@
     "fingerprint": true,
     "startup": {
       "permit": [
-        "/sys/class/devfreq/*/*governor",
         "/sys/devices/system/cpu/cpu*/cpufreq/*governor"
       ]
     }
