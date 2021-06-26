@@ -19,6 +19,7 @@
     hexedit
     apktool
     binutils
+    geteltorito
     unixtools.xxd
     mpkgs.steghide
     python3Packages.binwalk-full
