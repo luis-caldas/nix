@@ -7,6 +7,9 @@
       # Wifi
       rtl8821cu
 
+      # Controllers
+      hid-nintendo
+
   ];
 
 }
