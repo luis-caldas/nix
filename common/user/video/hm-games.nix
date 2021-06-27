@@ -19,6 +19,9 @@
     xonotic
     mpkgs.srb2
 
+    # Steam
+    steam
+
   ] ++
   # amd64 only games
   mfunc.useDefault my.config.x86_64 [
