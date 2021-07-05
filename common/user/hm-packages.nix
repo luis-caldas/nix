@@ -79,7 +79,10 @@
     p7zip
     unrar
     samba
+
+    # File systems
     jmtpfs
+    ntfs3g
     archivemount
 
     # Net tools
