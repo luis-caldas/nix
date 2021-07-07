@@ -76,6 +76,7 @@
     # File manipulation
     tree
     file
+    pigz
     p7zip
     unrar
     samba
