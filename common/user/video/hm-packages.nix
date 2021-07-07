@@ -157,6 +157,7 @@
     guitarix
     linuxsampler
     qsampler
+    zyn-fusion
 
   ] [];
 }
