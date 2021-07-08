@@ -19,16 +19,11 @@ let
 
   # List packages in folders
   stablePackages = listDirs ./stable;
-  unstablePackages = listDirs ./unstable;
 
   # Create set of package names and calls
   packageSet = (
     pkgs.lib.genAttrs stablePackages (
       folderName: pkgs.lib.callPackageWith pkgs (./stable + ("/" + folderName)) { }
-    )
-  ) // (
-    pkgs.lib.genAttrs unstablePackages (
-      folderName: pkgs.lib.callPackageWith upkgs (./unstable + ("/" + folderName)) { }
     )
   );
 
