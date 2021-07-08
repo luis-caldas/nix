@@ -22,11 +22,6 @@
     plugins = [ pkgs.acsccid ];
   };
 
-  # Fingerprint
-  services.fprintd = mfunc.useDefault my.config.services.fingerprint {
-    enable = true;
-  } {};
-
   # Udev configuration
   services.udev.packages = [ pkgs.rtl-sdr ];
 
