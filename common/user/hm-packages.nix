@@ -30,6 +30,7 @@
     # Flashing tools
     avrdude
     heimdall
+    dfu-programmer
 
     # Web tools
     w3m
