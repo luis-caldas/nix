@@ -175,9 +175,6 @@
     # Python
     python2Full
     python3Full
-    python3Packages.pip
-    python3Packages.pyusb
-    libusb
 
     # Ruby
     ruby
