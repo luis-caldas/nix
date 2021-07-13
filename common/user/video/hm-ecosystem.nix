@@ -182,6 +182,7 @@ in
         "i-dont-care-about-cookies"
         "foxyproxy-standard"
         "privacy-badger"
+        "tree-style-tab"
       ] ++ my.config.graphical.firefox.extensions.extra
     ) nur.repos.rycee.firefox-addons) ++
     (lib.attrVals (
