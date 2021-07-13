@@ -20,6 +20,11 @@ let
   linkIcons   = (mfunc.listCreateLinks (packages.icons + "/my-icons-collection") ".local/share/icons");
   linkPapes   = { ".local/share/backgrounds/papes" = { source = (packages.papes + "/papes"); }; };
 
+  # Link vst folders
+  linkVST = mfunc.useDefault my.config.graphical.production {
+    "./.vst/zynaddsubfx" = { source = "${pkgs.zyn-fusion}" + "/lib/vst"; };
+  } {};
+
   # List of default programs
   defaultPrograms = {
     "browser"   = "firefox";
@@ -100,7 +105,8 @@ let
 
   # Put all the sets together
   linkSets = linkThemes // linkFonts // linkIcons // linkCursors // linkPapes //
-             textXInit // textIconsCursor;
+             textXInit // textIconsCursor //
+             linkVST;
 
 in
 {
