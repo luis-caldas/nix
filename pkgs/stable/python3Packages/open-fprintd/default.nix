@@ -14,16 +14,14 @@ buildPythonPackage rec {
   };
 
   nativeBuildInputs = [
+    pygobject3
     dbus-python
   ];
 
   propagatedBuildInputs = [
+    pygobject3
     dbus-python
   ];
-
-  installPhase = ''
-    cp $out/lib/open-fprintd/open-fprintd $out/bin/open-fprintd
-  '';
 
   meta = with lib; {
     description = "Open Fprintd package for third party interfaces";
