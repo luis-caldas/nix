@@ -1,4 +1,4 @@
-{ my, mfunc, lib, pkgs, upkgs, ... }:
+{ my, mfunc, lib, pkgs, ... }:
 {
 
   # SSH
@@ -25,10 +25,6 @@
   # Fingerprint
   services.fprintd = mfunc.useDefault my.config.services.fingerprint {
     enable = true;
-    tod = {
-      enable = true;
-      driver = upkgs.libfprint-2-tod1-vfs0090;
-    };
   } {};
 
   # Udev configuration
