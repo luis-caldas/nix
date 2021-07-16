@@ -81,6 +81,7 @@
     p7zip
     unrar
     samba
+    jdupes
 
     # File systems
     jmtpfs
