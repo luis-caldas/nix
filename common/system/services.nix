@@ -2,10 +2,11 @@
 {
 
   # SSH
-  services.openssh.enable = my.config.services.ssh;
-
-  # Enable X11 forwarding if graphical is enabled
-  services.openssh.forwardX11 = my.config.services.ssh && my.config.graphical.enable;
+  services.openssh = {
+    enable = my.config.services.ssh;
+    # Enable X11 forwarding if graphical is enabled
+    forwardX11 = my.config.services.ssh && my.config.graphical.enable;
+  };
 
   # Docker for my servers
   virtualisation.docker.enable = my.config.services.docker;

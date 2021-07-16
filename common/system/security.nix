@@ -4,10 +4,18 @@
   # Create the sudo group
   users.groups.sudo = {};
 
-  security.sudo.enable = true;
-  security.sudo.extraConfig = "%sudo	ALL=(ALL:ALL)	NOPASSWD: ALL";
+  # Sudo configs
+  security.sudo = {
+    enable = true;
+    extraConfig = "%sudo	ALL=(ALL:ALL)	NOPASSWD: ALL";
+  };
 
-  # Disable askpass
-  programs.ssh.askPassword = "";
+  programs.ssh = {
+    # Disable askpass graphical password program
+    askPassword = "";
+    # Enable agent
+    startAgent = true;
+    agentTimeout = "0";
+  };
 
 }
