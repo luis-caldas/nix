@@ -132,6 +132,9 @@
     # Banner
     figlet
 
+    # Logitech
+    ltunify
+
     # Radio
     rtl-sdr
 
