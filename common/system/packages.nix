@@ -7,7 +7,13 @@
     # Basic
     git
     tmux
+    htop
+    less
+    gotop
+    screen
     neovim
+    parallel
+    nix-tree
 
     # Compatibility
     envsubst

@@ -3,15 +3,6 @@
 
   home.packages = with pkgs; [
 
-    # Basic
-    tmux
-    htop
-    gotop
-    less
-    screen
-    parallel
-    nix-tree
-
     # Bin manipulation
     john
     hashcat
