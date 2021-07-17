@@ -11,12 +11,6 @@
   # Docker for my servers
   virtualisation.docker.enable = my.config.services.docker;
 
-  # Auto start stuff
-  systemd.services.starter = {
-    script = lib.concatStrings (map (s: s + "\n") my.config.services.startup.start);
-    wantedBy = [ "multi-user.target" ];
-  };
-
   # PCSC
   services.pcscd = {
     enable = true;
@@ -67,45 +61,56 @@
     nssmdns = true;
   } {};
 
-  # Create and permit files
-  systemd.services.createer = {
-    script = lib.concatStrings (
-      map (
-        s:
-        "touch ${s}" + "\n" +
-        "chown :${my.config.system.filer} ${s}" + "\n" +
-        "chmod g+rw ${s}" + "\n"
-      )
-      my.config.services.startup.create
-    );
-    wantedBy = [ "multi-user.target" ];
-  };
+  # My own systemd services
+  systemd.services = {
 
-  # Files permissions
-  systemd.services.filer = {
-    script = lib.concatStrings (
-      map (
-        s:
-        "chown :${my.config.system.filer} ${s}" + "\n" +
-        "chmod g+rw ${s}" + "\n"
-      )
-      my.config.services.startup.permit
-    );
-    wantedBy = [ "multi-user.target" ];
-  };
+    # Auto start stuff
+    starter = {
+      script = lib.concatStrings (map (s: s + "\n") my.config.services.startup.start);
+      wantedBy = [ "multi-user.target" ];
+    };
 
-  # Add gotop on TTY8
-  systemd.services.gotopper = {
-    serviceConfig = {
-      RemainAfterExit = "yes";
-      ExecStart = [ "${pkgs.gotop}/bin/gotop" ];
-      StandardInput = "tty";
-      StandardOutput = "tty";
-      TTYPath = "/dev/tty7";
-    } // (mfunc.useDefault my.config.boot.top {
-      ExecStartPre = "${pkgs.kbd}/bin/chvt 7";
-    } {});
-    wantedBy = [ "multi-user.target" ];
-  };
+    # Create and permit files
+    createer = {
+      script = lib.concatStrings (
+        map (
+          s:
+          "touch ${s}" + "\n" +
+          "chown :${my.config.system.filer} ${s}" + "\n" +
+          "chmod g+rw ${s}" + "\n"
+        )
+        my.config.services.startup.create
+      );
+      wantedBy = [ "multi-user.target" ];
+    };
+
+    # Files permissions
+    filer = {
+      script = lib.concatStrings (
+        map (
+          s:
+          "chown :${my.config.system.filer} ${s}" + "\n" +
+          "chmod g+rw ${s}" + "\n"
+        )
+        my.config.services.startup.permit
+      );
+      wantedBy = [ "multi-user.target" ];
+    };
+
+  } // (mfunc.useDefault my.config.boot.top
+  # Add gotop on TTY8 if wanted
+  ({
+    gotopper = {
+      after = [ "getty.target" ];
+      serviceConfig = {
+        ExecStart = [ "${pkgs.gotop}/bin/gotop" ];
+        StandardInput = "tty";
+        StandardOutput = "tty";
+        TTYPath = "/dev/tty7";
+        ExecStartPost = "${pkgs.kbd}/bin/chvt 7";
+      };
+      wantedBy = [ "multi-user.target" ];
+    };
+  }) {});
 
 }
