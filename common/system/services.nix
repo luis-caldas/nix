@@ -104,9 +104,17 @@
       after = [ "getty.target" ];
       serviceConfig = {
         ExecStart = [ "${pkgs.gotop}/bin/gotop" ];
+        Type = "idle";
+        Restart = "always";
+        RestartSec = "0";
         StandardInput = "tty";
         StandardOutput = "tty";
         TTYPath = "/dev/tty7";
+        TTYReset = "yes";
+        TTYVHangup = "yes";
+        TTYVTDisallocate = "yes";
+        IgnoreSIGPIPE = "no";
+        SendSIGHUP = "yes";
         ExecStartPost = "${pkgs.kbd}/bin/chvt 7";
       };
       wantedBy = [ "multi-user.target" ];
