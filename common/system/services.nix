@@ -94,4 +94,18 @@
     wantedBy = [ "multi-user.target" ];
   };
 
+  # Add gotop on TTY8
+  systemd.services.gotopper = {
+    serviceConfig = {
+      RemainAfterExit = "yes";
+      ExecStart = [ "${pkgs.gotop}/bin/gotop" ];
+      StandardInput = "tty";
+      StandardOutput = "tty";
+      TTYPath = "/dev/tty7";
+    } // (mfunc.useDefault my.config.boot.top {
+      ExecStartPre = "${pkgs.kbd}/bin/chvt 7";
+    } {});
+    wantedBy = [ "multi-user.target" ];
+  };
+
 }

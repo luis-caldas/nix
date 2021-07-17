@@ -5,6 +5,7 @@
     "efi": true,
     "device": "nodev",
     "prober": false,
+    "top": false,
     "override": false
   },
   "x86_64": true,

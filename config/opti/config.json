@@ -1,6 +1,7 @@
 {
   "boot": {
-    "timeout": 1
+    "timeout": 1,
+    "top": true
   },
   "user": {
     "groups": []
