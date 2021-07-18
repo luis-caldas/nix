@@ -153,7 +153,6 @@
     #######
 
     # Shell
-    bc
     shellcheck
     inotify-tools
 
