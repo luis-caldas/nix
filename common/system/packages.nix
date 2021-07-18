@@ -15,6 +15,7 @@
     neovim
     parallel
     nix-tree
+    trash-cli
 
     # Compatibility
     envsubst

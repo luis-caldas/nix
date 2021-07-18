@@ -1,5 +1,5 @@
 { pkgs, ... }:
-let
+{
 
   # Create some aliases for the file commands
   programs.bash.shellAliases = {
