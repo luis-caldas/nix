@@ -17,7 +17,7 @@ in {
 
     extraConfig = mkOption {
       type = types.lines;
-      default = "";
+      default = builtins.readFile ./logid.example.cfg;
       description = ''
         Configuration for `logiops`, see
         <link xlink:href="https://github.com/PixlOne/logiops/wiki/Configuration"/>

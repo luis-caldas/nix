@@ -6,7 +6,7 @@ let
     let 
       allNameList = lib.mapAttrsToList (
         name: value:
-          if (value == "regular") then
+          if (value == "directory") then
             name
           else
             ""
