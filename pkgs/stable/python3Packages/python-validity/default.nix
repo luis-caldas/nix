@@ -1,6 +1,11 @@
 { lib
 , buildPythonPackage
+, cryptography
 , dbus-python
+, pygobject3
+, pyyaml
+, pyusb
+, innoextract
 }:
 
 buildPythonPackage rec {
@@ -14,17 +19,31 @@ buildPythonPackage rec {
   };
 
   nativeBuildInputs = [
-    pygobject3
+    cryptography
+    innoextract
     dbus-python
+    pygobject3
+    pyyaml
+    pyusb
   ];
 
-  propagatedBuildInputs = [
-    pygobject3
-    dbus-python
-  ];
+  propagatedBuildInputs = nativeBuildInputs;
+
+  preBuild = ''
+    sed -e 's|/usr/share/python-validity/|/var/lib/python-validity/|g' -i bin/validity-sensors-firmware
+    sed -e 's|/usr/share/python-validity/|/var/lib/python-validity/|g' -i dbus_service/dbus-service
+    sed -e 's|/usr/share/python-validity/|/var/lib/python-validity/|g' -i validitysensor/sensor.py
+    sed -e 's|/usr/share/python-validity|/var/lib/python-validity|g' -i validitysensor/upload_fwext.py
+  '';
+
+  postInstall = ''
+    wrapProgram $out/bin/validity-sensors-firmware --set PYTHONPATH $PYTHONPATH
+    wrapProgram $out/bin/validity-led-dance --set PYTHONPATH $PYTHONPATH
+    wrapProgram $out/lib/python-validity/dbus-service --set PYTHONPATH $PYTHONPATH
+  '';
 
   meta = with lib; {
-    description = "Open Fprintd package for third party interfaces";
+    description = "Thinkpad fingerprint driver";
   };
 
 }

@@ -193,7 +193,6 @@
   mfunc.useDefault my.config.x86_64 [ flashrom ] [] ++
   mfunc.useDefault my.config.services.fingerprint [
     fwupd
-    mpkgs.fprintd-clients
   ] [] ++
   mfunc.useDefault my.config.tex [ texlive.combined.scheme-medium ] [] ++
   mfunc.useDefault my.config.services.docker [ docker_compose ] [] ++

@@ -1,12 +1,13 @@
 { config, lib, pkgs, mpkgs, ... }:
-
 with lib;
-
 let
+
   cfg = config.services.logiops;
-  # settingsFormat = pkgs.formats.libconfig {};
+
 in {
+
   options.services.logiops = {
+
     enable = mkOption {
       type = types.bool;
       default = false;

@@ -1,4 +1,4 @@
-{ my, mfunc, lib, pkgs, ... }:
+{ my, mfunc, lib, pkgs, mpkgs, ... }:
 {
 
   # SSH
@@ -18,9 +18,10 @@
   };
 
   # Fingerprint
-  services.fprintd = mfunc.useDefault my.config.services.fingerprint {
-    enable = true;
-  } {};
+  nixpkgs.config.packageOverrides = pkgs: { fprintd = mpkgs.fprintd-clients; };
+  services.fprintd.enable = my.config.services.fingerprint;
+  services.open-fprintd.enable = my.config.services.fingerprint;
+  services.python-validity.enable = my.config.services.fingerprint;
 
   # Udev configuration
   services.udev.packages = [ pkgs.rtl-sdr ];
