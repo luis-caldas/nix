@@ -27,7 +27,7 @@ let
     { config = config.nixpkgs.config; };
 
   # My packages
-  mpkgs = import ./pkgs/all.nix { inherit pkgs upkgs; };
+  mpkgs = import ./pkgs/pkgs.nix { inherit pkgs upkgs; };
 
   # NUR user repos
   nur = import (builtins.fetchGit "https://github.com/nix-community/NUR") { inherit pkgs; };
@@ -42,7 +42,9 @@ let
 
   # System specific hardware configuration
   un-imports-list = [ (hardware-folder + "/hardware.nix") ]
+  # Local options for local packages
   ++
+  [ ./pkgs/options.nix ] ++
   # All the system modules
   [
     ./common/system/boot.nix

@@ -25,6 +25,9 @@
   # Udev configuration
   services.udev.packages = [ pkgs.rtl-sdr ];
 
+  # Enable logiops service (logitech MX mice)
+  services.logiops.enable = true;
+
   # Printing
   services.printing = mfunc.useDefault my.config.services.printing {
     enable = true;
