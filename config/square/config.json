@@ -32,5 +32,6 @@
     "production": true
   },
   "audio": true,
-  "games": true
+  "games": true,
+  "bluetooth": true
 }
