@@ -13,8 +13,7 @@
   "services": {
     "ssh": true,
     "docker": true,
-    "printing": true,
-    "fingerprint": true
+    "printing": true
   },
   "graphical": {
     "enable": true,
