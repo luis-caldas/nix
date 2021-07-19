@@ -30,7 +30,7 @@ buildPythonPackage rec {
   propagatedBuildInputs = nativeBuildInputs;
 
   preBuild = ''
-    sed -e 's|/usr/share/python-validity/|/var/lib/python-validity/|g' -i bin/validity-sensors-firmware
+    sed -e 's|/usr/share/python-validity/|/tmp/|g' -i bin/validity-sensors-firmware
     sed -e 's|/usr/share/python-validity/|/var/lib/python-validity/|g' -i dbus_service/dbus-service
     sed -e 's|/usr/share/python-validity/|/var/lib/python-validity/|g' -i validitysensor/sensor.py
     sed -e 's|/usr/share/python-validity|/var/lib/python-validity|g' -i validitysensor/upload_fwext.py

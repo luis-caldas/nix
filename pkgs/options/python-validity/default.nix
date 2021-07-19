@@ -4,6 +4,13 @@ let
 
   cfg = config.services.python-validity;
 
+  # Firmware variables
+  firmwarePath = ./6_07f_lenovo_mis_qm.xpfwext;
+  firmwareName = baseNameOf firmwarePath;
+
+  # Var reasign
+  packageInstall = mpkgs.python3Packages.python-validity;
+
 in {
 
   options.services.python-validity = {
@@ -18,7 +25,7 @@ in {
 
     firmwareFile = mkOption {
       type = types.path;
-      default = ./6_07f_lenovo_mis_qm.xpfwext;
+      default = firmwarePath;
       description = ''
         File that contains the firmware for your fingerprint reader
       '';
@@ -30,11 +37,12 @@ in {
 
     # Create the service
     systemd.services.python-validity = {
-      description = "Fingerprint package for Thinkpads";
+      description = "Thinkpad Fingerprint Service";
       startLimitIntervalSec = 0;
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${mpkgs.python3Packages.python-validity}/lib/python-validity/dbus-service --debug";
+        ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /var/lib/python-validity";
+        ExecStart = "${packageInstall}/lib/python-validity/dbus-service --debug";
         User = "root";
         ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
         Restart = "on-failure";
@@ -42,8 +50,11 @@ in {
       wantedBy = [ "multi-user.target" ];
     };
 
+    # Add the bin packages to the system as well
+    environment.systemPackages = [ packageInstall ];
+
     # Add given firmware file
-    #environment.etc."python-validity/$(baseNameOf cfg.firmwareFile)".source = cfg.firmwareFile;
+    environment.etc."python-validity/${firmwareName}".source = cfg.firmwareFile;
 
     # Add dbus policies
     services.dbus.packages = [ mpkgs.python3Packages.python-validity ];
