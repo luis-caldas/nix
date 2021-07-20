@@ -37,6 +37,7 @@
     mpkgs.python3Packages.anime-downloader
 
     # Pen
+    tor
     ncrack
     sqlmap
     thc-hydra
