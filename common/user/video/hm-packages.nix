@@ -132,8 +132,10 @@
   ] [] ++
   mfunc.useDefault (my.config.x86_64 && my.config.graphical.prod3d) [
 
-    # Latest blender if 3d production is set
+    # Modeling and cadding
     blender
+    freecad
+    librecad
 
   ] [] ++
   mfunc.useDefault my.config.audio [
