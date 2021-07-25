@@ -22,9 +22,9 @@
     };
 
   fileSystems."/data" =
-    { device = "/dev/disk/by-uuid/9A19-A1D9";
+    { device = "/dev/disk/by-uuid/52F24530523F1271";
       fsType = "ntfs";
-      options = [ "uid=1000" "gid=1000" "nofail" ];
+      options = [ "rw" "uid=1000" "gid=1000" "nofail" ];
     };
 
   fileSystems."/home" =
