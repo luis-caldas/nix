@@ -79,7 +79,6 @@
 
     # File systems
     jmtpfs
-    ntfs3g
     archivemount
 
     # Net tools

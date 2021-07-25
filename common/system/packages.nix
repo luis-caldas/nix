@@ -17,6 +17,9 @@
     nix-tree
     trash-cli
 
+    # Files
+    ntfs-3g
+
     # Compatibility
     envsubst
 
