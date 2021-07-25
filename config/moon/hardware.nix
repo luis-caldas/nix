@@ -52,10 +52,11 @@
     fsType = "vfat";
   };
 
-  #fileSystems."/strongo" = {
-  #  device = "/dev/disk/by-label/Strongo";
-  #  fsType = "btrfs";
-  #};
+  fileSystems."/strongo" = {
+    device = "/dev/disk/by-label/Strongo";
+    fsType = "btrfs";
+    options = [ "nofail" ];
+  };
 
   # I don't really need swap on this system
   swapDevices = [];

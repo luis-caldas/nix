@@ -29,7 +29,8 @@
     
   fileSystems."/data" =
     { device = "hill/data";
-    fsType = "zfs";
+      fsType = "zfs";
+      options = [ "nofail" ];
     };
 
   swapDevices = [ ];

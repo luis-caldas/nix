@@ -24,7 +24,7 @@
   fileSystems."/data" =
     { device = "/dev/disk/by-uuid/9A19-A1D9";
       fsType = "vfat";
-      options = [ "uid=1000" "gid=1000" ];
+      options = [ "uid=1000" "gid=1000" "nofail" ];
     };
 
   fileSystems."/home" =

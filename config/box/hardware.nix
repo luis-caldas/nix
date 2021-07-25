@@ -22,6 +22,7 @@
   fileSystems."/data" =
     { device = "boxy/data";
       fsType = "zfs";
+      options = [ "nofail" ];
     };
 
   fileSystems."/boot" =

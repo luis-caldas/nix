@@ -22,6 +22,7 @@
   fileSystems."/data" =
     { device = "circle/data";
       fsType = "zfs";
+      options = [ "nofail" ];
     };
 
   fileSystems."/boot" =

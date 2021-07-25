@@ -27,6 +27,7 @@
   fileSystems."/data" =
     { device = "opti/data";
       fsType = "zfs";
+      options = [ "nofail" ];
     };
 
   swapDevices = [ ];
