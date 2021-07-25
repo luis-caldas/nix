@@ -12,7 +12,6 @@
     binutils
     geteltorito
     unixtools.xxd
-    mpkgs.iso2opl
     mpkgs.steghide
     python3Packages.binwalk-full
 
