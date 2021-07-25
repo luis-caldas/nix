@@ -55,7 +55,7 @@ in
   boot = {
 
     # Support for zfs
-    supportedFilesystems = [ "zfs" ];
+    supportedFilesystems = [ "zfs" "ntfs" ];
 
     # Don't force import zfs pool
     zfs = {
