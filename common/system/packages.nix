@@ -18,7 +18,7 @@
     trash-cli
 
     # Files
-    ntfs-3g
+    ntfs3g
 
     # Compatibility
     envsubst
