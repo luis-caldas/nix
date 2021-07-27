@@ -44,6 +44,9 @@
     # Torrenting
     deluge
 
+    # Remote Desktop
+    remmina
+
     # Calculator
     gnome3.gnome-calculator
 
