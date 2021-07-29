@@ -17,6 +17,7 @@
 
     # Disk
     parted
+    libguestfs
 
     # Flashing tools
     avrdude
