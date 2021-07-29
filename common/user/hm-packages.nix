@@ -17,7 +17,6 @@
 
     # Disk
     parted
-    libguestfs-with-appliance
 
     # Flashing tools
     avrdude
