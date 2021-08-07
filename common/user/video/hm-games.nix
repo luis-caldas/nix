@@ -22,6 +22,9 @@
     # Steam
     steam
 
+    # Simulator
+    flightgear
+
   ] ++
   # amd64 only games
   mfunc.useDefault my.config.x86_64 [
