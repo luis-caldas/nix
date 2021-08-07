@@ -1,6 +1,5 @@
 { lib
 , buildPythonPackage
-, fetchPypi
 , file
 , stdenv
 , pysmartdl
@@ -18,11 +17,12 @@
 buildPythonPackage rec {
 
   pname = "anime-downloader";
-  version = "5.0.9";
+  owner = "anime-dl";
+  version = "master";
 
-  src = fetchPypi {
-    inherit pname version;
-    sha256 = "1m7a2qcc3gwmsl5s29c6slwrjz9mdi1hzz5jjdcz6c4aa3cxxsj0";
+  src = builtins.fetchGit {
+    url = "https://github.com/${owner}/${pname}";
+    ref = version;
   };
 
   buildInputs = [
