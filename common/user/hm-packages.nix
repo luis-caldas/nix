@@ -17,6 +17,7 @@
 
     # Disk
     parted
+    testdisk
 
     # Flashing tools
     avrdude
