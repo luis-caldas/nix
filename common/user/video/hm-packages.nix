@@ -16,6 +16,9 @@
     dconf
     gnome-themes-extra
 
+    # Font
+    gnome3.gnome-font-viewer
+
     # Monitors
     arandr
 
