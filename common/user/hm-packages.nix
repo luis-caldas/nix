@@ -114,6 +114,7 @@
 
     # User tools
     irssi
+    _3llo
     neomutt
 
     # Clipboard
