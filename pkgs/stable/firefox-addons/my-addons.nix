@@ -52,10 +52,10 @@
   };
   "search-image" = buildFirefoxXpiAddon {
     pname = "search-image";
-    version = "3.1.0";
+    version = "3.7.1";
     addonId = "{2e5ff8c8-32fe-46d0-9fc8-6b8986621f3c}";
-    url = "https://addons.mozilla.org/firefox/downloads/file/3641782/search_by_image-3.1.0-an+fx.xpi";
-    sha256 = "193934y6qbmmlkmdkwqjqv5py3xlc0hap7clpzlynk0ccz10zyv8";
+    url = "https://addons.mozilla.org/firefox/downloads/file/3815277/search_by_image-3.7.1-an+fx.xpi";
+    sha256 = "1ffihz5gmcmr9wp3cciwxmrgnpzkkd8wnq0gvxv16iq0zrg874y8";
     meta = with lib; {
       platforms = platforms.all;
     };
