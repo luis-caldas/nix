@@ -9,7 +9,7 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  boot.initrd.luks.devices."survivor".device = "/dev/disk/by-uuid/31d1f937-8f73-40ec-a8d1-cfc8fc13d5dd";
+  boot.initrd.luks.devices."survivor".device = "/dev/disk/by-uuid/1980e7ba-940a-4030-8ce6-912e4391e8d5";
 
   fileSystems."/" =
     { device = "survivor/root";
@@ -22,7 +22,7 @@
     };
 
   fileSystems."/data" =
-    { device = "/dev/disk/by-uuid/52F24530523F1271";
+    { device = "/dev/disk/by-uuid/3993DAA70776E5D6";
       fsType = "ntfs";
       options = [ "rw" "uid=1000" "gid=1000" "nofail" ];
     };
