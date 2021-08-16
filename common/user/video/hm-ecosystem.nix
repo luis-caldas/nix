@@ -189,13 +189,13 @@ in
         "foxyproxy-standard"
         "privacy-badger"
         "tree-style-tab"
+        "h264ify"
+        "search-by-image"
+        "translate-web-pages"
       ] ++ my.config.graphical.firefox.extensions.extra
     ) nur.repos.rycee.firefox-addons) ++
     (lib.attrVals (
       [
-        "google-translate"
-        "search-image"
-        "h264ify"
         "dark-theme"
       ] ++ my.config.graphical.firefox.extensions.mine
     ) mpkgs.firefox-addons);
