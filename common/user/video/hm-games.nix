@@ -6,11 +6,12 @@
 
     # Emulators
     # pcsxr  # Uses unsafe ffmpeg
-    # pcsx2  # Needs to compile
+    pcsx2
     desmume
     mednafen
     mednaffe
     retroarch
+    dolphinEmu
 
     # Proper games
     zeroad
