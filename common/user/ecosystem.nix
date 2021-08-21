@@ -67,6 +67,11 @@ in
       };}
     ;
 
+    # Add arduino libraries
+    home.file = {
+      ".local/share/arduino" = { source = "${pkgs.arduino}/share/arduino"; };
+    };
+
   };
 
 }

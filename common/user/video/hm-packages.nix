@@ -28,6 +28,9 @@
     # Desktop lock
     xss-lock
 
+    # IDE
+    arduino
+
     # Electronics
     kicad
     logisim
