@@ -7,6 +7,7 @@
     # Emulators
     # pcsxr  # Uses unsafe ffmpeg
     pcsx2
+    citra
     desmume
     mednafen
     mednaffe
