@@ -7,12 +7,12 @@
     # Emulators
     # pcsxr  # Uses unsafe ffmpeg
     pcsx2
-    citra
     desmume
     mednafen
     mednaffe
     retroarch
     dolphinEmu
+    mpkgs.citra
 
     # Proper games
     zeroad
