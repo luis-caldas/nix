@@ -60,6 +60,8 @@ let
       "export QT_AUTO_SCREEN_SCALE_FACTOR=" + (toString eachDisplay.scale) + "\n" +
       # Fix for java applications on tiling window managers
       "export _JAVA_AWT_WM_NONREPARENTING=1" + "\n" +
+      # Enable firefox XInput2 for touch
+      "export MOZ_USE_XINPUT2=1" + "\n" +
       # Dont blank screen with DPMS
       "xset s off" + "\n" +
       "xset dpms 0 0 0" + "\n" +
