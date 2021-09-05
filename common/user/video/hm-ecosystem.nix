@@ -65,6 +65,10 @@ let
       # Dont blank screen with DPMS
       "xset s off" + "\n" +
       "xset dpms 0 0 0" + "\n" +
+      # Unclutter normally if the cursor is idle
+      "unclutter --timeout 10 --jitter 5 --ignore-buttons 4,5,6,7 --start-hidden --fork" + " " + "&" + "\n" +
+      # Set unclutter to remove cursor on touch
+      (mfunc.useDefault my.config.graphical.touch ("unclutter --hide-on-touch --fork" + " " + "&" + "\n") "") +
       # Boot up numlock
       "numlockx" + " " + (if my.config.system.numlock then "on" else "off") + "\n" +
       # Change Caps to Ctrl
@@ -76,7 +80,7 @@ let
       # Restore the wallpapers
       "neotrogen restore" + "\n" +
       # Start window compositor
-      "neopicom" + "&" + "\n" +
+      "neopicom" + " " + "&" + "\n" +
       # Set the lock program to stay listening on lock events
       "xss-lock neolock" + " " + "&" + "\n" +
       # Call the preferred window manager

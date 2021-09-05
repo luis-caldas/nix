@@ -82,6 +82,7 @@
       "enable": false,
       "accel": "0.5"
     },
+    "touch": false,
     "displays": [
       { "scale": 1, "display": ":0", "extraCommands": [""] }
     ]

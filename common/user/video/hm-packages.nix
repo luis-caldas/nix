@@ -1,4 +1,4 @@
-{ my, mfunc, config, pkgs, ... }:
+{ my, mfunc, config, pkgs, mpkgs, ... }:
 {
 
   nixpkgs.config.allowUnsupportedSystem = true;
@@ -138,6 +138,9 @@
     # Reverse engineering
     ghidra-bin
 
+  ] [] ++
+  mfunc.useDefault my.config.graphical.touch [
+    mpkgs.unclutter-xfixes
   ] [] ++
   mfunc.useDefault (my.config.x86_64 && my.config.graphical.prod3d) [
 
