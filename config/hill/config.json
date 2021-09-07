@@ -29,8 +29,7 @@
     "touch": true,
     "displays": [{
       "scale": 1, "display": ":0", "extraCommands": [
-        "swap-back-and-slash",
-	"xinput map-to-output 9 eDP1"
+        "swap-back-and-slash"
       ]
     }]
   },
