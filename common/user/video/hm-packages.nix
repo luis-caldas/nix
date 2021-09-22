@@ -103,6 +103,9 @@
     protontricks
     wineWowPackages.staging
 
+    # QR Code
+    zbar
+
     # Video player
     mpv
     vlc
