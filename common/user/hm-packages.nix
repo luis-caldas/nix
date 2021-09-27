@@ -35,7 +35,6 @@
     socat
     inetutils
     youtube-dl
-    mpkgs.python3Packages.anime-downloader
 
     # Pen
     tor
