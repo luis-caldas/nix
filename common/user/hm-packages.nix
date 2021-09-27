@@ -80,6 +80,9 @@
     jmtpfs
     archivemount
 
+    # Optical disks
+    dvdplusrwtools
+
     # Net tools
     ethtool
     shadowsocks-libev
