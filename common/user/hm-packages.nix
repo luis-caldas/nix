@@ -18,6 +18,7 @@
     # Disk
     parted
     testdisk
+    smartmontools
 
     # Flashing tools
     avrdude
