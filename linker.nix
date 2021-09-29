@@ -74,6 +74,16 @@ let
     # Install preferred system wide gui applications
     ./common/system/video/packages.nix
   ] [] ++
+  # XServer configs for graphical interfaces
+  mfunc.useDefault (my.config.graphical.enable && !my.config.graphical.kodi) [
+    # XServer for user defined wm
+    ./common/system/video/xserver.nix
+  ] [] ++
+  # Kodi config
+  mfunc.useDefault (my.config.graphical.enable && my.config.graphical.kodi) [
+    # XServer for user defined wm
+    ./common/system/video/xserver-kodi.nix
+  ] [] ++
   # Check if there is touchpad and graphical support
   mfunc.useDefault (my.config.graphical.enable && my.config.graphical.touchpad.enable) [
     ./common/system/video/touchpad.nix
@@ -85,7 +95,9 @@ let
   # Check if audio is supported
   mfunc.useDefault my.config.audio [ ./common/system/audio.nix ] [] ++
   # Check if audio production is set
-  mfunc.useDefault (my.config.audio && my.config.graphical.production) [ ./common/system/production.nix ] [] ++
+  mfunc.useDefault (my.config.audio && my.config.graphical.production && !my.config.graphical.kodi) [ 
+    ./common/system/production.nix
+  ] [] ++
   # Check if bluetooth is supported
   mfunc.useDefault my.config.bluetooth [ ./common/system/bluetooth.nix ] [] ++
   # Bluetooth and video are enabled
@@ -103,7 +115,7 @@ let
     ./common/user/hm-games.nix
   ] [] ++
   # Visual imports for home-manager
-  mfunc.useDefault my.config.graphical.enable [
+  mfunc.useDefault (my.config.graphical.enable && !my.config.graphical.kodi) [
     # The visual ecosystem use
     ./common/user/video/hm-ecosystem.nix
     # Extra custom gui packages
@@ -112,7 +124,7 @@ let
     ./common/user/video/hm-window-managers.nix
   ] [] ++ 
   # Games
-  mfunc.useDefault (my.config.graphical.enable && my.config.games) [
+  mfunc.useDefault (my.config.graphical.enable && my.config.games && !my.config.graphical.kodi) [
     ./common/user/video/hm-games.nix
   ] [] ++
   mfunc.useDefault my.config.bluetooth [

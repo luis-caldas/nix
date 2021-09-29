@@ -39,6 +39,11 @@
 
   };
 
+  # Define extra users
+  users.extraUsers = mfunc.useDefault my.config.graphical.kodi {
+    kodi.isNormalUser = true;
+  } {};
+
   # Add custom getty message
   services.getty.greetingLine = my.config.system.getty.greeting;
   services.getty.helpLine = lib.mkOverride 70 ("\n" + my.config.system.getty.help);
