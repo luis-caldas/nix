@@ -16,6 +16,7 @@
   },
   "graphical": {
     "enable": true,
+    "drivers": [ "intel" ],
     "kodi": true,
     "touchpad": {
       "enable": true,
