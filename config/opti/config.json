@@ -1,7 +1,6 @@
 {
   "boot": {
-    "timeout": 1,
-    "top": true
+    "timeout": 1
   },
   "user": {
     "groups": []
@@ -15,5 +14,11 @@
   "services": {
     "ssh": true,
     "docker": true
-  }
+  },
+  "graphical": {
+    "enable": true,
+    "drivers": [ "intel" ],
+    "kodi": true
+  },
+  "audio": true
 }
