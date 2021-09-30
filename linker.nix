@@ -74,15 +74,15 @@ let
     # Install preferred system wide gui applications
     ./common/system/video/packages.nix
   ] [] ++
-  # XServer configs for graphical interfaces
+  # Xorg configs for graphical interfaces
   mfunc.useDefault (my.config.graphical.enable && !my.config.graphical.kodi) [
-    # XServer for user defined wm
-    ./common/system/video/xserver.nix
+    # Xorg config for user defined wm
+    ./common/system/video/xorg.nix
   ] [] ++
   # Kodi config
   mfunc.useDefault (my.config.graphical.enable && my.config.graphical.kodi) [
-    # XServer for user defined wm
-    ./common/system/video/xserver-kodi.nix
+    # Kodi xorg and app configs
+    ./common/system/video/kodi.nix
   ] [] ++
   # Check if there is touchpad and graphical support
   mfunc.useDefault (my.config.graphical.enable && my.config.graphical.touchpad.enable) [
