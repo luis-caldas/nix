@@ -2,7 +2,7 @@
   "boot": {
     "timeout": 1,
     "efi": false,
-    "device": "/dev/sda"
+    "device": "/dev/disk/by-id/ata-KINGSTON_SA400S37120G_50026B778325EF29"
   },
   "zram": true,
   "system": {
@@ -20,10 +20,7 @@
     "touchpad": {
       "enable": true,
       "accel": "0.1"
-    },
-    "displays": [
-      { "scale": 1, "display": ":0", "extraCommands": ["swap-back-and-slash"] }
-    ]
+    }
   },
   "audio": true,
   "bluetooth": true
