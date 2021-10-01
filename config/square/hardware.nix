@@ -9,7 +9,7 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  boot.initrd.luks.devices."rounder".device = "/dev/disk/by-uuid/321b6380-542d-4a07-b653-57bae44733de"
+  boot.initrd.luks.devices."rounder".device = "/dev/disk/by-uuid/321b6380-542d-4a07-b653-57bae44733de";
 
   fileSystems."/" =
     { device = "circle/root";
