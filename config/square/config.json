@@ -2,7 +2,7 @@
   "boot": {
     "timeout": 1,
     "efi": false,
-    "device": "/dev/sda"
+    "device": "/dev/disk/by-id/ata-KINGSTON_SA400S37120G_50026B76837D8C09"
   },
   "system": {
     "hostname": "square"

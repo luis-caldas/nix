@@ -9,6 +9,8 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
+  boot.initrd.luks.devices."rounder".device = "/dev/disk/by-uuid/321b6380-542d-4a07-b653-57bae44733de"
+
   fileSystems."/" =
     { device = "circle/root";
       fsType = "zfs";
@@ -19,21 +21,10 @@
       fsType = "zfs";
     };
 
-  fileSystems."/data" =
-    { device = "circle/data";
-      fsType = "zfs";
-      options = [ "nofail" ];
-    };
-
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/62A4-F0F5";
+    { device = "/dev/disk/by-uuid/DB65-255D";
       fsType = "vfat";
     };
-
-  swapDevices = [
-    { device = "/dev/zvol/circle/swap"; }
-  ];
-
 
   nix.maxJobs = lib.mkDefault 4;
 }
