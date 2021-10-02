@@ -14,7 +14,7 @@
   "user": {
     "name": "majora",
     "desc": "bossu",
-    "groups": ["sudo"],
+    "groups": [ "sudo", "wheel" ],
     "pass": "functional",
     "autologin": false
   },
@@ -42,8 +42,8 @@
       "wifi": "permanent"
     },
     "firewall": {
-        "enable": false,
-        "ping": true
+      "enable": false,
+      "ping": true
     }
   },
   "services": {
