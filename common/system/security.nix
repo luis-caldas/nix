@@ -18,7 +18,11 @@
           (action.id.indexOf("org.freedesktop.udisks.") == 0) ||
           (action.id.indexOf("org.freedesktop.udisks2.") == 0) ||
           (action.id.indexOf("org.freedesktop.consolekit.system.") == 0)) {
-        return polkit.Result.AUTH_ADMIN;
+        if (subject.isInGroup("wheel")) {
+          return polkit.Result.YES;
+        } else {
+          return polkit.Result.NO;
+        }
       }
     });
   '';
