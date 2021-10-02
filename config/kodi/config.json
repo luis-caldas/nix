@@ -6,8 +6,7 @@
   },
   "zram": true,
   "system": {
-    "hostname": "kodi",
-    "power": false
+    "hostname": "kodi"
   },
   "net": {
     "id": "43312312"

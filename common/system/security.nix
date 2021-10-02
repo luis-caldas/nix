@@ -1,4 +1,4 @@
-{ my, mfunc, ... }:
+{ ... }:
 {
 
   # Create the sudo group
@@ -10,8 +10,8 @@
     extraConfig = "%sudo	ALL=(ALL:ALL)	NOPASSWD: ALL";
   };
 
-  # Disable power commands if not su and if it was configured
-  security.polkit.extraConfig = mfunc.useDefault (!my.config.system.power) ''
+  # Disable power commands if not super user or on wheel group
+  security.polkit.extraConfig = ''
 
     polkit.addRule(function(action, subject) {
       if (action.id.indexOf("org.freedesktop.login1.hibernate") == 0) {
@@ -37,7 +37,7 @@
       }
     });
 
-  '' "";
+  '';
 
   programs.ssh = {
     # Disable askpass graphical password program

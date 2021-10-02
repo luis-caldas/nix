@@ -26,7 +26,6 @@
     "hostname": "unnamed",
     "timezone": "Europe/Dublin",
     "locale": "en_IE.UTF-8",
-    "power": true,
     "filer": "filer",
     "numlock": false,
     "getty": {
