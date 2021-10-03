@@ -14,7 +14,8 @@
   "user": {
     "name": "majora",
     "desc": "bossu",
-    "groups": [ "sudo", "wheel" ],
+    "groups": [],
+    "admin": true,
     "pass": "functional",
     "autologin": false
   },

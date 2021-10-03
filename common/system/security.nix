@@ -1,13 +1,10 @@
 { ... }:
 {
 
-  # Create the sudo group
-  users.groups.sudo = {};
-
-  # Sudo configs
+  # Sudo configs for wheel group
   security.sudo = {
     enable = true;
-    extraConfig = "%sudo	ALL=(ALL:ALL)	NOPASSWD: ALL";
+    extraConfig = "%wheel	ALL=(ALL:ALL)	NOPASSWD: ALL";
   };
 
   # Disable power commands if not super user or on wheel group

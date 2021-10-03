@@ -24,6 +24,7 @@
 
     # Give extra groups to the user
     extraGroups = [ "networkmanager" "wireshark" "${my.config.system.filer}" ] ++
+                  mfunc.useDefault my.config.user.admin [ "wheel" ] [] ++
                   mfunc.useDefault my.config.x86_64 [ "adbusers" ] [] ++
                   mfunc.useDefault my.config.audio [ "audio" ] [] ++
                   mfunc.useDefault my.config.graphical.enable [ "video" ] [] ++

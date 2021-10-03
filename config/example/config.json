@@ -2,7 +2,7 @@
   "user": {
     "name": "user",
     "desc": "Example User",
-    "groups": ["sudo", "example"],
+    "groups": [ "example" ],
     "pass": "password"
   },
   "git": {

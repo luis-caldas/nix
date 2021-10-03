@@ -3,7 +3,7 @@
     "timeout": 1
   },
   "user": {
-    "groups": []
+    "admin": false
   },
   "system": {
     "hostname": "opti"

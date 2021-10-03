@@ -5,7 +5,7 @@
     "device": "/dev/sda"
   },
   "user": {
-    "groups": []
+    "admin": false
   },
   "system": {
     "hostname": "box"
