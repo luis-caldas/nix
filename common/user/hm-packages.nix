@@ -82,6 +82,7 @@
     archivemount
 
     # Optical disks
+    cdrkit
     dvdplusrwtools
 
     # Net tools
