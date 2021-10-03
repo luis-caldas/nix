@@ -16,6 +16,11 @@
   },
   "services": {
     "ssh": true,
-    "docker": true
+    "docker": true,
+    "startup": {
+      "permit": [
+        "/dev/cdrom"
+      ]
+    }
   }
 }
