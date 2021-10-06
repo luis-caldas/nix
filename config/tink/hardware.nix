@@ -34,7 +34,6 @@
 
   nix.maxJobs = lib.mkDefault 2;
 
-  hardware.enableRedistributableFirmware = true;
   # networking.enableIntel3945ABGFirmware = true;
 
 }
