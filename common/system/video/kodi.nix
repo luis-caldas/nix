@@ -3,8 +3,17 @@
 
   # Needed xserver configs for kodi
   services.xserver.enable = true;
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "kodi";
+
+  # Use sddm as autologin displaymanager because it supports relogin
+  services.xserver.displayManager = {
+    lightdm.enable = false;
+    sddm = {
+      enable = true;
+      autoLogin.relogin = true;
+    };
+    autoLogin.enable = true;
+    autoLogin.user = "kodi";
+  };
 
   # Enable kodi
   services.xserver.desktopManager.kodi.enable = true;
