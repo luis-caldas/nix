@@ -1,9 +1,6 @@
 { lib, ... }:
 {
 
-  # Allow non free firmware
-  hardware.enableRedistributableFirmware = lib.mkDefault true;
-
   # Boot configs for the proper loading of my disks
   boot = {
 

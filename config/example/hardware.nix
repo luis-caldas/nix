@@ -1,8 +1,5 @@
 { ... }:
 {
-  imports =
-    [ <nixos/modules/installer/scan/not-detected.nix>
-    ];
 
   boot.initrd.availableKernelModules = [ "ehci_hcd" "ahci" ];
   boot.kernelModules = [ "kvm-intel" ];

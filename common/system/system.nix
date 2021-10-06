@@ -1,5 +1,8 @@
-{ my, ... }:
+{ my, lib, ... }:
 {
+
+  # Allow non free software
+  hardware.enableRedistributableFirmware = lib.mkDefault true;
 
   # Needed for ZFS to work
   networking.hostId = my.config.net.id;
