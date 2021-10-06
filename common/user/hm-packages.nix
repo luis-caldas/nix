@@ -37,6 +37,9 @@
     inetutils
     youtube-dl
 
+    # Debugger
+    gdb
+
     # Pen
     tor
     ncrack
