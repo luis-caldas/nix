@@ -20,7 +20,7 @@ let
   linkFonts   = { ".local/share/fonts/mine" = { source = (packages.fonts + "/my-custom-fonts"); }; };
   linkPapes   = { ".local/share/backgrounds/papes" = { source = (packages.papes + "/papes"); }; };
 
-  # Create custom fonts
+  # Create custom system fonts
   fontsList = with pkgs; [
     iosevka-bin
     (iosevka-bin.override { variant = "aile"; })
@@ -37,6 +37,16 @@ let
       (".local/share/fonts/system/" + pack.name)
     )
   );
+
+  # Create links from the system themes
+  linkSystemIcons = mfunc.listCreateLinks
+  ("${pkgs.cinnamon.mint-y-icons}" + "/share/icons")
+  ".local/share/icons";
+
+  # Create themes from the system themes
+  linkSystemThemes = mfunc.listCreateLinks
+  ("${pkgs.cinnamon.mint-themes}" + "/share/themes")
+  ".local/share/themes";
 
   # Link vst folders
   linkVST = mfunc.useDefault my.config.graphical.production {
@@ -63,7 +73,8 @@ let
     [Icon Theme]
     Name = default
     Comment = Default theme linker
-    Inherits = '' + my.config.graphical.cursor + "," + my.config.graphical.icons; };
+    Inherits = '' + my.config.graphical.cursor + "," + my.config.graphical.icons + "\n";
+  };
 
   # Create a script for each monitor
   linkDisplays = builtins.listToAttrs (map (eachDisplay: {
@@ -132,6 +143,7 @@ let
     linkThemes linkFonts linkIcons linkCursors linkPapes
     textXInit textIconsCursor
     linkVST
+    linkSystemIcons linkSystemThemes
   ] ++ linkSystemFonts);
 
 in
