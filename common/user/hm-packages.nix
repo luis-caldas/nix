@@ -119,6 +119,7 @@
     mkpasswd
 
     # User tools
+    khal
     irssi
     _3llo
     neomutt
