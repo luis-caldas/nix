@@ -180,6 +180,10 @@ in
   gtk.iconTheme.name = my.config.graphical.icons;
   gtk.theme.name     = my.config.graphical.theme;
 
+  # Add theming for qt
+  qt.enable = true;
+  qt.platformTheme = "gtk";
+
   # Default XDG applications
   xdg.mimeApps.enable = true;
   xdg.mimeApps.defaultApplications = {
