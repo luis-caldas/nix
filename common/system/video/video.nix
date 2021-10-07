@@ -7,6 +7,10 @@
   # Add 32 bit support and other acceleration packages
   hardware.opengl = {
     enable = true;
+    # Select custom version of mesa drivers
+    #package = pkgs.mesa.drivers;
+  } //
+  mfunc.useDefault my.config.x86_64 {
     driSupport32Bit = true;
     extraPackages32 = with pkgs; [
       intel-ocl
@@ -21,8 +25,6 @@
       vaapiVdpau
       libvdpau-va-gl
     ];
-    # Select custom version of mesa drivers
-    #package = pkgs.mesa.drivers;
-  };
+  } {};
 
 }

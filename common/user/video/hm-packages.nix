@@ -28,12 +28,8 @@
     # Desktop lock
     xss-lock
 
-    # IDE
-    arduino
-
     # Electronics
     kicad
-    logisim
 
     # Key reassignment
     xorg.xev
@@ -69,9 +65,6 @@
     # Document viewer
     evince
 
-    # Office
-    libreoffice
-
     # Money
     gnucash
 
@@ -97,11 +90,6 @@
 
     # Emulation
     dosbox
-
-    # Wine
-    winetricks
-    protontricks
-    wineWowPackages.staging
 
     # QR Code
     zbar
@@ -133,6 +121,20 @@
 
   ] ++
   mfunc.useDefault my.config.x86_64 [
+
+    # IDE
+    arduino
+
+    # Electronics
+    logisim
+
+    # Office
+    libreoffice
+
+    # Wine
+    winetricks
+    protontricks
+    wineWowPackages.staging
 
     # Video Apps
     obs-studio

@@ -24,9 +24,8 @@
       ]
     }
   },
-  "games": true,
   "graphical": {
-    "enable": true,
+    "enable": false,
     "drivers": ["panfrost"],
     "touchpad": { "enable": true },
     "displays": [

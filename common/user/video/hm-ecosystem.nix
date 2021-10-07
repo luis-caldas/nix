@@ -248,7 +248,7 @@ in
 
   # Enable chromium (ungoogled) and set its extensions
   programs.chromium = {
-    enable = true;
+    enable = my.config.x86_64;
     package = pkgs.ungoogled-chromium;
     extensions = [];
   };

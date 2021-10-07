@@ -8,7 +8,6 @@
     hashcat
     radare2
     hexedit
-    apktool
     binutils
     geteltorito
     unixtools.xxd
@@ -199,7 +198,15 @@
     #######
 
   ] ++
-  mfunc.useDefault my.config.x86_64 [ flashrom ] [] ++
+  mfunc.useDefault my.config.x86_64 [
+
+    # Bin
+    apktool
+
+    # Flash utilities
+    flashrom
+
+  ] [] ++
   mfunc.useDefault my.config.services.fingerprint [
     fwupd
   ] [] ++

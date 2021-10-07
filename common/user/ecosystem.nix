@@ -1,4 +1,4 @@
-{ my, pkgs, ... }:
+{ my, mfunc, pkgs, ... }:
 let
 
   # Get my wanted packages
@@ -68,9 +68,9 @@ in
     ;
 
     # Add arduino libraries
-    home.file = {
-      ".local/share/arduino" = { source = "${pkgs.arduino}/share/arduino"; };
-    };
+    home.file = mfunc.useDefault my.config.x86_64
+    { ".local/share/arduino" = { source = "${pkgs.arduino}/share/arduino"; }; }
+    {};
 
   };
 
