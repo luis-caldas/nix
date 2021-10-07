@@ -15,10 +15,28 @@ let
   # Link all the themes
   linkThemes  = (mfunc.listCreateLinks (packages.themes + "/collection") ".local/share/themes") //
                 (mfunc.listCreateLinks (packages.themes + "/openbox") ".local/share/themes");
-  linkFonts   = (mfunc.listCreateLinks (packages.fonts + "/my-custom-fonts") ".local/share/fonts");
   linkCursors = (mfunc.listCreateLinks (packages.cursors + "/my-x11-cursors") ".local/share/icons");
   linkIcons   = (mfunc.listCreateLinks (packages.icons + "/my-icons-collection") ".local/share/icons");
+  linkFonts   = { ".local/share/fonts/mine" = { source = (packages.fonts + "/my-custom-fonts"); }; };
   linkPapes   = { ".local/share/backgrounds/papes" = { source = (packages.papes + "/papes"); }; };
+
+  # Create custom fonts
+  fontsList = with pkgs; [
+    iosevka-bin
+    (iosevka-bin.override { variant = "aile"; })
+    (iosevka-bin.override { variant = "slab"; })
+    (iosevka-bin.override { variant = "etoile"; })
+    font-awesome
+    sarasa-gothic
+  ];
+  # Create links from custom fonts
+  linkSystemFonts = lib.forEach fontsList (
+    pack: (
+      mfunc.listCreateLinks
+      ("${pack}" + "/share/fonts")
+      (".local/share/fonts/system/" + pack.name)
+    )
+  );
 
   # Link vst folders
   linkVST = mfunc.useDefault my.config.graphical.production {
@@ -110,9 +128,11 @@ let
   };
 
   # Put all the sets together
-  linkSets = linkThemes // linkFonts // linkIcons // linkCursors // linkPapes //
-             textXInit // textIconsCursor //
-             linkVST;
+  linkSets = lib.mkMerge ([
+    linkThemes linkFonts linkIcons linkCursors linkPapes
+    textXInit textIconsCursor
+    linkVST
+  ] ++ linkSystemFonts);
 
 in
 {
