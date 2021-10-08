@@ -26,7 +26,7 @@
     extraGroups = [ "networkmanager" "wireshark" "${my.config.system.filer}" ] ++
                   mfunc.useDefault my.config.user.admin [ "wheel" ] [] ++
                   mfunc.useDefault my.config.x86_64 [ "adbusers" ] [] ++
-                  mfunc.useDefault my.config.audio [ "audio" ] [] ++
+                  mfunc.useDefault (my.config.audio && !my.config.graphical.kodi) [ "audio" ] [] ++
                   mfunc.useDefault my.config.graphical.enable [ "video" ] [] ++
                   mfunc.useDefault my.config.services.docker [ "docker" ] [] ++
                   mfunc.useDefault my.config.services.printing [ "scanner" "lp" ] [] ++
@@ -44,6 +44,11 @@
   users.extraUsers = mfunc.useDefault my.config.graphical.kodi {
     kodi.isNormalUser = true;
   } {};
+
+  # Add kodi to audio group
+  users.users.kodi.extraGroups = mfunc.useDefault
+  (my.config.graphical.kodi && my.config.audio)
+  [ "audio" ] [];
 
   # Add custom getty message
   services.getty.greetingLine = my.config.system.getty.greeting;

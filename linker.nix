@@ -94,6 +94,12 @@ let
   ] [] ++
   # Check if audio is supported
   mfunc.useDefault my.config.audio [ ./common/system/audio.nix ] [] ++
+  # Set config for games
+  mfunc.useDefault (
+    my.config.graphical.enable && (my.config.games || my.config.graphical.kodi)
+  ) [
+    ./common/system/video/games.nix
+  ] [] ++
   # Check if audio production is set
   mfunc.useDefault (my.config.audio && my.config.graphical.production.audio && !my.config.graphical.kodi) [
     ./common/system/production.nix

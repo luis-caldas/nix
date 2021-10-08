@@ -15,6 +15,9 @@
     autoLogin.user = "kodi";
   };
 
+  # Packages to be installed
+  environment.systemPackages = with pkgs; [ retroarch ];
+
   # Enable kodi
   services.xserver.desktopManager.kodi.enable = true;
 
@@ -27,7 +30,7 @@
     a4ksubtitles
     pdfreader
     osmc-skin
-    joystick steam-launcher
+    steam-launcher
   ]);
 
 }
