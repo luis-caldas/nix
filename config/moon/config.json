@@ -42,7 +42,11 @@
         }]
       }
     },
-    "production": true
+    "production": {
+      "audio": true,
+      "models": true,
+      "electronics": true
+    }
   },
   "games": true,
   "audio": true,

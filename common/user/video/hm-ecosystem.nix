@@ -49,7 +49,7 @@ let
   ".local/share/themes";
 
   # Link vst folders
-  linkVST = mfunc.useDefault my.config.graphical.production {
+  linkVST = mfunc.useDefault my.config.graphical.production.audio {
     "./.vst/zynaddsubfx" = { source = "${pkgs.zyn-fusion}" + "/lib/vst"; };
   } {};
 
@@ -123,10 +123,7 @@ let
   neoxAlias = { neox = packages.desktop + "/programs/init/neox"; };
 
   # Some firefox profile variables
-  nonDefaultFirefoxSettings = {
-    "browser.download.dir" = "/home/" + my.config.user.name + "/downloads";
-    "browser.download.lastDir" = "/home/" + my.config.user.name + " /downloads";
-  } //
+  nonDefaultFirefoxSettings =
   # Folding so we can leave the config in a json list
   # with this the scanner leaves the specific configurations alone
   (lib.foldr (x: y: x // y) {} my.config.graphical.firefox.settings.extra);

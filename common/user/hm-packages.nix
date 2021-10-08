@@ -164,6 +164,7 @@
 
     # Shell
     shellcheck
+    xdg-user-dirs
     inotify-tools
 
     # C

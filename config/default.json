@@ -73,8 +73,11 @@
         "mine": []
       }
     },
-    "production": false,
-    "prod3d": false,
+    "production": {
+      "audio": false,
+      "models": false,
+      "electronics": false
+    },
     "trackpoint": {
       "enable": false,
       "speed": 97,

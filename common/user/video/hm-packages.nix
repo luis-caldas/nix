@@ -28,8 +28,8 @@
     # Desktop lock
     xss-lock
 
-    # Electronics
-    kicad
+    # Unclutter
+    mpkgs.unclutter-xfixes
 
     # Key reassignment
     xorg.xev
@@ -125,9 +125,6 @@
     # IDE
     arduino
 
-    # Electronics
-    logisim
-
     # Office
     libreoffice
 
@@ -145,9 +142,20 @@
 
   ] [] ++
   mfunc.useDefault my.config.graphical.touch [
-    mpkgs.unclutter-xfixes
   ] [] ++
-  mfunc.useDefault (my.config.x86_64 && my.config.graphical.prod3d) [
+  mfunc.useDefault my.config.graphical.production.electronics [
+
+    # Electronics
+    kicad
+
+  ] [] ++
+  mfunc.useDefault (my.config.x86_64 && my.config.graphical.production.electronics) [
+
+    # Electronics
+    logisim
+
+  ] [] ++
+  mfunc.useDefault (my.config.x86_64 && my.config.graphical.production.models) [
 
     # Modeling and cadding
     blender
@@ -165,7 +173,7 @@
     pavucontrol
 
   ] [] ++
-  mfunc.useDefault (my.config.audio && my.config.graphical.production) [
+  mfunc.useDefault (my.config.audio && my.config.graphical.production.audio) [
 
     # Music production
     jack2

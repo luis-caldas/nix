@@ -95,7 +95,7 @@ let
   # Check if audio is supported
   mfunc.useDefault my.config.audio [ ./common/system/audio.nix ] [] ++
   # Check if audio production is set
-  mfunc.useDefault (my.config.audio && my.config.graphical.production && !my.config.graphical.kodi) [ 
+  mfunc.useDefault (my.config.audio && my.config.graphical.production.audio && !my.config.graphical.kodi) [
     ./common/system/production.nix
   ] [] ++
   # Check if bluetooth is supported
