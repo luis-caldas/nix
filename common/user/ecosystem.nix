@@ -55,6 +55,19 @@ in
   # Configure packages for main user
   home-manager.users."${my.config.user.name}" = { ... }: {
 
+    # Configure XDG custom folders
+    xdg.userDirs = {
+      enable = true;
+      desktop = "$HOME/home/desktop";
+      documents = "$HOME/home/docs";
+      download = "$HOME/home/downloads";
+      music = "$HOME/home/mus";
+      pictures = "$HOME/home/pics";
+      publicShare = "$HOME/home/pub";
+      templates = "$HOME/home/templates";
+      videos = "$HOME/home/vids";
+    };
+
     programs = programsSet //
     # Configure Git
     { 
