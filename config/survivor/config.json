@@ -12,8 +12,7 @@
   },
   "graphical": {
     "enable": true,
-    "touchpad": { "enable": true },
-    "production": true
+    "touchpad": { "enable": true }
   },
   "games": true,
   "audio": true,

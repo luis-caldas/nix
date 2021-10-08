@@ -49,7 +49,7 @@ let
   ".local/share/themes";
 
   # Link vst folders
-  linkVST = mfunc.useDefault my.config.graphical.production {
+  linkVST = mfunc.useDefault my.config.graphical.production.audio {
     "./.vst/zynaddsubfx" = { source = "${pkgs.zyn-fusion}" + "/lib/vst"; };
   } {};
 

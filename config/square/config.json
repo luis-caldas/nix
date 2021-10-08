@@ -26,7 +26,10 @@
         ]
       }
     ],
-    "production": true
+    "production": {
+      "audio": true,
+      "electronics": true
+    }
   },
   "audio": true,
   "games": true,
