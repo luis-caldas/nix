@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ my, mfunc, pkgs, ... }:
 {
 
   # Store audio cards states
