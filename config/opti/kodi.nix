@@ -52,7 +52,7 @@
   };
 
   # Create the kodi user and add it to the audio gruop
-  kodi = {
+  users.users.kodi = {
     isNormalUser = true;
     extraGroups = [ "audio" ];
   };
