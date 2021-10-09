@@ -1,4 +1,4 @@
-{ my, mfunc, pkgs, ... }:
+{ pkgs, ... }:
 {
 
   # Store audio cards states
@@ -21,8 +21,6 @@
   # Add 32 bit support and other acceleration packages
   hardware.opengl = {
     enable = true;
-  } //
-  mfunc.useDefault my.config.x86_64 {
     driSupport32Bit = true;
     extraPackages32 = with pkgs; [
       intel-ocl
