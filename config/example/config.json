@@ -12,5 +12,7 @@
   "system": {
     "hostname": "hoster"
   },
-  "graphical": false
+  "graphical": {
+    "enable": true
+  }
 }
