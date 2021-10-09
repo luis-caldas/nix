@@ -12,9 +12,6 @@
     package = pkgs.pulseaudioFull;
   };
 
-  # Allow system wide pulseaudio if kodi
-  hardware.pulseaudio.systemWide = my.config.graphical.kodi;
-
   # Allow packages to compile with pulseaudio support
   nixpkgs.config.pulseaudio = true;
 

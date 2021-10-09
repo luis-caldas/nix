@@ -73,16 +73,8 @@ let
     ./common/system/video/video.nix
     # Install preferred system wide gui applications
     ./common/system/video/packages.nix
-  ] [] ++
-  # Xorg configs for graphical interfaces
-  mfunc.useDefault (my.config.graphical.enable && !my.config.graphical.kodi) [
     # Xorg config for user defined wm
     ./common/system/video/xorg.nix
-  ] [] ++
-  # Kodi config
-  mfunc.useDefault (my.config.graphical.enable && my.config.graphical.kodi) [
-    # Kodi xorg and app configs
-    ./common/system/video/kodi.nix
   ] [] ++
   # Check if there is touchpad and graphical support
   mfunc.useDefault (my.config.graphical.enable && my.config.graphical.touchpad.enable) [
@@ -94,14 +86,8 @@ let
   ] [] ++
   # Check if audio is supported
   mfunc.useDefault my.config.audio [ ./common/system/audio.nix ] [] ++
-  # Set config for games
-  mfunc.useDefault (
-    my.config.graphical.enable && (my.config.games || my.config.graphical.kodi)
-  ) [
-    ./common/system/video/games.nix
-  ] [] ++
   # Check if audio production is set
-  mfunc.useDefault (my.config.audio && my.config.graphical.production.audio && !my.config.graphical.kodi) [
+  mfunc.useDefault (my.config.audio && my.config.graphical.production.audio) [
     ./common/system/production.nix
   ] [] ++
   # Check if bluetooth is supported
@@ -121,7 +107,7 @@ let
     ./common/user/hm-games.nix
   ] [] ++
   # Visual imports for home-manager
-  mfunc.useDefault (my.config.graphical.enable && !my.config.graphical.kodi) [
+  mfunc.useDefault (my.config.graphical.enable) [
     # The visual ecosystem use
     ./common/user/video/hm-ecosystem.nix
     # Extra custom gui packages
@@ -130,7 +116,7 @@ let
     ./common/user/video/hm-window-managers.nix
   ] [] ++ 
   # Games
-  mfunc.useDefault (my.config.graphical.enable && my.config.games && !my.config.graphical.kodi) [
+  mfunc.useDefault (my.config.graphical.enable && my.config.games) [
     ./common/user/video/hm-games.nix
   ] [] ++
   mfunc.useDefault my.config.bluetooth [

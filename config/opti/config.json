@@ -16,9 +16,6 @@
     "docker": true
   },
   "graphical": {
-    "enable": true,
-    "drivers": [ "intel" ],
-    "kodi": true
-  },
-  "audio": true
+    "drivers": [ "intel" ]
+  }
 }

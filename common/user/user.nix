@@ -12,47 +12,33 @@
 
   # My user
   users.groups."${my.config.user.name}".gid = 1000;
-  users.users = {
+  users.users."${my.config.user.name}" = {
 
-    # Default username set on configuration
-    "${my.config.user.name}" = {
+    # Simple user configuration
+    isNormalUser = true;
+    home = "/home/" + my.config.user.name;
+    description = my.config.user.desc;
 
-      # Simple user configuration
-      isNormalUser = true;
-      home = "/home/" + my.config.user.name;
-      description = my.config.user.desc;
+    # Primary group
+    group = my.config.user.name;
 
-      # Primary group
-      group = my.config.user.name;
+    # Give extra groups to the user
+    extraGroups = [ "networkmanager" "wireshark" "${my.config.system.filer}" ] ++
+                  mfunc.useDefault my.config.user.admin [ "wheel" ] [] ++
+                  mfunc.useDefault my.config.x86_64 [ "adbusers" ] [] ++
+                  mfunc.useDefault my.config.audio [ "audio" ] [] ++
+                  mfunc.useDefault my.config.graphical.enable [ "video" ] [] ++
+                  mfunc.useDefault my.config.services.docker [ "docker" ] [] ++
+                  mfunc.useDefault my.config.services.printing [ "scanner" "lp" ] [] ++
+                  my.config.user.groups;
 
-      # Give extra groups to the user
-      extraGroups = [ "networkmanager" "wireshark" "${my.config.system.filer}" ] ++
-                    mfunc.useDefault my.config.user.admin [ "wheel" ] [] ++
-                    mfunc.useDefault my.config.x86_64 [ "adbusers" ] [] ++
-                    mfunc.useDefault (my.config.audio && !my.config.graphical.kodi) [ "audio" ] [] ++
-                    mfunc.useDefault my.config.graphical.enable [ "video" ] [] ++
-                    mfunc.useDefault my.config.services.docker [ "docker" ] [] ++
-                    mfunc.useDefault my.config.services.printing [ "scanner" "lp" ] [] ++
-                    my.config.user.groups;
+    # Set out custom uid
+    uid = 1000;
 
-      # Set out custom uid
-      uid = 1000;
+    # Set the user to the first default uid
+    initialPassword = my.config.user.pass;
 
-      # Set the user to the first default uid
-      initialPassword = my.config.user.pass;
-
-    };
-
-  } //
-  # Add kodi to the userlist if defined
-  mfunc.useDefault my.config.graphical.kodi {
-
-    kodi = {
-      isNormalUser = true;
-      extraGroups = mfunc.useDefault my.config.audio [ "audio" ] [];
-    };
-
-  } {};
+  };
 
   # Add custom getty message
   services.getty.greetingLine = my.config.system.getty.greeting;

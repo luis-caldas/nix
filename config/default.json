@@ -59,7 +59,6 @@
   },
   "graphical": {
     "enable": false,
-    "kodi": false,
     "drivers": [],
     "latest": true,
     "wm": "xmonad",
