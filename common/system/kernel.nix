@@ -16,7 +16,7 @@ let
   };
 
   # Set the specialisation if needed
-  dynamicSpecialization = mfunc.useDefault (! my.config.graphical.enable) {} textConfig;
+  dynamicSpecialization = mfunc.useDefault (!my.config.graphical.enable && my.config.kernel.text) {} textConfig;
 
 in
 {
@@ -32,7 +32,7 @@ in
 
     # Force kernel support for zfs and add user params
     kernelParams = defaultKernelParams ++ my.config.kernel.params ++
-    mfunc.useDefault (! my.config.graphical.enable) textKernelParams [];
+    mfunc.useDefault (!my.config.graphical.enable && my.config.kernel.text) textKernelParams [];
 
     # Blacklisted kernel modules
     # For RTL-SDR

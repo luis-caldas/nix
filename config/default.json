@@ -9,7 +9,10 @@
     "override": false
   },
   "x86_64": true,
-  "kernel": { "params": [] },
+  "kernel": {
+    "params": [],
+    "text": true
+  },
   "zram": false,
   "user": {
     "name": "majora",

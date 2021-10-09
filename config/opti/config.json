@@ -2,6 +2,9 @@
   "boot": {
     "timeout": 1
   },
+  "kernel": {
+    "text": false
+  },
   "user": {
     "admin": false
   },
