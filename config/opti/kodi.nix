@@ -1,12 +1,43 @@
 { pkgs, ... }:
 {
 
-  # Outside imports
-  imports = [
-    ../../common/system/audio.nix
-    ../../common/system/video/video.nix
-    ../../common/system/video/packages.nix
-  ];
+  # Store audio cards states
+  sound.enable = true;
+
+  # Enable pulseaudio and all the supported codecs
+  hardware.pulseaudio = {
+    enable = true;
+    support32Bit = true;
+    extraModules = [ pkgs.pulseaudio-modules-bt ];
+    package = pkgs.pulseaudioFull;
+  };
+
+  # Allow packages to compile with pulseaudio support
+  nixpkgs.config.pulseaudio = true;
+
+  # Set graphics drivers
+  services.xserver.videoDrivers = [ "intel" ];
+
+  # Add 32 bit support and other acceleration packages
+  hardware.opengl = {
+    enable = true;
+  } //
+  mfunc.useDefault my.config.x86_64 {
+    driSupport32Bit = true;
+    extraPackages32 = with pkgs; [
+      intel-ocl
+      vaapiIntel
+      rocm-opencl-icd
+      rocm-opencl-runtime
+      pkgsi686Linux.libva
+    ];
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  } {};
 
   # Needed xserver configs for kodi
   services.xserver.enable = true;
