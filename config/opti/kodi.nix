@@ -35,7 +35,7 @@
       vaapiVdpau
       libvdpau-va-gl
     ];
-  } {};
+  };
 
   # Needed xserver configs for kodi
   services.xserver.enable = true;
