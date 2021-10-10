@@ -67,15 +67,12 @@ let
   # My packages
   mpkgs = import ./pkgs/pkgs.nix { inherit pkgs upkgs; };
 
-  # NUR user repos
-  nur = import (builtins.fetchGit "https://github.com/nix-community/NUR") { inherit pkgs; };
-
   # Generate the hardware folder location
   hardware-folder = ./config + ("/" + my.path);
 
   # Function for importing with all arguments
   impall = path: argolis: (import path (argolis // {
-    inherit my mfunc mpkgs upkgs nur;
+    inherit my mfunc mpkgs upkgs;
   }));
 
   # System specific hardware configuration

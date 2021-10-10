@@ -1,0 +1,40 @@
+{
+
+  "policies": {
+
+    "SyncDisabled": true,
+    "BrowserSignin": 0,
+    "SpellcheckEnabled": false,
+    "BackgroundModeEnabled": false,
+
+    "AllowDinosaurEasterEgg": false,
+
+    "ShowFullUrlsInAddressBar": true,
+    "ShowAppsShortcutInBookmarkBar": false,
+    "DefaultSearchProviderEnabled": true,
+
+    "HideWebStoreIcon": true,
+
+    "AutofillAddressEnabled": false,
+    "PasswordManagerEnabled": false,
+    "CloudPrintSubmitEnabled": false,
+    "BuiltInDnsClientEnabled": false,
+    "MetricsReportingEnabled": false,
+    "PaymentMethodQueryEnabled": false,
+
+    "DefaultCookiesSetting": 4,
+    "BlockThirdPartyCookies": true,
+    "ClearBrowsingDataOnExitList": [
+       "browsing_history",
+       "download_history",
+       "cookies_and_other_site_data",
+       "cached_images_and_files",
+       "password_signin",
+       "autofill",
+       "site_settings",
+       "hosted_app_data"
+    ]
+
+  }
+
+}

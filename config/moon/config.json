@@ -35,13 +35,6 @@
         ]
       }
     ],
-    "firefox": {
-      "settings": {
-        "extra": [{
-          "layout.frame_rate": 144
-        }]
-      }
-    },
     "production": {
       "audio": true,
       "models": true,

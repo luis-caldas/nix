@@ -19,12 +19,12 @@ let
        builtins.readFile (./config + ("/" + system-path) + "/config.json"))
     );
 
-  # Import the firefox config
-  firefox-obj = builtins.fromJSON (builtins.readFile (./config + "/firefox.json"));
+  # Import the browser config
+  chromium-obj = builtins.fromJSON (builtins.readFile (./config + "/chromium.json"));
 
 in
 {
   path = system-path;
   config = config-obj;
-  firefox = firefox-obj;
+  chromium = chromium-obj;
 }

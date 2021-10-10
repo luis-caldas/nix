@@ -1,4 +1,4 @@
-{ my, mfunc, nur, lib, pkgs, mpkgs, ... }:
+{ my, mfunc, lib, pkgs, mpkgs, ... }:
 let
 
   # My own packages
@@ -55,7 +55,7 @@ let
 
   # List of default programs
   defaultPrograms = {
-    "browser"   = "firefox";
+    "browser"   = "chromium";
     "directory" = "org.gnome.Nautilus";
     "image"     = "sxiv";
     "pdf"       = "org.gnome.Evince";
@@ -89,7 +89,7 @@ let
       "export QT_AUTO_SCREEN_SCALE_FACTOR=" + (toString eachDisplay.scale) + "\n" +
       # Fix for java applications on tiling window managers
       "export _JAVA_AWT_WM_NONREPARENTING=1" + "\n" +
-      # Enable firefox XInput2 for touch
+      # Enable moz XInput2 for touch
       "export MOZ_USE_XINPUT2=1" + "\n" +
       # Dont blank screen with DPMS
       "xset s off" + "\n" +
@@ -121,19 +121,6 @@ let
 
   # Create a alias for the neox startx command
   neoxAlias = { neox = packages.desktop + "/programs/init/neox"; };
-
-  # Some firefox profile variables
-  nonDefaultFirefoxSettings =
-  # Folding so we can leave the config in a json list
-  # with this the scanner leaves the specific configurations alone
-  (lib.foldr (x: y: x // y) {} my.config.graphical.firefox.settings.extra);
-  # Join all configurations
-  firefoxFullSettings = my.firefox.default // nonDefaultFirefoxSettings;
-
-  firefoxUserCustom = {
-    userChrome  = builtins.readFile (packages.desktop + "/browser/firefox" + "/userChrome.css");
-    userContent = builtins.readFile (packages.desktop + "/browser/firefox" + "/userContent.css");
-  };
 
   # Put all the sets together
   linkSets = lib.mkMerge ([
@@ -217,54 +204,8 @@ in
     "x-scheme-handler/unknown" = [ (defaultPrograms.browser + ".desktop") ];
   };
 
-  # Enable firefox and set its configs
-  programs.firefox = {
-    enable = true;
-    extensions = (lib.attrVals (
-      [
-        "ublock-origin"
-        "https-everywhere"
-        "i-dont-care-about-cookies"
-        "foxyproxy-standard"
-        "privacy-badger"
-        "tree-style-tab"
-        "h264ify"
-        "search-by-image"
-        "translate-web-pages"
-      ] ++ my.config.graphical.firefox.extensions.extra
-    ) nur.repos.rycee.firefox-addons) ++
-    (lib.attrVals (
-      [
-        "dark-theme"
-      ] ++ my.config.graphical.firefox.extensions.mine
-    ) mpkgs.firefox-addons);
-    profiles = {
-        main = {
-          settings = firefoxFullSettings;
-          userChrome = firefoxUserCustom.userChrome;
-          userContent = firefoxUserCustom.userContent;
-        };
-        persistent = {
-          settings = lib.overrideExisting my.firefox.default my.firefox.persistent;
-          userChrome = firefoxUserCustom.userChrome;
-          userContent = firefoxUserCustom.userContent;
-          id = 1;
-        };
-        basic = {
-          settings = nonDefaultFirefoxSettings;
-          userChrome = firefoxUserCustom.userChrome;
-          userContent = firefoxUserCustom.userContent;
-          id = 2;
-        };
-    };
-  };
-
-  # Enable chromium (ungoogled) and set its extensions
-  programs.chromium = {
-    enable = my.config.x86_64;
-    package = pkgs.ungoogled-chromium;
-    extensions = [];
-  };
+  # Enable chromium
+  programs.chromium.enable = true;
 
   # Add all the acquired link sets to the config
   home.file = linkSets;
