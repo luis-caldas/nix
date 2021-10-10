@@ -1,24 +1,13 @@
 { my, mfunc, lib, pkgs, mpkgs, ... }:
 let
 
-  # My own packages
-  packages = {
-    desktop = builtins.fetchGit "https://github.com/luis-caldas/mydesktop";
-    conky   = builtins.fetchGit "https://github.com/luis-caldas/myconky";
-    themes  = builtins.fetchGit "https://github.com/luis-caldas/mythemes";
-    fonts   = builtins.fetchGit "https://github.com/luis-caldas/myfonts";
-    cursors = builtins.fetchGit "https://github.com/luis-caldas/mycursors";
-    icons   = builtins.fetchGit "https://github.com/luis-caldas/myicons";
-    papes   = builtins.fetchGit "https://github.com/luis-caldas/mywallpapers";
-  };
-
   # Link all the themes
-  linkThemes  = (mfunc.listCreateLinks (packages.themes + "/collection") ".local/share/themes") //
-                (mfunc.listCreateLinks (packages.themes + "/openbox") ".local/share/themes");
-  linkCursors = (mfunc.listCreateLinks (packages.cursors + "/my-x11-cursors") ".local/share/icons");
-  linkIcons   = (mfunc.listCreateLinks (packages.icons + "/my-icons-collection") ".local/share/icons");
-  linkFonts   = { ".local/share/fonts/mine" = { source = (packages.fonts + "/my-custom-fonts"); }; };
-  linkPapes   = { ".local/share/backgrounds/papes" = { source = (packages.papes + "/papes"); }; };
+  linkThemes  = (mfunc.listCreateLinks (my.projects.themes + "/collection") ".local/share/themes") //
+                (mfunc.listCreateLinks (my.projects.themes + "/openbox") ".local/share/themes");
+  linkCursors = (mfunc.listCreateLinks (my.projects.cursors + "/my-x11-cursors") ".local/share/icons");
+  linkIcons   = (mfunc.listCreateLinks (my.projects.icons + "/my-icons-collection") ".local/share/icons");
+  linkFonts   = { ".local/share/fonts/mine" = { source = (my.projects.fonts + "/my-custom-fonts"); }; };
+  linkPapes   = { ".local/share/backgrounds/papes" = { source = (my.projects.wallpapers + "/papes"); }; };
 
   # Create custom system fonts
   fontsList = with pkgs; [
@@ -65,7 +54,7 @@ let
   textXInit = { ".xinitrc" = {
     text = "" +
       ''xrdb -load "''${HOME}""/.Xresources"'' + "\n" +
-      "exec bash" + " " + packages.desktop + "/entrypoint.bash" + "\n";
+      "exec bash" + " " + my.projects.desktop + "/entrypoint.bash" + "\n";
   }; };
 
   # Create the default icons file
@@ -120,7 +109,7 @@ let
   }) my.config.graphical.displays);
 
   # Create a alias for the neox startx command
-  neoxAlias = { neox = packages.desktop + "/programs/init/neox"; };
+  neoxAlias = { neox = my.projects.desktop + "/programs/init/neox"; };
 
   # Put all the sets together
   linkSets = lib.mkMerge ([
@@ -140,8 +129,8 @@ in
   nixpkgs.config.packageOverrides = pkgs:
   {
     st = pkgs.st.override {
-      conf = builtins.readFile (packages.desktop + "/term/st/config.h");
-      patches = mfunc.listFullFilesInFolder (packages.desktop + "/term/st/patches");
+      conf = builtins.readFile (my.projects.desktop + "/term/st/config.h");
+      patches = mfunc.listFullFilesInFolder (my.projects.desktop + "/term/st/patches");
       extraLibs = [ pkgs.xorg.libXcursor pkgs.harfbuzz ];
     };
   };
@@ -152,19 +141,19 @@ in
   ];
 
   # Add custom XResources file
-  xresources.extraConfig = builtins.readFile (packages.desktop + "/xresources/XResources");
+  xresources.extraConfig = builtins.readFile (my.projects.desktop + "/xresources/XResources");
 
   # Add xmonad config file
-  xsession.windowManager.xmonad.config = (packages.desktop + "/wm/xmonad/xmonad.hs");
+  xsession.windowManager.xmonad.config = (my.projects.desktop + "/wm/xmonad/xmonad.hs");
 
   # Some XDG links
   xdg.configFile = {
     # Link the fontconfig conf file
-    "fontconfig/fonts.conf" = { source = packages.fonts + "/fonts.conf"; };
+    "fontconfig/fonts.conf" = { source = my.projects.fonts + "/fonts.conf"; };
     # Link the conky project
-    "conky" = { source = packages.conky; };
+    "conky" = { source = my.projects.conky; };
     # Link the xmobar configs
-    "xmobar" = { source = packages.desktop + "/bar/xmobar"; };
+    "xmobar" = { source = my.projects.desktop + "/bar/xmobar"; };
     # Force OVMF links to my config folder
     "virt-ovmf" = { source = "${pkgs.OVMF.fd}/FV"; };
   } //

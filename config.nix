@@ -22,9 +22,40 @@ let
   # Import the browser config
   chromium-obj = builtins.fromJSON (builtins.readFile (./config + "/chromium.json"));
 
+  # Link all my projects to the config
+  listProjects = [
+    "mydesktop"
+    "myconky"
+    "mythemes"
+    "myfonts"
+    "mycursors"
+    "myicons"
+    "mywallpapers"
+    "myshell"
+    "myvim"
+  ];
+  projects-obj = builtins.listToAttrs (
+    map (
+      projectName:
+      let
+        newProjectName = (lib.replaceStrings [ "my" ] [ "" ] projectName);
+        githubUrlBuilder = userString: repoString:
+        let
+          protocol = "https";
+          domain = "github.com";
+        in
+          protocol + "://" + domain + "/" + userString + "/" + repoString;
+      in {
+        name = newProjectName;
+        value = builtins.fetchGit (githubUrlBuilder "luis-caldas" projectName);
+      }
+    ) listProjects
+  );
+
 in
 {
   path = system-path;
   config = config-obj;
   chromium = chromium-obj;
+  projects = projects-obj;
 }

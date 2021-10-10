@@ -1,10 +1,8 @@
 { my, pkgs, lib, ... }:
 let
 
-  # My git repo for the xres file
-  myDesktop = builtins.fetchGit "https://github.com/luis-caldas/mydesktop";
   # Acquire the Xresources file
-  xreFile = builtins.readFile (myDesktop + "/xresources/XResources");
+  xreFile = builtins.readFile (my.projects.desktop + "/xresources/XResources");
   # Create a list with the items
   xreList = lib.remove "" (lib.splitString " " (builtins.replaceStrings ["\n"] [" "] xreFile));
 

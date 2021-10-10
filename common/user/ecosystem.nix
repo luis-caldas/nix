@@ -1,22 +1,13 @@
 { my, mfunc, pkgs, ... }:
 let
 
-  # Get my wanted packages
-  packages = {
-    shell = builtins.fetchGit "https://github.com/luis-caldas/myshell";
-    vim = builtins.fetchGit {
-      url = "https://github.com/luis-caldas/myvim";
-      # fetchSubmodules = true;
-    };
-  };
-
   # Create a set with the proper files
   configFiles = {
     # Shell configuration
-    bash = "source" + " " + packages.shell + "/shell/shell.bash";
+    bash = "source" + " " + my.projects.shell + "/shell/shell.bash";
     # Vim configuration
     vim = ''
-      exec 'source' "'' + packages.vim + ''/vimrc.vim"
+      exec 'source' "'' + my.projects.vim + ''/vimrc.vim"
     '';
   };
 
