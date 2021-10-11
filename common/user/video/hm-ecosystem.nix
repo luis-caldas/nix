@@ -1,4 +1,4 @@
-{ my, mfunc, lib, pkgs, mpkgs, ... }:
+{ my, mfunc, lib, pkgs, mpkgs, config, options, ... }:
 let
 
   # Link all the themes
@@ -111,12 +111,42 @@ let
   # Create a alias for the neox startx command
   neoxAlias = { neox = my.projects.desktop + "/programs/init/neox"; };
 
+  # Function for creating extensions for chromium based browsers
+  extensionJson = ext: browserName:
+  let
+    configDir = "${config.xdg.configHome}/" + browserName;
+    updateUrl = (options.programs.chromium.extensions.type.getSubOptions "").updateUrl.default;
+  in
+    with builtins; {
+      name = "${configDir}/External Extensions/${ext}.json";
+      value.text = toJSON ({
+        external_update_url = updateUrl;
+      });
+    };
+
+  # Set browser names
+  browserNameMain = "chromium";
+  browserNamePersistent = "chromium-persistent";
+
+  # List of the extensions
+  listChromeExtensions = [
+    "elidgjfpciimeeeoeneeiifkmhadhkeh" # clean all
+  ] ++ my.config.graphical.chromium.extensions.main;
+  listChromePersistentExtensions = [] ++ my.config.graphical.chromium.extensions.persistent;
+
+  # Create a list with the extensions
+  listChromeExtensionsFiles = lib.listToAttrs (
+    (map (eachExt: extensionJson eachExt browserNameMain) listChromeExtensions) ++
+    (map (eachExt: extensionJson eachExt browserNamePersistent) listChromePersistentExtensions)
+  );
+
   # Put all the sets together
   linkSets = lib.mkMerge ([
     linkThemes linkFonts linkIcons linkCursors linkPapes
     textXInit textIconsCursor
     linkVST
     linkSystemIcons linkSystemThemes
+    listChromeExtensionsFiles
   ] ++ linkSystemFonts);
 
 in

@@ -22,7 +22,7 @@ in {
   # Set program to change backlight
   programs.light.enable = true;
 
-  # Enable chromium with custom configs
+  # Enable chromium custom configs
   programs.chromium = {
 
     # Enable chromium
@@ -36,22 +36,25 @@ in {
     defaultSearchProviderSuggestURL = "https://ac.duckduckgo.com" +
     "/ac/?q={searchTerms}&type=list";
 
-    #"ublock-origin"
-    #"https-everywhere"
-    #"i-dont-care-about-cookies"
-    #"foxyproxy-standard"
-    #"privacy-badger"
-    #"tree-style-tab"
-    #"h264ify"
-    #"search-by-image"
-    #"translate-web-pages"
-    # Extensions
+    # Extensions all browsers
     extensions = [
-      "gcbommkclmclpchllfjekcdonpmejbdp" # https everywhere
+
+      "padekgcemlokbadohgkifijomclgjgif" # switchy proxy omega
+
       "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
+      "gcbommkclmclpchllfjekcdonpmejbdp" # https everywhere
+      "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # privacy badger
+      "fihnjjcciajhdojfnbdddfaoknhalnja" # i dont care about cookies
+
+      "cnojnbdhbhnkbcieeekonklommdnndci" # search by image
+      "aleakchihdccplidncghkekgioiakgal" # h264ify
+
+      # "pddljdmihkpdfpkgmbhdomeeifpklgnm" # vertical tabs
+      "ahifcnpnjgbadkjdhagpfjfkmlapfoel" # dark theme
+
     ] ++
     # Add users extensions
-    my.config.graphical.chromium.extensions;
+    my.config.graphical.chromium.extensions.common;
 
     # Extra options using policy
     extraOpts = {

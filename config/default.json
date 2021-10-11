@@ -70,7 +70,11 @@
     "theme": "Adwaita-dark",
     "chromium": { 
       "policies": {},
-      "extensions": []
+      "extensions": {
+        "common": [],
+        "main": [],
+        "persistent": []
+      }
     },
     "production": {
       "audio": false,
