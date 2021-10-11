@@ -49,8 +49,9 @@ in {
       "cnojnbdhbhnkbcieeekonklommdnndci" # search by image
       "aleakchihdccplidncghkekgioiakgal" # h264ify
 
+      "gbmdgpbipfallnflgajpaliibnhdgobh" # json viewer
+
       # "pddljdmihkpdfpkgmbhdomeeifpklgnm" # vertical tabs
-      "ahifcnpnjgbadkjdhagpfjfkmlapfoel" # dark theme
 
     ] ++
     # Add users extensions
@@ -64,6 +65,18 @@ in {
     my.chromium.policies // my.config.graphical.chromium.policies;
 
   };
+
+  # Add chromium initial config
+  environment.etc =
+    let
+      folders = [ "chromium" "opt/chrome"];
+    in
+      lib.listToAttrs (
+        map (eachFolder: {
+          name = eachFolder + "/initial_preferences";
+          value.text = builtins.toJSON my.chromium.preferences;
+        }) folders
+      );
 
   # Other needed packages
   environment.systemPackages = with pkgs; [

@@ -1,37 +1,62 @@
 {
 
-  "policies": {
+	"policies": {
 
-    "SyncDisabled": true,
-    "BrowserSignin": 0,
-    "SpellcheckEnabled": false,
-    "BackgroundModeEnabled": false,
+		"SyncDisabled": true,
+		"BrowserSignin": 0,
+		"SpellcheckEnabled": false,
+		"BackgroundModeEnabled": false,
 
-    "AllowDinosaurEasterEgg": false,
+		"AllowDinosaurEasterEgg": false,
 
-    "ShowFullUrlsInAddressBar": true,
-    "ShowAppsShortcutInBookmarkBar": false,
-    "DefaultSearchProviderEnabled": true,
+		"ShowFullUrlsInAddressBar": true,
+		"ShowAppsShortcutInBookmarkBar": false,
+		"DefaultSearchProviderEnabled": true,
 
-    "HideWebStoreIcon": true,
+		"HideWebStoreIcon": true,
 
-    "AutofillAddressEnabled": false,
-    "PasswordManagerEnabled": false,
-    "CloudPrintSubmitEnabled": false,
-    "BuiltInDnsClientEnabled": false,
-    "MetricsReportingEnabled": false,
-    "PaymentMethodQueryEnabled": false,
+		"AutofillAddressEnabled": false,
+		"PasswordManagerEnabled": false,
+		"CloudPrintSubmitEnabled": false,
+		"BuiltInDnsClientEnabled": false,
+		"MetricsReportingEnabled": false,
+		"PaymentMethodQueryEnabled": false,
 
-    "DefaultCookiesSetting": 1,
-    "BlockThirdPartyCookies": true,
-    "ClearBrowsingDataOnExitList": [
-       "browsing_history",
-       "download_history",
-       "cached_images_and_files",
-       "password_signin",
-       "autofill"
-    ]
+		"DefaultCookiesSetting": 1,
+		"BlockThirdPartyCookies": true,
+		"ClearBrowsingDataOnExitList": [
+			 "browsing_history",
+			 "download_history",
+			 "cached_images_and_files",
+			 "password_signin",
+			 "autofill"
+		]
 
-  }
+	},
+
+	"preferences": {
+
+		"extensions": {
+			"theme": {
+				"id": "",
+				"use_system": true
+			}
+		},
+
+		"webkit": {
+			"webprefs": {
+				"default_fixed_font_size":12,
+				"default_font_size":12,
+				"fonts": {
+					"fixed": { "Zyyy": "Mono" },
+					"sansserif": { "Zyyy": "Sans" },
+					"serif": { "Zyyy": "Serif" },
+					"standard": { "Zyyy": "Sans" }
+				},
+				"minimum_font_size": 0
+			}
+		}
+
+	}
 
 }
