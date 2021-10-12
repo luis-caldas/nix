@@ -67,16 +67,7 @@ in {
   };
 
   # Add chromium initial config
-  environment.etc =
-    let
-      folders = [ "chromium" "opt/chrome"];
-    in
-      lib.listToAttrs (
-        map (eachFolder: {
-          name = eachFolder + "/initial_preferences";
-          value.text = builtins.toJSON my.chromium.preferences;
-        }) folders
-      );
+  # environment.etc."chromium/master_preferences".text = builtins.toJSON my.chromium.preferences; # chromium needs a patch to read this path
 
   # Other needed packages
   environment.systemPackages = with pkgs; [
