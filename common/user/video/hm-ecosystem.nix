@@ -155,19 +155,13 @@ in
   # Add my bash aliases
   programs.bash.shellAliases = neoxAlias;
 
-  # Add patches and configs to the suckless tools
-  nixpkgs.config.packageOverrides = pkgs:
-  {
-    st = pkgs.st.override {
+  # Add st to the home packages with my patches and config
+  home.packages = with pkgs; [
+    (st.override {
       conf = builtins.readFile (my.projects.desktop + "/term/st/config.h");
       patches = mfunc.listFullFilesInFolder (my.projects.desktop + "/term/st/patches");
       extraLibs = [ pkgs.xorg.libXcursor pkgs.harfbuzz ];
-    };
-  };
-
-  # Add suckless tools that have been configured
-  home.packages = with pkgs; [
-    st
+    })
   ];
 
   # Add custom XResources file
