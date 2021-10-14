@@ -1,4 +1,4 @@
-{ my, mfunc, config, pkgs, mpkgs, ... }:
+{ my, mfunc, config, pkgs, upkgs, ... }:
 {
 
   nixpkgs.config.allowUnsupportedSystem = true;
@@ -29,7 +29,7 @@
     xss-lock
 
     # Unclutter
-    mpkgs.unclutter-xfixes
+    upkgs.unclutter-xfixes
 
     # Key reassignment
     xorg.xev
