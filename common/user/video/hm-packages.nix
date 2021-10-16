@@ -13,6 +13,7 @@
     rofi
 
     # XDG
+    awf
     dconf
     gnome-themes-extra
 
