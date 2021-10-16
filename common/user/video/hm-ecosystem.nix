@@ -187,8 +187,6 @@ in
     "conky" = { source = my.projects.conky; };
     # Link the xmobar configs
     "xmobar" = { source = my.projects.desktop + "/bar/xmobar"; };
-    # Force OVMF links to my config folder
-    "virt-ovmf" = { source = "${pkgs.OVMF.fd}/FV"; };
   } //
   # Link the created monitor configs
   linkDisplays;
