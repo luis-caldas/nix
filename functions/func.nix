@@ -28,10 +28,10 @@ let
     );
 
   # Function to find the index of a element in the list
-  getFirstIndex = nameElement:
+  getFirstIndex = nameElement: listInput:
     let
-      genListIndexes = builtins.genList (x: x) (builtins.length xreList);
-      foundIndex = lib.findFirst (x: nameElement == (lib.elemAt xreList x)) 0 genListIndexes;
+      genListIndexes = builtins.genList (x: x) (builtins.length listInput);
+      foundIndex = lib.findFirst (x: nameElement == (lib.elemAt listInput x)) 0 genListIndexes;
     in
     foundIndex;
 
@@ -44,7 +44,7 @@ let
     xreList = lib.remove "" (lib.splitString " " (builtins.replaceStrings ["\n"] [" "] xreFile));
   in
   # Extract value after on list
-    lib.elemAt xreList ((getFirstIndex elemString) + 1);
+    lib.elemAt xreList ((getFirstIndex elemString xreList) + 1);
 
 in {
   useDefault = useDefault;
