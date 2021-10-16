@@ -1,5 +1,4 @@
 .*
 !.gitignore
-/config/*/config-*.json
 /system
 /iso/result
