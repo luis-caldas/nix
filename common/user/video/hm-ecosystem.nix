@@ -33,9 +33,16 @@ let
   ".local/share/icons";
 
   # Create themes from the system themes
-  linkSystemThemes = mfunc.listCreateLinks
-  ("${pkgs.cinnamon.mint-themes}" + "/share/themes")
-  ".local/share/themes";
+  linkSystemThemes = lib.forEach (with pkgs; [
+    gnome.gnome-themes-extra
+    cinnamon.mint-themes
+  ]) (
+    pack: (
+      mfunc.listCreateLinks
+      ("${pack}" + "/share/themes")
+      ".local/share/themes"
+    )
+  );
 
   # Link vst folders
   linkVST = mfunc.useDefault my.config.graphical.production.audio {
@@ -145,9 +152,11 @@ let
     linkThemes linkFonts linkIcons linkCursors linkPapes
     textXInit textIconsCursor
     linkVST
-    linkSystemIcons linkSystemThemes
+    linkSystemIcons
     listChromeExtensionsFiles
-  ] ++ linkSystemFonts);
+  ] ++
+  linkSystemFonts ++
+  linkSystemThemes);
 
 in
 {
@@ -188,6 +197,43 @@ in
   gtk.enable = true;
   gtk.iconTheme.name = my.config.graphical.icons;
   gtk.theme.name     = my.config.graphical.theme;
+
+  # Add extra gtk css for colours
+  gtk.gtk3.extraCss = let
+    colourExt = mfunc.getElementXRes (my.projects.desktop + "/xresources/XResources") "MY_COLOUR_0";
+  in ''
+    @define-color theme_selected_fg_color ${colourExt};
+    @define-color theme_selected_bg_color ${colourExt};
+
+    *:selected{
+        background-color: @theme_selected_bg_color;
+    }
+
+    *.view:selected {
+        background-color: @theme_selected_bg_color;
+    }
+
+    textview selection {
+        background-color: @theme_selected_bg_color;
+    }
+
+    selection {
+        background-color: @theme_selected_bg_color;
+     }
+
+    menu menuitem:hover,
+    .menu menuitem:hover {
+         background-color: @theme_selected_bg_color;
+    }
+
+    switch:checked {
+       background-color: @theme_selected_bg_color;
+    }
+
+     notebook > header.top > tabs > tab:checked {
+        box-shadow: inset 0 -3px  @theme_selected _bg_color;
+    }
+  '';
 
   # Add theming for qt
   qt.enable = true;
