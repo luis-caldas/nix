@@ -59,9 +59,12 @@ in
       videos = "$HOME/home/vids";
     };
 
+    # Add ovmf path
+    xdg.configFile."virt-ovmf".source = "${pkgs.OVMF.fd}/FV";
+
     programs = programsSet //
     # Configure Git
-    { 
+    {
       git = {
         enable = true;
         userName = my.config.git.name;
