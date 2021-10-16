@@ -67,8 +67,8 @@
     "wm": "xmonad",
     "cursor": "hacked-black",
     "icons": "Mint-Y-Dark-Grey",
-    "theme": "Adwaita-dark",
-    "chromium": { 
+    "theme": "Mint-Y-Dark-Grey",
+    "chromium": {
       "policies": {},
       "extensions": {
         "common": [],

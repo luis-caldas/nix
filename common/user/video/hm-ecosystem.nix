@@ -230,7 +230,7 @@ in
        background-color: @theme_selected_bg_color;
     }
 
-     notebook > header.top > tabs > tab:checked {
+    notebook > header.top > tabs > tab:checked {
         box-shadow: inset 0 -3px  @theme_selected _bg_color;
     }
   '';
