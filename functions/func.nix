@@ -27,9 +27,30 @@ let
       }) listFiles
     );
 
+  # Function to find the index of a element in the list
+  getFirstIndex = nameElement:
+    let
+      genListIndexes = builtins.genList (x: x) (builtins.length xreList);
+      foundIndex = lib.findFirst (x: nameElement == (lib.elemAt xreList x)) 0 genListIndexes;
+    in
+    foundIndex;
+
+  # Function to get the element from a Xresources file
+  getElementXRes = fileIn: elemString:
+  let
+    # Acquire the Xresources file
+    xreFile = builtins.readFile fileIn;
+    # Create a list with the items
+    xreList = lib.remove "" (lib.splitString " " (builtins.replaceStrings ["\n"] [" "] xreFile));
+  in
+  # Extract value after on list
+    lib.elemAt xreList ((getFirstIndex elemString) + 1);
+
 in {
   useDefault = useDefault;
   listFilesInFolder = listFilesInFolder;
   listFullFilesInFolder = listFullFilesInFolder;
   listCreateLinks = listCreateLinks;
+  getFirstIndex = getFirstIndex;
+  getElementXRes = getElementXRes;
 }

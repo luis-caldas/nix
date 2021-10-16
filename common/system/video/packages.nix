@@ -1,23 +1,5 @@
-{ my, pkgs, lib, ... }:
-let
-
-  # Acquire the Xresources file
-  xreFile = builtins.readFile (my.projects.desktop + "/xresources/XResources");
-  # Create a list with the items
-  xreList = lib.remove "" (lib.splitString " " (builtins.replaceStrings ["\n"] [" "] xreFile));
-
-  # Function to find the index of a element in the list
-  getFirstIndex = nameElement:
-    let
-      genListIndexes = builtins.genList (x: x) (builtins.length xreList);
-      foundIndex = lib.findFirst (x: nameElement == (lib.elemAt xreList x)) 0 genListIndexes;
-    in
-    foundIndex;
-
-  # Extract value after on list
-  colourFromXre = lib.elemAt xreList ((getFirstIndex "MY_BACKGROUND") + 1);
-
-in {
+{ my, mfunc, pkgs, lib, ... }:
+{
 
   # Set program to change backlight
   programs.light.enable = true;
@@ -60,7 +42,7 @@ in {
     # Extra options using policy
     extraOpts = {
        # Set colour from xresources file
-       "BrowserThemeColor" = colourFromXre;
+       "BrowserThemeColor" = mfunc.getElementXRes (my.projects.desktop + "/xresources/XResources") "MY_BACKGROUND";
     } //
     my.chromium.policies // my.config.graphical.chromium.policies;
 
