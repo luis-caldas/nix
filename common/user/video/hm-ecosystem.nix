@@ -262,7 +262,12 @@ in
   };
 
   # Enable chromium
-  programs.chromium.enable = true;
+  programs.chromium = {
+    enable = true;
+    package = pkgs.chromium.override {
+      commandLineArgs = "--disable-remote-fonts";
+    };
+  };
 
   # Add all the acquired link sets to the config
   home.file = linkSets;
