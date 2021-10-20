@@ -1,4 +1,4 @@
-{ my, mfunc, pkgs, mpkgs, ... }:
+{ my, mfunc, pkgs, mpkgs, upkgs, ... }:
 {
 
   # Games
@@ -22,7 +22,7 @@
     mpkgs.srb2
 
     # Steam
-    steam
+    upkgs.steam
 
     # Simulator
     flightgear
