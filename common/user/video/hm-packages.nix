@@ -12,6 +12,9 @@
     conky
     rofi
 
+    # Notifications
+    dunst
+
     # XDG
     awf
     dconf
