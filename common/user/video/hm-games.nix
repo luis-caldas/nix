@@ -12,7 +12,7 @@
     mednaffe
     retroarch
     dolphinEmu
-    mpkgs.citra
+    upkgs.citra
 
     # Proper games
     zeroad
