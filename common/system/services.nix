@@ -44,6 +44,7 @@
       ] []);
     browsedConf = "
       CreateIPPPrinterQueues All
+      CreateIPPPrinterQueues driverless
     ";
   } {};
 
