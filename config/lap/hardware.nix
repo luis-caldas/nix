@@ -26,7 +26,6 @@
       fsType = "vfat";
     };
 
-  nix.maxJobs = lib.mkDefault 6;
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 
 }

@@ -23,5 +23,4 @@
       fsType = "vfat";
     };
 
-  nix.maxJobs = lib.mkDefault 4;
 }

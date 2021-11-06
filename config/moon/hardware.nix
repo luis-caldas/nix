@@ -27,7 +27,6 @@
   };
 
   # Set the proper number of the max jobs
-  nix.maxJobs = lib.mkDefault 16;
   powerManagement.cpuFreqGovernor = lib.mkDefault "schedutil";
 
   # Tell the system that this luks device exists

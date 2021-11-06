@@ -21,5 +21,4 @@
     [ { device = "/dev/sda2"; }
     ];
 
-  nix.maxJobs = 8;
 }
