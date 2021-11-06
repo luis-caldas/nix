@@ -108,6 +108,9 @@
     # Screeshot
     scrot
 
+    # Overlay
+    screenkey
+
     # Streaming
     streamlink
     nodePackages.peerflix
