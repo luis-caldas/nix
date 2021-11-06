@@ -237,9 +237,7 @@ in
 
   # Add theming for qt
   qt.enable = true;
-  qt.platformTheme = "gnome";
-  qt.style.name = "adwaita-dark";
-  qt.style.package = pkgs.adwaita-qt;
+  qt.platformTheme = "gtk";
 
   # Default XDG applications
   xdg.mimeApps.enable = true;
