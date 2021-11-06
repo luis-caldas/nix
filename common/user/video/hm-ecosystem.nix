@@ -104,6 +104,8 @@ let
       (builtins.concatStringsSep "\n" eachDisplay.extraCommands) + "\n" +
       # Restore the wallpapers
       "neotrogen restore" + "\n" +
+      # Start the notification system
+      "neodunst" + " " + "&" + "\n" +
       # Start window compositor
       "neopicom" + " " + "&" + "\n" +
       # Set the lock program to stay listening on lock events
