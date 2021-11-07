@@ -4,12 +4,16 @@
 , nasm
 , libpng, libupnp, zlib, libgme, openmpt123
 , SDL2, SDL2_mixer
+, fetchFromGitHub
 }:
 
 stdenv.mkDerivation rec {
 
   pname = "sonic-robo-blast-2";
-  version = "2.2.8";
+  owner = "STJr";
+  repo = "SRB2";
+  version = "2.2.9";
+  fixVersion = builtins.replaceStrings ["."] [""] version;
 
   amd64linux = "x86_64-linux";
   allowedPlatforms = [ amd64linux "i686-linux" ];
@@ -24,31 +28,23 @@ stdenv.mkDerivation rec {
   else
     throw ("Unsupported system " + stdenv.system);
 
-  src = builtins.fetchGit {
-    url = "https://github.com/STJr/SRB2";
-    ref = "SRB2_release_${version}";
+  src = fetchFromGitHub {
+    owner = owner;
+    repo = repo;
+    rev = "${repo}_release_${version}";
+    sha256 = "07wlyqqihhvhfv7qy0x2khi2r6fbsvfrhpdbjjfz3ljpvn76pf23";
   };
 
+  nativeBuildInputs = [ gcc curl pkg-config ];
   buildInputs = [
-
-    gcc
-    curl
-    pkg-config
-
     nasm
-
-    libpng
-    libupnp
-    zlib
-    libgme
-    openmpt123
-
-    SDL2
-    SDL2_mixer
-
+    libpng libupnp zlib libgme openmpt123
+    SDL2 SDL2_mixer
   ];
 
-  patchPhase = ''
+  patches = [ ./makefile-endef-fix.patch ];
+
+  postPatch = ''
     sed 's/-DCOMPVERSION//' -i src/Makefile
     sed 's/illegal/NixOS/' -i src/comptime.c
   '';
@@ -59,8 +55,7 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     mkdir -p $out/bin
-    mv bin/Linux64/Release/lsdl2srb2 $out/bin/srb2
-    strip $out/bin/srb2
+    mv bin/Linux*/Release/lsdl2srb2 $out/bin/sonic-robo-blast-2
   '';
 
   meta = with lib; {

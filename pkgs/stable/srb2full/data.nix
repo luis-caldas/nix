@@ -1,17 +1,20 @@
-{ stdenv, lib, fetchurl, srb2-unwrapped, unzip }:
+{ stdenv, lib
+, fetchurl
+, srb2-unwrapped
+, unzip
+}:
 
 stdenv.mkDerivation rec {
 
   pname = "srb2-data";
-  inherit (srb2-unwrapped) version;
+  inherit (srb2-unwrapped) owner repo version fixVersion;
 
   nativeBuildInputs = [ unzip ];
   buildInputs = [ unzip ];
 
   src = fetchurl {
-    #url = "https://github.com/STJr/SRB2/releases/download/SRB2_release_${version}/SRB2-v${version}-Full.zip";
-    url = "https://files.srb2skybase.org/srb2_v2.2/SRB2-v${version}-Full.zip";
-    sha256 = "066p2k0ysl97kkf8pm4p8hrrw9i7b7if77ra8fv2vm3v2aqhaf3s";
+    url = "https://github.com/${owner}/${repo}/releases/download/${repo}_release_${version}/${repo}-v${fixVersion}-Full.zip";
+    sha256 = "0zgkwvmqdzjdaf6g2w5ss0c02b84yji27vqjdg7bb0gd9dh49rj8";
   };
 
   sourceRoot = ".";
