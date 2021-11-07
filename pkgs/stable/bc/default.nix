@@ -1,9 +1,11 @@
-{ cmake
+{ stdenv, lib
+, cmake
 , libGL, freeglut
 , xorg
 , alsaLib
 , portaudio
 , libsndfile
+, fetchFromGitHub
 }:
 
 stdenv.mkDerivation rec {
@@ -48,5 +50,10 @@ stdenv.mkDerivation rec {
     mv ../bin $out/lib
     ln -s $out/lib/bridgecommand $out/bin/bridgecommand
   '';
+
+  meta = with lib; {
+    description = "Bridge Command is a free interactive ship simulator program";
+    homepage = "https://www.bridgecommand.co.uk/";
+  };
 
 }
