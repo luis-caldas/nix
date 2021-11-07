@@ -10,7 +10,7 @@
 
 stdenv.mkDerivation rec {
 
-  pname = "bc";
+  pname = "bridgecommand";
   version = "release561";
 
   src = fetchFromGitHub {
