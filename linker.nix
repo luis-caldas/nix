@@ -56,7 +56,7 @@ let
   # Home manager
   home-manager = builtins.fetchGit {
     url = "https://github.com/rycee/home-manager.git";
-    ref = ("release-" + version);
+    ref = "release-" + version;
   };
 
   # Unstable packages
@@ -149,7 +149,7 @@ let
     ./common/user/video/hm-packages.nix
     # Window manager configs
     ./common/user/video/hm-window-managers.nix
-  ] [] ++ 
+  ] [] ++
   # Games
   mfunc.useDefault (my.config.graphical.enable && my.config.games) [
     ./common/user/video/hm-games.nix

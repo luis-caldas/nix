@@ -22,7 +22,7 @@
     mpkgs.srb2
 
     # Steam
-    upkgs.steam
+    steam
 
     # Simulator
     flightgear

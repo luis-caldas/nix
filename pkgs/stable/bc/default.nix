@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
 
   src = fetchFromGitHub {
     owner = "bridgecommand";
-    repo = pname;
+    repo = "bc";
     rev = version;
     sha256 = "10sgz1aq5hgz5brkhgisffrz7p3iwb5afvd2d54bj6j4l06x4xbx";
   };
@@ -48,7 +48,11 @@ stdenv.mkDerivation rec {
   installPhase = ''
     mkdir -p $out/bin
     mv ../bin $out/lib
-    ln -s $out/lib/bridgecommand $out/bin/bridgecommand
+    cat > $out/bin/bridgecommand <<EOF
+      #!/usr/bin/env sh
+      cd "$out"/lib
+      ./bridgecommand
+    EOF
   '';
 
   meta = with lib; {
