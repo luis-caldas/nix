@@ -60,6 +60,9 @@
     gimp
     inkscape
 
+    # Video editing
+    kdenlive
+
     # Scan
     gnome3.simple-scan
 
