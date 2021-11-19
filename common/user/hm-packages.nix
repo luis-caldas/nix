@@ -15,6 +15,7 @@
     python3Packages.binwalk-full
 
     # Disk
+    ncdu
     parted
     testdisk
     smartmontools
