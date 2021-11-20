@@ -19,8 +19,8 @@
     };
 
   fileSystems."/data" =
-    { device = "/dev/disk/by-uuid/3993DAA70776E5D6";
-      fsType = "ntfs";
+    { device = "/dev/disk/by-uuid/0945-46DB";
+      fsType = "vfat";
       options = [ "rw" "uid=1000" "gid=1000" "nofail" ];
     };
 
