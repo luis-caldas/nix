@@ -14,6 +14,7 @@
 
     # Notifications
     dunst
+    libnotify
 
     # XDG
     awf
