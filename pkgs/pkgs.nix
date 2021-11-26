@@ -3,8 +3,8 @@
 let
 
   # Get list of directories in folder
-  listDirs = folderName: 
-    let 
+  listDirs = folderName:
+    let
       allNameList = pkgs.lib.mapAttrsToList (
         name: value:
           if (value == "directory") then
