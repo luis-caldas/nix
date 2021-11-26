@@ -1,4 +1,4 @@
-{ my, mfunc, pkgs, mpkgs, upkgs, ... }:
+{ my, mfunc, pkgs, mpkgs, ... }:
 {
 
   # Games
@@ -7,12 +7,12 @@
     # Emulators
     # pcsxr  # Uses unsafe ffmpeg
     pcsx2
+    citra
     desmume
     mednafen
     mednaffe
     retroarch
     dolphinEmu
-    upkgs.citra
 
     # Proper games
     zeroad
