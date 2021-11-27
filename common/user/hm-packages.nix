@@ -97,7 +97,6 @@
     imagemagick
     libqrencode
     ffmpeg-full
-    imagemagick
     ghostscript
     waifu2x-converter-cpp
     python3Packages.pywal
