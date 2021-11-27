@@ -1,4 +1,4 @@
-{ my, mfunc, lib, pkgs, mpkgs, config, options, ... }:
+{ my, mfunc, lib, pkgs, mpkgs, upkgs, config, options, ... }:
 let
 
   # Link all the themes
@@ -58,63 +58,193 @@ let
   };
 
   # Create the .xinitrc link file
-  textXInit = { ".xinitrc" = {
-    text = "" +
-      ''xrdb -load "''${HOME}""/.Xresources"'' + "\n" +
-      "exec bash" + " " + my.projects.desktop + "/entrypoint.bash" + "\n";
-  }; };
+  textXInit = { ".xinitrc" = { text = ''
+    xrdb -load "''${HOME}/.Xresources"
+    exec bash "${my.projects.desktop}/entrypoint.bash"
+  ''; }; };
 
   # Create the default icons file
   textIconsCursor = { ".local/share/icons/default/index.theme".text = ''
-    [Icon Theme]
-    Name = default
-    Comment = Default theme linker
-    Inherits = '' + my.config.graphical.cursor + "," + my.config.graphical.icons + "\n";
+      [Icon Theme]
+      Name = default
+      Comment = Default theme linker
+      Inherits = ${my.config.graphical.cursor},${my.config.graphical.icons}
+    '';
   };
+
+  # Create local services
+  servicesLocal = {
+    # Lock screen service
+    xlock = {
+      Unit = {
+        Description = "XServer lock listener";
+        Requires = "graphical-session.target";
+        After = "graphical-session.target";
+      };
+      Service = {
+        Restart = "on-failure";
+        ExecStart = let
+        textFile = pkgs.writeTextFile {
+          name = "neolock"; executable = true;
+          text = ''
+            #!${pkgs.bash}/bin/bash
+            . /etc/profile
+            "${pkgs.systemd}/bin/systemctl" --user import-environment XDG_SESSION_ID
+            "${pkgs.coreutils}/bin/env"
+            "${pkgs.xss-lock}/bin/xss-lock" -s "''${XDG_SESSION_ID}" -- "${my.projects.desktop}/programs/public/neolock"
+          '';
+        }; in "${textFile}";
+      };
+    };
+    # Default unclutter program
+    unclutter = {
+      Unit = {
+        Description = "Unclutter desktop";
+        Requires = "graphical-session.target";
+        After = "graphical-session.target";
+      };
+      Service = {
+        Restart = "on-failure";
+        ExecStart = "${upkgs.unclutter-xfixes}/bin/unclutter --timeout 10 --jitter 5 --ignore-buttons 4,5,6,7";
+      };
+    };
+    # Dunst notification system
+    neodunst = {
+      Unit = {
+        Description = "Neodunst notification system";
+        Conflicts = "dunst.service";
+        Requires = "graphical-session.target";
+        After = "graphical-session.target";
+      };
+      Service = {
+        Restart = "on-failure";
+        ExecStart = let
+        textFile = pkgs.writeTextFile {
+          name = "neodunst"; executable = true;
+          text = ''
+            #!${pkgs.bash}/bin/bash
+            . /etc/profile
+            "${my.projects.desktop}/programs/public/neodunst"
+          '';
+        }; in "${textFile}";
+      };
+    };
+    # Picom window compositor
+    neopicom = {
+      Unit = {
+        Description = "Neopicom window compositor";
+        Requires = "graphical-session.target";
+        After = "graphical-session.target";
+      };
+      Service = {
+        Restart = "on-failure";
+        ExecStart = let
+        textFile = pkgs.writeTextFile {
+          name = "neopicom"; executable = true;
+          text = ''
+            #!${pkgs.bash}/bin/bash
+            . /etc/profile
+            "${my.projects.desktop}/programs/public/neopicom"
+          '';
+        }; in "${textFile}";
+      };
+    };
+  } //
+  # Uncluter + touch support
+  mfunc.useDefault my.config.graphical.touch {
+    unclutter-touch = {
+      Unit = {
+        Description = "Unclutter desktop on touch";
+        Requires = "graphical-session.target";
+        After = "graphical-session.target";
+      };
+      Service = {
+        Restart = "on-failure";
+        ExecStart = "${upkgs.unclutter-xfixes}/bin/unclutter --hide-on-touch";
+      };
+    };
+  } {};
 
   # Create a script for each monitor
   linkDisplays = builtins.listToAttrs (map (eachDisplay: {
+
+    # Create all displays for system
     name = "my-displays" + "/display" + (builtins.replaceStrings [":"] ["-"] eachDisplay.display);
-    value = { text = "" +
+
+    value = { text = let
+
+      scaleString = toString eachDisplay.scale;
+      scaleStringDPI = toString (1.0 / eachDisplay.scale);
+
+    in ''
+
       # We set the display variable here
-      "export DISPLAY=" + eachDisplay.display + "\n" +
+      export DISPLAY="${eachDisplay.display}"
+
       # Scaling variables
-      "export GDK_SCALE=" + (toString eachDisplay.scale) + "\n" +
-      "export GDK_DPI_SCALE=" + (toString (1.0 / eachDisplay.scale)) + "\n" +
-      "export ELM_SCALE=" + (toString eachDisplay.scale) + "\n" +
-      "export QT_AUTO_SCREEN_SCALE_FACTOR=" + (toString eachDisplay.scale) + "\n" +
+      export GDK_SCALE="${scaleString}"
+      export GDK_DPI_SCALE="${scaleStringDPI}"
+      export ELM_SCALE="${scaleString}"
+      export QT_AUTO_SCREEN_SCALE_FACTOR="${scaleString}"
+
       # Fix for java applications on tiling window managers
-      "export _JAVA_AWT_WM_NONREPARENTING=1" + "\n" +
+      export _JAVA_AWT_WM_NONREPARENTING=1
+
       # Enable moz XInput2 for touch
-      "export MOZ_USE_XINPUT2=1" + "\n" +
+      export MOZ_USE_XINPUT2=1
+
       # Dont blank screen with DPMS
-      "xset s off" + "\n" +
-      "xset dpms 0 0 0" + "\n" +
-      # Unclutter normally if the cursor is idle
-      "unclutter --timeout 10 --jitter 5 --ignore-buttons 4,5,6,7 --start-hidden --fork" + " " + "&" + "\n" +
-      # Set unclutter to remove cursor on touch
-      (mfunc.useDefault my.config.graphical.touch ("unclutter --hide-on-touch --fork" + " " + "&" + "\n") "") +
+      xset s off
+      xset dpms 0 0 0
+
       # Boot up numlock
-      "numlockx" + " " + (if my.config.system.numlock then "on" else "off") + "\n" +
+      ${ "numlockx" + " " + (if my.config.system.numlock then "on" else "off") }
+
       # Change Caps to Ctrl
-      "remap-caps-to-ctrl" + "\n" +
-      # Start bluetooth if present
-      (mfunc.useDefault my.config.bluetooth ("blueman-applet" + " " + "&" + "\n") "") +
-      # Extra commands from the config to be added
-      (builtins.concatStringsSep "\n" eachDisplay.extraCommands) + "\n" +
+      remap-caps-to-ctrl
+
       # Restore the wallpapers
-      "neotrogen restore" + "\n" +
-      # Start the notification system
-      "neodunst" + " " + "&" + "\n" +
-      # Start window compositor
-      "neopicom" + " " + "&" + "\n" +
-      # Set the lock program to stay listening on lock events
-      "xss-lock neolock" + " " + "&" + "\n" +
+      neotrogen restore
+
+      # Extra commands from the config to be added
+      ${ (builtins.concatStringsSep "\n" eachDisplay.extraCommands) }
+
+      # Set DBus variables
+      if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
+        eval $(dbus-launch --exit-with-session --sh-syntax)
+      fi
+
+      # Import some variables from user
+      systemctl --user import-environment XAUTHORITY
+
+      # Update DBus environment
+      if command -v dbus-update-activation-environment >/dev/null 2>&1; then
+        dbus-update-activation-environment DISPLAY XAUTHORITY
+      fi
+
+      # Export some local variables
+      systemctl --user set-environment XDG_SESSION_ID="''${XDG_SESSION_ID}"
+
       # Call the preferred window manager
-      my.config.graphical.wm + " " + "&" + "\n" +
+      ${my.config.graphical.wm} &
+
+      # Announce graphical session started
+      ${pkgs.systemd}/bin/systemctl --user start graphical-session.target
+
+      # Start all possible services
+      ${pkgs.systemd}/bin/systemctl --user start xlock
+      ${pkgs.systemd}/bin/systemctl --user start unclutter
+      ${mfunc.useDefault my.config.graphical.touch "${pkgs.systemd}/bin/systemctl --user start unclutter-touch" ""}
+      ${pkgs.systemd}/bin/systemctl --user start neopicom
+      ${pkgs.systemd}/bin/systemctl --user start neodunst
+
       # Wait for all programs to exit
-      "wait" + "\n";
-    };
+      "wait"
+
+      # Announce graphical session stopped
+      ${pkgs.systemd}/bin/systemctl --user stop graphical-session.target
+
+      ''; };
   }) my.config.graphical.displays);
 
   # Create a alias for the neox startx command
@@ -270,6 +400,9 @@ in
       commandLineArgs = "--force-dark-mode --enable-features=WebUIDarkMode";
     };
   };
+
+  # Add all the created services
+  systemd.user.services = servicesLocal;
 
   # Add all the acquired link sets to the config
   home.file = linkSets;
