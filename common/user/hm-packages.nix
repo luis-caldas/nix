@@ -93,6 +93,9 @@
     shadowsocks-libev
 
     # Audio & Video manipulation
+    potrace
+    imagemagick
+    libqrencode
     ffmpeg-full
     imagemagick
     ghostscript
@@ -130,7 +133,6 @@
 
     # Image
     jp2a
-    libqrencode
 
     # Banner
     figlet
