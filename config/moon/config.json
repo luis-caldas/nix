@@ -25,16 +25,14 @@
   "graphical": {
     "enable": true,
     "drivers": ["amdgpu"],
-    "displays": [
-      {
-        "scale": 2, "display": ":0",
-        "extraCommands": [
-          "xrandr --dpi 192x192",
-          "xrandr --output DisplayPort-0 --mode 1920x1080 --rate 144 --scale 2x2 --pos 0x0 --primary",
-          "xrandr --output DisplayPort-1 --mode 3840x2160 --rate 60 --scale 1x1 --pos 3840x0"
-        ]
-      }
-    ],
+    "display": {
+      "scale": 2,
+      "extraCommands": [
+        "xrandr --dpi 192x192",
+        "xrandr --output DisplayPort-0 --mode 1920x1080 --rate 144 --scale 2x2 --pos 0x0 --primary",
+        "xrandr --output DisplayPort-1 --mode 3840x2160 --rate 60 --scale 1x1 --pos 3840x0"
+      ]
+    },
     "production": {
       "audio": true,
       "models": true,

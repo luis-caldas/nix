@@ -28,9 +28,7 @@
     "enable": false,
     "drivers": ["panfrost"],
     "touchpad": { "enable": true },
-    "displays": [
-      { "scale": 1, "display": ":0", "extraCommands": ["swap-back-and-slash", "neogov restore"] }
-    ]
+    "display": { "extraCommands": ["swap-back-and-slash", "neogov restore"] }
   },
   "audio": true
 }

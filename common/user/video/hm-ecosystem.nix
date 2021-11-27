@@ -58,10 +58,12 @@ let
   };
 
   # Create the .xinitrc link file
-  textXInit = { ".xinitrc" = { text = ''
-    xrdb -load "''${HOME}/.Xresources"
-    exec bash "${my.projects.desktop}/entrypoint.bash"
-  ''; }; };
+  textXInit = { ".xinitrc".text = ''
+    systemctl --user set-environment DISPLAY="''${DISPLAY}"
+    systemctl --user set-environment XAUTHORITY="''${XAUTHORITY}"
+    systemctl --user start display
+    sleep infinity
+  ''; };
 
   # Create the default icons file
   textIconsCursor = { ".local/share/icons/default/index.theme".text = ''
@@ -74,6 +76,108 @@ let
 
   # Create local services
   servicesLocal = {
+
+    # Window managers per number of displays
+    # Create a script for each monitor
+
+    # Create name for current display
+    display = {
+
+      Unit = {
+        Description = "Graphical init display for XOrg";
+      };
+
+      Service = {
+        ExecStart = let textFile = pkgs.writeTextFile {
+          name = "xorg-display-init";
+          executable = true;
+          text = let
+            scaleString = toString my.config.graphical.display.scale;
+            scaleStringDPI = toString (1.0 / my.config.graphical.display.scale);
+          in ''
+            #!${pkgs.bash}/bin/bash
+
+            # Import needed variables
+            source /etc/profile
+            export PATH="''${PATH}:${my.projects.desktop}/programs/public"
+
+            # Import my functions
+            source "${my.projects.desktop}/programs/functions/functions.bash"
+
+            # Scaling variables
+            export GDK_SCALE="${scaleString}"
+            export GDK_DPI_SCALE="${scaleStringDPI}"
+            export ELM_SCALE="${scaleString}"
+            export QT_AUTO_SCREEN_SCALE_FACTOR="${scaleString}"
+
+            # Fix for java applications on tiling window managers
+            export _JAVA_AWT_WM_NONREPARENTING=1
+
+            # Enable moz XInput2 for touch
+            export MOZ_USE_XINPUT2=1
+
+            # Dont blank screen with DPMS
+            ${pkgs.xorg.xset}/bin/xset s off
+            ${pkgs.xorg.xset}/bin/xset dpms 0 0 0
+
+            # Load the proper xresources
+            "${pkgs.xorg.xrdb}/bin/xrdb" -load "''${HOME}/.Xresources"
+
+            # Boot up numlock
+            ${ "numlockx" + " " + (if my.config.system.numlock then "on" else "off") }
+
+            # Change Caps to Ctrl
+            remap-caps-to-ctrl
+
+            # Restore the wallpapers
+            neotrogen restore
+
+            # Extra commands from the config to be added
+            ${ (builtins.concatStringsSep "\n" my.config.graphical.display.extraCommands) }
+
+            # Set DBus variables
+            if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
+              eval $(dbus-launch --exit-with-session --sh-syntax)
+            fi
+
+            # Import some variables from user
+            ${pkgs.systemd}/bin/systemctl --user import-environment DISPLAY XAUTHORITY
+
+            # Update DBus environment
+            if command -v dbus-update-activation-environment >/dev/null 2>&1; then
+              dbus-update-activation-environment DISPLAY XAUTHORITY
+            fi
+
+            # Export some local variables
+            ${pkgs.systemd}/bin/systemctl --user set-environment XDG_SESSION_ID="''${XDG_SESSION_ID}"
+
+            # Call the preferred window manager
+            ${my.config.graphical.wm} &
+
+            # Announce graphical session started
+            ${pkgs.systemd}/bin/systemctl --user start graphical-session.target
+
+            # Start all possible services
+            ${pkgs.systemd}/bin/systemctl --user start xlock
+            ${pkgs.systemd}/bin/systemctl --user start unclutter
+            ${mfunc.useDefault my.config.graphical.touch "${pkgs.systemd}/bin/systemctl --user start unclutter-touch" ""}
+            ${pkgs.systemd}/bin/systemctl --user start neopicom
+            ${pkgs.systemd}/bin/systemctl --user start neodunst
+
+            # Wait for all programs to exit
+            "wait"
+
+            # Announce graphical session stopped
+            ${pkgs.systemd}/bin/systemctl --user stop graphical-session.target
+
+          '';
+        }; in "${textFile}";
+      };
+    };
+  } //
+
+  {
+
     # Lock screen service
     xlock = {
       Unit = {
@@ -88,14 +192,14 @@ let
           name = "neolock"; executable = true;
           text = ''
             #!${pkgs.bash}/bin/bash
-            . /etc/profile
+            source /etc/profile
             "${pkgs.systemd}/bin/systemctl" --user import-environment XDG_SESSION_ID
-            "${pkgs.coreutils}/bin/env"
             "${pkgs.xss-lock}/bin/xss-lock" -s "''${XDG_SESSION_ID}" -- "${my.projects.desktop}/programs/public/neolock"
           '';
         }; in "${textFile}";
       };
     };
+
     # Default unclutter program
     unclutter = {
       Unit = {
@@ -108,6 +212,7 @@ let
         ExecStart = "${upkgs.unclutter-xfixes}/bin/unclutter --timeout 10 --jitter 5 --ignore-buttons 4,5,6,7";
       };
     };
+
     # Dunst notification system
     neodunst = {
       Unit = {
@@ -123,12 +228,13 @@ let
           name = "neodunst"; executable = true;
           text = ''
             #!${pkgs.bash}/bin/bash
-            . /etc/profile
+            source /etc/profile
             "${my.projects.desktop}/programs/public/neodunst"
           '';
         }; in "${textFile}";
       };
     };
+
     # Picom window compositor
     neopicom = {
       Unit = {
@@ -143,12 +249,13 @@ let
           name = "neopicom"; executable = true;
           text = ''
             #!${pkgs.bash}/bin/bash
-            . /etc/profile
+            source /etc/profile
             "${my.projects.desktop}/programs/public/neopicom"
           '';
         }; in "${textFile}";
       };
     };
+
   } //
   # Uncluter + touch support
   mfunc.useDefault my.config.graphical.touch {
@@ -164,88 +271,6 @@ let
       };
     };
   } {};
-
-  # Create a script for each monitor
-  linkDisplays = builtins.listToAttrs (map (eachDisplay: {
-
-    # Create all displays for system
-    name = "my-displays" + "/display" + (builtins.replaceStrings [":"] ["-"] eachDisplay.display);
-
-    value = { text = let
-
-      scaleString = toString eachDisplay.scale;
-      scaleStringDPI = toString (1.0 / eachDisplay.scale);
-
-    in ''
-
-      # We set the display variable here
-      export DISPLAY="${eachDisplay.display}"
-
-      # Scaling variables
-      export GDK_SCALE="${scaleString}"
-      export GDK_DPI_SCALE="${scaleStringDPI}"
-      export ELM_SCALE="${scaleString}"
-      export QT_AUTO_SCREEN_SCALE_FACTOR="${scaleString}"
-
-      # Fix for java applications on tiling window managers
-      export _JAVA_AWT_WM_NONREPARENTING=1
-
-      # Enable moz XInput2 for touch
-      export MOZ_USE_XINPUT2=1
-
-      # Dont blank screen with DPMS
-      xset s off
-      xset dpms 0 0 0
-
-      # Boot up numlock
-      ${ "numlockx" + " " + (if my.config.system.numlock then "on" else "off") }
-
-      # Change Caps to Ctrl
-      remap-caps-to-ctrl
-
-      # Restore the wallpapers
-      neotrogen restore
-
-      # Extra commands from the config to be added
-      ${ (builtins.concatStringsSep "\n" eachDisplay.extraCommands) }
-
-      # Set DBus variables
-      if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
-        eval $(dbus-launch --exit-with-session --sh-syntax)
-      fi
-
-      # Import some variables from user
-      systemctl --user import-environment XAUTHORITY
-
-      # Update DBus environment
-      if command -v dbus-update-activation-environment >/dev/null 2>&1; then
-        dbus-update-activation-environment DISPLAY XAUTHORITY
-      fi
-
-      # Export some local variables
-      systemctl --user set-environment XDG_SESSION_ID="''${XDG_SESSION_ID}"
-
-      # Call the preferred window manager
-      ${my.config.graphical.wm} &
-
-      # Announce graphical session started
-      ${pkgs.systemd}/bin/systemctl --user start graphical-session.target
-
-      # Start all possible services
-      ${pkgs.systemd}/bin/systemctl --user start xlock
-      ${pkgs.systemd}/bin/systemctl --user start unclutter
-      ${mfunc.useDefault my.config.graphical.touch "${pkgs.systemd}/bin/systemctl --user start unclutter-touch" ""}
-      ${pkgs.systemd}/bin/systemctl --user start neopicom
-      ${pkgs.systemd}/bin/systemctl --user start neodunst
-
-      # Wait for all programs to exit
-      "wait"
-
-      # Announce graphical session stopped
-      ${pkgs.systemd}/bin/systemctl --user stop graphical-session.target
-
-      ''; };
-  }) my.config.graphical.displays);
 
   # Create a alias for the neox startx command
   neoxAlias = { neox = my.projects.desktop + "/programs/init/neox"; };
@@ -319,9 +344,7 @@ in
     "conky" = { source = my.projects.conky; };
     # Link the xmobar configs
     "xmobar" = { source = my.projects.desktop + "/bar/xmobar"; };
-  } //
-  # Link the created monitor configs
-  linkDisplays;
+  };
 
   # Set icons and themes
   gtk.enable = true;
