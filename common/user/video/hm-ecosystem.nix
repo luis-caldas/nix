@@ -89,7 +89,7 @@ let
 
       Service = {
         ExecStart = let textFile = pkgs.writeTextFile {
-          name = "xorg-display-init";
+          name = "display-init";
           executable = true;
           text = let
             scaleString = toString my.config.graphical.display.scale;
@@ -101,11 +101,23 @@ let
             source /etc/profile
             export PATH="''${PATH}:${my.projects.desktop}/programs/public"
 
-            # Scaling variables
-            export GDK_SCALE="${scaleString}"
-            export GDK_DPI_SCALE="${scaleStringDPI}"
-            export ELM_SCALE="${scaleString}"
-            export QT_AUTO_SCREEN_SCALE_FACTOR="${scaleString}"
+            # Try to import new systemd variable
+            ${pkgs.systemd}/bin/systemctl --user import-environment NEW_SCALE
+
+            # Check if variable was set and if it was override scaling
+            if [ -n "$NEW_SCALE" ]; then
+              dpiScale=$(awk "BEGIN { print "1.0 / ''${NEW_SCALE}" }")
+              export GDK_SCALE="''${NEW_SCALE}"
+              export GDK_DPI_SCALE="''${dpiScale}"
+              export ELM_SCALE="''${NEW_SCALE}"
+              export QT_AUTO_SCREEN_SCALE_FACTOR="''${NEW_SCALE}"
+            else
+              # Scaling variables
+              export GDK_SCALE="${scaleString}"
+              export GDK_DPI_SCALE="${scaleStringDPI}"
+              export ELM_SCALE="${scaleString}"
+              export QT_AUTO_SCREEN_SCALE_FACTOR="${scaleString}"
+            fi
 
             # Fix for java applications on tiling window managers
             export _JAVA_AWT_WM_NONREPARENTING=1
@@ -270,7 +282,10 @@ let
   } {};
 
   # Create a alias for the neox startx command
-  neoxAlias = { neox = my.projects.desktop + "/programs/init/neox"; };
+  neoxAlias = {
+    neox = "${my.projects.desktop}/programs/init/neox";
+    neo2x = "${my.projects.desktop}/programs/init/neox 2";
+  };
 
   # Grobi config
   grobiService = {
