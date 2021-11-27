@@ -101,9 +101,6 @@ let
             source /etc/profile
             export PATH="''${PATH}:${my.projects.desktop}/programs/public"
 
-            # Import my functions
-            source "${my.projects.desktop}/programs/functions/functions.bash"
-
             # Scaling variables
             export GDK_SCALE="${scaleString}"
             export GDK_DPI_SCALE="${scaleStringDPI}"

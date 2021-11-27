@@ -4,10 +4,13 @@ let
   # Create a set with the proper files
   configFiles = {
     # Shell configuration
-    bash = "source" + " " + my.projects.shell + "/shell/shell.bash";
+    bash = ''
+      source "${my.projects.shell}/shell/shell.bash"
+      source "${my.projects.desktop}/programs/functions/functions.bash"
+    '';
     # Vim configuration
     vim = ''
-      exec 'source' "'' + my.projects.vim + ''/vimrc.vim"
+      exec 'source' "${my.projects.vim}/vimrc.vim"
     '';
   };
 
