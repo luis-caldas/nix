@@ -272,6 +272,14 @@ let
   # Create a alias for the neox startx command
   neoxAlias = { neox = my.projects.desktop + "/programs/init/neox"; };
 
+  # Grobi config
+  grobiService = {
+    enable = true;
+    executeAfter = [
+      "${my.projects.desktop}/programs/public/neotrogen restore"
+    ] ++ my.config.graphical.display.updateCommands;
+  };
+
   # Function for creating extensions for chromium based browsers
   extensionJson = ext: browserName:
   let
@@ -423,6 +431,9 @@ in
 
   # Add all the created services
   systemd.user.services = servicesLocal;
+
+  # Add local services
+  services.grobi = grobiService;
 
   # Add all the acquired link sets to the config
   home.file = linkSets;

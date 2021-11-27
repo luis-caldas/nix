@@ -30,7 +30,9 @@
       "electronics": true
     },
     "touch": true,
-    "display": { "extraCommands": [ "swap-back-and-slash" ] }
+    "display": { "extraCommands": [ "swap-back-and-slash" ], "updateCommands": [
+      "xinput map-to-output \"Raydium Corporation Raydium Touch System\" \"eDP1\""
+    ]}
   },
   "games": true,
   "audio": true,
