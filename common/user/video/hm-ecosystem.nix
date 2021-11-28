@@ -58,12 +58,94 @@ let
   };
 
   # Create the .xinitrc link file
-  textXInit = { ".xinitrc".text = ''
-    systemctl --user set-environment DISPLAY="''${DISPLAY}"
-    systemctl --user set-environment XAUTHORITY="''${XAUTHORITY}"
-    systemctl --user start display
-    sleep infinity
-  ''; };
+  textXInit = { ".xinitrc".text = let
+    scaleString = toString my.config.graphical.display.scale;
+    scaleStringDPI = toString (1.0 / my.config.graphical.display.scale);
+  in ''
+    #!${pkgs.bash}/bin/bash
+
+    # Set XOrg variables
+    ${pkgs.systemd}/bin/systemctl --user set-environment DISPLAY="''${DISPLAY}"
+    ${pkgs.systemd}/bin/systemctl --user set-environment XAUTHORITY="''${XAUTHORITY}"
+    ${pkgs.systemd}/bin/systemctl --user set-environment XDG_SESSION_ID="''${XDG_SESSION_ID}"
+
+    # Add own programs to PATH
+    export PATH="''${PATH}:${my.projects.desktop}/programs/public"
+
+    # Try to import new systemd variable
+    ${pkgs.systemd}/bin/systemctl --user import-environment NEW_SCALE
+
+    # Set default scaling variables
+    export GDK_SCALE="${scaleString}"
+    export GDK_DPI_SCALE="${scaleStringDPI}"
+
+    # Check if new scaling variable was set and if it was, override scaling
+    if [ -n "$NEW_SCALE" ]; then
+      dpiScale=$(awk "BEGIN { print "1.0 / ''${NEW_SCALE}" }")
+      export GDK_SCALE="''${NEW_SCALE}"
+      export GDK_DPI_SCALE="''${dpiScale}"
+    fi
+
+    # Update more scaling variables
+    export ELM_SCALE="''${GDK_SCALE}"
+    export QT_AUTO_SCREEN_SCALE_FACTOR="''${GDK_SCALE}"
+
+    # Fix for java applications on tiling window managers
+    export _JAVA_AWT_WM_NONREPARENTING=1
+
+    # Enable moz XInput2 for touch
+    export MOZ_USE_XINPUT2=1
+
+    # Dont blank screen with DPMS
+    ${pkgs.xorg.xset}/bin/xset s off
+    ${pkgs.xorg.xset}/bin/xset dpms 0 0 0
+
+    # Load the proper xresources
+    "${pkgs.xorg.xrdb}/bin/xrdb" -load "''${HOME}/.Xresources"
+
+    # Boot up numlock
+    ${ "numlockx" + " " + (if my.config.system.numlock then "on" else "off") }
+
+    # Change Caps to Ctrl
+    remap-caps-to-ctrl
+
+    # Restore the wallpapers
+    neotrogen restore
+
+    # Extra commands from the config to be added
+    ${ (builtins.concatStringsSep "\n" my.config.graphical.display.extraCommands) }
+
+    # Set DBus variables
+    if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
+      eval $(dbus-launch --exit-with-session --sh-syntax)
+    fi
+
+    # Update DBus environment
+    if command -v dbus-update-activation-environment >/dev/null 2>&1; then
+      dbus-update-activation-environment DISPLAY XAUTHORITY
+    fi
+
+    # Call the preferred window manager
+    ${my.config.graphical.wm} &
+
+    # Announce graphical session started
+    ${pkgs.systemd}/bin/systemctl --user start graphical-session.target
+
+    # Start all possible services
+    ${pkgs.systemd}/bin/systemctl --user start xlock
+    ${pkgs.systemd}/bin/systemctl --user start unclutter
+    ${mfunc.useDefault my.config.graphical.touch "${pkgs.systemd}/bin/systemctl --user start unclutter-touch" ""}
+    ${pkgs.systemd}/bin/systemctl --user start neopicom
+    ${pkgs.systemd}/bin/systemctl --user start neodunst
+
+    # Wait for all programs to exit
+    wait
+
+    # Announce graphical session stopped
+    ${pkgs.systemd}/bin/systemctl --user stop graphical-session.target
+
+    '';
+  };
 
   # Create the default icons file
   textIconsCursor = { ".local/share/icons/default/index.theme".text = ''
@@ -76,116 +158,6 @@ let
 
   # Create local services
   servicesLocal = {
-
-    # Window managers per number of displays
-    # Create a script for each monitor
-
-    # Create name for current display
-    display = {
-
-      Unit = {
-        Description = "Graphical init display for XOrg";
-      };
-
-      Service = {
-        ExecStart = let textFile = pkgs.writeTextFile {
-          name = "display-init";
-          executable = true;
-          text = let
-            scaleString = toString my.config.graphical.display.scale;
-            scaleStringDPI = toString (1.0 / my.config.graphical.display.scale);
-          in ''
-            #!${pkgs.bash}/bin/bash
-
-            # Import needed variables
-            source /etc/profile
-            export PATH="''${PATH}:${my.projects.desktop}/programs/public"
-
-            # Try to import new systemd variable
-            ${pkgs.systemd}/bin/systemctl --user import-environment NEW_SCALE
-
-            # Check if variable was set and if it was override scaling
-            if [ -n "$NEW_SCALE" ]; then
-              dpiScale=$(awk "BEGIN { print "1.0 / ''${NEW_SCALE}" }")
-              export GDK_SCALE="''${NEW_SCALE}"
-              export GDK_DPI_SCALE="''${dpiScale}"
-              export ELM_SCALE="''${NEW_SCALE}"
-              export QT_AUTO_SCREEN_SCALE_FACTOR="''${NEW_SCALE}"
-            else
-              # Scaling variables
-              export GDK_SCALE="${scaleString}"
-              export GDK_DPI_SCALE="${scaleStringDPI}"
-              export ELM_SCALE="${scaleString}"
-              export QT_AUTO_SCREEN_SCALE_FACTOR="${scaleString}"
-            fi
-
-            # Fix for java applications on tiling window managers
-            export _JAVA_AWT_WM_NONREPARENTING=1
-
-            # Enable moz XInput2 for touch
-            export MOZ_USE_XINPUT2=1
-
-            # Dont blank screen with DPMS
-            ${pkgs.xorg.xset}/bin/xset s off
-            ${pkgs.xorg.xset}/bin/xset dpms 0 0 0
-
-            # Load the proper xresources
-            "${pkgs.xorg.xrdb}/bin/xrdb" -load "''${HOME}/.Xresources"
-
-            # Boot up numlock
-            ${ "numlockx" + " " + (if my.config.system.numlock then "on" else "off") }
-
-            # Change Caps to Ctrl
-            remap-caps-to-ctrl
-
-            # Restore the wallpapers
-            neotrogen restore
-
-            # Extra commands from the config to be added
-            ${ (builtins.concatStringsSep "\n" my.config.graphical.display.extraCommands) }
-
-            # Set DBus variables
-            if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
-              eval $(dbus-launch --exit-with-session --sh-syntax)
-            fi
-
-            # Import some variables from user
-            ${pkgs.systemd}/bin/systemctl --user import-environment DISPLAY XAUTHORITY
-
-            # Update DBus environment
-            if command -v dbus-update-activation-environment >/dev/null 2>&1; then
-              dbus-update-activation-environment DISPLAY XAUTHORITY
-            fi
-
-            # Export some local variables
-            ${pkgs.systemd}/bin/systemctl --user set-environment XDG_SESSION_ID="''${XDG_SESSION_ID}"
-
-            # Call the preferred window manager
-            ${my.config.graphical.wm} &
-
-            # Announce graphical session started
-            ${pkgs.systemd}/bin/systemctl --user start graphical-session.target
-
-            # Start all possible services
-            ${pkgs.systemd}/bin/systemctl --user start xlock
-            ${pkgs.systemd}/bin/systemctl --user start unclutter
-            ${mfunc.useDefault my.config.graphical.touch "${pkgs.systemd}/bin/systemctl --user start unclutter-touch" ""}
-            ${pkgs.systemd}/bin/systemctl --user start neopicom
-            ${pkgs.systemd}/bin/systemctl --user start neodunst
-
-            # Wait for all programs to exit
-            "wait"
-
-            # Announce graphical session stopped
-            ${pkgs.systemd}/bin/systemctl --user stop graphical-session.target
-
-          '';
-        }; in "${textFile}";
-      };
-    };
-  } //
-
-  {
 
     # Lock screen service
     xlock = {
