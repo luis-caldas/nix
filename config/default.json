@@ -91,7 +91,7 @@
       "accel": "0.5"
     },
     "touch": false,
-    "display": { "scale": 1, "extraCommands": [""], "updateCommands": [""] }
+    "display": { "scale": 1, "extraCommands": [""] }
   },
   "games": false,
   "tex": false,
