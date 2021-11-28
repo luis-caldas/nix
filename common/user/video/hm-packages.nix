@@ -53,6 +53,7 @@
 
     # Remote Desktop
     remmina
+    tigervnc
 
     # Calculator
     gnome3.gnome-calculator
