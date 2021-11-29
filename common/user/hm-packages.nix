@@ -228,6 +228,7 @@
     cli-visualizer
 
     # TUI mixer
+    pamix
     ncpamixer
 
     # MPRIS controller
