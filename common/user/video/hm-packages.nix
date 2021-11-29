@@ -60,6 +60,7 @@
 
     # Image editing
     gimp
+    krita
     inkscape
 
     # Video editing
