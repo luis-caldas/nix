@@ -90,6 +90,9 @@ let
     export ELM_SCALE="''${GDK_SCALE}"
     export QT_AUTO_SCREEN_SCALE_FACTOR="''${GDK_SCALE}"
 
+    # Export the scaling to systemd
+    ${pkgs.systemd}/bin/systemctl --user set-environment GDK_SCALE="''${GDK_SCALE}"
+
     # Fix for java applications on tiling window managers
     export _JAVA_AWT_WM_NONREPARENTING=1
 
@@ -103,6 +106,9 @@ let
     # Load the proper xresources
     "${pkgs.xorg.xrdb}/bin/xrdb" -load "''${HOME}/.Xresources"
 
+    # Extra commands from the config to be added
+    ${ (builtins.concatStringsSep "\n" my.config.graphical.display.extraCommands) }
+
     # Boot up numlock
     ${ "numlockx" + " " + (if my.config.system.numlock then "on" else "off") }
 
@@ -111,9 +117,6 @@ let
 
     # Restore the wallpapers
     neotrogen restore
-
-    # Extra commands from the config to be added
-    ${ (builtins.concatStringsSep "\n" my.config.graphical.display.extraCommands) }
 
     # Set DBus variables
     if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
@@ -210,6 +213,7 @@ let
           text = ''
             #!${pkgs.bash}/bin/bash
             source /etc/profile
+            "${pkgs.systemd}/bin/systemctl" --user import-environment GDK_SCALE
             "${my.projects.desktop}/programs/public/neodunst"
           '';
         }; in "${textFile}";
