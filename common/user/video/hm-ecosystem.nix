@@ -106,14 +106,14 @@ let
     # Load the proper xresources
     "${pkgs.xorg.xrdb}/bin/xrdb" -load "''${HOME}/.Xresources"
 
-    # Extra commands from the config to be added
-    ${ (builtins.concatStringsSep "\n" my.config.graphical.display.extraCommands) }
-
     # Boot up numlock
     ${ "numlockx" + " " + (if my.config.system.numlock then "on" else "off") }
 
     # Change Caps to Ctrl
     remap-caps-to-ctrl
+
+    # Extra commands from the config to be added
+    ${ (builtins.concatStringsSep "\n" my.config.graphical.display.extraCommands) }
 
     # Restore the wallpapers
     neotrogen restore
