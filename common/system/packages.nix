@@ -13,6 +13,7 @@
     gotop
     screen
     neovim
+    nix-top
     parallel
     nix-tree
     trash-cli
