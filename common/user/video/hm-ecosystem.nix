@@ -1,4 +1,4 @@
-{ my, mfunc, lib, pkgs, mpkgs, upkgs, config, options, ... }:
+{ my, mfunc, lib, pkgs, mpkgs, config, options, ... }:
 let
 
   # Link all the themes
@@ -193,7 +193,7 @@ let
       };
       Service = {
         Restart = "on-failure";
-        ExecStart = "${upkgs.unclutter-xfixes}/bin/unclutter --timeout 10 --jitter 5 --ignore-buttons 4,5,6,7";
+        ExecStart = "${pkgs.unclutter-xfixes}/bin/unclutter --timeout 10 --jitter 5 --ignore-buttons 4,5,6,7";
       };
     };
 
@@ -252,7 +252,7 @@ let
       };
       Service = {
         Restart = "on-failure";
-        ExecStart = "${upkgs.unclutter-xfixes}/bin/unclutter --hide-on-touch";
+        ExecStart = "${pkgs.unclutter-xfixes}/bin/unclutter --hide-on-touch";
       };
     };
   } {};
