@@ -66,16 +66,25 @@ in
     xdg.configFile."virt-ovmf".source = "${pkgs.OVMF.fd}/FV";
 
     programs = programsSet //
-    # Configure Git
     {
+      # Configure Git
       git = {
         enable = true;
         userName = my.config.git.name;
         userEmail = my.config.git.email;
         package = pkgs.gitAndTools.gitFull;
         extraConfig = { pull = { rebase = false; }; init = { defaultBranch = "master"; }; };
-      };}
-    ;
+      };
+    } //
+    # Configure ncspot
+    mfunc.useDefault my.config.audio {
+      ncspot = {
+        enable = true;
+        settings = {
+          notify = true;
+        };
+      };
+    } {};
 
     # Add arduino libraries
     home.file = mfunc.useDefault my.config.x86_64

@@ -234,9 +234,6 @@
     # MPRIS controller
     playerctl
 
-    # Spotify
-    ncspot
-
     # Morse code training
     aldo
 
