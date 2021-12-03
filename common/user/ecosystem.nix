@@ -81,6 +81,7 @@ in
       ncspot = {
         enable = true;
         settings = {
+          gapless = true;
           notify = true;
         };
       };
