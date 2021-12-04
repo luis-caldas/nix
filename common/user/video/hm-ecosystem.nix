@@ -110,7 +110,7 @@ let
     ${ "numlockx" + " " + (if my.config.system.numlock then "on" else "off") }
 
     # Change Caps to Ctrl
-    remap-caps-to-ctrl
+    reneocapstoctrl
 
     # Extra commands from the config to be added
     ${ (builtins.concatStringsSep "\n" my.config.graphical.display.extraCommands) }

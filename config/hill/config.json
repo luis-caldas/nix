@@ -30,7 +30,7 @@
       "electronics": true
     },
     "touch": true,
-    "display": { "extraCommands": [ "swap-back-and-slash" ] }
+    "display": { "extraCommands": [ "reneoslashtoback" ] }
   },
   "games": true,
   "audio": true,
