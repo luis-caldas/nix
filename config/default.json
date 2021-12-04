@@ -33,7 +33,7 @@
     "filer": "filer",
     "numlock": false,
     "getty": {
-      "greeting": "\\S{PRETTY_NAME} @ \\r - \\m - \\b\nSystem initiated successfully",
+      "greeting": "\\S{PRETTY_NAME} @ \\r \\m \\b\nSystem initiated successfully",
       "help": "You shouldn't need help at this point"
     },
     "motd": "Welcome back"
