@@ -60,6 +60,7 @@
 
     # Image editing
     gimp
+    gpick
     krita
     inkscape
 
