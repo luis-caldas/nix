@@ -330,6 +330,8 @@ in
     "fontconfig/fonts.conf" = { source = my.projects.fonts + "/fonts.conf"; };
     # Link the conky project
     "conky" = { source = my.projects.conky; };
+    # JGmenu config file
+    "jgmenu/jgmenurc" = { text = "stay_alive = 0"; };
   };
 
   # Set icons and themes
