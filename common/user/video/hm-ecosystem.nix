@@ -15,6 +15,7 @@ let
     (iosevka-bin.override { variant = "aile"; })
     (iosevka-bin.override { variant = "slab"; })
     (iosevka-bin.override { variant = "etoile"; })
+    nerdfonts
     font-awesome
     sarasa-gothic
   ];
