@@ -70,7 +70,7 @@ let
     ${pkgs.systemd}/bin/systemctl --user set-environment XDG_SESSION_ID="''${XDG_SESSION_ID}"
 
     # Add own programs to PATH
-    export PATH="''${PATH}:${my.projects.desktop}/programs/public"
+    export PATH="''${PATH}:${my.projects.desktop.programs}/public"
 
     # Try to import new systemd variable
     ${pkgs.systemd}/bin/systemctl --user import-environment NEW_SCALE
@@ -178,7 +178,7 @@ let
             #!${pkgs.bash}/bin/bash
             source /etc/profile
             "${pkgs.systemd}/bin/systemctl" --user import-environment XDG_SESSION_ID
-            "${pkgs.xss-lock}/bin/xss-lock" -s "''${XDG_SESSION_ID}" -- "${my.projects.desktop}/programs/public/neolock"
+            "${pkgs.xss-lock}/bin/xss-lock" -s "''${XDG_SESSION_ID}" -- "${my.projects.desktop.programs}/public/neolock"
           '';
         }; in "${textFile}";
       };
@@ -214,7 +214,7 @@ let
             #!${pkgs.bash}/bin/bash
             source /etc/profile
             "${pkgs.systemd}/bin/systemctl" --user import-environment GDK_SCALE
-            "${my.projects.desktop}/programs/public/neodunst"
+            "${my.projects.desktop.programs}/public/neodunst"
           '';
         }; in "${textFile}";
       };
@@ -235,7 +235,7 @@ let
           text = ''
             #!${pkgs.bash}/bin/bash
             source /etc/profile
-            "${my.projects.desktop}/programs/public/neopicom"
+            "${my.projects.desktop.programs}/public/neopicom"
           '';
         }; in "${textFile}";
       };
@@ -259,8 +259,8 @@ let
 
   # Create a alias for the neox startx command
   neoxAlias = {
-    neox = "${my.projects.desktop}/programs/init/neox";
-    neo2x = "${my.projects.desktop}/programs/init/neox 2";
+    neox = "${my.projects.desktop.programs}/init/neox";
+    neo2x = "${my.projects.desktop.programs}/init/neox 2";
   };
 
   # Function for creating extensions for chromium based browsers
@@ -312,17 +312,17 @@ in
   # Add st to the home packages with my patches and config
   home.packages = with pkgs; [
     (st.override {
-      conf = builtins.readFile (my.projects.desktop + "/term/st/config.h");
-      patches = mfunc.listFullFilesInFolder (my.projects.desktop + "/term/st/patches");
+      conf = builtins.readFile ("${my.projects.desktop.term}/st/config.h");
+      patches = mfunc.listFullFilesInFolder ("${my.projects.desktop.term}/st/patches");
       extraLibs = [ pkgs.xorg.libXcursor pkgs.harfbuzz ];
     })
   ];
 
   # Add custom XResources file
-  xresources.extraConfig = builtins.readFile (my.projects.desktop + "/xresources/XResources");
+  xresources.extraConfig = builtins.readFile ("${my.projects.desktop.xresources}/XResources");
 
   # Add xmonad config file
-  xsession.windowManager.xmonad.config = (my.projects.desktop + "/wm/xmonad/xmonad.hs");
+  xsession.windowManager.xmonad.config = ("${my.projects.desktop.wm}/xmonad/xmonad.hs");
 
   # Some XDG links
   xdg.configFile = {
@@ -330,8 +330,6 @@ in
     "fontconfig/fonts.conf" = { source = my.projects.fonts + "/fonts.conf"; };
     # Link the conky project
     "conky" = { source = my.projects.conky; };
-    # Link the xmobar configs
-    "xmobar" = { source = my.projects.desktop + "/bar/xmobar"; };
   };
 
   # Set icons and themes
@@ -341,7 +339,7 @@ in
 
   # Add extra gtk css for colours
   gtk.gtk3.extraCss = let
-    colourExt = mfunc.getElementXRes (my.projects.desktop + "/xresources/XResources") "MY_COLOUR_0";
+    colourExt = mfunc.getElementXRes ("${my.projects.desktop.xresources}/XResources") "MY_COLOUR_0";
   in ''
     @define-color theme_selected_fg_color ${colourExt};
     @define-color theme_selected_bg_color ${colourExt};

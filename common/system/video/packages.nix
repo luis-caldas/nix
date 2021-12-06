@@ -41,7 +41,7 @@
     # Extra options using policy
     extraOpts = {
        # Set colour from xresources file
-       "BrowserThemeColor" = mfunc.getElementXRes (my.projects.desktop + "/xresources/XResources") "MY_BACKGROUND";
+       "BrowserThemeColor" = mfunc.getElementXRes ("${my.projects.desktop.xresources}/XResources") "MY_BACKGROUND";
     } //
     my.chromium.policies // my.config.graphical.chromium.policies;
 

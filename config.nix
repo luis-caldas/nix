@@ -1,4 +1,4 @@
-{ lib, iso, ... }:
+{ pkgs, lib, iso, ... }:
 let
 
   # Default path for the chosen system that was set on a file
@@ -22,9 +22,24 @@ let
   # Import the browser config
   chromium-obj = builtins.fromJSON (builtins.readFile (./config + "/chromium.json"));
 
+  # Replace name function
+  replaceName = projectName: (lib.replaceStrings [ "my" ] [ "" ] projectName);
+
+  # Create fetch project function
+  fetchProject =
+      projectName:
+      let
+        githubUrlBuilder = userString: repoString:
+        let
+          protocol = "https";
+          domain = "github.com";
+        in
+          protocol + "://" + domain + "/" + userString + "/" + repoString;
+      in
+        builtins.fetchGit (githubUrlBuilder "luis-caldas" projectName);
+
   # Link all my projects to the config
   listProjects = [
-    "mydesktop"
     "myconky"
     "mythemes"
     "myfonts"
@@ -34,28 +49,36 @@ let
     "myshell"
     "myvim"
   ];
-  projects-obj = builtins.listToAttrs (
-    map (
-      projectName:
-      let
-        newProjectName = (lib.replaceStrings [ "my" ] [ "" ] projectName);
-        githubUrlBuilder = userString: repoString:
-        let
-          protocol = "https";
-          domain = "github.com";
-        in
-          protocol + "://" + domain + "/" + userString + "/" + repoString;
-      in {
-        name = newProjectName;
-        value = builtins.fetchGit (githubUrlBuilder "luis-caldas" projectName);
+  someProjects = builtins.listToAttrs (map (
+    eachProject: { name = (replaceName eachProject); value = (fetchProject eachProject); }
+  ) listProjects);
+
+  # Ovewrite desktop project with derivated subfolders
+  desktopProject = let
+    myProject = "mydesktop";
+    fixedName = replaceName myProject;
+  in
+  {
+    "${fixedName}" = builtins.listToAttrs (map (
+      eachFolder:
+      {
+        name = eachFolder;
+        value = pkgs.stdenv.mkDerivation {
+          name = "desktop-${eachFolder}";
+          src = fetchProject myProject;
+          installPhase = ''
+            mkdir -p "$out"
+            mv "${eachFolder}"/* "''${out}/."
+          '';
+        };
       }
-    ) listProjects
-  );
+    ) [ "browser" "programs" "term" "wm" "xresources" ]);
+  };
 
 in
 {
   path = system-path;
   config = config-obj;
   chromium = chromium-obj;
-  projects = projects-obj;
+  projects = someProjects // desktopProject;
 }
