@@ -57,6 +57,14 @@ let
   desktopProject = let
     myProject = "mydesktop";
     fixedName = replaceName myProject;
+    fetchedProject = fetchProject myProject;
+    subFolders = lib.remove null (lib.mapAttrsToList (
+      name: value:
+        if ((value == "directory") && ((builtins.substring 0 1 name) != ".")) then
+          name
+        else
+          null
+      ) (builtins.readDir fetchedProject));
   in
   {
     "${fixedName}" = builtins.listToAttrs (map (
@@ -64,15 +72,16 @@ let
       {
         name = eachFolder;
         value = pkgs.stdenv.mkDerivation {
-          name = "desktop-${eachFolder}";
+          name = "${myProject}-${eachFolder}";
           src = fetchProject myProject;
+          phases = [ "unpackPhase" "installPhase" ];
           installPhase = ''
             mkdir -p "$out"
             mv "${eachFolder}"/* "''${out}/."
           '';
         };
       }
-    ) [ "browser" "programs" "term" "wm" "xresources" ]);
+    ) subFolders);
   };
 
 in
