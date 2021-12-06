@@ -71,15 +71,7 @@ let
       eachFolder:
       {
         name = eachFolder;
-        value = pkgs.stdenv.mkDerivation {
-          name = "${myProject}-${eachFolder}";
-          src = fetchProject myProject;
-          phases = [ "unpackPhase" "installPhase" ];
-          installPhase = ''
-            mkdir -p "$out"
-            mv "${eachFolder}"/* "''${out}/."
-          '';
-        };
+        value = "${fetchedProject}/${eachFolder}";
       }
     ) subFolders);
   };
