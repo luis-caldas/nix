@@ -9,13 +9,15 @@
 
     # Desktop
     openbox
-    jgmenu
     conky
     rofi
 
     # Notifications
     dunst
     libnotify
+
+    # Clipboard
+    clipster
 
     # XDG
     awf

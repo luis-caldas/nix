@@ -137,6 +137,7 @@ let
 
     # Start all possible services
     ${pkgs.systemd}/bin/systemctl --user start xlock
+    ${pkgs.systemd}/bin/systemctl --user start clipster
     ${pkgs.systemd}/bin/systemctl --user start unclutter
     ${mfunc.useDefault my.config.graphical.touch "${pkgs.systemd}/bin/systemctl --user start unclutter-touch" ""}
     ${pkgs.systemd}/bin/systemctl --user start neopicom
@@ -180,6 +181,28 @@ let
             source /etc/profile
             "${pkgs.systemd}/bin/systemctl" --user import-environment XDG_SESSION_ID
             "${pkgs.xss-lock}/bin/xss-lock" -s "''${XDG_SESSION_ID}" -- "${my.projects.desktop.programs}/public/neolock"
+          '';
+        }; in "${textFile}";
+      };
+    };
+
+    # Clipboard service
+    clipster = {
+      Unit = {
+        Description = "Clipboard manager";
+        Requires = "graphical-session.target";
+        After = "graphical-session.target";
+      };
+      Service = {
+        Restart = "on-failure";
+        ExecStart = let
+        textFile = pkgs.writeTextFile {
+          name = "clipster"; executable = true;
+          text = ''
+            #!${pkgs.bash}/bin/bash
+            source /etc/profile
+            "${pkgs.systemd}/bin/systemctl" --user import-environment XDG_SESSION_ID
+            "${pkgs.clipster}/bin/clipster" -d
           '';
         }; in "${textFile}";
       };
