@@ -34,6 +34,8 @@
     atftp
     nload
     socat
+    browsh
+    firefox
     inetutils
     youtube-dl
 
