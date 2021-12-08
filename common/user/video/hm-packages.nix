@@ -9,7 +9,6 @@
 
     # Desktop
     openbox
-    jgmenu
     conky
     rofi
 
