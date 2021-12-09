@@ -16,6 +16,9 @@
     dunst
     libnotify
 
+    # Clipboard
+    clipster
+
     # XDG
     awf
     dconf

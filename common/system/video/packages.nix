@@ -56,6 +56,9 @@
     # Package for locking the screen
     alock
 
+    # CL info
+    clinfo
+
   ];
 
 }
