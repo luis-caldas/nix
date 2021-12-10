@@ -15,6 +15,7 @@
     python3Packages.binwalk-full
 
     # Disk
+    pv
     ncdu
     parted
     testdisk
