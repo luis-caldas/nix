@@ -6,6 +6,7 @@
     # Bin manipulation
     john
     flips
+    xdelta
     hashcat
     radare2
     hexedit
