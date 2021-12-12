@@ -196,7 +196,7 @@
     jack2
     cadence
     reaper
-    audacity
+    tenacity
     calf
     guitarix
     linuxsampler
