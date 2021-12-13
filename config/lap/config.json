@@ -11,9 +11,6 @@
   "system": {
     "hostname": "lap"
   },
-  "net": {
-    "id": "29387412"
-  },
   "services": {
     "ssh": true,
     "printing": true,

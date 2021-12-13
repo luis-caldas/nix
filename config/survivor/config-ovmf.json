@@ -4,7 +4,6 @@
     "device": "/dev/disk/by-id/usb-Corsair_Survivor_3.0_0700127C3AAE2D57-0:0"
   },
   "system": { "hostname": "survivor" },
-  "net": { "id": "1ff1fecc" },
   "services": {
     "ssh": true,
     "docker": true,

@@ -5,9 +5,6 @@
   "system": {
     "hostname": "hill"
   },
-  "net": {
-    "id": "1ff99666"
-  },
   "services": {
     "ssh": true,
     "docker": true,

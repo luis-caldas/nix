@@ -2,7 +2,7 @@
 let
 
   # Default kernel params
-  defaultKernelParams = [ "zfs_force=1" ];
+  defaultKernelParams = [ "zfs_force=1" "nohibernate" ];
 
   # Params to set the kernel to text mode
   textKernelParams = [ "vga=normal" "nomodeset" ];

@@ -39,7 +39,6 @@
     "motd": "Welcome back"
   },
   "net": {
-    "id": "ffffffff",
     "mac": {
       "cable": "permanent",
       "wifi": "permanent"

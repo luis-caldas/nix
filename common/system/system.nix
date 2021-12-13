@@ -5,7 +5,18 @@
   hardware.enableRedistributableFirmware = lib.mkDefault true;
 
   # Needed for ZFS to work
-  networking.hostId = my.config.net.id;
+  networking.hostId = my.id;
+
+  # Add zfs scrubbing
+  services.zfs.autoScrub.enable = true;
+
+  # Fix ZFS scheduler
+  services.udev.extraRules = ''
+    ACTION=="add|change", KERNEL=="sd[a-z]*[0-9]*|mmcblk[0-9]*p[0-9]*|nvme[0-9]*n[0-9]*p[0-9]*", ENV{ID_FS_TYPE}=="zfs_member", ATTR{../queue/scheduler}="none"
+  '';
+
+  # Enable trimming when possible
+  services.zfs.trim.enable = true;
 
   # Set the hostname
   networking.hostName = my.config.system.hostname; # Define your hostname.

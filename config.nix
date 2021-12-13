@@ -2,13 +2,16 @@
 let
 
   # Default path for the chosen system that was set on a file
-  path-file = lib.replaceStrings ["\n" " "] ["" ""] (builtins.readFile ./system);
+  system-name = lib.replaceStrings ["\n" " "] ["" ""] (builtins.readFile ./system);
 
   # Check if it is a iso and set the correct path then
-  system-path = if iso then
+  real-name = if iso then
     "iso"
   else
-    path-file;
+    system-name;
+
+  # Generate the net id from the system name
+  net-id = builtins.substring 0 8 (builtins.hashString "sha512" real-name);
 
   # Import the chosen config file
   config-obj = lib.recursiveUpdate
@@ -16,7 +19,7 @@ let
        builtins.readFile (./config + "/default.json"))
     )
     (builtins.fromJSON (
-       builtins.readFile (./config + ("/" + system-path) + "/config.json"))
+       builtins.readFile (./config + ("/" + real-name) + "/config.json"))
     );
 
   # Import the browser config
@@ -78,7 +81,8 @@ let
 
 in
 {
-  path = system-path;
+  id = net-id;
+  path = real-name;
   config = config-obj;
   chromium = chromium-obj;
   projects = someProjects // desktopProject;

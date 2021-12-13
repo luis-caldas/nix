@@ -11,9 +11,6 @@
   "system": {
     "hostname": "naso"
   },
-  "net": {
-    "id": "19719432"
-  },
   "services": {
     "ssh": true,
     "docker": true,

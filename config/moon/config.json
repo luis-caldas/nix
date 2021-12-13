@@ -6,9 +6,6 @@
     "hostname": "moon",
     "numlock": true
   },
-  "net": {
-    "id": "19709431"
-  },
   "services": {
     "ssh": true,
     "printing": true,

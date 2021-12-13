@@ -8,6 +8,9 @@ let
     enable = true;
     version = 2;
 
+    # ZFS fixes
+    copyKernels = true;
+
     # Try to identify other systems
     useOSProber = my.config.boot.prober;
 
@@ -56,6 +59,7 @@ in
 
     # Support for zfs
     supportedFilesystems = [ "zfs" "ntfs" "btrfs" ];
+    initrd.supportedFilesystems = [ "zfs" "ntfs" "btrfs" ];
 
     # Don't force import zfs pool
     zfs = {

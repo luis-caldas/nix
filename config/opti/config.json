@@ -11,9 +11,6 @@
   "system": {
     "hostname": "opti"
   },
-  "net": {
-    "id": "19719123"
-  },
   "services": {
     "ssh": true,
     "docker": true
