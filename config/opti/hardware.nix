@@ -10,24 +10,33 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "opti/root";
+    { device = "light/root";
       fsType = "zfs";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/0EC4-EC27";
+    { device = "/dev/disk/by-uuid/40FB-1D4B";
       fsType = "vfat";
     };
 
+  fileSystems."/tmp" =
+    { device = "light/tmp";
+      fsType = "zfs";
+    };
+
   fileSystems."/home" =
-    { device = "opti/home";
+    { device = "light/home";
+      fsType = "zfs";
+    };
+
+  fileSystems."/nix" =
+    { device = "light/nix";
       fsType = "zfs";
     };
 
   fileSystems."/data" =
-    { device = "opti/data";
+    { device = "light/data";
       fsType = "zfs";
-      options = [ "nofail" ];
     };
 
   swapDevices = [ ];
