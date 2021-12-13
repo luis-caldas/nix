@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ ... }:
 {
 
   boot.initrd.availableKernelModules = [ "nvme" "uhci_hcd" "ehci_pci" "xhci_pci" "ata_piix" "ahci" "usbhid" "usb_storage" "sd_mod" ];
@@ -6,27 +6,37 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  boot.initrd.luks.devices."survivor".device = "/dev/disk/by-uuid/1980e7ba-940a-4030-8ce6-912e4391e8d5";
+  boot.zfs.requestEncryptionCredentials = true;
 
   fileSystems."/" =
-    { device = "survivor/root";
+    { device = "wilson/root";
+      fsType = "zfs";
+    };
+
+  fileSystems."/home" =
+    { device = "wilson/home";
+      fsType = "zfs";
+    };
+
+  fileSystems."/tmp" =
+    { device = "wilson/tmp";
+      fsType = "zfs";
+    };
+
+  fileSystems."/nix" =
+    { device = "wilson/nix";
       fsType = "zfs";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/09B8-F881";
+    { device = "/dev/disk/by-uuid/F814-164C";
       fsType = "vfat";
     };
 
   fileSystems."/data" =
-    { device = "/dev/disk/by-uuid/0945-46DB";
+    { device = "/dev/disk/by-uuid/3F2B-D291";
       fsType = "vfat";
       options = [ "rw" "uid=1000" "gid=1000" "nofail" ];
-    };
-
-  fileSystems."/home" =
-    { device = "survivor/home";
-      fsType = "zfs";
     };
 
   swapDevices = [ ];
