@@ -85,25 +85,30 @@ When installing it to a new system, it is needed that the graphical flag is set 
 Taken from <https://elis.nu/blog/2019/08/encrypted-zfs-mirror-with-mirrored-boot-on-nixos/>
 
 Disable ZFS automatic mounting:
-  -O mountpoint=none
+
+   `-O mountpoint=none`
 
 Disable writing access time:
-  -O atime=off
 
-Use 4K sectors on the drive, otherwise you can get really
-bad performance:
-  -o ashift=12
+   `-O atime=off`
 
-This is more or less required for certain things to
-not break:
-  -O acltype=posixacl
+Use 4K sectors on the drive, otherwise you can get really bad performance:
+
+   `-o ashift=12`
+
+This is more or less required for certain things to not break:
+
+   `-O acltype=posixacl`
 
 To improve performance of certain extended attributes:
-  -O xattr=sa
+
+   `-O xattr=sa`
 
 To enable file system compression:
-  -O compression=lz4
+
+   `-O compression=lz4`
 
 To enable encryption:
-  -O encryption=aes-256-gcm -O keyformat=passphrase
+
+   `-O encryption=aes-256-gcm -O keyformat=passphrase`
 
