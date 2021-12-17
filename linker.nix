@@ -85,7 +85,6 @@ let
     ./common/system/boot.nix
     ./common/system/kernel.nix
     ./common/system/drivers.nix
-    ./common/system/specializations.nix
     ./common/system/ecosystem.nix
     ./common/system/packages.nix
     ./common/system/security.nix

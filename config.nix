@@ -19,29 +19,8 @@ let
        builtins.readFile (./config + "/default.json"))
     )
     (builtins.fromJSON (
-       builtins.readFile (./config + ("/" + real-name) + "/config.json"))
+       builtins.readFile (./config + ("/" + realName) + "/config.json"))
     );
-
-  # Import exra configurations if any
-  extraConfigs = let
-    configFolder = ./config + ("/" + real-name);
-    filePrefix = "config-";
-    fileSuffix = ".json";
-    nameList = lib.remove null (lib.mapAttrsToList (
-      name: value:
-      if ((value == "directory") &&
-	  (builtins.hasPrefix "." value) &&
-	  (builtins.hasPrefix filePrefix value) &&
-	  (builtins.hasSuffix fileSuffix)
-	 ) then
-	  name
-	else
-	  null
-      ) (builtins.readDir configFolder));
-  in
-    lib.listToAttrs (map (
-      eachName: { name = eachName; value = (builtins.fromJSON (builtins.readFile (configFolder + filePrefix + eachName + fileSuffix))); }
-    ) nameList);
 
   # Import the browser config
   chromiumObj = builtins.fromJSON (builtins.readFile (./config + "/chromium.json"));
@@ -100,12 +79,42 @@ let
     ) subFolders);
   };
 
-in
-{
-  id = netId;
-  path = realName;
-  config = configObj;
-  extra = extraConfigs;
-  chromium = chromiumObj;
-  projects = someProjects // desktopProject;
-}
+  # Create part of the last object
+  objectPart = {
+    id = netId;
+    path = realName;
+    config = configObj;
+    chromium = chromiumObj;
+    projects = someProjects // desktopProject;
+  };
+
+  # Import extra configurations if any
+  extraConfigs = let
+    configFolder = ./config + ("/" + realName);
+    filePrefix = "config-";
+    fileSuffix = ".json";
+    folderContents = builtins.readDir configFolder;
+    nameList = lib.remove null (lib.mapAttrsToList (
+      name: value:
+        if ((lib.hasPrefix filePrefix name) &&
+            (lib.hasSuffix fileSuffix name)
+           ) then
+          lib.removePrefix filePrefix (lib.removeSuffix fileSuffix name)
+        else
+          null
+      ) folderContents);
+  in
+    lib.listToAttrs (map (
+      eachName: {
+        name = eachName;
+        value = objectPart // {
+          config = lib.recursiveUpdate
+            (builtins.fromJSON (
+               builtins.readFile (./config + "/default.json"))
+            )
+            (builtins.fromJSON (builtins.readFile (configFolder + ("/" + filePrefix + eachName + fileSuffix))));
+        };
+      }
+    ) nameList);
+
+in (objectPart // { extra = extraConfigs; })
