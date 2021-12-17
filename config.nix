@@ -2,19 +2,19 @@
 let
 
   # Default path for the chosen system that was set on a file
-  system-name = lib.replaceStrings ["\n" " "] ["" ""] (builtins.readFile ./system);
+  systemName = lib.replaceStrings ["\n" " "] ["" ""] (builtins.readFile ./system);
 
   # Check if it is a iso and set the correct path then
-  real-name = if iso then
+  realName = if iso then
     "iso"
   else
-    system-name;
+    systemName;
 
   # Generate the net id from the system name
-  net-id = builtins.substring 0 8 (builtins.hashString "sha512" real-name);
+  netId = builtins.substring 0 8 (builtins.hashString "sha512" realName);
 
   # Import the chosen config file
-  config-obj = lib.recursiveUpdate
+  configObj = lib.recursiveUpdate
     (builtins.fromJSON (
        builtins.readFile (./config + "/default.json"))
     )
@@ -22,8 +22,29 @@ let
        builtins.readFile (./config + ("/" + real-name) + "/config.json"))
     );
 
+  # Import exra configurations if any
+  extraConfigs = let
+    configFolder = ./config + ("/" + real-name);
+    filePrefix = "config-";
+    fileSuffix = ".json";
+    nameList = lib.remove null (lib.mapAttrsToList (
+      name: value:
+      if ((value == "directory") &&
+	  (builtins.hasPrefix "." value) &&
+	  (builtins.hasPrefix filePrefix value) &&
+	  (builtins.hasSuffix fileSuffix)
+	 ) then
+	  name
+	else
+	  null
+      ) (builtins.readDir configFolder));
+  in
+    lib.listToAttrs (map (
+      eachName: { name = eachName; value = (builtins.fromJSON (builtins.readFile (configFolder + filePrefix + eachName + fileSuffix))); }
+    ) nameList);
+
   # Import the browser config
-  chromium-obj = builtins.fromJSON (builtins.readFile (./config + "/chromium.json"));
+  chromiumObj = builtins.fromJSON (builtins.readFile (./config + "/chromium.json"));
 
   # Replace name function
   replaceName = projectName: (lib.replaceStrings [ "my" ] [ "" ] projectName);
@@ -81,9 +102,10 @@ let
 
 in
 {
-  id = net-id;
-  path = real-name;
-  config = config-obj;
-  chromium = chromium-obj;
+  id = netId;
+  path = realName;
+  config = configObj;
+  extra = extraConfigs;
+  chromium = chromiumObj;
   projects = someProjects // desktopProject;
 }
