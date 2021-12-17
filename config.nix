@@ -1,4 +1,4 @@
-{ pkgs, lib, iso, ... }:
+{ lib, iso, ... }:
 let
 
   # Default path for the chosen system that was set on a file
@@ -13,14 +13,18 @@ let
   # Generate the net id from the system name
   netId = builtins.substring 0 8 (builtins.hashString "sha512" realName);
 
+  # Recursively update config list with default
+  overlayDefault = filePath:
+    lib.recursiveUpdate
+      (builtins.fromJSON (
+         builtins.readFile (./config + "/default.json"))
+      )
+      (builtins.fromJSON (
+         builtins.readFile filePath)
+      );
+
   # Import the chosen config file
-  configObj = lib.recursiveUpdate
-    (builtins.fromJSON (
-       builtins.readFile (./config + "/default.json"))
-    )
-    (builtins.fromJSON (
-       builtins.readFile (./config + ("/" + realName) + "/config.json"))
-    );
+  configObj = overlayDefault (./config + ("/" + realName) + "/config.json");
 
   # Import the browser config
   chromiumObj = builtins.fromJSON (builtins.readFile (./config + "/chromium.json"));
@@ -107,13 +111,7 @@ let
     lib.listToAttrs (map (
       eachName: {
         name = eachName;
-        value = objectPart // {
-          config = lib.recursiveUpdate
-            (builtins.fromJSON (
-               builtins.readFile (./config + "/default.json"))
-            )
-            (builtins.fromJSON (builtins.readFile (configFolder + ("/" + filePrefix + eachName + fileSuffix))));
-        };
+        value = overlayDefault (configFolder + ("/" + filePrefix + eachName + fileSuffix));
       }
     ) nameList);
 
