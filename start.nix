@@ -13,7 +13,7 @@ let
     firstLetter = (builtins.substring 0 1 eachName);
     capitalizedName = (lib.toUpper firstLetter) + (lib.removePrefix firstLetter eachName);
     newMyVar = my // { config = my.extra."${eachName}"; extra = {}; };
-    builtArgs = (args // { my = newMyVar; });
+    builtArgs = args // { my = newMyVar; };
     globalImport = import ./linker.nix builtArgs;
   in
     {

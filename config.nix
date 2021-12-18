@@ -34,7 +34,7 @@ let
 
   # Create fetch project function
   fetchProject =
-      projectName:
+    projectName:
       let
         githubUrlBuilder = userString: repoString:
         let

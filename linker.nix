@@ -142,7 +142,7 @@ let
     ./common/user/hm-games.nix
   ] [] ++
   # Visual imports for home-manager
-  mfunc.useDefault (my.config.graphical.enable) [
+  mfunc.useDefault my.config.graphical.enable [
     # The visual ecosystem use
     ./common/user/video/hm-ecosystem.nix
     # Extra custom gui packages
