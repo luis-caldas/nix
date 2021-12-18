@@ -114,7 +114,7 @@ let
     reneocapstoctrl
 
     # Extra commands from the config to be added
-    ${ (builtins.concatStringsSep "\n" (builtins.trace my.config.graphical.display.extraCommands my.config.graphical.display.extraCommands )) }
+    ${ (builtins.concatStringsSep "\n" my.config.graphical.display.extraCommands) }
 
     # Restore the wallpapers
     neotrogen restore

@@ -86,6 +86,7 @@ let
   # Create part of the last object
   objectPart = {
     id = netId;
+    name = realName;
     path = realName;
     config = configObj;
     chromium = chromiumObj;
