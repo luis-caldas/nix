@@ -1,4 +1,4 @@
-args@{ lib, config, pkgs, utils, stdenv, ... }:
+args@{ lib, config, pkgs, utils, stdenv, options, ... }:
 let
 
   # Function for capitalizing name
@@ -43,12 +43,9 @@ let
   # Create dict with wanted attrs
   wantedAttrs = { inherit mfunc upkgs mpkgs home-manager-modules; };
 
-  # Create extra imports needed
-  extraImports = [ home-manager mopts ];
-
   # Function that create linker builders
   createLinker = myVar:
-    import ./linker.nix (args // (builtins.trace ("start.nix 51 - " + myVar.my.name + " " + (builtins.elemAt myVar.my.config.graphical.display.extraCommands 0)) myVar) // { oattrs = wantedAttrs; } );
+    import ./linker.nix (args // myVar // { oattrs = wantedAttrs; } );
 
   # Import the linker after configurations have been loaded
   linkerMain = createLinker { my = ( my // { name = capitalizeFirst my.path; }); };
@@ -66,18 +63,14 @@ let
         inheritParentConfig = false;
         configuration = {
           boot.loader.grub.configurationName = capitalizedName;
-          imports = extraImports ++ [ globalImport ];
-        };
+        } // globalImport;
       };
     })
   (builtins.attrNames my.extra));
 
 in {
 
-  # Add the system import list
-  imports = extraImports ++ [ linkerMain ];
-
   # Add the specializations
-  specialisation = otherLinkers;
+  specialisation = builtins.trace otherLinkers otherLinkers;
 
-}
+} // linkerMain

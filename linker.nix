@@ -153,8 +153,8 @@ let
   };
   # Merge all the possible data
   merged = lib.mkMerge (
-    [ (builtins.trace defaultConfig.home-manager.users.majora.contents defaultConfig) ] ++
+    [ defaultConfig ] ++
     (map (eachImport: importWithAll eachImport {}) un-imports-list)
   );
 
-in merged
+in builtins.trace un-home-manager-imports-list merged
