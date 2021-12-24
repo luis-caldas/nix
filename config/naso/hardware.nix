@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, config, ... }:
 {
 
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
@@ -6,18 +6,40 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
   fileSystems."/" =
-    { device = "systemo/root";
+    { device = "into/root";
       fsType = "zfs";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/B817-C894";
+    { device = "/dev/disk/by-uuid/9B05-BBE0";
       fsType = "vfat";
     };
 
   fileSystems."/home" =
-    { device = "systemo/home";
+    { device = "into/home";
+      fsType = "zfs";
+    };
+
+  fileSystems."/tmp" =
+    { device = "into/tmp";
+      fsType = "zfs";
+    };
+
+  fileSystems."/nix" =
+    { device = "into/nix";
+      fsType = "zfs";
+    };
+
+  fileSystems."/data/bunker" =
+    { device = "bunker/main";
+      fsType = "zfs";
+    };
+
+  fileSystems."/data/storr" =
+    { device = "storr/main";
       fsType = "zfs";
     };
 
