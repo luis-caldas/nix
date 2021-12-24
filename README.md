@@ -115,3 +115,7 @@ To enable encryption:
 To disable sync on the `tmp` partition:
 
    `-o sync=disabled`
+
+To enable autotrim on SSDs:
+
+   `-O autotrim=on`
