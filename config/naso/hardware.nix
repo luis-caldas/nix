@@ -13,7 +13,7 @@
     enable = true;
     setSendmail = true;
     defaults = {
-      aliases = "/mail/alias";
+      aliases = "/data/local/mail/alias";
       port = 465;
       tls_trust_file = "/etc/ssl/certs/ca-certificates.crt";
       tls = "on";
@@ -21,13 +21,13 @@
       tls_starttls = "off";
     };
     accounts = let
-      mailDomain = builtins.readFile /mail/domain;
-      accountMail = builtins.readFile /mail/account;
+      mailDomain = builtins.readFile /data/local/mail/domain;
+      accountMail = builtins.readFile /data/local/mail/account;
     in
     {
       default = {
         host = mailDomain;
-        passwordeval = "cat /mail/password";
+        passwordeval = "cat /data/local/mail/password";
         user = accountMail;
         from = accountMail;
       };
@@ -80,6 +80,11 @@
 
   fileSystems."/nix" =
     { device = "into/nix";
+      fsType = "zfs";
+    };
+
+  fileSystems."/data/local" =
+    { device = "into/data";
       fsType = "zfs";
     };
 
