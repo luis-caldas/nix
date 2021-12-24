@@ -79,9 +79,15 @@ let
     ) subFolders);
   };
 
+  # Show some verbose
+  traceId = let
+    verboseString = "building for " + real-name + " with ID " + net-id;
+  in
+    builtins.trace verboseString net-id;
+
 in
 {
-  id = net-id;
+  id = traceId;
   path = real-name;
   config = config-obj;
   chromium = chromium-obj;

@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 {
 
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
@@ -7,6 +7,56 @@
   boot.extraModulePackages = [ ];
 
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  # Allow msmtp to work with my configs
+  programs.msmtp = {
+    enable = true;
+    setSendmail = true;
+    defaults = {
+      aliases = "/mail/alias";
+      port = 465;
+      tls_trust_file = "/etc/ssl/certs/ca-certificates.crt";
+      tls = "on";
+      auth = "login";
+      tls_starttls = "off";
+    };
+    accounts = let
+      mailDomain = builtins.readFile /mail/domain;
+      accountMail = builtins.readFile /mail/account;
+    in
+    {
+      default = {
+        host = mailDomain;
+        passwordeval = "cat /mail/password";
+        user = accountMail;
+        from = accountMail;
+      };
+    };
+  };
+
+  services.zfs.zed = {
+    enableMail = false;
+    settings = {
+      ZED_DEBUG_LOG = "/tmp/zed.debug.log";
+
+      ZED_EMAIL_ADDR = [ "root" ];
+      ZED_EMAIL_PROG = let
+        textFile = pkgs.writeTextFile {
+          name = "mail"; executable = true;
+          text = ''
+            #!${pkgs.bash}/bin/bash
+            "${pkgs.coreutils}/bin/cat" <("${pkgs.coreutils}/bin/echo" -e "Subject: ''${1}\r\n") - | "${pkgs.msmtp}/bin/msmtp" "''${2}"
+          '';
+        }; in "${textFile}";
+      ZED_EMAIL_OPTS = "'@SUBJECT@' '@ADDRESS@'";
+
+      ZED_NOTIFY_INTERVAL_SECS = 3600;
+      ZED_NOTIFY_VERBOSE = true;
+
+      ZED_USE_ENCLOSURE_LEDS = true;
+      ZED_SCRUB_AFTER_RESILVER = true;
+    };
+  };
 
   fileSystems."/" =
     { device = "into/root";
