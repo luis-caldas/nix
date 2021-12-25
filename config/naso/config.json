@@ -1,9 +1,7 @@
 {
   "boot": {
     "timeout": 1,
-    "efi": false,
-    "top": true,
-    "device": "/dev/sda"
+    "top": true
   },
   "user": {
     "admin": false

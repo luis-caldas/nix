@@ -1,12 +1,12 @@
 { config, lib, pkgs, ... }:
 {
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "uas" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  boot.initrd.luks.devices."mountain".device = "/dev/disk/by-uuid/b1e8d0a6-e8c8-4470-90d4-5fd122977429";
+  boot.zfs.requestEncryptionCredentials = true;
 
   fileSystems."/" =
     { device = "hill/root";
@@ -14,23 +14,33 @@
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/F3D9-C934";
+    { device = "/dev/disk/by-uuid/E4B6-6B03";
       fsType = "vfat";
+    };
+
+  fileSystems."/data" =
+    { device = "hill/data";
+      fsType = "zfs";
+    };
+
+  fileSystems."/nix" =
+    { device = "hill/nix";
+      fsType = "zfs";
     };
 
   fileSystems."/home" =
     { device = "hill/home";
       fsType = "zfs";
     };
-    
-  fileSystems."/data" =
-    { device = "hill/data";
+
+  fileSystems."/tmp" =
+    { device = "hill/tmp";
       fsType = "zfs";
-      options = [ "nofail" ];
     };
 
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
 }

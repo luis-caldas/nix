@@ -2,35 +2,35 @@
 let
 
   # Default path for the chosen system that was set on a file
-  system-name = lib.replaceStrings ["\n" " "] ["" ""] (builtins.readFile ./system);
+  systemName = lib.replaceStrings ["\n" " "] ["" ""] (builtins.readFile ./system);
 
   # Check if it is a iso and set the correct path then
-  real-name = if iso then
+  realName = if iso then
     "iso"
   else
-    system-name;
+    systemName;
 
   # Generate the net id from the system name
-  net-id = builtins.substring 0 8 (builtins.hashString "sha512" real-name);
+  netId = builtins.substring 0 8 (builtins.hashString "sha512" realName);
 
   # Import the chosen config file
-  config-obj = lib.recursiveUpdate
+  configObj = lib.recursiveUpdate
     (builtins.fromJSON (
        builtins.readFile (./config + "/default.json"))
     )
     (builtins.fromJSON (
-       builtins.readFile (./config + ("/" + real-name) + "/config.json"))
+       builtins.readFile (./config + ("/" + realName) + "/config.json"))
     );
 
   # Import the browser config
-  chromium-obj = builtins.fromJSON (builtins.readFile (./config + "/chromium.json"));
+  chromiumObj = builtins.fromJSON (builtins.readFile (./config + "/chromium.json"));
 
   # Replace name function
   replaceName = projectName: (lib.replaceStrings [ "my" ] [ "" ] projectName);
 
   # Create fetch project function
   fetchProject =
-      projectName:
+    projectName:
       let
         githubUrlBuilder = userString: repoString:
         let
@@ -79,11 +79,17 @@ let
     ) subFolders);
   };
 
+  # Show some verbose
+  traceId = let
+    verboseString = "building for " + realName + " with ID " + netId;
+  in
+    builtins.trace verboseString netId;
+
 in
 {
-  id = net-id;
-  path = real-name;
-  config = config-obj;
-  chromium = chromium-obj;
+  id = traceId;
+  path = realName;
+  config = configObj;
+  chromium = chromiumObj;
   projects = someProjects // desktopProject;
 }

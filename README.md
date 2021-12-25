@@ -112,3 +112,10 @@ To enable encryption:
 
    `-O encryption=aes-256-gcm -O keyformat=passphrase`
 
+To disable sync on the `tmp` partition:
+
+   `-o sync=disabled`
+
+To enable autotrim on SSDs:
+
+   `-O autotrim=on`
