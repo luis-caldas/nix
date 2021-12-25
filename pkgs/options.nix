@@ -2,8 +2,8 @@ args@{ pkgs, mpkgs, lib, ... }:
 let
 
   # Get list of files in folder
-  listDirs = folderName: 
-    let 
+  listDirs = folderName:
+    let
       allNameList = lib.mapAttrsToList (
         name: value:
           if (value == "directory") then
@@ -21,6 +21,6 @@ let
 
 in {
 
-  imports = optionFiles; 
+  imports = optionFiles;
 
 }
