@@ -20,6 +20,7 @@
     crispyDoom
     xonotic
     mpkgs.srb2
+    mpkgs.srb2kart
 
     # Steam
     steam
