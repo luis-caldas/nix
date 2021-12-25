@@ -1,4 +1,4 @@
-args@{ my, oattrs, lib, config, pkgs, utils, ... }:
+args@{ my, lib, config, pkgs, utils, ... }:
 
 # Do some assertions before starting the importing
 
@@ -39,26 +39,47 @@ assert lib.asserts.assertMsg
 
 let
 
-  # Inherit some vars
-  inherit (oattrs) mfunc;
+  # My functions
+  mfunc = import ./functions/func.nix { inherit lib; };
+
+  # Extract this version from nixpkgs
+  versionList = lib.splitString "." lib.version;
+  versionConcatenated = (
+    builtins.elemAt versionList 0 +
+    "." +
+    builtins.elemAt versionList 1
+  );
+
+  # System Version
+  version = versionConcatenated;
+
+  # Home manager
+  home-manager = builtins.fetchGit {
+    url = "https://github.com/rycee/home-manager.git";
+    ref = "release-" + version;
+  };
+
+  # Unstable packages
+  upkgs = import
+    (builtins.fetchGit "https://github.com/nixos/nixpkgs")
+    { config = config.nixpkgs.config; };
+
+  # My packages
+  mpkgs = import ./pkgs/pkgs.nix { inherit pkgs upkgs; };
 
   # Generate the hardware folder location
   hardware-folder = ./config + ("/" + my.path);
 
   # Function for importing with all arguments
-  importWithAll = path: extraArguments:
-  let
-    allArguments =
-      args //
-      { inherit my; inherit (oattrs) mfunc mpkgs upkgs; } //
-      extraArguments;
-  in
-    import path (builtins.trace ("importWithAll - " + my.name + " " + path + " - " + (builtins.elemAt my.config.graphical.display.extraCommands 0)) allArguments);
+  impall = path: argolis: (import path (argolis // {
+    inherit my mfunc mpkgs upkgs;
+  }));
 
   # System specific hardware configuration
   un-imports-list = [ (hardware-folder + "/hardware.nix") ]
   # Local options for local packages
   ++
+  [ ./pkgs/options.nix ] ++
   # All the system modules
   [
     ./common/system/boot.nix
@@ -69,6 +90,10 @@ let
     ./common/system/security.nix
     ./common/system/services.nix
     ./common/system/system.nix
+  ] ++
+  # Home manager
+  [
+    "${home-manager}/nixos"
   ] ++
   # User config that does not use home manager
   [
@@ -117,7 +142,7 @@ let
     ./common/user/hm-games.nix
   ] [] ++
   # Visual imports for home-manager
-  mfunc.useDefault my.config.graphical.enable [
+  mfunc.useDefault (my.config.graphical.enable) [
     # The visual ecosystem use
     ./common/user/video/hm-ecosystem.nix
     # Extra custom gui packages
@@ -133,28 +158,23 @@ let
     ./common/user/video/hm-bluetooth.nix
   ] [];
 
-  # Default general configs
-  defaultConfigHomeManager = {
+in {
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
+  # Add the system import list
+  imports = map (x: impall x args) un-imports-list;
+
+  # Import the files needed for the home-manager package
+  home-manager.users."${my.config.user.name}" = args@{ lib, config, pkgs, nixpkgs, ... }: {
+
     # Allow unfree packages on home-manager as well
     nixpkgs.config.allowUnfree = true;
-  };
-  # Merge all home-manager modules
-  hm-merged = lib.mkMerge (
-    [ defaultConfigHomeManager ] ++
-    (map (eachImport: importWithAll eachImport oattrs.home-manager-modules) un-home-manager-imports-list)
-  );
 
-  # Create default config
-  defaultConfig = {
-    # Allow unfree packages
-    nixpkgs.config.allowUnfree = true;
-    # Import the files needed for the home-manager package
-    home-manager.users."${my.config.user.name}" = hm-merged;
-  };
-  # Merge all the possible data
-  merged = lib.mkMerge (
-    [ defaultConfig ] ++
-    (map (eachImport: importWithAll eachImport {}) un-imports-list)
-  );
+    # Import all home-manager files
+    imports = map (x: impall x args) un-home-manager-imports-list;
 
-in builtins.trace un-home-manager-imports-list merged
+  };
+
+}

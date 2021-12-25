@@ -1,40 +1,36 @@
-{ lib, iso, ... }:
+{ pkgs, lib, iso, ... }:
 let
 
   # Default path for the chosen system that was set on a file
-  systemName = lib.replaceStrings ["\n" " "] ["" ""] (builtins.readFile ./system);
+  system-name = lib.replaceStrings ["\n" " "] ["" ""] (builtins.readFile ./system);
 
   # Check if it is a iso and set the correct path then
-  realName = if iso then
+  real-name = if iso then
     "iso"
   else
-    systemName;
+    system-name;
 
   # Generate the net id from the system name
-  netId = builtins.substring 0 8 (builtins.hashString "sha512" realName);
-
-  # Recursively update config list with default
-  overlayDefault = filePath:
-    lib.recursiveUpdate
-      (builtins.fromJSON (
-         builtins.readFile (./config + "/default.json"))
-      )
-      (builtins.fromJSON (
-         builtins.readFile filePath)
-      );
+  net-id = builtins.substring 0 8 (builtins.hashString "sha512" real-name);
 
   # Import the chosen config file
-  configObj = overlayDefault (./config + ("/" + realName) + "/config.json");
+  config-obj = lib.recursiveUpdate
+    (builtins.fromJSON (
+       builtins.readFile (./config + "/default.json"))
+    )
+    (builtins.fromJSON (
+       builtins.readFile (./config + ("/" + real-name) + "/config.json"))
+    );
 
   # Import the browser config
-  chromiumObj = builtins.fromJSON (builtins.readFile (./config + "/chromium.json"));
+  chromium-obj = builtins.fromJSON (builtins.readFile (./config + "/chromium.json"));
 
   # Replace name function
   replaceName = projectName: (lib.replaceStrings [ "my" ] [ "" ] projectName);
 
   # Create fetch project function
   fetchProject =
-    projectName:
+      projectName:
       let
         githubUrlBuilder = userString: repoString:
         let
@@ -83,37 +79,11 @@ let
     ) subFolders);
   };
 
-  # Create part of the last object
-  objectPart = {
-    id = netId;
-    name = realName;
-    path = realName;
-    config = configObj;
-    chromium = chromiumObj;
-    projects = someProjects // desktopProject;
-  };
-
-  # Import extra configurations if any
-  extraConfigs = let
-    configFolder = ./config + ("/" + realName);
-    filePrefix = "config-";
-    fileSuffix = ".json";
-    folderContents = builtins.readDir configFolder;
-    nameList = lib.remove null (lib.mapAttrsToList (
-      name: value:
-        if ((lib.hasPrefix filePrefix name) &&
-            (lib.hasSuffix fileSuffix name)
-           ) then
-          lib.removePrefix filePrefix (lib.removeSuffix fileSuffix name)
-        else
-          null
-      ) folderContents);
-  in
-    lib.listToAttrs (map (
-      eachName: {
-        name = eachName;
-        value = overlayDefault (configFolder + ("/" + filePrefix + eachName + fileSuffix));
-      }
-    ) nameList);
-
-in (objectPart // { extra = extraConfigs; })
+in
+{
+  id = net-id;
+  path = real-name;
+  config = config-obj;
+  chromium = chromium-obj;
+  projects = someProjects // desktopProject;
+}

@@ -1,4 +1,4 @@
-{ my, mfunc, pkgs, mpkgs, ... }:
+{ my, mfunc, pkgs, mpkgs, config, ... }:
 {
 
   home.packages = with pkgs; [
