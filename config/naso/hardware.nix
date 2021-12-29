@@ -1,12 +1,10 @@
 { lib, config, pkgs, ... }:
 {
 
-  boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # Allow msmtp to work with my configs
   programs.msmtp = {
@@ -91,14 +89,18 @@
   fileSystems."/data/bunker" =
     { device = "bunker/main";
       fsType = "zfs";
+      options = [ "nofail" ];
     };
 
   fileSystems."/data/storr" =
     { device = "storr/main";
       fsType = "zfs";
+      options = [ "nofail" ];
     };
 
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
 }
