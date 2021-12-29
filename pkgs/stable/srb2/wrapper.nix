@@ -1,4 +1,4 @@
-{ buildEnv, makeWrapper, srb2-unwrapped, srb2-data }:
+{ buildEnv, makeWrapper, srb2-unwrapped, srb2-data, srb2-link }:
 
 assert srb2-unwrapped.version == srb2-data.version;
 
@@ -9,9 +9,9 @@ buildEnv {
 
   buildInputs = [ makeWrapper ];
 
-  paths = [ srb2-unwrapped srb2-data ];
+  paths = [ srb2-unwrapped srb2-data srb2-link ];
 
-  pathsToLink = [ "/" "/bin" ];
+  pathsToLink = [ "/" "/bin" "/share" ];
 
   postBuild = ''
     for i in $out/bin/*; do

@@ -29,8 +29,8 @@ let
 
   # Manally reassign some of the names
   manualNames = {
-    srb2 = packageSet.srb2full.srb2;
-    srb2kart = packageSet.srb2kartfull.srb2;
+    srb2 = packageSet.srb2.srb2;
+    srb2kart = packageSet.srb2kart.srb2kart;
   };
 
   # Set this object to be the package set
