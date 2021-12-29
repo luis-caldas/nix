@@ -27,6 +27,11 @@ assert lib.asserts.assertMsg
   (!(my.config.graphical.production.audio && !my.config.graphical.enable))
   "Cannot install audio production apps without graphical mode";
 
+# Video production + graphical assertion
+assert lib.asserts.assertMsg
+  (!(my.config.graphical.production.video && !my.config.graphical.enable))
+  "Cannot enable video production without graphical mode";
+
 # Model production + graphical assertion
 assert lib.asserts.assertMsg
   (!(my.config.graphical.production.models && !my.config.graphical.enable))

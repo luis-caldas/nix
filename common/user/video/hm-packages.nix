@@ -1,4 +1,4 @@
-{ my, mfunc, config, pkgs, ... }:
+{ my, mfunc, config, pkgs, mpkgs, ... }:
 {
 
   nixpkgs.config.allowUnsupportedSystem = true;
@@ -190,6 +190,11 @@
     # Audio Control
     paprefs
     pavucontrol
+
+  ] [] ++
+  mfunc.useDefault (my.config.audio && my.config.graphical.production.video) [
+
+    mpkgs.davinci-resolve
 
   ] [] ++
   mfunc.useDefault (my.config.audio && my.config.graphical.production.audio) [
