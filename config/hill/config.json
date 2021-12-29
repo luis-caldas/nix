@@ -23,7 +23,6 @@
     "touchpad": { "enable": true },
     "production": {
       "audio": true,
-      "video": true,
       "models": true,
       "electronics": true
     },
