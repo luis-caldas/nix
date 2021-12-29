@@ -119,7 +119,9 @@
     scrot
 
     # Overlay
+    xmagnify
     screenkey
+    find-cursor
 
     # Streaming
     streamlink
