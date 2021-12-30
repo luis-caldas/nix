@@ -86,10 +86,16 @@
       fsType = "zfs";
     };
 
-  fileSystems."/data/bunker" =
+  fileSystems."/data/bunker/main" =
     { device = "bunker/main";
       fsType = "zfs";
       options = [ "nofail" ];
+    };
+
+  fileSystems."/data/bunker/everything" =
+    { device = "bunker/everything";
+      fsType = "zfs";
+      options = [ "nofail" "ro" ];
     };
 
   fileSystems."/data/storr" =
@@ -98,7 +104,9 @@
       options = [ "nofail" ];
     };
 
-  swapDevices = [ ];
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/118dc015-fd73-456c-86fd-00aa279b0fa9"; }
+    ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
