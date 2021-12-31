@@ -203,6 +203,7 @@
     jack2
     cadence
     reaper
+    tuxguitar
     tenacity
     calf
     guitarix
