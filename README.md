@@ -118,4 +118,4 @@ To disable sync on the `tmp` partition:
 
 To enable autotrim on SSDs:
 
-   `-O autotrim=on`
+   `-o autotrim=on`
