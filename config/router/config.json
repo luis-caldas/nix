@@ -1,0 +1,13 @@
+{
+  "boot": {
+    "timeout": 1,
+    "top": true
+  },
+  "system": {
+    "hostname": "router"
+  },
+  "services": {
+    "ssh": true,
+    "docker": true
+  }
+}
