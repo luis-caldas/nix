@@ -1,7 +1,6 @@
 {
   "boot": {
-    "timeout": 1,
-    "top": true
+    "timeout": 1
   },
   "system": {
     "hostname": "router"
