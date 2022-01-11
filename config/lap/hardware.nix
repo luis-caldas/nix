@@ -19,6 +19,11 @@
       fsType = "vfat";
     };
 
+  swapDevices = [ {
+    device = "/swappers";
+    size = (1024 * 4); # Size in MB
+  } ];
+
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 
 }

@@ -10,11 +10,19 @@
   },
   "services": {
     "ssh": true,
+    "printing": true,
     "startup": {
       "permit": [
         "/sys/class/devfreq/*/*governor",
         "/sys/devices/system/cpu/cpu*/cpufreq/*governor"
       ]
     }
-  }
+  },
+  "graphical": {
+    "enable": true,
+    "drivers": ["panfrost"],
+    "touchpad": { "enable": true },
+    "display": { "extraCommands": ["reneoslashtoback", "cneogovernor restore"] }
+  },
+  "audio": true
 }
