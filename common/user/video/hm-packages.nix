@@ -144,9 +144,6 @@
     # IDE
     arduino
 
-    # Office
-    libreoffice
-
     # Wine
     winetricks
     protontricks
