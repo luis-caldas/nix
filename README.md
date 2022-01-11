@@ -74,13 +74,17 @@ A file named `system` in the root of the project is needed in order to select th
 
 For the commands `nixos-rebuild` or `nixos-install` to work the file `linker.nix` must be imported from your `/etc/nixos/configuration.nix` file
 
-# Warnings
+# Extra
 
-When installing it to a new system, it is needed that the graphical flag is set to false, and only set to true when the system is already installed and ready to perform a `nixos-rebuild`
+### Warnings
 
-# Hardware
+When installing it to a new system some git projects won't be copied due to a `nixos-install` bug, the workaround would be to run the following command
 
-## Useful ZFS flags
+`nix-build '<nixpkgs/nixos>' -A config.system.build.toplevel -I nixos-config=/mnt/etc/nixos/configuration.nix`
+
+The command then fetches the projects into your host `/nix` folder and is capable of proceeding with the installation after
+
+### Useful ZFS flags
 
 Taken from <https://elis.nu/blog/2019/08/encrypted-zfs-mirror-with-mirrored-boot-on-nixos/>
 
