@@ -4,28 +4,17 @@
     "timeout": 1
   },
   "x86_64": false,
-  "kernel": {
-    "params": ["console=ttyS2,1500000n8", "console=tty0"]
-  },
   "zram": true,
   "system": {
     "hostname": "lap"
   },
   "services": {
     "ssh": true,
-    "printing": true,
     "startup": {
       "permit": [
         "/sys/class/devfreq/*/*governor",
         "/sys/devices/system/cpu/cpu*/cpufreq/*governor"
       ]
     }
-  },
-  "graphical": {
-    "enable": false,
-    "drivers": ["panfrost"],
-    "touchpad": { "enable": true },
-    "display": { "extraCommands": ["reneoslashtoback", "cneogovernor restore"] }
-  },
-  "audio": true
+  }
 }

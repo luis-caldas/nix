@@ -9,20 +9,13 @@
 
   boot.initrd.availableKernelModules = [ "nvme" "usbhid" ];
 
-  boot.initrd.luks.devices."emmm".device = "/dev/disk/by-uuid/b41b6c61-719d-44a1-989a-92a3a77268ea";
-
   fileSystems."/" =
-    { device = "emco/root";
-      fsType = "zfs";
-    };
-
-  fileSystems."/home" =
-    { device = "emco/home";
-      fsType = "zfs";
+    { device = "/dev/disk/by-uuid/bf0e68e6-dc1d-4c92-b456-6b427059ae2a";
+      fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/C1F0-D964";
+    { device = "/dev/disk/by-uuid/05DA-50FC";
       fsType = "vfat";
     };
 
