@@ -85,9 +85,6 @@
     # Image viewer
     sxiv
 
-    # Email
-    thunderbird
-
     # Wallpaper
     nitrogen
 
@@ -139,10 +136,14 @@
     picom
 
   ] ++
+  # Packages that do not work on arm
   mfunc.useDefault my.config.x86_64 [
 
     # IDE
     arduino
+
+    # Email
+    thunderbird
 
     # Wine
     winetricks
