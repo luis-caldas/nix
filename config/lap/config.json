@@ -4,6 +4,9 @@
     "timeout": 1
   },
   "x86_64": false,
+  "kernel": {
+    "params": [ "console=tty1" ]
+  },
   "zram": true,
   "system": {
     "hostname": "lap"
