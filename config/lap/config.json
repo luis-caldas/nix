@@ -8,6 +8,7 @@
     "params": [ "console=tty1" ]
   },
   "zram": true,
+  "user": { "name": "lakituen" },
   "system": {
     "hostname": "lap"
   },
@@ -24,8 +25,9 @@
   "graphical": {
     "enable": true,
     "drivers": ["panfrost"],
+    "compositor": false,
     "touchpad": { "enable": true },
-    "display": { "extraCommands": ["reneoslashtoback", "cneogovernor restore"] }
+    "display": { "extraCommands": ["cneogovernor restore"] }
   },
   "audio": true
 }
