@@ -140,7 +140,7 @@ let
     ${pkgs.systemd}/bin/systemctl --user start clipster
     ${pkgs.systemd}/bin/systemctl --user start unclutter
     ${mfunc.useDefault my.config.graphical.touch "${pkgs.systemd}/bin/systemctl --user start unclutter-touch" ""}
-    ${pkgs.systemd}/bin/systemctl --user start neopicom
+    ${mfunc.useDefault my.config.graphical.compositor "${pkgs.systemd}/bin/systemctl --user start neopicom" ""}
     ${pkgs.systemd}/bin/systemctl --user start neodunst
 
     # Wait for all programs to exit

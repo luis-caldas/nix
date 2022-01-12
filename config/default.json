@@ -64,6 +64,7 @@
     "drivers": [],
     "latest": true,
     "wm": "xmonad",
+    "compositor": true,
     "cursor": "hacked-black",
     "icons": "Mint-Y-Dark-Grey",
     "theme": "Adwaita-dark",
