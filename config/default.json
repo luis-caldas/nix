@@ -51,6 +51,7 @@
   "services": {
     "ssh": false,
     "docker": false,
+    "monitor": false,
     "printing": false,
     "fingerprint": false,
     "startup": {

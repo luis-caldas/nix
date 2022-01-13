@@ -11,6 +11,9 @@
   # Docker for my servers
   virtualisation.docker.enable = my.config.services.docker;
 
+  # Netdata monitor for servers and such
+  services.netdata.enable = my.config.services.monitor;
+
   # PCSC
   services.pcscd = {
     enable = true;
