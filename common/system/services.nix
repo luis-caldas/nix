@@ -22,7 +22,7 @@
     OVMFFull = pkgs.OVMFFull.overrideAttrs (attrs: {
         name = attrs.name + "custom-logo";
         postPatch = (if (builtins.hasAttr "postPatch" attrs) then attrs.postPatch else "") + ''
-          "${pkgs.imagemagick}/bin/convert" "${my.projects.wallpapers}/papes/dpm-navy-small.png" -compress none -geometry 128x -depth 8 -colors 256 -type palette BMP3:./MdeModulePkg/Logo/Logo.bmp
+          "${pkgs.imagemagick}/bin/convert" "${my.projects.wallpapers}/papes/dpm-navy-small.png" -compress none -geometry x128 -depth 8 -type palette BMP3:./MdeModulePkg/Logo/Logo.bmp
         '';
     });
     fprintd = mpkgs.fprintd-clients;
