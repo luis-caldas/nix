@@ -106,13 +106,15 @@
     waifu2x-converter-cpp
     python3Packages.pywal
 
+    # EXIF
+    exiftool
+
     # Android
     gitRepo
     simg2img
 
     # KVM & Virt
     qemu
-    OVMF
 
     # Drives
     hdparm

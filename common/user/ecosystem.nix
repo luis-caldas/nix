@@ -71,7 +71,7 @@ in
     };
 
     # Add ovmf path
-    xdg.configFile."virt-ovmf".source = "${pkgs.OVMF.fd}/FV";
+    xdg.configFile."virt-ovmf".source = "${pkgs.OVMFFull.fd}/FV";
 
     programs = programsSet //
     {
