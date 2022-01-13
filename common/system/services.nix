@@ -14,6 +14,12 @@
   # Netdata monitor for servers and such
   services.netdata.enable = my.config.services.monitor;
 
+  # Etc files
+  environment.etc = {} //
+  mfunc.useDefault my.config.services.monitor {
+    "netdata/.opt-out-from-anonymous-statistics".text = "";
+  } {};
+
   # PCSC
   services.pcscd = {
     enable = true;
