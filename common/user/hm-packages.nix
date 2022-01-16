@@ -86,6 +86,7 @@
     rmtrash
 
     # File systems
+    sshfs
     jmtpfs
     archivemount
 
