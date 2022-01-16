@@ -49,6 +49,10 @@
     };
     autoLogin.enable = true;
     autoLogin.user = "kodi";
+    setupCommands = ''
+      "${pkgs.xorg.xset}/bin/xset" -dpms
+      "${pkgs.xorg.xset}/bin/xset" s off
+    '';
   };
 
   # Create the kodi user and add it to the audio gruop
