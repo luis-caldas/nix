@@ -71,7 +71,10 @@ in
     };
 
     # Add ovmf path
-    xdg.configFile."virt-ovmf".source = "${pkgs.OVMFFull.fd}/FV";
+    xdg.configFile."virt/ovmf".source = "${pkgs.OVMFFull.fd}";
+    xdg.configFile."virt/win/qemu".source = "${pkgs.win-qemu}";
+    xdg.configFile."virt/win/spice".source = "${pkgs.win-spice}";
+    xdg.configFile."virt/win/virtio".source = "${pkgs.win-virtio}";
 
     programs = programsSet //
     {
