@@ -1,42 +1,24 @@
 { stdenv
 , makeDesktopItem
 , srb2-unwrapped
-, srb2
 }:
 let
 
-  # Create binary name so we can reference it on the desktop link
-  gameBinName = "${srb2-unwrapped.pname}";
-
-  # Agree on a common icon name
-  iconName = "icon.png";
-
-  # Add icon to the store
-  iconFile = stdenv.mkDerivation rec {
-    name = "${gameBinName}-icon";
-    iconSrc = ./. + ("/" + iconName);
-    phases = [ "installPhase" ];
-    installPhase = ''
-      mkdir -p "$out"
-      cp ${iconSrc} "$out/${iconName}"
-    '';
-  };
-
   # Create the full desktop link
-  desktopLink = makeDesktopItem {
-    name = "srb2";
-    exec = gameBinName;
-    icon = "${iconFile}/${iconName}";
-    comment = "Sonic Robo Blast 2 Kart fangame";
-    desktopName = "Sonic Robo Blast 2";
-    genericName = "Sonic Robo Blast 2";
+  desktopLink = makeDesktopItem rec {
+    name = "${srb2-unwrapped.pname}-link";
+    exec = srb2-unwrapped.pname;
+    icon = "${srb2-unwrapped}/share/${srb2-unwrapped.pname}-icon.png";
+    comment = srb2-unwrapped.meta.description;
+    desktopName = srb2-unwrapped.goodName;
+    genericName = desktopName;
     categories = "Game;";
   };
 
 in
 stdenv.mkDerivation rec {
 
-  name = iconFile.name;
+  name = desktopLink.name;
 
   phases = [ "installPhase" ];
 

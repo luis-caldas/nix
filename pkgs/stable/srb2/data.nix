@@ -6,7 +6,7 @@
 
 stdenv.mkDerivation rec {
 
-  pname = "srb2-data";
+  pname = "${srb2-unwrapped.pname}-data";
   inherit (srb2-unwrapped) owner repo version fixVersion;
 
   nativeBuildInputs = [ unzip ];
@@ -24,11 +24,8 @@ stdenv.mkDerivation rec {
     cp -r *pk3 *dta *dat models/ $out/share/srb2/
   '';
 
-  meta = with lib; {
-    description = "Sonic Robo Blast 2 is a 3D open-source Sonic the Hedgehog fangame -- data files";
-    homepage = "https://www.srb2.org/";
-    platforms = platforms.linux;
-    hydraPlatforms = [];
+  meta = srb2-unwrapped.meta // {
+    description = srb2-unwrapped.meta.description + " -- data files";
   };
 
 }

@@ -1,10 +1,13 @@
-{ buildEnv, makeWrapper, srb2-unwrapped, srb2-data, srb2-link }:
-
-assert srb2-unwrapped.version == srb2-data.version;
+{ buildEnv
+, makeWrapper
+, srb2-unwrapped
+, srb2-data
+, srb2-link
+}:
 
 buildEnv {
 
-  name = "srb2-${srb2-unwrapped.version}";
+  name = "${srb2-unwrapped.pname}-wrapped";
   inherit (srb2-unwrapped) meta;
 
   buildInputs = [ makeWrapper ];
