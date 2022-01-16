@@ -15,6 +15,13 @@
     ACTION=="add|change", KERNEL=="sd[a-z]*[0-9]*|mmcblk[0-9]*p[0-9]*|nvme[0-9]*n[0-9]*p[0-9]*", ENV{ID_FS_TYPE}=="zfs_member", ATTR{../queue/scheduler}="none"
   '';
 
+  # Fix extra remote codes on g20
+  services.udev.extraHwdb = ''
+    evdev:input:*v4842p0001*
+      KEYBOARD_KEY_c0041=enter
+      KEYBOARD_KEY_c00cf=search
+  '';
+
   # Enable trimming when possible
   services.zfs.trim.enable = true;
 
