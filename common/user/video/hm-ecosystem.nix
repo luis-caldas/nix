@@ -89,7 +89,7 @@ let
 
     # Update more scaling variables
     export ELM_SCALE="''${GDK_SCALE}"
-    export QT_AUTO_SCREEN_SCALE_FACTOR="''${GDK_SCALE}"
+    export QT_AUTO_SCREEN_SCALE_FACTOR=1
 
     # Export the scaling to systemd
     ${pkgs.systemd}/bin/systemctl --user set-environment GDK_SCALE="''${GDK_SCALE}"
