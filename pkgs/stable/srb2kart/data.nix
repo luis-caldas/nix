@@ -7,7 +7,7 @@
 
 stdenv.mkDerivation rec {
 
-  pname = "srb2kart-data";
+  pname = "${srb2kart-unwrapped.pname}-data";
   inherit (srb2kart-unwrapped) owner repo version fixVersion;
 
   nativeBuildInputs = [ unzip ];
@@ -29,10 +29,8 @@ stdenv.mkDerivation rec {
     cp -r mdls/ *.kart *.dat *.pdf *.srb $out/share/srb2kart/
   '';
 
-  meta = with lib; {
-    description = "Sonic Robo Blast 2 Kart is a kart racing fangame with Sonic and SEGA-themed characters, items and maps -- data files";
-    homepage = "https://mb.srb2.org/threads/srb2kart.25868/";
-    platforms = platforms.linux;
+  meta = srb2kart-unwrapped.meta // {
+    description = srb2kart-unwrapped.meta.description + " -- data files";
   };
 
 }

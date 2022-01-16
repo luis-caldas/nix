@@ -32,6 +32,7 @@ stdenv.mkDerivation rec {
   fixVersion = builtins.replaceStrings ["."] [""] version;
 
   # Check system compatibility
+  allowedPlatforms = with lib; intersectLists platforms.x86 platforms.linux;
   systemChosen = let
     amd64Prefix = "x86_64";
   in if builtins.elem stdenv.system allowedPlatforms
@@ -76,7 +77,7 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     description = "Sonic Robo Blast 2 is a 3D open-source Sonic the Hedgehog fangame";
     homepage = "https://www.srb2.org/";
-    platforms = intersectLists platforms.x86 platforms.linux;
+    platforms = allowedPlatforms;
     license = licenses.gpl2;
   };
 

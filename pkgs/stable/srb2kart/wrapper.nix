@@ -1,10 +1,13 @@
-{ buildEnv, makeWrapper, srb2kart-unwrapped, srb2kart-data, srb2kart-link }:
-
-assert srb2kart-unwrapped.version == srb2kart-data.version;
+{ buildEnv
+, makeWrapper
+, srb2kart-unwrapped
+, srb2kart-data
+, srb2kart-link
+}:
 
 buildEnv {
 
-  name = "srb2kart-${srb2kart-unwrapped.version}";
+  name = "${srb2kart-unwrapped.pname}-wrapped";
   inherit (srb2kart-unwrapped) meta;
 
   buildInputs = [ makeWrapper ];
