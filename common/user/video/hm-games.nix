@@ -16,9 +16,13 @@
 
     # Proper games
     zeroad
-    chocolateDoom
-    crispyDoom
+    openttd
     xonotic
+    hedgewars
+    teeworlds
+    assaultcube
+    crispyDoom
+    chocolateDoom
     mpkgs.srb2
     mpkgs.srb2kart
 
