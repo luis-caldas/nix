@@ -54,6 +54,9 @@
     # Sniffer
     wireshark
 
+    # Net
+    ntp
+
     # Keyboard
     xorg.xmodmap
     xdotool
