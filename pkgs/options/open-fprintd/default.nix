@@ -24,7 +24,7 @@ in {
       startLimitIntervalSec = 0;
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${mpkgs.python3Packages.open-fprintd}/lib/open-fprintd/open-fprintd --debug";
+        ExecStart = "${mpkgs.python3Packages.open-fprintd}/lib/open-fprintd/open-fprintd";
         User = "root";
         ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
         Restart = "on-failure";

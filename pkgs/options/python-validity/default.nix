@@ -42,7 +42,7 @@ in {
       serviceConfig = {
         Type = "simple";
         ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /var/lib/python-validity";
-        ExecStart = "${packageInstall}/lib/python-validity/dbus-service --debug";
+        ExecStart = "${packageInstall}/lib/python-validity/dbus-service";
         User = "root";
         ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
         Restart = "on-failure";

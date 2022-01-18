@@ -1,4 +1,5 @@
 { lib
+, fetchFromGitHub
 , buildPythonPackage
 , cryptography
 , dbus-python
@@ -11,11 +12,13 @@
 buildPythonPackage rec {
 
   pname = "python-validity";
-  version = "0.12";
+  version = "0.13";
 
-  src = builtins.fetchGit {
-    url = "https://github.com/uunicorn/${pname}";
-    ref = version;
+  src = fetchFromGitHub {
+    owner = "uunicorn";
+    repo = pname;
+    rev = "c94c243bce6a1f8451cbb2b39299f21d3832bf5f";
+    sha256 = "044lh1p1fwg0mq5kaz1ipdwaf89svzni6f41plxi304vaxv3z5j8";
   };
 
   nativeBuildInputs = [
