@@ -54,9 +54,6 @@
     # Sniffer
     wireshark
 
-    # Net
-    ntp
-
     # Keyboard
     xorg.xmodmap
     xdotool
@@ -93,11 +90,15 @@
     jmtpfs
     archivemount
 
+    # Virtualisation
+    virt-manager
+
     # Optical disks
     cdrkit
     dvdplusrwtools
 
     # Net tools
+    ntp
     ethtool
     shadowsocks-libev
 
