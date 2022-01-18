@@ -8,6 +8,7 @@
   "services": {
     "ssh": true,
     "docker": true,
+    "monitor": true,
     "virt": { "enable": true, "kvm": true }
   }
 }
