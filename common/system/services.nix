@@ -11,6 +11,19 @@
   # Docker for my servers
   virtualisation.docker.enable = my.config.services.docker;
 
+  # libvirt config
+  virtualisation.libvirtd = mfunc.useDefault my.config.services.virt.enable {
+    enable = true;
+    enableKVM = my.config.services.virt.kvm;
+    onBoot = "start";
+    onShutdown = "shutdown";
+    qemu.ovmf = {
+      enable = true;
+      package = pkgs.OVMFFull;
+    };
+    qemu.swtpm.enable = my.config.services.virt.swtpm;
+  } {};
+
   # Netdata monitor for servers and such
   services.netdata.enable = my.config.services.monitor;
 

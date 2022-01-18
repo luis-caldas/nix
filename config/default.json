@@ -50,6 +50,11 @@
   },
   "services": {
     "ssh": false,
+    "virt": {
+      "enable": false,
+      "swtpm": false,
+      "kvm": false
+    },
     "docker": false,
     "monitor": false,
     "printing": false,
