@@ -14,7 +14,6 @@
   # libvirt config
   virtualisation.libvirtd = mfunc.useDefault my.config.services.virt.enable {
     enable = true;
-    enableKVM = my.config.services.virt.kvm;
     onBoot = "start";
     onShutdown = "shutdown";
     qemu.ovmf = {

@@ -52,8 +52,7 @@
     "ssh": false,
     "virt": {
       "enable": false,
-      "swtpm": false,
-      "kvm": false
+      "swtpm": false
     },
     "docker": false,
     "monitor": false,
