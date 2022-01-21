@@ -99,7 +99,9 @@
 
     # Net tools
     ntp
+    iperf
     ethtool
+    bridge-utils
     shadowsocks-libev
 
     # Audio & Video manipulation
