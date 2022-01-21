@@ -99,6 +99,7 @@
 
     # Net tools
     ntp
+    lsof
     iperf
     ethtool
     bridge-utils
