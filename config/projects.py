@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import sys
 import json
 import subprocess
 import urllib.request
@@ -16,6 +17,9 @@ def print_item(size, name, commit, hash):
 
 def main():
 
+    # Acquire args
+    reposChosen = sys.argv[1:]
+
     # Create URL
     reposURL = "https://api.github.com/users/%s/repos" % USER_NAME
 
@@ -24,6 +28,29 @@ def main():
 
     # Extract repo names
     cleanNames = [each["name"] for each in repos if each["name"].startswith(REPOS_PREFIX)]
+
+    # Cross check repo names
+    if reposChosen:
+        crossedNames = [eachIn for eachIn in reposChosen if eachIn in cleanNames]
+
+        # Check if all were found
+        if len(crossedNames) != len(reposChosen):
+
+            # Get all that weren't in the list and print them
+            print("The following repos given were not found")
+            print("\t", *[eachNot for eachNot in reposChosen if eachNot not in cleanNames])
+            print("-" * 0b100000)
+            print("Arguments given were")
+            print("\t", *reposChosen)
+            print("Possible repos are")
+            print("\t", *cleanNames)
+
+            # Return from error
+            return
+
+        # If all were found assign it to the variable
+        else:
+            cleanNames = crossedNames
 
     # Get length of biggest string
     bigLen = len(max(cleanNames, key=len))
