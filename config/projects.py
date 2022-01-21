@@ -10,6 +10,8 @@ USER_NAME="luis-caldas"
 REPOS_PREFIX="my"
 REPOS_BRANCH="master"
 
+PER_PAGE=10
+
 
 def print_item(size, name, commit, hash):
     print( ( " %%%ds - %%s - %%s" % size ) % (name, commit, hash) )
@@ -20,14 +22,38 @@ def main():
     # Acquire args
     reposChosen = sys.argv[1:]
 
-    # Create URL
-    reposURL = "https://api.github.com/users/%s/repos" % USER_NAME
+    # Initialize clean name variable
+    cleanNames = []
 
-    # Get all repos
-    repos = json.load(urllib.request.urlopen(reposURL))
+    # Start pagination index
+    pagIndex = 1
 
-    # Extract repo names
-    cleanNames = [each["name"] for each in repos if each["name"].startswith(REPOS_PREFIX)]
+    # Paginate github response
+    while True:
+
+        # Create URL
+        reposURL = "https://api.github.com/users/%s/repos?per_page=%d&page=%d" % (USER_NAME, PER_PAGE, pagIndex)
+
+        # Get all repos
+        repos = json.load(urllib.request.urlopen(reposURL))
+
+        # Check if list is empty
+        if repos:
+
+            # Extract repo names
+            cleanNames.extend([each["name"] for each in repos if each["name"].startswith(REPOS_PREFIX)])
+
+            # Increment pagination index
+            pagIndex += 1
+
+        # Break from loop if no more entries are returned
+        else:
+            break
+
+    # Exit if no projects were returned
+    if not cleanNames:
+        print("Could not find any project")
+        return
 
     # Cross check repo names
     if reposChosen:
@@ -59,7 +85,7 @@ def main():
     print_item(bigLen, "Name", "Commit", "SHA256")
 
     # Iterate and get commits
-    for eachProject in cleanNames:
+    for eachProject in sorted(cleanNames):
 
         # Get commit info
         projURL = "https://api.github.com/repos/%s/%s/branches" % (USER_NAME, eachProject)
@@ -73,7 +99,6 @@ def main():
 
         # Run command and get output
         shaHash = subprocess.run(hashCommand.split(" "), stdout=subprocess.PIPE, stderr=subprocess.DEVNULL).stdout.decode("utf-8").strip("\n")
-
         # Print item
         print_item(bigLen, eachProject, lastCommitHash, shaHash)
 
