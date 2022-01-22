@@ -162,8 +162,10 @@
     pcsclite
 
     # Fetching packages
+    pfetch
     neofetch
     screenfetch
+    lsb-release
 
     # LLVM
     llvm
