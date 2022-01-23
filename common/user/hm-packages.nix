@@ -83,6 +83,7 @@
     unrar
     samba
     jdupes
+    rdfind
     rmtrash
 
     # File systems
