@@ -192,7 +192,7 @@
   ] [] ++
   mfunc.useDefault (my.config.audio && my.config.graphical.production.video) [
 
-    mpkgs.davinci-resolve
+    # mpkgs.davinci-resolve
 
   ] [] ++
   mfunc.useDefault (my.config.audio && my.config.graphical.production.audio) [
