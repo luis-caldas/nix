@@ -162,6 +162,9 @@
     pcsctools
     pcsclite
 
+    # Bluetooth
+    bluetooth_battery
+
     # Fetching packages
     pfetch
     neofetch
