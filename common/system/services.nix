@@ -35,9 +35,9 @@
   # Overrides
   nixpkgs.config.packageOverrides = pkgs: {
     OVMFFull = pkgs.OVMFFull.overrideAttrs (attrs: {
-        name = attrs.name + "custom-logo";
+        name = attrs.name + "-custom-logo";
         postPatch = (if (builtins.hasAttr "postPatch" attrs) then attrs.postPatch else "") + ''
-          "${pkgs.imagemagick}/bin/convert" "${my.projects.wallpapers}/papes/dpm-navy-small.png" -compress none -geometry x128 -depth 8 -type palette BMP3:./MdeModulePkg/Logo/Logo.bmp
+          "${pkgs.ffmpeg}/bin/ffmpeg" -i "${my.projects.wallpapers}/papes/dpm-navy-small.png" -pix_fmt rgb24 -y -vf scale=256:-1 "./MdeModulePkg/Logo/Logo.bmp"
         '';
     });
     fprintd = mpkgs.fprintd-clients;
