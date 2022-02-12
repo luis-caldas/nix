@@ -14,19 +14,21 @@
     driSupport32Bit = true;
     extraPackages32 = with pkgs; [
       intel-ocl
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+      pkgsi686Linux.libva
       rocm-opencl-icd
       rocm-opencl-runtime
-      vaapiIntel
-      pkgsi686Linux.libva
     ];
     extraPackages = with pkgs; [
       intel-ocl
       intel-media-driver
-      rocm-opencl-icd
-      rocm-opencl-runtime
       vaapiIntel
       vaapiVdpau
       libvdpau-va-gl
+      rocm-opencl-icd
+      rocm-opencl-runtime
     ];
   } {};
 

@@ -23,7 +23,7 @@
     group = my.config.user.name;
 
     # Give extra groups to the user
-    extraGroups = [ "networkmanager" "wireshark" "${my.config.system.filer}" ] ++
+    extraGroups = [ "plugdev" "networkmanager" "wireshark" "${my.config.system.filer}" ] ++
                   mfunc.useDefault my.config.user.admin [ "wheel" ] [] ++
                   mfunc.useDefault my.config.x86_64 [ "adbusers" ] [] ++
                   mfunc.useDefault my.config.audio [ "audio" ] [] ++
