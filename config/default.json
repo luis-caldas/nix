@@ -15,8 +15,8 @@
   },
   "zram": false,
   "user": {
-    "name": "majora",
-    "desc": "bossu",
+    "name": "lu",
+    "desc": "admin",
     "groups": [],
     "admin": true,
     "pass": "functional",
