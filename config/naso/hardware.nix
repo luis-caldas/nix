@@ -32,6 +32,23 @@
     };
   };
 
+  # Set up SMARTD
+  services.smartd = {
+    enable = true;
+    autodetect = true;
+    notifications = {
+      test = true;
+      wall.enable = false;
+      mail = {
+        enable = true;
+        sender = builtins.replaceStrings [ "\n" "\t" ] [ "" "" ] (builtins.readFile /data/local/mail/account);
+        recipient = "root";
+        mailer = "${pkgs.msmtp}/bin/msmtp";
+      };
+    };
+  };
+
+  # Set up ZFS ZED
   services.zfs.zed = {
     enableMail = false;
     settings = {
