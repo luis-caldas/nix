@@ -24,7 +24,16 @@
   } {};
 
   # Netdata monitor for servers and such
-  services.netdata.enable = my.config.services.monitor;
+  services.netdata = mfunc.useDefault my.config.services.monitor {
+    enable = true;
+    config = {
+      global = {
+        "memory mode" = "dbengine";
+        "page cache size" = 256;
+        "dbengine multihost disk space" = 2048;
+      };
+    };
+  } {};
 
   # PCSC
   services.pcscd = {
