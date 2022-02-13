@@ -430,7 +430,7 @@ in
   programs.chromium = {
     enable = true;
     package = pkgs.chromium.override {
-      commandLineArgs = "--force-dark-mode --enable-features=WebUIDarkMode";
+      commandLineArgs = "--disable-remote-fonts --force-dark-mode --enable-features=WebUIDarkMode";
     };
   };
 
