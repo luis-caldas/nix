@@ -25,7 +25,7 @@
     {
       default = {
         host = mailDomain;
-        passwordeval = "cat /data/local/mail/password";
+        passwordeval = "${pkgs.coreutils}/bin/cat /data/local/mail/password";
         user = accountMail;
         from = accountMail;
       };
@@ -36,6 +36,7 @@
   services.smartd = {
     enable = true;
     autodetect = true;
+    defaults.autodetected = "-a -o on -s (S/../.././02|L/../../7/04)";
     notifications = {
       test = true;
       wall.enable = false;
