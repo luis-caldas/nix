@@ -3,6 +3,10 @@
 
   nixpkgs.config.allowUnsupportedSystem = true;
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "openssl-1.0.2u"
+  ];
+
   home.packages = with pkgs; [
 
     # Basic graphics tools that I use
@@ -185,6 +189,9 @@
     # Online radio
     icecast
 
+    # Phone
+    twinkle
+
     # Audio Control
     paprefs
     pavucontrol
@@ -208,6 +215,7 @@
     linuxsampler
     qsampler
     zyn-fusion
+    zita-at1
 
   ] [];
 }
