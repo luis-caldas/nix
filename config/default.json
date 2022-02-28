@@ -70,6 +70,7 @@
     "latest": true,
     "wm": "xmonad",
     "compositor": true,
+    "conky": true,
     "cursor": "hacked-black",
     "icons": "Mint-Y-Dark-Grey",
     "theme": "Adwaita-dark",

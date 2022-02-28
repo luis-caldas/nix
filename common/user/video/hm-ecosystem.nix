@@ -141,6 +141,7 @@ let
     ${pkgs.systemd}/bin/systemctl --user start unclutter
     ${mfunc.useDefault my.config.graphical.touch "${pkgs.systemd}/bin/systemctl --user start unclutter-touch" ""}
     ${mfunc.useDefault my.config.graphical.compositor "${pkgs.systemd}/bin/systemctl --user start neopicom" ""}
+    ${mfunc.useDefault my.config.graphical.conky "${pkgs.systemd}/bin/systemctl --user start neoconky" ""}
     ${pkgs.systemd}/bin/systemctl --user start neodunst
 
     # Wait for all programs to exit
@@ -265,6 +266,27 @@ let
       };
     };
 
+    # Conky
+    neoconky = {
+      Unit = {
+        Description = "Conky system monitor";
+        Requires = "graphical-session.target";
+        After = "graphical-session.target";
+      };
+      Service = {
+        Restart = "on-failure";
+        ExecStart = let
+        textFile = pkgs.writeTextFile {
+          name = "neoconky"; executable = true;
+          text = ''
+            #!${pkgs.bash}/bin/bash
+            source /etc/profile
+            "${pkgs.conky}/bin/conky" -c "${my.projects.conky}/conky.lua"
+          '';
+        }; in "${textFile}";
+      };
+    };
+
   } //
   # Uncluter + touch support
   mfunc.useDefault my.config.graphical.touch {
@@ -352,8 +374,6 @@ in
   xdg.configFile = {
     # Link the fontconfig conf file
     "fontconfig/fonts.conf" = { source = my.projects.fonts + "/fonts.conf"; };
-    # Link the conky project
-    "conky" = { source = my.projects.conky; };
   };
 
   # Set icons and themes
