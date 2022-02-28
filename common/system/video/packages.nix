@@ -54,6 +54,7 @@
   environment.systemPackages = with pkgs; [
 
     # Package for locking the screen
+    xsecurelock
     alock
 
     # CL info
