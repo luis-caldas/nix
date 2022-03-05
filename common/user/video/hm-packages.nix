@@ -123,6 +123,7 @@
     xmagnify
     screenkey
     find-cursor
+    mpkgs.boomer
 
     # Streaming
     streamlink
