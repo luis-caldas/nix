@@ -38,7 +38,7 @@ let
 
   # Link all my projects to the config
   listSomeProjects = {
-    "myconky"      = { rev = "af3bf551ca2d8632abe163a9f84baf0410358cb8"; sha256 = "18lzdx6sm2zsrcd6kccxfd5f37pzf882psvbgp5mypidvdsx07n1"; };
+    "myconky"      = { rev = "449efb4b888f6843ea3fe6507e96a2ae720e7159"; sha256 = "1gsnq6g34f7gv43gqv8iw8kc52m3y70s2zbf7lnq4ds2zj1ijmhq"; };
     "mycursors"    = { rev = "42b16a3d8b2af5b45ca57df3e4e0c07bd5cd19e9"; sha256 = "10nzdpdvp4pwz3w2z980v137yzdj8qwhkr2fwz46vram9400xfv7"; };
     "myfonts"      = { rev = "3623109a3f342622db3f9a42bf906b898777abe2"; sha256 = "1rlb6wf5i4vvcc4m29796kr18zxi9040x21in0kf4kppmzxliy94"; };
     "myicons"      = { rev = "fd4692ed166aab23865a45ee154bf23cadb843e9"; sha256 = "017pqsqhln6hjs2ini4f9fabf7smj628dyavr2w7566vv13hqni6"; };
@@ -61,8 +61,8 @@ let
   desktopProject = let
     myProject = {
       repo = "mydesktop";
-      rev = "116037c9f4fb3900c35a7ce4c2b75095db44ed22";
-      sha256 = "1bqfzviv3ggcl1hr43fqln87mlgjlcsfjz0fnavi4bivv3zg9z4s";
+      rev = "e41880d7fa4476dd47d6412a483625ea9f77684f";
+      sha256 = "01k7j9xhg6lnlrcvchn1hkq1qflgwpr3npj14qh58y7dzdnaq75p";
     };
     fixedName = replaceName myProject.repo;
     fetchedProject = fetchProject myProject;
