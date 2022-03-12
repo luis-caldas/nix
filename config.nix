@@ -45,7 +45,7 @@ let
     "myshell"      = { rev = "3ef9ca1b06141eda5f25a65293e9c319c81ba286"; sha256 = "0md3sg8s9a1gxb49c08x243b3l7galz8qalp7ibx28ghfgx6cy0p"; };
     "mythemes"     = { rev = "e55cec84f30af58e2aa36af3145167167cc9fce4"; sha256 = "1kfwqwpai0yk2i4xq5zgvfy7s5gxbvy5ckqsq3ai6ppz5f4pb2is"; };
     "myvim"        = { rev = "4469988257a52021d98486d9bc053f582f28b97e"; sha256 = "0g30vjzqmhb7i0kcz8nrgbhw5xx4lfh6fn0hspdd7dcx7x10qfc1"; };
-    "mywallpapers" = { rev = "4c9dcbe6f58a123dacb7bc9d10f95761efb4e642"; sha256 = "0j5dym6a10xxqxd6mpqsssbc3wd77hkv29yf6agh6wg7yfjck5rk"; };
+    "mywallpapers" = { rev = "42fb2fe79306bf3be52027ea740d53fa19e838af"; sha256 = "10ywkzpigkqk8a040hifqkkndc9cf3sjrdzw8f5lh6v05vbfl2fd"; };
   };
   someProjects = builtins.listToAttrs (map (
     eachProjectName: {
