@@ -446,12 +446,37 @@ in
     "x-scheme-handler/unknown" = [ (defaultPrograms.browser + ".desktop") ];
   };
 
-  # Enable chromium
-  programs.chromium = {
-    enable = true;
-    package = pkgs.chromium.override {
-      commandLineArgs = "--disable-remote-fonts --force-dark-mode --enable-features=WebUIDarkMode";
+  # Home manager programs
+  programs = {
+
+    # Enable chromium
+    chromium = {
+      enable = true;
+      package = pkgs.chromium.override {
+        commandLineArgs = "--disable-remote-fonts --force-dark-mode --enable-features=WebUIDarkMode";
+      };
     };
+
+    # Enable vscode
+    vscode = {
+      enable = true;
+      extensions = [
+        pkgs.vscode-extensions.bbenoist.nix
+      ];
+      haskell = {
+        enable = true;
+        hie.enable = false;
+      };
+      userSettings = {
+        "workbench.colorTheme" = "One Dark Pro";
+        "editor.fontFamily" = "Monospace";
+        "workbench.preferredDarkColorTheme" = "One Dark Pro";
+        "oneDarkPro.vivid" = true;
+        "oneDarkPro.bold" = true;
+        "telemetry.telemetryLevel" = "off";
+      };
+    };
+
   };
 
   # Add all the created services
