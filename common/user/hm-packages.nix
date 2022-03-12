@@ -245,12 +245,19 @@
     # Alsa tools
     alsaUtils
 
+    # PulseAudio tools
+    pulseaudio
+
     # Visualizer
     cli-visualizer
 
     # TUI mixer
     pamix
     ncpamixer
+
+    # Patchers
+    carla
+    helvum
 
     # MPRIS controller
     playerctl
