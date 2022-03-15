@@ -478,7 +478,7 @@ in
           };
         };
       in [
-        pkgs.vscode-extensions.bbenoist.nix
+        pkgs.vscode-extensions.jnoortheen.nix-ide
         oneDarkPro
       ];
       haskell = {
@@ -499,6 +499,12 @@ in
 
   # Add all the created services
   systemd.user.services = servicesLocal;
+
+  # Enable redshift
+  services.redshift = {
+    enable = true;
+    provider = "geoclue2";
+  };
 
   # Add all the acquired link sets to the config
   home.file = linkSets;
