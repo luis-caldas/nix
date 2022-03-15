@@ -461,8 +461,25 @@ in
     vscode = {
       enable = true;
       package = pkgs.vscodium;
-      extensions = [
+      extensions = let
+        oneDarkPro = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+          mktplcRef = {
+            name = "Material-theme";
+            publisher = "zhuangtongfa";
+            version = "3.13.20";
+            sha256 = "0jmw8f012mqzbaivz219l4k879sishjac5475fxi93j5gip3sa80";
+          };
+          meta = with lib; {
+            changelog = "https://marketplace.visualstudio.com/items/zhuangtongfa.Material-theme/changelog";
+            description = "Atom's iconic One Dark theme, and one of the most installed themes for VS Code!";
+            downloadPage = "https://marketplace.visualstudio.com/items?itemName=zhuangtongfa.Material-theme";
+            homepage = "https://github.com/Binaryify/OneDark-Pro";
+            license = licenses.mit;
+          };
+        };
+      in [
         pkgs.vscode-extensions.bbenoist.nix
+        oneDarkPro
       ];
       haskell = {
         enable = true;
