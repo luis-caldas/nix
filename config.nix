@@ -40,7 +40,7 @@ let
   listSomeProjects = {
     "myconky"      = { rev = "449efb4b888f6843ea3fe6507e96a2ae720e7159"; sha256 = "1gsnq6g34f7gv43gqv8iw8kc52m3y70s2zbf7lnq4ds2zj1ijmhq"; };
     "mycursors"    = { rev = "42b16a3d8b2af5b45ca57df3e4e0c07bd5cd19e9"; sha256 = "10nzdpdvp4pwz3w2z980v137yzdj8qwhkr2fwz46vram9400xfv7"; };
-    "myfonts"      = { rev = "3623109a3f342622db3f9a42bf906b898777abe2"; sha256 = "1rlb6wf5i4vvcc4m29796kr18zxi9040x21in0kf4kppmzxliy94"; };
+    "myfonts"      = { rev = "b2536dff328409cd7b42422cfbdadb92dba28bdc"; sha256 = "0vbgxzyimp90d0izwg4s3g4f6dl1d8c2chb869s2fynp9z2jfrf0"; };
     "myicons"      = { rev = "fd4692ed166aab23865a45ee154bf23cadb843e9"; sha256 = "017pqsqhln6hjs2ini4f9fabf7smj628dyavr2w7566vv13hqni6"; };
     "myshell"      = { rev = "3ef9ca1b06141eda5f25a65293e9c319c81ba286"; sha256 = "0md3sg8s9a1gxb49c08x243b3l7galz8qalp7ibx28ghfgx6cy0p"; };
     "mythemes"     = { rev = "e55cec84f30af58e2aa36af3145167167cc9fce4"; sha256 = "1kfwqwpai0yk2i4xq5zgvfy7s5gxbvy5ckqsq3ai6ppz5f4pb2is"; };
