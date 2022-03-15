@@ -90,6 +90,7 @@ let
     ./common/system/boot.nix
     ./common/system/kernel.nix
     ./common/system/drivers.nix
+    ./common/system/exceptions.nix
     ./common/system/ecosystem.nix
     ./common/system/packages.nix
     ./common/system/security.nix
@@ -141,6 +142,8 @@ let
   un-home-manager-imports-list = [
     # Non graphical packages I use
     ./common/user/hm-packages.nix
+    # Exceptions
+    ./common/user/hm-exceptions.nix
   ] ++
   # Text based games
   mfunc.useDefault my.config.games [
@@ -165,17 +168,11 @@ let
 
 in {
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   # Add the system import list
   imports = map (x: impall x args) un-imports-list;
 
   # Import the files needed for the home-manager package
-  home-manager.users."${my.config.user.name}" = args@{ lib, config, pkgs, nixpkgs, ... }: {
-
-    # Allow unfree packages on home-manager as well
-    nixpkgs.config.allowUnfree = true;
+  home-manager.users."${my.config.user.name}" = args@{ lib, config, pkgs, ... }: {
 
     # Import all home-manager files
     imports = map (x: impall x args) un-home-manager-imports-list;
