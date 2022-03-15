@@ -61,8 +61,8 @@ let
   desktopProject = let
     myProject = {
       repo = "mydesktop";
-      rev = "d9a5c96e3f3ed9572fb3294ec7380e55f9b51dde";
-      sha256 = "06c9j99f0w21ghiqc6n5k52h1z8vv2b5cyqrhvhmf6q1d0vj60pw";
+      rev = "fdbe0bcb653368e42a82fc3b21c2fd5e27769a27";
+      sha256 = "16f4f3dj7cnbw3xfhg9hnzdzfmn6fai2x52p33hc9pacmva0idrm";
     };
     fixedName = replaceName myProject.repo;
     fetchedProject = fetchProject myProject;
