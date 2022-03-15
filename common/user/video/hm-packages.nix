@@ -37,6 +37,9 @@
     # Unclutter
     unclutter-xfixes
 
+    # Joysticks
+    python3Packages.ds4drv
+
     # Key reassignment
     xorg.xev
 
