@@ -17,7 +17,12 @@
         GROUPID = builtins.toString my.config.user.gid;
       };
       cmd = [
-        "-s" "public;/media"
+        "-g" "log level = 2" # Global config
+        "-n" # NMBF
+        "-r" # Remove recycle bin
+        "-S" # Disable minimum SMB2
+        "-s" "media;/media;yes;no;yes;all;;;Share for media files" # Share config
+        "-W" # Wide link support
       ];
       volumes = [
         "/data/storr/media:/media"
