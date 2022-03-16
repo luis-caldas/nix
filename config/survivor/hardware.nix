@@ -1,4 +1,4 @@
-{ ... }:
+{ my, ... }:
 {
 
   boot.initrd.availableKernelModules = [ "nvme" "uhci_hcd" "ehci_pci" "xhci_pci" "ata_piix" "ahci" "usbhid" "usb_storage" "sd_mod" ];
@@ -36,7 +36,7 @@
   fileSystems."/data" =
     { device = "/dev/disk/by-uuid/3F2B-D291";
       fsType = "vfat";
-      options = [ "rw" "uid=1000" "gid=1000" "nofail" ];
+      options = [ "rw" "uid=${my.config.user.uid}" "gid=${my.config.user.gid}" "nofail" ];
     };
 
   swapDevices = [ ];

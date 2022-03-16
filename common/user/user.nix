@@ -11,7 +11,7 @@
   users.groups."${my.config.system.filer}" = {};
 
   # My user
-  users.groups."${my.config.user.name}".gid = 1000;
+  users.groups."${my.config.user.name}".gid = my.config.user.gid;
   users.users."${my.config.user.name}" = {
 
     # Simple user configuration
@@ -33,7 +33,7 @@
                   my.config.user.groups;
 
     # Set out custom uid
-    uid = 1000;
+    uid = my.config.user.uid;
 
     # Set the user to the first default uid
     initialPassword = my.config.user.pass;

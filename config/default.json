@@ -16,6 +16,8 @@
   "zram": false,
   "user": {
     "name": "lu",
+    "uid": 1000,
+    "gid": 1000,
     "desc": "admin",
     "groups": [],
     "admin": true,
