@@ -1,10 +1,35 @@
-{ lib, config, pkgs, ... }:
+{ my, lib, config, pkgs, ... }:
 {
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+
+  # Set up docker containers
+  virtualisation.oci-containers.backend = "docker";
+  virtualisation.oci-containers.containers = {
+    media = {
+      image = "dperson/samba";
+      environment = {
+        TZ = my.config.system.timezone;
+        USERID = builtins.toString my.config.user.uid;
+        GROUPID = builtins.toString my.config.user.gid;
+      };
+      cmd = [
+        "-s" "public;/media"
+      ];
+      volumes = [
+        "/data/storr/media:/media"
+      ];
+      ports = [
+        "137:137/udp"
+        "138:138/udp"
+        "139:139/tcp"
+        "445:445/tcp"
+      ];
+    };
+  };
 
   # Allow msmtp to work with my configs
   programs.msmtp = {
