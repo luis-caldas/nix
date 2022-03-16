@@ -29,6 +29,10 @@
   "system": {
     "hostname": "unnamed",
     "timezone": "Europe/Dublin",
+    "location": {
+      "latitude": 53.3498,
+      "longitude": -6.2603
+    },
     "locale": "en_IE.UTF-8",
     "filer": "filer",
     "numlock": false,

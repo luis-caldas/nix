@@ -35,10 +35,6 @@
     };
   } {};
 
-  # Geolocation and times
-  services.geoclue2.enable = true;
-  services.localtime.enable = true;
-
   # PCSC
   services.pcscd = {
     enable = true;

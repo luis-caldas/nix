@@ -503,7 +503,8 @@ in
   # Enable redshift
   services.redshift = {
     enable = true;
-    provider = "geoclue2";
+    latitude = my.config.system.location.latitude;
+    longitude = my.config.system.location.longitude;
   };
 
   # Add all the acquired link sets to the config
