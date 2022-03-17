@@ -462,25 +462,41 @@ in
       enable = true;
       package = pkgs.vscodium;
       extensions = let
-        oneDarkPro = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
-          mktplcRef = {
-            name = "Material-theme";
-            publisher = "zhuangtongfa";
-            version = "3.13.20";
-            sha256 = "0jmw8f012mqzbaivz219l4k879sishjac5475fxi93j5gip3sa80";
-          };
-          meta = with lib; {
-            changelog = "https://marketplace.visualstudio.com/items/zhuangtongfa.Material-theme/changelog";
-            description = "Atom's iconic One Dark theme, and one of the most installed themes for VS Code!";
-            downloadPage = "https://marketplace.visualstudio.com/items?itemName=zhuangtongfa.Material-theme";
-            homepage = "https://github.com/Binaryify/OneDark-Pro";
-            license = licenses.mit;
-          };
-        };
+        custom = [
+          (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+            mktplcRef = {
+              name = "Material-theme";
+              publisher = "zhuangtongfa";
+              version = "3.13.20";
+              sha256 = "0jmw8f012mqzbaivz219l4k879sishjac5475fxi93j5gip3sa80";
+            };
+            meta = with lib; {
+              changelog = "https://marketplace.visualstudio.com/items/zhuangtongfa.Material-theme/changelog";
+              description = "Atom's iconic One Dark theme, and one of the most installed themes for VS Code!";
+              downloadPage = "https://marketplace.visualstudio.com/items?itemName=zhuangtongfa.Material-theme";
+              homepage = "https://github.com/Binaryify/OneDark-Pro";
+              license = licenses.mit;
+            };
+          })
+          (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+            mktplcRef = {
+              name = "explicit-folding";
+              publisher = "zokugun";
+              version = "0.21.0";
+              sha256 = "0kzfrzmvjadg4wq4imgb3m2h81rm5nrcn1nyz8j1993qz6559d4h";
+            };
+            meta = with lib; {
+              changelog = "https://marketplace.visualstudio.com/items/zokugun.explicit-folding/changelog";
+              description = "This extension lets you manually control how and where to fold your code.";
+              downloadPage = "https://marketplace.visualstudio.com/items?itemName=zokugun.explicit-folding";
+              homepage = "https://github.com/zokugun/vscode-explicit-folding";
+              license = licenses.mit;
+            };
+          })
+        ];
       in [
         pkgs.vscode-extensions.jnoortheen.nix-ide
-        oneDarkPro
-      ];
+      ] ++ custom;
       haskell = {
         enable = true;
         hie.enable = false;
@@ -492,6 +508,13 @@ in
         "oneDarkPro.vivid" = true;
         "oneDarkPro.bold" = true;
         "telemetry.telemetryLevel" = "off";
+        "editor.fontLigatures" = true;
+        "explicitFolding.rules" = {
+          "*" = {
+              "begin" = "{{{";
+              "end" = "}}}";
+          };
+        };
       };
     };
 
