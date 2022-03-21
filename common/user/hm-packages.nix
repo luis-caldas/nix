@@ -18,6 +18,7 @@
 
     # Disk
     pv
+    duf
     ncdu
     parted
     testdisk
