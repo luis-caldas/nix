@@ -86,8 +86,6 @@
     youtube netflix
     a4ksubtitles
     pdfreader
-    osmc-skin
-    steam-launcher
   ]);
 
 }
