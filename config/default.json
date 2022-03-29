@@ -6,7 +6,8 @@
     "device": "nodev",
     "prober": false,
     "top": false,
-    "override": false
+    "override": false,
+    "tune": false
   },
   "x86_64": true,
   "kernel": {

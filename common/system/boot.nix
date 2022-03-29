@@ -32,9 +32,9 @@ let
     extraConfig = "
       terminal_input console
       terminal_output console
-    " + # Add a custom tune to the start
-    " play 600 440 1 220 1 880 1 0 1 880 2
-    ";
+    " + 
+    # Add a custom tune to the start if set
+    (mfunc.useDefault my.config.boot.tune "play 600 440 1 220 1 880 1 0 1 880 2" "");
 
     # Which GRUB entry should be booted first
     default = my.config.boot.default;
