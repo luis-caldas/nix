@@ -24,6 +24,9 @@
     testdisk
     smartmontools
 
+    # Optical
+    ccd2iso
+
     # Flashing tools
     avrdude
     heimdall
