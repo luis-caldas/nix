@@ -1,4 +1,4 @@
-{ my, lib, config, pkgs, ... }:
+{ my, mfunc, lib, config, pkgs, ... }:
 {
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "sd_mod" "sr_mod" ];
@@ -49,8 +49,8 @@
       tls_starttls = "off";
     };
     accounts = let
-      mailDomain = builtins.readFile /data/local/mail/domain;
-      accountMail = builtins.readFile /data/local/mail/account;
+      mailDomain = mfunc.safeReadFile /data/local/mail/domain;
+      accountMail = mfunc.safeReadFile /data/local/mail/account;
     in
     {
       default = {
@@ -72,7 +72,7 @@
       wall.enable = false;
       mail = {
         enable = true;
-        sender = builtins.replaceStrings [ "\n" "\t" ] [ "" "" ] (builtins.readFile /data/local/mail/account);
+        sender = builtins.replaceStrings [ "\n" "\t" ] [ "" "" ] (mfunc.safeReadFile /data/local/mail/account);
         recipient = "root";
         mailer = "${pkgs.msmtp}/bin/msmtp";
       };
@@ -110,7 +110,7 @@
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/34CD-71D6";
+    { device = "/dev/disk/by-uuid/F62C-297C";
       fsType = "vfat";
     };
 

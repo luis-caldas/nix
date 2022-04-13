@@ -46,6 +46,13 @@ let
   # Extract value after on list
     lib.elemAt xreList ((getFirstIndex elemString xreList) + 1);
 
+  # Function for safely reading a file
+  safeReadFile = filePath:
+    if (builtins.pathExists filePath) then
+      (builtins.readFile filePath)
+    else
+      "";
+
 in {
   useDefault = useDefault;
   listFilesInFolder = listFilesInFolder;
@@ -53,4 +60,5 @@ in {
   listCreateLinks = listCreateLinks;
   getFirstIndex = getFirstIndex;
   getElementXRes = getElementXRes;
+  safeReadFile = safeReadFile;
 }

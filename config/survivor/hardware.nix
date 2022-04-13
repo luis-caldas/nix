@@ -36,7 +36,7 @@
   fileSystems."/data" =
     { device = "/dev/disk/by-uuid/3F2B-D291";
       fsType = "vfat";
-      options = [ "rw" "uid=${my.config.user.uid}" "gid=${my.config.user.gid}" "nofail" ];
+      options = [ "rw" "uid=${builtins.toString my.config.user.uid}" "gid=${builtins.toString my.config.user.gid}" "nofail" ];
     };
 
   swapDevices = [ ];
