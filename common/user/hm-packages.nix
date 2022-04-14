@@ -138,7 +138,10 @@
     openssl
     cryptsetup
 
-    # Passwork hash generator
+    # Password managers
+    bitwarden-cli
+
+    # Password hash generator
     mkpasswd
 
     # User tools
@@ -146,6 +149,7 @@
     irssi
     _3llo
     neomutt
+    tty-clock
 
     # Clipboard
     xclip

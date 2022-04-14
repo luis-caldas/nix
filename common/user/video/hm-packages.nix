@@ -14,6 +14,10 @@
     dunst
     libnotify
 
+    # Password manager
+    bitwarden
+    keepass
+
     # Clipboard
     clipster
 
