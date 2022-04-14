@@ -110,6 +110,9 @@
     bridge-utils
     shadowsocks-libev
 
+    # Versioning
+    subversion
+
     # Audio & Video manipulation
     potrace
     imagemagick
