@@ -66,10 +66,16 @@
         brgenml1lpr
         brgenml1cupswrapper
       ] []);
+    browsing = true;
     browsedConf = "
+      BrowseDNSSDSubTypes _cups,_print
+      BrowseLocalProtocols All
+      BrowseRemoteProtocols All
+      BrowseProtocols All
       CreateIPPPrinterQueues All
       CreateIPPPrinterQueues driverless
     ";
+    logLevel = "debug";
   } {};
 
   # Scanning
