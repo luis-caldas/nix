@@ -41,6 +41,12 @@ in
   # Enable bash auto completion
   programs.bash.enableCompletion = true;
 
+  # Enable gnupg
+  programs.gnupg.agent = {
+    enable = true;
+    pinentryFlavor = "curses";
+  };
+
   # Add packages that dont work with home-manager
   users.users."${my.config.user.name}".packages = mfunc.useDefault my.config.graphical.enable [
 
