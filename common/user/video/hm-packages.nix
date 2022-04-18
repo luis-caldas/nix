@@ -42,6 +42,7 @@
     unclutter-xfixes
 
     # Joysticks
+    jstest-gtk
     python3Packages.ds4drv
 
     # Key reassignment

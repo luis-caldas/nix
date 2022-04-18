@@ -122,6 +122,10 @@
     waifu2x-converter-cpp
     python3Packages.pywal
 
+    # Input
+    xboxdrv
+    linuxConsoleTools
+
     # EXIF
     exiftool
 
