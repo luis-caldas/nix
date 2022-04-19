@@ -124,6 +124,7 @@
 
     # Input
     xboxdrv
+    mpkgs.x56linux
     linuxConsoleTools
 
     # EXIF
