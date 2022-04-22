@@ -22,6 +22,7 @@
         "-r" # Remove recycle bin
         "-S" # Disable minimum SMB2
         "-s" "media;/media;yes;no;yes;all;;;Share for media files" # Share config
+        "-w" "WORKGROUP" # Default workgroup
         "-W" # Wide link support
       ];
       volumes = [

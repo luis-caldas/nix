@@ -15,8 +15,11 @@
     libnotify
 
     # Password manager
-    bitwarden
     keepass
+    bitwarden
+
+    # Policies
+    lxqt.lxqt-policykit
 
     # Clipboard
     clipster

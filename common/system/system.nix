@@ -7,6 +7,9 @@
   # Needed for ZFS to work
   networking.hostId = my.id;
 
+  # Enable Gnome Virtual Filesystem to browse shares
+  services.gvfs.enable = true;
+
   # Add zfs scrubbing
   services.zfs.autoScrub.enable = true;
 
