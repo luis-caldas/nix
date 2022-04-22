@@ -7,8 +7,9 @@
   boot.extraModulePackages = [ ];
 
   # Set up docker containers
-  virtualisation.oci-containers.backend = "docker";
   virtualisation.oci-containers.containers = {
+
+    # Media serving samba instance
     media = {
       image = "dperson/samba";
       environment = {
@@ -35,6 +36,23 @@
         "445:445/tcp"
       ];
     };
+
+    # Deluge instance for downloading
+    delusion = {
+        image = "lscr.io/linuxserver/deluge";
+        environment = {
+          TZ = my.config.system.timezone;
+          PUID = builtins.toString my.config.user.uid;
+          PGID = builtins.toString my.config.user.gid;
+        };
+        volumes = [
+          "/data/storr/media/downloads:/downloads"
+        ];
+        ports = [
+          "8112:8112/tcp"
+        ];
+    };
+
   };
 
   # Allow msmtp to work with my configs
