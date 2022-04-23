@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ my, mfunc, config, lib, ... }:
 {
 
   # Import kodi
@@ -8,6 +8,20 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+
+  # Some containers
+  virtualisation.oci-containers.containers = {
+    media = {
+      image = "local/python-scrape";
+      imageFile = my.containers.pythonScrape;
+      environment = {
+        "SMTP_USER" = mfunc.safeReadFile /data/safe/smtp_user;
+        "SMTP_SERVER" = mfunc.safeReadFile /data/safe/smtp_server;
+        "SMTP_PASSWORD" = mfunc.safeReadFile /data/safe/smtp_password;
+        "SMTP_MAIL_TO" = mfunc.safeReadFile /data/safe/smtp_mail_to;
+      };
+    };
+  };
 
   fileSystems."/" =
     { device = "light/root";
@@ -42,4 +56,5 @@
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+
 }

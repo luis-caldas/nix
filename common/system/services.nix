@@ -8,8 +8,11 @@
     forwardX11 = my.config.services.ssh && my.config.graphical.enable;
   };
 
-  # Docker for my servers
+  # Vitualisation
   virtualisation.docker.enable = my.config.services.docker;
+
+  # Set default backend
+  virtualisation.oci-containers.backend = "docker";
 
   # libvirt config
   virtualisation.libvirtd = mfunc.useDefault my.config.services.virt.enable {

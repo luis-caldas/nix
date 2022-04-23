@@ -49,7 +49,7 @@ let
   # Function for safely reading a file
   safeReadFile = filePath:
     if (builtins.pathExists filePath) then
-      (builtins.readFile filePath)
+      lib.removeSuffix "\n" (builtins.readFile filePath)
     else
       "";
 

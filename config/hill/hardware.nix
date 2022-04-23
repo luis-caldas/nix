@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ lib, config, ... }:
 {
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "uas" "usb_storage" "usbhid" "sd_mod" ];
