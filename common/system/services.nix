@@ -8,6 +8,12 @@
     forwardX11 = my.config.services.ssh && my.config.graphical.enable;
   };
 
+  # Enable avahi
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+  };
+
   # Vitualisation
   virtualisation.docker.enable = my.config.services.docker;
 
@@ -92,12 +98,6 @@
   # Printer applets
   programs.system-config-printer.enable =
     my.config.graphical.enable && my.config.services.printing;
-
-  # Avahi for printer discovery
-  services.avahi = mfunc.useDefault my.config.services.printing {
-    enable = true;
-    nssmdns = true;
-  } {};
 
   # My own systemd services
   systemd.services = {
