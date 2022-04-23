@@ -53,6 +53,20 @@
         ];
     };
 
+    # Web Service Discovery for Microsoft
+    shout = {
+        image = "jonasped/wsdd";
+        environment = {
+          TZ = my.config.system.timezone;
+          HOSTNAME = my.path;
+          WORKGROUP = "WORKGROUP";
+        };
+        ports = [
+          "3702:3702/udp"
+          "5357:5357/tcp"
+        ];
+    };
+
   };
 
   # Allow msmtp to work with my configs
