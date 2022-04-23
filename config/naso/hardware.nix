@@ -47,6 +47,7 @@
         };
         volumes = [
           "/data/storr/media/downloads:/downloads"
+          "/data/local/config/deluge:/config"
         ];
         ports = [
           "8112:8112/tcp"
