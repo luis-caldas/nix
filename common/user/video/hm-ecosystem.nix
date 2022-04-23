@@ -510,6 +510,7 @@ in
         "oneDarkPro.bold" = true;
         "telemetry.telemetryLevel" = "off";
         "editor.fontLigatures" = true;
+        "files.trimTrailingWhitespace" = true;
         "explicitFolding.rules" = {
           "*" = {
               "begin" = "{{{";
