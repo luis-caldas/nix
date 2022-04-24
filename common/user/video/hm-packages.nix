@@ -35,6 +35,9 @@
     # Monitors
     arandr
 
+    # VNC
+    x11vnc
+
     # File manager
     gnome3.nautilus
 
@@ -110,6 +113,9 @@
 
     # Emulation
     dosbox
+
+    # Inputs
+    mpkgs.opentrack
 
     # QR Code
     zbar
