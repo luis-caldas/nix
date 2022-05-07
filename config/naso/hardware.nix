@@ -45,10 +45,12 @@
         "-r" # Remove recycle bin
         "-S" # Disable minimum SMB2
         "-s" "media;/media;yes;no;yes;all;;;Share for media files" # Share config
+        "-s" "google;/google;yes;yes;yes;all;;;Google saved files"
         "-w" "WORKGROUP" # Default workgroup
         "-W" # Wide link support
       ];
       volumes = [
+        "/data/bunker/everything/vault/untouched/google-parents:/google"
         "/data/storr/media:/media"
       ];
       ports = [
