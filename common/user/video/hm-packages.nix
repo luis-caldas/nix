@@ -228,6 +228,7 @@
     qsampler
     zyn-fusion
     zita-at1
+    lsp-plugins
 
   ] [];
 }
