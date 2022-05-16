@@ -8,6 +8,7 @@
     "minecraft-launcher"
     "dwarf-fortress"
     "reaper" "linuxsampler"
+    "spotify" "spotify-unwrapped"
     "unrar"
   ];
 

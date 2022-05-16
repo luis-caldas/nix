@@ -201,6 +201,9 @@
     # Online radio
     icecast
 
+    # Audio player
+    spotify
+
     # Phone
     twinkle
 
