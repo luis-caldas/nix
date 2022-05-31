@@ -41,6 +41,9 @@
     # File manager
     gnome3.nautilus
 
+    # File organizing
+    qdirstat
+
     # Desktop lock
     xss-lock
 
