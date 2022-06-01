@@ -63,6 +63,9 @@
     # Graph plotting
     gnuplot
 
+    # Term
+    cool-retro-term
+
     # Web
     electron
 
