@@ -32,7 +32,7 @@ let
     extraConfig = "
       terminal_input console
       terminal_output console
-    " + 
+    " +
     # Add a custom tune to the start if set
     (mfunc.useDefault my.config.boot.tune "play 600 440 1 220 1 880 1 0 1 880 2" "");
 
@@ -57,11 +57,11 @@ in
   console.font = "";
 
   # Main boot configuration
-  boot = {
+  boot = rec {
 
     # Support for zfs
-    supportedFilesystems = [ "zfs" "ntfs" "btrfs" ];
-    initrd.supportedFilesystems = [ "zfs" "ntfs" "btrfs" ];
+    supportedFilesystems = [ "zfs" "ntfs" "btrfs" "autofs" "nfs" "cifs" ];
+    initrd.supportedFilesystems = supportedFilesystems;
 
     # Don't force import zfs pool
     zfs = {
