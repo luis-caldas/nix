@@ -9,6 +9,7 @@
     device = "//naso/media/games/roms";
     fsType = "cifs";
     options = [
+      "ro"
       "nofail"
       "noauto"
       "x-systemd.automount"
