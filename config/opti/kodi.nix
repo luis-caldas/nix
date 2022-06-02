@@ -76,9 +76,6 @@
     extraGroups = [ "audio" ];
   };
 
-  # Allow system wide pulseaudio for multiple users
-  hardware.pulseaudio.systemWide = true;
-
   # Packages to be installed
   environment.systemPackages = with pkgs; [
     (retroarch.override { cores = with libretro; [
