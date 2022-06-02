@@ -79,7 +79,14 @@
   hardware.pulseaudio.systemWide = true;
 
   # Packages to be installed
-  environment.systemPackages = with pkgs; [ retroarch ];
+  environment.systemPackages = with pkgs; [
+    (retroarch.override { cores = with libretro; [
+      mgba
+      snes9x
+      fceumm
+      mupen64plus
+    ]; })
+  ];
 
   # Enable retroarch cores
   nixpkgs.config.retroarch = {
