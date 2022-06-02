@@ -88,6 +88,7 @@
     samba
     jdupes
     rdfind
+    rmlint
     rmtrash
 
     # File systems
