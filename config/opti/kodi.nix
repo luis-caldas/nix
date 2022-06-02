@@ -6,7 +6,7 @@
 
   # Mount network storage locally
   fileSystems."/naso" = {
-    device = "//naso/media";
+    device = "//naso/media/games/roms";
     fsType = "cifs";
     options = [
       "nofail"
