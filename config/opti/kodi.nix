@@ -4,6 +4,20 @@
   # Store audio cards states
   sound.enable = true;
 
+  # Mount network storage locally
+  fileSystems."/naso" = {
+    device = "//naso/media";
+    fsType = "cifs";
+    options = [
+      "nofail"
+      "noauto"
+      "x-systemd.automount"
+      "x-systemd.idle-timeout=60"
+      "x-systemd.device-timeout=5s"
+      "x-systemd.mount-timeout=5s"
+    ];
+  };
+
   # Enable pulseaudio and all the supported codecs
   hardware.pulseaudio = {
     enable = true;
