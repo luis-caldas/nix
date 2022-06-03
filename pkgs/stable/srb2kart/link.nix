@@ -12,7 +12,7 @@ let
     comment = srb2kart-unwrapped.meta.description;
     desktopName = srb2kart-unwrapped.goodName;
     genericName = desktopName;
-    categories = "Game;";
+    categories = [ "Game" ];
   };
 
 in

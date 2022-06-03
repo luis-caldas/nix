@@ -25,7 +25,7 @@
     zeroad
     openttd
     xonotic
-    hedgewars
+    # hedgewars
     teeworlds
     assaultcube
     crispyDoom
@@ -44,7 +44,7 @@
   mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [
 
     # Minecraft
-    multimc
+    polymc
     minecraft
 
     # FPS
@@ -52,7 +52,6 @@
 
     # N64
     mupen64plus
-    wxmupen64plus
 
   ] [];
 

@@ -315,7 +315,7 @@ let
   extensionJson = ext: browserName:
   let
     configDir = "${config.xdg.configHome}/" + browserName;
-    updateUrl = (options.programs.chromium.extensions.type.getSubOptions "").updateUrl.default;
+    updateUrl = (options.programs.chromium.extensions.type.getSubOptions []).updateUrl.default;
   in
     with builtins; {
       name = "${configDir}/External Extensions/${ext}.json";

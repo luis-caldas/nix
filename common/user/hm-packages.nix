@@ -117,7 +117,7 @@
     # Audio & Video manipulation
     potrace
     imagemagick
-    libqrencode
+    qrencode
     ffmpeg-full
     ghostscript
     waifu2x-converter-cpp
@@ -253,7 +253,7 @@
     fwupd
   ] [] ++
   mfunc.useDefault my.config.tex [ texlive.combined.scheme-medium ] [] ++
-  mfunc.useDefault my.config.services.docker [ docker_compose ] [] ++
+  mfunc.useDefault my.config.services.docker [ docker-compose ] [] ++
   mfunc.useDefault my.config.audio [
 
     # Local player

@@ -21,4 +21,6 @@
     [ { device = "/dev/sda2"; }
     ];
 
+  system.stateVersion = "21.11";
+
 }

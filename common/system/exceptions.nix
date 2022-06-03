@@ -17,7 +17,7 @@
   nixpkgs.config.packageOverrides = pkgs: {
     # Add custom image to OVMF UEFI
     OVMFFull = pkgs.OVMFFull.overrideAttrs (attrs: {
-        name = attrs.name + "-custom-logo";
+        pname = attrs.pname + "-custom-logo";
         postPatch = (if (builtins.hasAttr "postPatch" attrs) then attrs.postPatch else "") + ''
           "${pkgs.ffmpeg}/bin/ffmpeg" -i "${my.projects.wallpapers}/papes/dpm-navy-small.png" -pix_fmt rgb24 -y -vf scale=256:-1 "./MdeModulePkg/Logo/Logo.bmp"
         '';

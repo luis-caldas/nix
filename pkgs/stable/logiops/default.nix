@@ -3,7 +3,7 @@
 , cmake
 , pkg-config
 , libevdev
-, libudev
+, udev
 , libconfig
 }:
 
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    libevdev libudev libconfig
+    libevdev udev libconfig
   ];
 
   patches = [ ./logiops-no-systemd-service.patch ];

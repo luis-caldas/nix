@@ -22,9 +22,10 @@
     }
   },
   "graphical": {
-    "enable": false,
+    "enable": true,
     "drivers": ["panfrost"],
     "compositor": false,
+    "touchpad": { "enable": true },
     "display": { "extraCommands": ["cneogovernor restore"] }
   },
   "audio": true
