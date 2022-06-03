@@ -259,10 +259,9 @@
     # Local player
     cmus
 
-    # Alsa tools
+    # Tools
+    pipewire
     alsaUtils
-
-    # PulseAudio tools
     pulseaudio
 
     # Visualizer
