@@ -260,6 +260,7 @@
     cmus
 
     # Tools
+    pamixer
     pipewire
     alsaUtils
     pulseaudio
