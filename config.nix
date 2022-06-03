@@ -4,6 +4,25 @@ let
   # Default path for the chosen system that was set on a file
   systemName = lib.replaceStrings ["\n" " "] ["" ""] (builtins.readFile ./system);
 
+  # Create list for allowed architectures
+  archReference = {
+    "x64" = "x86_64";
+    "x86" = "i686";
+    "arm" = "aarch64";
+  };
+  allowedArchitectures = builtins.attrValues archReference;
+
+  # Check for system architecture
+  sysArch = let
+    sysFull = pkgs.stdenv.system;
+    linuxSuffix = "-linux";
+    arch = lib.removeSuffix linuxSuffix sysFull;
+  in
+    if builtins.elem arch allowedArchitectures then
+      arch
+    else
+      throw "Unsupported architecture ${arch}";
+
   # Owner name
   owner = "luis-caldas";
 
@@ -87,16 +106,18 @@ let
 
   # Show some verbose
   traceId = let
-    verboseString = "building for " + realName + " with ID " + netId;
+    verboseString = "building for ${realName} @ ${sysArch} - ${netId}";
   in
     builtins.trace verboseString netId;
 
   # Create the entire object
   mySome = {
     id = traceId;
+    arch = sysArch;
     path = realName;
     config = configObj;
     chromium = chromiumObj;
+    reference = archReference;
     projects = someProjects // desktopProject;
     containers = containerObj;
   };

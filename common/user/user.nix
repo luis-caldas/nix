@@ -25,11 +25,11 @@
     # Give extra groups to the user
     extraGroups = [ "networkmanager" "wireshark" "plugdev" "${my.config.system.filer}" ] ++
                   mfunc.useDefault my.config.user.admin [ "wheel" ] [] ++
-                  mfunc.useDefault my.config.x86_64 [ "adbusers" ] [] ++
                   mfunc.useDefault my.config.audio [ "audio" ] [] ++
                   mfunc.useDefault my.config.graphical.enable [ "video" ] [] ++
                   mfunc.useDefault my.config.services.docker [ "docker" ] [] ++
                   mfunc.useDefault my.config.services.printing [ "scanner" "lp" ] [] ++
+                  mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [ "adbusers" ] [] ++
                   my.config.user.groups;
 
     # Set out custom uid

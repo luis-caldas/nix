@@ -33,7 +33,7 @@ in
 {
 
   # Enable adb debugging
-  programs.adb.enable = my.config.x86_64;
+  programs.adb.enable = ((my.arch == my.reference.x64) || (my.arch == my.reference.x86));
 
   # Add wireshark
   programs.wireshark.enable = true;
@@ -77,10 +77,13 @@ in
     };
 
     # Add ovmf path
-    xdg.configFile."virt/ovmf".source = "${pkgs.OVMFFull.fd}";
-    xdg.configFile."virt/win/qemu".source = "${pkgs.win-qemu}";
-    xdg.configFile."virt/win/spice".source = "${pkgs.win-spice}";
-    xdg.configFile."virt/win/virtio".source = "${pkgs.win-virtio}";
+    xdg.configFile = (mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) {
+      "virt/ovmf".source = "${pkgs.OVMFFull.fd}";
+    } {}) // {
+      "virt/win/qemu".source = "${pkgs.win-qemu}";
+      "virt/win/spice".source = "${pkgs.win-spice}";
+      "virt/win/virtio".source = "${pkgs.win-virtio}";
+    };
 
     programs = programsSet //
     {
@@ -105,7 +108,7 @@ in
     } {};
 
     # Add arduino libraries
-    home.file = mfunc.useDefault my.config.x86_64
+    home.file = mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86))
     { ".local/share/arduino" = { source = "${pkgs.arduino}/share/arduino"; }; }
     {};
 

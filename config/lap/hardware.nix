@@ -4,6 +4,10 @@
     ./custom/pinebook_pro.nix
   ];
 
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "pinebookpro-ap6256-firmware"
+  ];
+
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
 

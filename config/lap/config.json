@@ -3,7 +3,6 @@
     "override": true,
     "timeout": 1
   },
-  "x86_64": false,
   "kernel": {
     "params": [ "console=tty1" ]
   },
@@ -23,10 +22,9 @@
     }
   },
   "graphical": {
-    "enable": true,
+    "enable": false,
     "drivers": ["panfrost"],
     "compositor": false,
-    "touchpad": { "enable": true },
     "display": { "extraCommands": ["cneogovernor restore"] }
   },
   "audio": true

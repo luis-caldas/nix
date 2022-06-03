@@ -5,7 +5,7 @@
   home.packages = with pkgs; [
   ] ++
   # amd64 only games
-  mfunc.useDefault my.config.x86_64 [
+  mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [
 
     # Dwarf Fortress
     (pkgs.dwarf-fortress-packages.dwarf-fortress-full.override {

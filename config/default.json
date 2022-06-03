@@ -9,7 +9,6 @@
     "override": false,
     "tune": false
   },
-  "x86_64": true,
   "kernel": {
     "params": [],
     "text": true

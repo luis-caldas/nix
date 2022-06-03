@@ -10,7 +10,7 @@
     # Select custom version of mesa drivers
     #package = pkgs.mesa.drivers;
   } //
-  mfunc.useDefault my.config.x86_64 {
+  mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) {
     driSupport32Bit = true;
     extraPackages32 = with pkgs; [
       intel-ocl

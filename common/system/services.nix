@@ -70,8 +70,10 @@
         brlaser
         gutenprint
       ] ++
-      (mfunc.useDefault my.config.x86_64 [
+      (mfunc.useDefault (my.arch == my.reference.x64) [
         gutenprintBin
+      ] []) ++
+      (mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [
         brgenml1lpr
         brgenml1cupswrapper
       ] []);

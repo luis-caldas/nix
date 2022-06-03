@@ -159,7 +159,7 @@
 
   ] ++
   # Packages that do not work on arm
-  mfunc.useDefault my.config.x86_64 [
+  mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [
 
     # IDE
     arduino
@@ -188,13 +188,13 @@
     kicad
 
   ] [] ++
-  mfunc.useDefault (my.config.x86_64 && my.config.graphical.production.electronics) [
+  mfunc.useDefault (((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) && my.config.graphical.production.electronics) [
 
     # Electronics
     logisim
 
   ] [] ++
-  mfunc.useDefault (my.config.x86_64 && my.config.graphical.production.models) [
+  mfunc.useDefault (((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) && my.config.graphical.production.models) [
 
     # Modeling and cadding
     blender
