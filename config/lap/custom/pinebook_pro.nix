@@ -6,8 +6,6 @@
     (import ./overlay.nix)
   ];
 
-  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_pinebookpro_lts;
-
   # This list of modules is not entirely minified, but represents
   # a set of modules that is required for the display to work in stage-1.
   # Further minification can be done, but requires trial-and-error mainly.
@@ -26,6 +24,7 @@
     "dw_hdmi"
     "dw_mipi_dsi"
     "gpu_sched"
+    "panel_edp"
     "panel_simple"
     "panfrost"
     "pwm_bl"
@@ -41,18 +40,13 @@
     "rtc_rk808"
   ];
 
-  boot.kernelParams = [
-    # Works around an issue with efifb, U-Boot and RK3399
-    "efifb=off"
-  ];
-
-  services.udev.extraHwdb = lib.concatStrings [
+  services.udev.extraHwdb = lib.mkMerge [
     # https://gitlab.manjaro.org/manjaro-arm/packages/community/pinebookpro-post-install/blob/master/10-usb-kbd.hwdb
     ''
       evdev:input:b0003v258Ap001E*
         KEYBOARD_KEY_700a5=brightnessdown
         KEYBOARD_KEY_700a6=brightnessup
-        KEYBOARD_KEY_70066=sleep 
+        KEYBOARD_KEY_70066=sleep
     ''
 
     # https://github.com/elementary/os/blob/05a5a931806d4ed8bc90396e9e91b5ac6155d4d4/build-pinebookpro.sh#L253-L257
@@ -64,7 +58,7 @@
         ID_INPUT_MOUSE=0
     ''
   ];
-  
+
   # https://github.com/elementary/os/blob/05a5a931806d4ed8bc90396e9e91b5ac6155d4d4/build-pinebookpro.sh#L253-L257
   # Mark the keyboard as internal, so that "disable when typing" works for the touchpad
   environment.etc."libinput/local-overrides.quirks".text = ''
@@ -80,7 +74,7 @@
   hardware.firmware = [
     pkgs.pinebookpro-ap6256-firmware
   ];
-  
+
   systemd.tmpfiles.rules = [
     # Tweak the minimum frequencies of the GPU and CPU governors to get a bit more performance
     # https://github.com/elementary/os/blob/05a5a931806d4ed8bc90396e9e91b5ac6155d4d4/build-pinebookpro.sh#L288-L294
