@@ -16,7 +16,6 @@
 
     # Password manager
     keepass
-    bitwarden
 
     # Policies
     lxqt.lxqt-policykit
@@ -158,6 +157,12 @@
     picom
 
   ] ++
+  mfunc.useDefault (my.arch == my.reference.x64) [
+
+    # Password manager
+    bitwarden
+
+  ] [] ++
   # Packages that do not work on arm
   mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [
 
@@ -207,15 +212,18 @@
     # Online radio
     icecast
 
-    # Audio player
-    spotify
-
     # Phone
     twinkle
 
     # Audio Control
     paprefs
     pavucontrol
+
+  ] [] ++
+  mfunc.useDefault ((my.arch == my.reference.x64) && my.config.audio) [
+
+    # Audio player
+    spotify
 
   ] [] ++
   mfunc.useDefault (my.config.audio && my.config.graphical.production.video) [
