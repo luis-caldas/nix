@@ -514,6 +514,7 @@ in
         "files.trimTrailingWhitespace" = true;
         "keyboard.dispatch" = "keyCode";
         "terminal.integrated.shellIntegration.showWelcome" = false;
+        "workbench.startupEditor": "none";
         "explicitFolding.rules" = {
           "*" = {
               "begin" = "{{{";
