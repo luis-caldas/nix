@@ -9,7 +9,6 @@
     "ssh": true,
     "docker": true,
     "printing": true,
-    "fingerprint": true,
     "startup": {
       "permit": [
         "/sys/devices/system/cpu/cpu*/cpufreq/*governor"
