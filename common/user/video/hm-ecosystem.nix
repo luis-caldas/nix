@@ -512,6 +512,8 @@ in
         "telemetry.telemetryLevel" = "off";
         "editor.fontLigatures" = true;
         "files.trimTrailingWhitespace" = true;
+        "keyboard.dispatch" = "keyCode";
+        "terminal.integrated.shellIntegration.showWelcome" = false;
         "explicitFolding.rules" = {
           "*" = {
               "begin" = "{{{";
