@@ -68,6 +68,9 @@
     # Web
     electron
 
+    # Email
+    thunderbird
+
     # Torrenting
     deluge
 
@@ -171,9 +174,6 @@
 
     # IDE
     arduino
-
-    # Email
-    thunderbird
 
     # Wine
     winetricks
