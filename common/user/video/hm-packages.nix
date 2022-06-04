@@ -99,6 +99,9 @@
     # Money
     gnucash
 
+    # Comics
+    mcomix3
+
     # Image viewer
     sxiv
 
