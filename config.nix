@@ -57,7 +57,7 @@ let
 
   # Link all my projects to the config
   listSomeProjects = {
-    "myconky"      = { rev = "7b31ce733c0d6d40eaaee049f93be01a62603d10"; sha256 = "1xp85l72dhfaqh0gmzjs7ly1z6fly12v93rygif9wly9nm80pfzj"; };
+    "myconky"      = { rev = "bac1c3284ad885da077f5ce97a4e2336c6ac1f49"; sha256 = "11zslx75xmrdak2nw14g5mhkhhkildx2bqvl5hx1jnv9p1nmhnzl"; };
     "mycursors"    = { rev = "42b16a3d8b2af5b45ca57df3e4e0c07bd5cd19e9"; sha256 = "10nzdpdvp4pwz3w2z980v137yzdj8qwhkr2fwz46vram9400xfv7"; };
     "myfonts"      = { rev = "b2536dff328409cd7b42422cfbdadb92dba28bdc"; sha256 = "0vbgxzyimp90d0izwg4s3g4f6dl1d8c2chb869s2fynp9z2jfrf0"; };
     "myicons"      = { rev = "fd4692ed166aab23865a45ee154bf23cadb843e9"; sha256 = "017pqsqhln6hjs2ini4f9fabf7smj628dyavr2w7566vv13hqni6"; };
