@@ -29,9 +29,34 @@ let
       '';
       initScript = pkgs.writeScriptBin "start" ''
         #!${pkgs.bash}/bin/bash
+
+        # Variable that contains all the processes
+        processes=()
+
+        # Catch SIGTERMs
+        _term() {
+          for each_pid in ''${processes[@]}; do
+            "${pkgs.util-linux}/bin/kill" -TERM "$each_pid" 2>/dev/null
+          done
+        }
+        trap _term SIGTERM
+
+        # Import ENVs to proper path
         "${pkgs.coreutils}/bin/printenv" | "${pkgs.gnugrep}/bin/grep" "SMTP\|SSL" > /etc/environment
+
+        # Start cron process
         "${pkgs.busybox}/bin/crond" -f -l 0 -L /cron.log &
-        "${pkgs.coreutils}/bin/tail" -fq "${logFileScript}" "${logFileCron}"
+        processes+=("$!")
+
+        # Tail log file
+        "${pkgs.coreutils}/bin/tail" -fq "${logFileScript}" "${logFileCron}" &
+        processes+=("$!")
+
+        # Wait for all processes
+        for pid in ''${processes[@]}; do
+            wait "$pid"
+        done
+
       '';
       projectFull = pkgs.runCommand "add-folder" { project = builtins.fetchGit {
         url = "https://github.com/luis-caldas/get-weathers";
@@ -44,7 +69,7 @@ let
       name = "local/python-scrape";
       tag = "latest";
       contents = with pkgs; [
-        bash bashInteractive busybox coreutils gnugrep findutils moreutils procps
+        bash bashInteractive busybox coreutils gnugrep findutils moreutils util-linux
         cron openssl cacert packagedPython
         initScript mainExec cronFile projectFull
       ];
