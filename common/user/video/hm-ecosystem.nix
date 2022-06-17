@@ -84,7 +84,7 @@ let
 
     # Check if new scaling variable was set and if it was, override scaling
     if [ -n "$NEW_SCALE" ]; then
-      dpiScale="$(awk "BEGIN { print "1.0/"''${NEW_SCALE}"" }")"
+      dpiScale="$(awk "BEGIN { printf \"%f\n\",1.0/''${NEW_SCALE} }")"
       export GDK_SCALE="''${NEW_SCALE}"
       export GDK_DPI_SCALE="''${dpiScale}"
     fi
