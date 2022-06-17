@@ -76,7 +76,7 @@ let
     export PATH="''${PATH}:${my.projects.desktop.programs}/public"
 
     # Try to import new systemd variable
-    ${pkgs.systemd}/bin/systemctl --user import-environment NEW_SCALE
+    NEW_SCALE="$(${pkgs.systemd}/bin/systemctl --user show-environment | grep NEW_SCALE | cut -d"=" -f2)"
 
     # Set default scaling variables
     export GDK_SCALE="${scaleString}"
@@ -182,7 +182,6 @@ let
           text = ''
             #!${pkgs.bash}/bin/bash
             source /etc/profile
-            "${pkgs.systemd}/bin/systemctl" --user import-environment XDG_SESSION_ID
             "${pkgs.xss-lock}/bin/xss-lock" -s "''${XDG_SESSION_ID}" -- "${my.projects.desktop.programs}/public/neolock"
           '';
         }; in "${textFile}";
@@ -204,7 +203,6 @@ let
           text = ''
             #!${pkgs.bash}/bin/bash
             source /etc/profile
-            "${pkgs.systemd}/bin/systemctl" --user import-environment XDG_SESSION_ID
             "${pkgs.clipster}/bin/clipster" -d
           '';
         }; in "${textFile}";
@@ -240,7 +238,6 @@ let
           text = ''
             #!${pkgs.bash}/bin/bash
             source /etc/profile
-            "${pkgs.systemd}/bin/systemctl" --user import-environment GDK_SCALE
             "${my.projects.desktop.programs}/public/neodunst"
           '';
         }; in "${textFile}";
