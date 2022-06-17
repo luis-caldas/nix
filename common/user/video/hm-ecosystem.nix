@@ -84,7 +84,7 @@ let
 
     # Check if new scaling variable was set and if it was, override scaling
     if [ -n "$NEW_SCALE" ]; then
-      dpiScale=$(awk "BEGIN { print "1.0 / ''${NEW_SCALE}" }")
+      dpiScale="$(awk "BEGIN { print "1.0/''${NEW_SCALE}" }")"
       export GDK_SCALE="''${NEW_SCALE}"
       export GDK_DPI_SCALE="''${dpiScale}"
     fi
@@ -123,7 +123,7 @@ let
 
     # Set DBus variables
     if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
-      eval $(dbus-launch --exit-with-session --sh-syntax)
+      eval "$(dbus-launch --exit-with-session --sh-syntax)"
     fi
 
     # Update DBus environment
