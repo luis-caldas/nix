@@ -169,6 +169,10 @@
     # Banner
     figlet
 
+    # Terminal
+    cbonsai
+    pipes
+
     # Logitech
     ltunify
 
