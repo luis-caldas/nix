@@ -10,6 +10,9 @@
     conky
     rofi
 
+    # Video
+    xorg.xdpyinfo
+
     # Notifications
     dunst
     libnotify
@@ -226,7 +229,9 @@
   mfunc.useDefault ((my.arch == my.reference.x64) && my.config.audio) [
 
     # Audio player
-    spotify
+    (writeShellScriptBin "spotify" ''
+      "${spotify}/bin/spotify" --force-device-scale-factor="''${GDK_SCALE}" "''${@}"
+    '')
 
   ] [] ++
   mfunc.useDefault (my.config.audio && my.config.graphical.production.video) [
