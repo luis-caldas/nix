@@ -90,8 +90,9 @@ let
     export TARGET_SCALE="''${GDK_SCALE}"
     export GDK_SCALE="''${ceil_scale}"
 
-    # Export default DPI
+    # Export defaults
     export DEFAULT_XORG_DPI=96
+    export DEFAULT_XORG_CURSOR_SIZE=24
 
     # Get the DPI scale
     dpiScale="$(awk "BEGIN { printf \"%f\n\",1.0/''${GDK_SCALE} }")"
@@ -124,11 +125,13 @@ let
     # Change Caps to Ctrl
     reneocapstoctrl
 
-    # Rescale if needed
-    if [ -n "''${NEW_SCALE}" ]; then
-      new_dpi="$(awk "BEGIN { printf \"%f\n\",''${DEFAULT_XORG_DPI}*''${NEW_SCALE} }")"
-      xrandr --dpi "''${new_dpi}"
-    fi
+    # Set X Dpi
+    new_dpi="$(awk "BEGIN { printf \"%f\n\",''${DEFAULT_XORG_DPI}*''${GDK_SCALE} }")"
+    xrandr --dpi "''${new_dpi}"
+
+    # Set cursor size
+    new_cursor_size=$(( DEFAULT_XORG_CURSOR_SIZE * GDK_SCALE ))
+    export XCURSOR_SIZE="''${new_cursor_size}"
 
     # Extra commands from the config to be added
     ${ (builtins.concatStringsSep "\n" my.config.graphical.display.extraCommands) }
