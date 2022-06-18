@@ -92,7 +92,7 @@ let
 
     # Export defaults
     export DEFAULT_XORG_DPI=96
-    export DEFAULT_XORG_CURSOR_SIZE=24
+    export DEFAULT_XORG_CURSOR_SIZE=36
 
     # Get the DPI scale
     dpiScale="$(awk "BEGIN { printf \"%f\n\",1.0/''${GDK_SCALE} }")"
