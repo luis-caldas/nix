@@ -63,7 +63,6 @@ let
   # Create the .xinitrc link file
   textXInit = { ".xinitrc".text = let
     scaleString = toString my.config.graphical.display.scale;
-    scaleStringDPI = toString (1.0 / my.config.graphical.display.scale);
   in ''
     #!${pkgs.bash}/bin/bash
 
@@ -80,14 +79,23 @@ let
 
     # Set default scaling variables
     export GDK_SCALE="${scaleString}"
-    export GDK_DPI_SCALE="${scaleStringDPI}"
 
     # Check if new scaling variable was set and if it was, override scaling
     if [ -n "$NEW_SCALE" ]; then
-      dpiScale="$(awk "BEGIN { printf \"%f\n\",1.0/''${NEW_SCALE} }")"
       export GDK_SCALE="''${NEW_SCALE}"
-      export GDK_DPI_SCALE="''${dpiScale}"
     fi
+
+    # Ceil the scale and save its original value
+    ceil_scale="$(awk '{printf("%d\n",$0+=$0<0?0:0.999)}' <<< "''${GDK_SCALE}")"
+    export TARGET_SCALE="''${GDK_SCALE}"
+    export GDK_SCALE="''${ceil_scale}"
+
+    # Export default DPI
+    export DEFAULT_XORG_DPI=96
+
+    # Get the DPI scale
+    dpiScale="$(awk "BEGIN { printf \"%f\n\",1.0/''${GDK_SCALE} }")"
+    export GDK_DPI_SCALE="''${dpiScale}"
 
     # Update more scaling variables
     export ELM_SCALE="''${GDK_SCALE}"
@@ -95,6 +103,7 @@ let
 
     # Export the scaling to systemd
     ${pkgs.systemd}/bin/systemctl --user set-environment GDK_SCALE="''${GDK_SCALE}"
+    ${pkgs.systemd}/bin/systemctl --user set-environment TARGET_SCALE="''${TARGET_SCALE}"
 
     # Fix for java applications on tiling window managers
     export _JAVA_AWT_WM_NONREPARENTING=1
@@ -114,6 +123,12 @@ let
 
     # Change Caps to Ctrl
     reneocapstoctrl
+
+    # Rescale if needed
+    if [ -n "''${NEW_SCALE}" ]; then
+      new_dpi="$(awk "BEGIN { printf \"%f\n\",''${DEFAULT_XORG_DPI}*''${NEW_SCALE} }")"
+      xrandr --dpi "''${new_dpi}"
+    fi
 
     # Extra commands from the config to be added
     ${ (builtins.concatStringsSep "\n" my.config.graphical.display.extraCommands) }
