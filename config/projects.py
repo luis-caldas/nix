@@ -177,7 +177,10 @@ def main():
         # Print the update ones
         if eachUpdated in updatedProjectsNames:
             if eachUpdated in oldProjects:
-                print( formatString % (eachUpdated, oldProjects[eachUpdated]["commit"], oldProjects[eachUpdated]["sha256"]) )
+                if eachUpdated in newProjects:
+                    print( '\033[33m', formatString % (eachUpdated, oldProjects[eachUpdated]["commit"], oldProjects[eachUpdated]["sha256"]), '\033[0m', sep='')
+                else:
+                    print( formatString % (eachUpdated, oldProjects[eachUpdated]["commit"], oldProjects[eachUpdated]["sha256"]) )
             else:
                 print( formatString % (eachUpdated, "-", "-") )
             print( '\033[32m', formatString % (" ⮡ ", updatedProjects[eachUpdated]["commit"], updatedProjects[eachUpdated]["sha256"]), '\033[0m', sep='')
