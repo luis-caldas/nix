@@ -55,34 +55,39 @@ let
     projectData:
       pkgs.fetchFromGitHub rec { inherit owner; inherit (projectData) repo rev sha256; name = replaceName repo; };
 
+  # Load list of all projects
+  allProjectsGitHub = builtins.fromJSON (builtins.readFile (./config + "/projects.json"));
+
   # Link all my projects to the config
-  listSomeProjects = {
-    "myconky"      = { rev = "bac1c3284ad885da077f5ce97a4e2336c6ac1f49"; sha256 = "11zslx75xmrdak2nw14g5mhkhhkildx2bqvl5hx1jnv9p1nmhnzl"; };
-    "mycursors"    = { rev = "42b16a3d8b2af5b45ca57df3e4e0c07bd5cd19e9"; sha256 = "10nzdpdvp4pwz3w2z980v137yzdj8qwhkr2fwz46vram9400xfv7"; };
-    "myfonts"      = { rev = "51bfa43e6bf877813101f28b72b8649ca23f0193"; sha256 = "1936bkpahvv39iwfbajmm3h4p7ipmzp0fb7gmxqd1fwvzrdfvzbb"; };
-    "myicons"      = { rev = "fd4692ed166aab23865a45ee154bf23cadb843e9"; sha256 = "017pqsqhln6hjs2ini4f9fabf7smj628dyavr2w7566vv13hqni6"; };
-    "myshell"      = { rev = "caaf4490bf9b4221cd2d0d6f8e04861144091700"; sha256 = "13z05gkhn63nnb39lil825w72sd20z70n4bv4j5483l9cc8xv1d0"; };
-    "mythemes"     = { rev = "e55cec84f30af58e2aa36af3145167167cc9fce4"; sha256 = "1kfwqwpai0yk2i4xq5zgvfy7s5gxbvy5ckqsq3ai6ppz5f4pb2is"; };
-    "myvim"        = { rev = "4469988257a52021d98486d9bc053f582f28b97e"; sha256 = "0g30vjzqmhb7i0kcz8nrgbhw5xx4lfh6fn0hspdd7dcx7x10qfc1"; };
-    "mywallpapers" = { rev = "42fb2fe79306bf3be52027ea740d53fa19e838af"; sha256 = "10ywkzpigkqk8a040hifqkkndc9cf3sjrdzw8f5lh6v05vbfl2fd"; };
-    "mycontainers" = { rev = "09af6d18ca3686bef587921e4f6d03e53883b5c2"; sha256 = "0bgaq8pihnvhpy3jnfw4kfffg86ils8r0w2aybkpsnz2jdv9i2mv"; };
-  };
+  listSomeProjects = [
+    "myconky"
+    "mycursors"
+    "myfonts"
+    "myicons"
+    "myshell"
+    "mythemes"
+    "myvim"
+    "mywallpapers"
+    "mycontainers"
+  ];
+
   someProjects = builtins.listToAttrs (map (
     eachProjectName: {
       name = replaceName eachProjectName;
       value = fetchProject {
         repo = eachProjectName;
-        inherit (listSomeProjects."${eachProjectName}") rev sha256;
+        rev = allProjectsGitHub."${eachProjectName}".commit;
+        sha256 = allProjectsGitHub."${eachProjectName}".sha256;
       };
     }
-  ) (builtins.attrNames listSomeProjects));
+  ) listSomeProjects);
 
   # Ovewrite desktop project with derivated subfolders
   desktopProject = let
-    myProject = {
+    myProject = rec {
       repo = "mydesktop";
-      rev = "10298201b10f9f2b3b1d31259af31d2cd5082a33";
-      sha256 = "106kgfzrnm8a568r7w57jhbf47xrrsin51aig22bcxrw9yfqgwk6";
+      rev = allProjectsGitHub."${repo}".commit;
+      sha256 = allProjectsGitHub."${repo}".sha256;
     };
     fixedName = replaceName myProject.repo;
     fetchedProject = fetchProject myProject;

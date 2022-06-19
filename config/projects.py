@@ -1,20 +1,22 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import os
 import sys
 import json
 import subprocess
 import urllib.request
 
-USER_NAME="luis-caldas"
-REPOS_PREFIX="my"
-REPOS_BRANCH="master"
+USER_NAME    = "luis-caldas"
+REPOS_PREFIX = "my"
+REPOS_BRANCH = "master"
 
-PER_PAGE=10
+PER_PAGE = 10
 
+COMMIT_LENGTH = 40
+HASH_LENGTH   = 52
 
-def print_item(size, name, commit, hash):
-    print( ( " %%%ds - %%s - %%s" % size ) % (name, commit, hash) )
+PROJECTS_FILE_NAME = "projects.json"
 
 
 def main():
@@ -78,11 +80,29 @@ def main():
         else:
             cleanNames = crossedNames
 
-    # Get length of biggest string
-    bigLen = len(max(cleanNames, key=len))
+    # Verbose
+    infoString = "[ ! ] - %s"
+    namesNumber = len(cleanNames)
+    print( infoString % ("Found %d project%s..." % (namesNumber, 's' if namesNumber > 1 else '')) )
+    print( infoString % "Acquiring information" )
 
-    # Create header
-    print_item(bigLen, "Name", "Commit", "SHA256")
+    # Counter for projects acquired
+    counterProjs = 0
+    def printI(numberIn, maxNumber):
+        maxSize = len(str(maxNumber))
+        print( infoString % (
+            ("Loading Projects... (%%%dd / %%d)" % maxSize) % (
+                numberIn,
+                maxNumber
+            )
+        ) , end='\r')
+
+    # Import old project
+    location = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+    oldProjects = json.load(open((os.path.join(location, "projects.json")), 'r'))
+
+    # Create object that it going to house all new projects
+    newProjects = dict()
 
     # Iterate and get commits
     for eachProject in sorted(cleanNames):
@@ -99,8 +119,71 @@ def main():
 
         # Run command and get output
         shaHash = subprocess.run(hashCommand.split(" "), stdout=subprocess.PIPE, stderr=subprocess.DEVNULL).stdout.decode("utf-8").strip("\n")
-        # Print item
-        print_item(bigLen, eachProject, lastCommitHash, shaHash)
+
+        # Print
+        counterProjs += 1
+        printI(counterProjs, namesNumber)
+
+        # Add item to object
+        newProjects.update({
+            eachProject: {
+                "commit": lastCommitHash,
+                "sha256": shaHash
+            }
+        })
+
+    print()
+    print( infoString % "All projects loaded" )
+    print( infoString % "Generating list..." )
+
+    # Create updated object
+    updatedProjects = { key : oldProjects[key] for key in set(oldProjects) - set(newProjects) }
+
+    # Create list of updated objects
+    updatedProjectsNames = []
+
+    # Compare both objects and update it
+    for eachProj in newProjects:
+
+        # Whether we should update the item
+        updateIt = True
+
+        # Check if they are identical
+        if eachProj in oldProjects:
+            matchCommit = newProjects[eachProj]["commit"] == oldProjects[eachProj]["commit"]
+            matchSha256 = newProjects[eachProj]["sha256"] == oldProjects[eachProj]["sha256"]
+            if matchCommit == matchSha256 == True:
+                updateIt = False
+
+        # Show what changed
+        if updateIt:
+            updatedProjectsNames.append(eachProj)
+
+        # Update it
+        updatedProjects.update({eachProj: newProjects[eachProj]})
+
+    # Get length of biggest string
+    bigLen = len(max(list(updatedProjects), key=len))
+
+    # Print headers
+    formatString = " %%%ds   %%%ds   %%%ds" % (bigLen, COMMIT_LENGTH, HASH_LENGTH)
+    print( formatString % ("Name", "Commit Hash", "Sha256") )
+    print( formatString % ('-' * bigLen, '-' * COMMIT_LENGTH, '-' * HASH_LENGTH) )
+
+    # Iterate updated items
+    for eachUpdated in updatedProjects:
+        # Print the update ones
+        if eachUpdated in updatedProjectsNames:
+            if eachUpdated in oldProjects:
+                print( formatString % (eachUpdated, oldProjects[eachUpdated]["commit"], oldProjects[eachUpdated]["sha256"]) )
+            else:
+                print( formatString % (eachUpdated, "-", "-") )
+            print( formatString % (" ➥ ", updatedProjects[eachUpdated]["commit"], updatedProjects[eachUpdated]["sha256"]) )
+        else:
+            print( formatString % (eachUpdated, updatedProjects[eachUpdated]["commit"], updatedProjects[eachUpdated]["sha256"]) )
+
+    # Finally write it to file
+    json.dump(updatedProjects, open((os.path.join(location, "projects.json")), 'w'), sort_keys=True, indent=4)
 
 
 if __name__ == "__main__":

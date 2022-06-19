@@ -1,0 +1,54 @@
+{
+    "myconky": {
+        "commit": "bac1c3284ad885da077f5ce97a4e2336c6ac1f49",
+        "sha256": "11zslx75xmrdak2nw14g5mhkhhkildx2bqvl5hx1jnv9p1nmhnzl"
+    },
+    "mycontainers": {
+        "commit": "09af6d18ca3686bef587921e4f6d03e53883b5c2",
+        "sha256": "0bgaq8pihnvhpy3jnfw4kfffg86ils8r0w2aybkpsnz2jdv9i2mv"
+    },
+    "mycursors": {
+        "commit": "42b16a3d8b2af5b45ca57df3e4e0c07bd5cd19e9",
+        "sha256": "10nzdpdvp4pwz3w2z980v137yzdj8qwhkr2fwz46vram9400xfv7"
+    },
+    "mydesktop": {
+        "commit": "10298201b10f9f2b3b1d31259af31d2cd5082a33",
+        "sha256": "106kgfzrnm8a568r7w57jhbf47xrrsin51aig22bcxrw9yfqgwk6"
+    },
+    "myfonts": {
+        "commit": "51bfa43e6bf877813101f28b72b8649ca23f0193",
+        "sha256": "1936bkpahvv39iwfbajmm3h4p7ipmzp0fb7gmxqd1fwvzrdfvzbb"
+    },
+    "mygrub": {
+        "commit": "e0405542a1d90b6ecbc5ec3b6061c564864b0875",
+        "sha256": "0prm1ym8z6ix4f0xvifyr1474ckvs93dmwp5y638qby512bg7rkx"
+    },
+    "myicons": {
+        "commit": "fd4692ed166aab23865a45ee154bf23cadb843e9",
+        "sha256": "017pqsqhln6hjs2ini4f9fabf7smj628dyavr2w7566vv13hqni6"
+    },
+    "mykbds": {
+        "commit": "9e1c0071780137f9a6461c7c239d0d6c6313a5ec",
+        "sha256": "1cm43ncrbahi720sd03jbjvwsw0094wh8aif35s0q9cl0lh423v3"
+    },
+    "myradios": {
+        "commit": "ebe08eb559e8176de0a10b4506d02d6054e14720",
+        "sha256": "1f86b40x1d2kz3ci4y643nh22w3k5lfw8cv5jfa4hixkvy4hshp9"
+    },
+    "myshell": {
+        "commit": "caaf4490bf9b4221cd2d0d6f8e04861144091700",
+        "sha256": "13z05gkhn63nnb39lil825w72sd20z70n4bv4j5483l9cc8xv1d0"
+    },
+    "mythemes": {
+        "commit": "e55cec84f30af58e2aa36af3145167167cc9fce4",
+        "sha256": "1kfwqwpai0yk2i4xq5zgvfy7s5gxbvy5ckqsq3ai6ppz5f4pb2is"
+    },
+    "myvim": {
+        "commit": "4469988257a52021d98486d9bc053f582f28b97e",
+        "sha256": "0g30vjzqmhb7i0kcz8nrgbhw5xx4lfh6fn0hspdd7dcx7x10qfc1"
+    },
+    "mywallpapers": {
+        "commit": "42fb2fe79306bf3be52027ea740d53fa19e838af",
+        "sha256": "10ywkzpigkqk8a040hifqkkndc9cf3sjrdzw8f5lh6v05vbfl2fd"
+    }
+}
