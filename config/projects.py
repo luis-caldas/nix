@@ -163,7 +163,9 @@ def main():
         updatedProjects.update({eachProj: newProjects[eachProj]})
 
     # Get length of biggest string
-    bigLen = len(max(list(updatedProjects), key=len))
+    listUpdatedProjects = list(updatedProjects)
+    listUpdatedProjects.sort()
+    bigLen = len(max(listUpdatedProjects, key=len))
 
     # Print headers
     formatString = " %%%ds   %%%ds   %%%ds" % (bigLen, COMMIT_LENGTH, HASH_LENGTH)
@@ -171,14 +173,14 @@ def main():
     print( formatString % ('-' * bigLen, '-' * COMMIT_LENGTH, '-' * HASH_LENGTH) )
 
     # Iterate updated items
-    for eachUpdated in updatedProjects:
+    for eachUpdated in listUpdatedProjects:
         # Print the update ones
         if eachUpdated in updatedProjectsNames:
             if eachUpdated in oldProjects:
                 print( formatString % (eachUpdated, oldProjects[eachUpdated]["commit"], oldProjects[eachUpdated]["sha256"]) )
             else:
                 print( formatString % (eachUpdated, "-", "-") )
-            print( formatString % (" ➥ ", updatedProjects[eachUpdated]["commit"], updatedProjects[eachUpdated]["sha256"]) )
+            print( '\033[32m', formatString % (" ⮡ ", updatedProjects[eachUpdated]["commit"], updatedProjects[eachUpdated]["sha256"]), '\033[0m', sep='')
         else:
             print( formatString % (eachUpdated, updatedProjects[eachUpdated]["commit"], updatedProjects[eachUpdated]["sha256"]) )
 
