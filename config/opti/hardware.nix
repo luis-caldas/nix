@@ -14,12 +14,7 @@
     media = {
       image = "local/python-scrape";
       imageFile = my.containers.pythonScrape;
-      environment = {
-        "SMTP_USER" = mfunc.safeReadFile /data/safe/smtp_user;
-        "SMTP_SERVER" = mfunc.safeReadFile /data/safe/smtp_server;
-        "SMTP_PASSWORD" = mfunc.safeReadFile /data/safe/smtp_password;
-        "SMTP_MAIL_TO" = mfunc.safeReadFile /data/safe/smtp_mail_to;
-      };
+      environmentFiles = [ /data/safe/smtp.env ];
     };
   };
 
