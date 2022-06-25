@@ -35,6 +35,11 @@
       fsType = "zfs";
     };
 
+  fileSystems."/data/local" =
+    { device = "vimmer/data";
+      fsType = "zfs";
+    };
+
   fileSystems."/nix" =
     { device = "vimmer/nix";
       fsType = "zfs";
