@@ -78,6 +78,19 @@
         ];
     };
 
+    # Service for mangas
+    komga = {
+      image = "gotson/komga";
+      environment = {
+        TZ = my.config.system.timezone;
+      };
+      user = "1000:1000";
+      volumes = [
+        "/data/local/config/komga:/config"
+        "/data/storr/media/manga:/data"
+      ];
+    }
+
     # Web Service Discovery for Microsoft
     shout = {
         image = "jonasped/wsdd";
