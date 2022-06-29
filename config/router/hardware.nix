@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ my, lib, config, pkgs, ... }:
 {
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "vfio-pci" ];
@@ -14,6 +14,64 @@
     done
     modprobe -i vfio-pci
   '';
+
+  # Set up docker containers
+  virtualisation.oci-containers.containers = {
+
+    # Asterisk container
+    asterisk = {
+      image = "local/asterisk";
+      imageFile = my.containers.asterisk;
+      volumes = [
+        "/data/local/docker/config/asterisk/conf:/etc/asterisk/conf.mine"
+        "/data/local/docker/config/asterisk/voicemail:/var/spool/asterisk/voicemail"
+        "/data/local/docker/config/asterisk/sounds:/usr/share/asterisk/sounds/mine"
+      ];
+      extraOptions = ["--dns=10.0.0.1"];
+    };
+
+    # DNS updater
+    udns = {
+      image = "udns";
+      imageFile = my.containers.udns;
+      environmentFiles = [ /data/safe/udns.env ];
+    };
+
+    # DNS Server
+    adblock = {
+      image = "pihole/pihole:latest";
+      environment = {
+        TZ = my.config.system.timezone;
+        DNS1 = "1.1.1.1";
+        DNS2 = "1.0.0.1";
+      };
+      environmentFiles = [ /data/safe/adblock.env ];
+      volumes = [
+        "/data/local/docker/config/pihole/etc:/etc/pihole"
+        "/data/local/docker/config/pihole/dnsmasq:/etc/dnsmasq.d"
+      ];
+      ports = [
+        "53:53/tcp"
+        "53:53/udp"
+        "80:80/tcp"
+      ];
+      extraOptions = ["--dns=127.0.0.1"];
+    };
+
+    # Shadow Socks server
+    shadow = {
+      image = "shadowsocks/shadowsocks-libev";
+      environment = {
+        METHOD = "aes-256-gcm";
+        DNS_ADDRS = "10.0.0.1"
+      };
+      environmentFiles = [ /data/safe/shadow.env ];
+      ports = [
+        "8388:8388/tcp"
+      ];
+    };
+
+  };
 
   fileSystems."/" =
     { device = "vimmer/root";
