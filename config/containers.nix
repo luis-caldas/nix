@@ -163,7 +163,7 @@ let
 
     # Asterisk image
     asterisk = let
-      asteriskPkg = pkgs.asterisk-lts;
+      asteriskPkg = pkgs.asterisk;
       buildPath = "${my.projects.containers}/build/asterisk/app";
       buildScript = let
         createBuild = functions.create [ "/run/asterisk" ];
