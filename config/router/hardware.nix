@@ -27,7 +27,7 @@
         "/data/local/docker/config/asterisk/voicemail:/var/spool/asterisk/voicemail"
         "/data/local/docker/config/asterisk/sounds:/usr/share/asterisk/sounds/mine"
       ];
-      extraOptions = ["--dns=10.0.0.1"];
+      extraOptions = [ "--dns=10.0.0.1" "--network=host" ];
     };
 
     # DNS updater
@@ -55,7 +55,7 @@
         "53:53/udp"
         "80:80/tcp"
       ];
-      extraOptions = ["--dns=127.0.0.1"];
+      extraOptions = [ "--dns=127.0.0.1" ];
     };
 
     # Shadow Socks server
