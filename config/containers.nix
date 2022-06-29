@@ -1,11 +1,89 @@
 { my, pkgs, ... }:
 let
-  allContainers = {
+
+  # Useful functions for creating containers
+  functions = {
+
+    # Function for adding files or directories to a container
+    add = itemsList: let
+      createEach = tupleIn: let
+        originalPath = builtins.head tupleIn;
+        destinationPath = pkgs.lib.last tupleIn;
+      in ''
+        base_dir="$("${pkgs.coreutils}/bin/dirname" "${destinationPath}")"
+        "${pkgs.coreutils}/bin/mkdir" -p "$base_dir"
+        "${pkgs.coreutils}/bin/rm" -r "${destinationPath}"
+        "${pkgs.coreutils}/bin/cp" -r "${originalPath}" "${destinationPath}"
+      '';
+      fullScript = builtins.map createEach itemsList;
+    in pkgs.writeScriptBin "build" ''
+      #!${pkgs.bash}/bin/bash
+      ${pkgs.lib.concatStrings fullScript}
+    '';
+
+    # Function to create directories
+    create = itemsList: let
+      fullScript = builtins.map (
+        eachItem: ''
+          "${pkgs.coreutils}/bin/mkdir" -p "${eachItem}"
+        ''
+      ) itemsList;
+    in pkgs.writeScriptBin "build" ''
+      #!${pkgs.bash}/bin/bash
+      ${pkgs.lib.concatStrings fullScript}
+    '';
+
+    # Function to create directories
+    touch = itemsList: let
+      fullScript = builtins.map (
+        eachItem: ''
+          base_dir="$("${pkgs.coreutils}/bin/dirname" "${eachItem}")"
+          "${pkgs.coreutils}/bin/mkdir" -p "$base_dir"
+          "${pkgs.coreutils}/bin/touch" "${eachItem}"
+        ''
+      ) itemsList;
+    in pkgs.writeScriptBin "build" ''
+      #!${pkgs.bash}/bin/bash
+      ${pkgs.lib.concatStrings fullScript}
+    '';
+
+  };
+
+  # Container object
+  allContainers = let
+
+    # Base nixos with default tools
+    baseImage = pkgs.dockerTools.buildImage {
+      name = "local/base";
+      tag = "latest";
+      contents = with pkgs; [
+        bash bashInteractive busybox coreutils wget gnugrep findutils moreutils util-linux
+        cron openssl cacert
+      ];
+      config = {
+        Env = [
+          "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
+        ];
+      };
+    };
+
+  in {
 
     # Python Scrape container
     pythonScrape = let
-      logFileScript = "/met-weathers-cron.log";
-      logFileCron = "/cron-tab.log";
+
+      # Default log files
+      logFileScript = "/log/exec.log";
+      logFileCron = "/log/cron.log";
+
+      # Main application
+      projectFull = pkgs.runCommand "add-folder" { project = builtins.fetchGit {
+        url = "https://github.com/luis-caldas/get-weathers";
+        ref = "master";
+      };} ''
+        mkdir -p "''${out}"
+        cp -a "''${project}" "''${out}/main/"
+      '';
       packagedPython = pkgs.python3.withPackages (pack: with pack; [
         fpdf requests
         beautifulsoup4
@@ -20,13 +98,21 @@ let
           */1 * * * * "${mainExec}/bin/main" >> "${logFileScript}" 2>&1
         '';
       };
-      buildingScript = pkgs.writeScriptBin "building" ''
+
+      # Build script for the image
+      buildScript = let
+        createBuild = functions.create [ "/var/spool/cron/crontabs" "/var/run" "/tmp" ];
+        touchBuild = functions.touch [ logFileScript logFileCron ];
+        addBuild = functions.add [[ "${cronFile}/cron" "/var/spool/cron/crontabs/root" ]];
+      in pkgs.writeScriptBin "build" ''
         #!${pkgs.bash}/bin/bash
-        "${pkgs.coreutils}/bin/mkdir" -p /var/spool/cron/crontabs /var/run /tmp
-        "${pkgs.coreutils}/bin/touch" "${logFileScript}" "${logFileCron}"
+        "${createBuild}/bin/build"
+        "${touchBuild}/bin/build"
         "${pkgs.coreutils}/bin/echo" 'root:x:0:0:root:/root:/bin/bash' > /etc/passwd
-        "${pkgs.coreutils}/bin/cp" "${cronFile}/cron" /var/spool/cron/crontabs/root
+        "${addBuild}/bin/build"
       '';
+
+      # Initialization script for the container
       initScript = pkgs.writeScriptBin "start" ''
         #!${pkgs.bash}/bin/bash
 
@@ -56,34 +142,44 @@ let
         for pid in ''${processes[@]}; do
             wait "$pid"
         done
+      '';
 
-      '';
-      projectFull = pkgs.runCommand "add-folder" { project = builtins.fetchGit {
-        url = "https://github.com/luis-caldas/get-weathers";
-        ref = "master";
-      };} ''
-        mkdir -p "''${out}"
-        cp -a "''${project}" "''${out}/main/"
-      '';
     in pkgs.dockerTools.buildImage {
       name = "local/python-scrape";
       tag = "latest";
-      contents = with pkgs; [
-        bash bashInteractive busybox coreutils gnugrep findutils moreutils util-linux
-        cron openssl cacert packagedPython
-        initScript mainExec cronFile projectFull
-      ];
-      runAsRoot = "${buildingScript}/bin/building";
+      fromImage = baseImage;
+      contents = [ initScript ];
+      runAsRoot = "${buildScript}/bin/build";
       config = {
-        Env = [
-          "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
-        ];
         Cmd = [
           "${pkgs.bash}/bin/bash" "${initScript}/bin/start"
         ];
       };
     };
 
+    # Asterisk image
+    asterisk = let
+      buildPath = "${my.projects.containers}/build/asterisk/app";
+      buildScript = functions.add [
+        ["${buildPath}/songs" "/usr/share/asterisk/songs"]
+        ["${buildPath}/conf" "/etc/asterisk"]
+        ["${buildPath}/phoneprov" "/var/lib/asterisk/phoneprov"]
+      ];
+    in pkgs.dockerTools.buildImage {
+      name = "local/asterisk";
+      tag = "latest";
+      fromImage = baseImage;
+      runAsRoot = "${buildScript}/bin/build";
+      contents = with pkgs; [
+        asterisk
+        perl sox mpg123
+      ];
+      config = {
+        Cmd = [
+          "${pkgs.asterisk}/bin/asterisk" "-T" "-p" "-vvv" "-ddd" "-f"
+        ];
+      };
+    };
 
   };
 in allContainers
