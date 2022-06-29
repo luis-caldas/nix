@@ -32,7 +32,7 @@
 
     # DNS updater
     udns = {
-      image = "udns";
+      image = "local/udns";
       imageFile = my.containers.udns;
       environmentFiles = [ /data/local/safe/udns.env ];
     };
