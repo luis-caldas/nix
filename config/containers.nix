@@ -181,5 +181,83 @@ let
       };
     };
 
+    # DNS updater image
+    udns = let
+
+      # Default log files
+      logFileScript = "/log/exec.log";
+      logFileCron = "/log/cron.log";
+
+      # Default application
+      mainExec = pkgs.writeScriptBin "main" ''
+        #!${pkgs.bash}/bin/bash
+        "${my.projects.containers}/build/update-dns/update_dns.sh"
+      '';
+      cronFile = pkgs.writeTextFile {
+        name = "cron"; destination = "/cron"; text = ''
+          */5 * * * * "${mainExec}/bin/main" >> "${logFileScript}" 2>&1
+        '';
+      };
+
+      # Build script for the image
+      buildScript = let
+        createBuild = functions.create [
+          "/var/cache/dns_updater" "/var/spool/cron/crontabs" "/var/run" "/tmp"
+        ];
+        touchBuild = functions.touch [ logFileScript logFileCron ];
+        addBuild = functions.add [[ "${cronFile}/cron" "/var/spool/cron/crontabs/root" ]];
+      in pkgs.writeScriptBin "build" ''
+        #!${pkgs.bash}/bin/bash
+        "${createBuild}/bin/build"
+        "${touchBuild}/bin/build"
+        "${pkgs.coreutils}/bin/echo" 'root:x:0:0:root:/root:/bin/bash' > /etc/passwd
+        "${addBuild}/bin/build"
+      '';
+
+      # Initialization script for the container
+      initScript = pkgs.writeScriptBin "start" ''
+        #!${pkgs.bash}/bin/bash
+
+        # Variable that contains all the processes
+        processes=()
+
+        # Catch SIGTERMs
+        _term() {
+          for each_pid in ''${processes[@]}; do
+            "${pkgs.util-linux}/bin/kill" -TERM "$each_pid" 2>/dev/null
+          done
+        }
+        trap _term SIGTERM
+
+        # Import ENVs to proper path
+        "${pkgs.coreutils}/bin/printenv" | "${pkgs.gnugrep}/bin/grep" "KEY\|SSL" > /etc/environment
+
+        # Start cron process
+        "${pkgs.busybox}/bin/crond" -f -l 0 -L /cron.log &
+        processes+=("$!")
+
+        # Tail log file
+        "${pkgs.coreutils}/bin/tail" -fq "${logFileScript}" "${logFileCron}" &
+        processes+=("$!")
+
+        # Wait for all processes
+        for pid in ''${processes[@]}; do
+            wait "$pid"
+        done
+      '';
+
+    in pkgs.dockerTools.buildImage {
+      name = "local/udns";
+      tag = "latest";
+      fromImage = baseImage;
+      contents = [ initScript ];
+      runAsRoot = "${buildScript}/bin/build";
+      config = {
+        Cmd = [
+          "${pkgs.bash}/bin/bash" "${initScript}/bin/start"
+        ];
+      };
+    };
+
   };
 in allContainers
