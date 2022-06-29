@@ -101,7 +101,7 @@ let
 
       # Build script for the image
       buildScript = let
-        createBuild = functions.create [ "/var/spool/cron/crontabs" "/var/run" "/tmp" ];
+        createBuild = functions.create [ "/var/spool/cron/crontabs" "/var/run" "/tmp" "/run/asterisk" ];
         touchBuild = functions.touch [ logFileScript logFileCron ];
         addBuild = functions.add [[ "${cronFile}/cron" "/var/spool/cron/crontabs/root" ]];
       in pkgs.writeScriptBin "build" ''
@@ -176,7 +176,7 @@ let
       ];
       config = {
         Cmd = [
-          "${pkgs.asterisk}/bin/asterisk" "-T" "-p" "-vvv" "-ddd" "-f"
+          "${pkgs.asterisk}/bin/asterisk" "-T" "-p" "-vvv" "-ddd" "-f" "-C" "/etc/asterisk/asterisk.conf"
         ];
       };
     };
