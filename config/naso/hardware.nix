@@ -87,7 +87,7 @@
       user = "1000:1000";
       volumes = [
         "/data/local/config/komga:/config"
-        "/data/storr/media/manga:/data"
+        "/data/storr/media/manga:/data:ro"
       ];
       ports = [
         "8080:8080/tcp"
