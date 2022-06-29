@@ -58,6 +58,7 @@ let
       tag = "latest";
       contents = with pkgs; [
         bash bashInteractive
+        vim
         tree
         busybox coreutils
         curl wget
@@ -171,6 +172,7 @@ let
           [ "${buildPath}/songs" "/usr/share/asterisk/songs" ]
           [ "${buildPath}/conf" "/etc/asterisk" ]
           [ "${buildPath}/phoneprov" "/var/lib/asterisk/phoneprov" ]
+          [ "${asteriskPkgs}/var/lib/asterisk/modules" "/var/lib/asterisk/modules" ]
         ];
       in pkgs.writeScriptBin "build" ''
         #!${pkgs.bash}/bin/bash
