@@ -34,7 +34,7 @@
     udns = {
       image = "udns";
       imageFile = my.containers.udns;
-      environmentFiles = [ /data/safe/udns.env ];
+      environmentFiles = [ /data/local/safe/udns.env ];
     };
 
     # DNS Server
@@ -45,7 +45,7 @@
         DNS1 = "1.1.1.1";
         DNS2 = "1.0.0.1";
       };
-      environmentFiles = [ /data/safe/adblock.env ];
+      environmentFiles = [ /data/local/safe/adblock.env ];
       volumes = [
         "/data/local/docker/config/pihole/etc:/etc/pihole"
         "/data/local/docker/config/pihole/dnsmasq:/etc/dnsmasq.d"
@@ -65,7 +65,7 @@
         METHOD = "aes-256-gcm";
         DNS_ADDRS = "10.0.0.1";
       };
-      environmentFiles = [ /data/safe/shadow.env ];
+      environmentFiles = [ /data/local/safe/shadow.env ];
       ports = [
         "8388:8388/tcp"
       ];
