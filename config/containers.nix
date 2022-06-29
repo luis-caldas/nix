@@ -188,7 +188,7 @@ let
       ];
       config = {
         Cmd = [
-          "${asteriskPkg}/bin/asterisk" "-C" "/etc/asterisk/asterisk.conf" "-T" "-p" "-vvv" "-f"
+          "${asteriskPkg}/bin/asterisk" "-C" "/etc/asterisk/asterisk.conf" "-T" "-p" "-ddd" "-vvv" "-f"
         ];
       };
     };
