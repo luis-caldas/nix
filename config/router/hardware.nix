@@ -63,7 +63,7 @@
       image = "shadowsocks/shadowsocks-libev";
       environment = {
         METHOD = "aes-256-gcm";
-        DNS_ADDRS = "10.0.0.1"
+        DNS_ADDRS = "10.0.0.1";
       };
       environmentFiles = [ /data/safe/shadow.env ];
       ports = [
