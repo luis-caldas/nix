@@ -105,7 +105,7 @@ let
 
       # Build script for the image
       buildScript = let
-        createBuild = functions.create [ "/var/spool/cron/crontabs" "/var/run" "/tmp" "/run/asterisk" ];
+        createBuild = functions.create [ "/var/spool/cron/crontabs" "/var/run" "/tmp" ];
         touchBuild = functions.touch [ logFileScript logFileCron ];
         addBuild = functions.add [[ "${cronFile}/cron" "/var/spool/cron/crontabs/root" ]];
       in pkgs.writeScriptBin "build" ''
@@ -164,11 +164,18 @@ let
     # Asterisk image
     asterisk = let
       buildPath = "${my.projects.containers}/build/asterisk/app";
-      buildScript = functions.add [
-        ["${buildPath}/songs" "/usr/share/asterisk/songs"]
-        ["${buildPath}/conf" "/etc/asterisk"]
-        ["${buildPath}/phoneprov" "/var/lib/asterisk/phoneprov"]
-      ];
+      buildScript = let
+        createBuild = functions.create [ "/run/asterisk" ];
+        addBuild = functions.add [
+          [ "${buildPath}/songs" "/usr/share/asterisk/songs" ]
+          [ "${buildPath}/conf" "/etc/asterisk" ]
+          [ "${buildPath}/phoneprov" "/var/lib/asterisk/phoneprov" ]
+        ];
+      in pkgs.writeScriptBin "build" ''
+        #!${pkgs.bash}/bin/bash
+        "${createBuild}/bin/build"
+        "${addBuild}/bin/build"
+      '';
     in pkgs.dockerTools.buildImage {
       name = "local/asterisk";
       tag = "latest";
@@ -180,7 +187,7 @@ let
       ];
       config = {
         Cmd = [
-          "${pkgs.asterisk}/bin/asterisk" "-T" "-p" "-vvv" "-ddd" "-f" "-C" "/etc/asterisk/asterisk.conf"
+          "${pkgs.asterisk}/bin/asterisk" "-C" "/etc/asterisk/asterisk.conf" "-T" "-p" "-vvv" "-f"
         ];
       };
     };
