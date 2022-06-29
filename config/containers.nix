@@ -163,6 +163,7 @@ let
 
     # Asterisk image
     asterisk = let
+      asteriskPkg = pkgs.asterisk-lts;
       buildPath = "${my.projects.containers}/build/asterisk/app";
       buildScript = let
         createBuild = functions.create [ "/run/asterisk" ];
@@ -182,12 +183,12 @@ let
       fromImage = baseImage;
       runAsRoot = "${buildScript}/bin/build";
       contents = with pkgs; [
-        asterisk
+        asteriskPkg
         perl sox mpg123
       ];
       config = {
         Cmd = [
-          "${pkgs.asterisk}/bin/asterisk" "-C" "/etc/asterisk/asterisk.conf" "-T" "-p" "-vvv" "-f"
+          "${asteriskPkg}/bin/asterisk" "-C" "/etc/asterisk/asterisk.conf" "-T" "-p" "-vvv" "-f"
         ];
       };
     };
