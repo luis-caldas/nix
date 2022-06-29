@@ -12,7 +12,7 @@ let
       in ''
         base_dir="$("${pkgs.coreutils}/bin/dirname" "${destinationPath}")"
         "${pkgs.coreutils}/bin/mkdir" -p "$base_dir"
-        "${pkgs.coreutils}/bin/rm" -r "${destinationPath}"
+        [ -e "${destinationPath}" ] && "${pkgs.coreutils}/bin/rm" -r "${destinationPath}"
         "${pkgs.coreutils}/bin/cp" -r "${originalPath}" "${destinationPath}"
       '';
       fullScript = builtins.map createEach itemsList;
