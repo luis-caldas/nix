@@ -172,7 +172,7 @@ let
           [ "${buildPath}/songs" "/usr/share/asterisk/songs" ]
           [ "${buildPath}/conf" "/etc/asterisk" ]
           [ "${buildPath}/phoneprov" "/var/lib/asterisk/phoneprov" ]
-          [ "${asteriskPkg}/var/lib/asterisk/modules" "/usr/lib/asterisk/modules" ]
+          [ "${asteriskPkg}/lib/asterisk/modules" "/usr/lib/asterisk/modules" ]
         ];
       in pkgs.writeScriptBin "build" ''
         #!${pkgs.bash}/bin/bash
