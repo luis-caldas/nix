@@ -89,6 +89,9 @@
         "/data/local/config/komga:/config"
         "/data/storr/media/manga:/data"
       ];
+      ports = [
+        "8080:8080/tcp"
+      ];
     }
 
     # Web Service Discovery for Microsoft
