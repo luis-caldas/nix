@@ -57,7 +57,11 @@ let
       name = "local/base";
       tag = "latest";
       contents = with pkgs; [
-        bash bashInteractive busybox coreutils wget gnugrep findutils moreutils util-linux
+        bash bashInteractive
+        tree
+        busybox coreutils
+        curl wget
+        gnugrep findutils moreutils util-linux
         cron openssl cacert
       ];
       config = {
