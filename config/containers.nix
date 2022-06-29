@@ -173,6 +173,7 @@ let
           [ "${buildPath}/conf" "/etc/asterisk" ]
           [ "${buildPath}/phoneprov" "/var/lib/asterisk/phoneprov" ]
           [ "${asteriskPkg}/lib/asterisk/modules" "/usr/lib/asterisk/modules" ]
+          [ "${asteriskPkg}/bin" "/usr/sbin" ]
         ];
       in pkgs.writeScriptBin "build" ''
         #!${pkgs.bash}/bin/bash
@@ -190,7 +191,7 @@ let
       ];
       config = {
         Cmd = [
-          "${asteriskPkg}/bin/asterisk" "-C" "/etc/asterisk/asterisk.conf" "-T" "-p" "-vvv" "-f"
+          "${asteriskPkg}/bin/asterisk" "-C" "/etc/asterisk/asterisk.conf" "-T" "-p" "-vvvvv" "-ddddd" "-f"
         ];
       };
     };
