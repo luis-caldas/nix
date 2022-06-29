@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
 
   # Store audio cards states
@@ -6,7 +6,7 @@
 
   # Mount network storage locally
   fileSystems."/naso" = {
-    device = "//naso/media/games/roms";
+    device = "//naso/media/games";
     fsType = "cifs";
     options = [
       "ro"
@@ -75,13 +75,23 @@
     extraGroups = [ "audio" ];
   };
 
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "steam"
+  ];
+
   # Packages to be installed
   environment.systemPackages = with pkgs; [
+    steam
     (retroarch.override { cores = with libretro; [
+      mame
       mgba
       snes9x
       fceumm
       mupen64plus
+      pcsx2
+      desmume
+      dolphin
+      pcsx_rearmed
     ]; })
   ];
 
