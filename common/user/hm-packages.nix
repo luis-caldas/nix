@@ -65,6 +65,7 @@
 
     # Window manager manipulation
     wmctrl
+    xorg.xkill
 
     # Serial
     picocom
