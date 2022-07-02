@@ -46,12 +46,14 @@
         "-S" # Disable minimum SMB2
         "-s" "media;/media;yes;no;yes;all;;;Share for media files" # Share config
         "-s" "google;/google;yes;yes;yes;all;;;Google saved files"
+        "-s" "ps2;/ps2;yes;yes;yes;all;;;PS2 Games"
         "-w" "WORKGROUP" # Default workgroup
         "-W" # Wide link support
       ];
       volumes = [
         "/data/bunker/everything/vault/untouched/google-parents:/google"
         "/data/storr/media:/media"
+        "/data/storr/media/games/roms/ps2:/ps2"
       ];
       ports = [
         "137:137/udp"
