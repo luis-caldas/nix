@@ -53,7 +53,8 @@
       volumes = [
         "/data/bunker/everything/vault/untouched/google-parents:/google"
         "/data/storr/media:/media"
-        "/data/storr/media/games/roms/ps2:/ps2"
+        "/data/storr/media/games/roms/ps2:/ps2/DVD"
+        "/data/storr/media/games/roms/ps1:/ps2/CD"
       ];
       ports = [
         "137:137/udp"
