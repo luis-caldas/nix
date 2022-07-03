@@ -25,6 +25,7 @@
     smartmontools
 
     # Optical
+    bchunk
     ccd2iso
 
     # Flashing tools
