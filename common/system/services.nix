@@ -42,11 +42,7 @@
         "dbengine multihost disk space" = 2048;
       };
     };
-    # Remove ads
-    configDir = "cloud.conf" = pkgs.writeText "cloud.conf" ''
-      [global]
-        enabled = no
-    '';
+    packages = pkgs.netdata.override { withCloud = false; };
   } {};
 
   # PCSC
