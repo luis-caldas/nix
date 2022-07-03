@@ -42,7 +42,13 @@
         "dbengine multihost disk space" = 2048;
       };
     };
-    package = pkgs.netdata.override { withCloud = false; };
+    package = pkgs.netdata.overrideAttrs ( old: let
+      createString = enabled: let
+        addPref = pref: "--${pref}able-cloud";
+      in ( if enabled then addPref "en" else addPref "dis" );
+    in {
+      configureFlags = (pkgs.lib.remove (createString true) old.configureFlags) ++ [ (createString false) ];
+    });
   } {};
 
   # PCSC
