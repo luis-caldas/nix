@@ -1,8 +1,18 @@
 { lib, ... }:
 {
 
+  # Generate config for all packages
+  options.exceptions.unfree = {
+     packages = mkOption {
+      type = types.list;
+      default = [];
+    };
+  };
+
   # Allow unfree stuff
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) (
+    config.exceptions.packages
+  ++ [
     "assaultcube"
     "steam" "steam-original" "steam-runtime"
     "minecraft-launcher"
@@ -10,7 +20,7 @@
     "reaper" "linuxsampler"
     "spotify" "spotify-unwrapped"
     "unrar"
-  ];
+  ]);
 
   # Allow some insecure packages
   nixpkgs.config.permittedInsecurePackages = [

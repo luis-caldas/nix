@@ -75,9 +75,8 @@
     extraGroups = [ "audio" ];
   };
 
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "steam"
-  ];
+  # Add steam to exceptions
+  exceptions.unfree = [ "steam" ];
 
   # Packages to be installed
   environment.systemPackages = with pkgs; [
