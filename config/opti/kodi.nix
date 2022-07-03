@@ -76,7 +76,7 @@
   };
 
   # Add steam to exceptions
-  exceptions.unfree = [ "steam" ];
+  exceptions.unfree = [ "steam" "steam-runtime" "steam-original" ];
 
   # Packages to be installed
   environment.systemPackages = with pkgs; [
