@@ -32,17 +32,7 @@
     qemu.swtpm.enable = my.config.services.virt.swtpm;
   } {};
 
-  # Netdata monitor for servers and such
-  services.netdata = mfunc.useDefault my.config.services.monitor {
-    enable = true;
-    config = {
-      global = {
-        "memory mode" = "dbengine";
-        "page cache size" = 256;
-        "dbengine multihost disk space" = 2048;
-      };
-    };
-  } {};
+  # System monitor
 
   # PCSC
   services.pcscd = {
