@@ -42,7 +42,7 @@
         "dbengine multihost disk space" = 2048;
       };
     };
-    packages = pkgs.netdata.override { withCloud = false; };
+    package = pkgs.netdata.override { withCloud = false; };
   } {};
 
   # PCSC
