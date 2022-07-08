@@ -101,6 +101,13 @@
       };
     };
 
+    # Jack latency
+    config.jack = {
+      "jack.properties" = {
+        "node.latency" = "64/48000";
+      };
+    };
+
   };
 
   # Set up bluetooth codecs for wireplumber
