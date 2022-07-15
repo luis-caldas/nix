@@ -50,8 +50,6 @@
           stripRoot = false;
         };
       });
-      # Add package to general
-      kodi-plymouth = mpkgs.kodi-plymouth;
     });
 
   };
