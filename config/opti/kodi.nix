@@ -70,9 +70,9 @@
   };
 
   # Use plymouth theme
-  plymouth = {
+  boot.plymouth = {
     enable = true;
-    package = "kodi-plymouth"
+    theme = "kodi-plymouth";
     themePackages = [ pkgs.kodi-plymouth ];
   };
 
