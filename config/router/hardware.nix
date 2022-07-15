@@ -8,7 +8,7 @@
   boot.extraModulePackages = [ ];
 
   boot.initrd.preDeviceCommands = ''
-    devices="0000:07:00.0 0000:07:00.1"
+    devices="0000:05:00.0 0000:05:00.1"
     for each_device in $devices; do
       echo "vfio-pci" > /sys/bus/pci/devices/$each_device/driver_override
     done
