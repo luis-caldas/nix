@@ -206,7 +206,7 @@ let
       # Default application
       mainExec = pkgs.writeScriptBin "main" ''
         #!${pkgs.bash}/bin/bash
-        "${my.projects.containers}/build/update-dns/update_dns.sh"
+        "${pkgs.bash}/bin/bash" "${my.projects.containers}/build/update-dns/update_dns.sh"
       '';
       cronFile = pkgs.writeTextFile {
         name = "cron"; destination = "/cron"; text = ''
