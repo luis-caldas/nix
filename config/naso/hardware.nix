@@ -112,17 +112,17 @@
 
     # Downloading app
     aria = {
-      image = "abcminiuser/docker-aria2-with-webui:latest";
+      image = "hurlenko/aria2-ariang";
       environment = {
-        PGID = "1000";
         PUID = "1000";
+        PGID = "1000";
       };
       ports = [
         "6880:6880/tcp"
       ];
       volumes = [
-        "/data/storr/media/downloads:/data"
-        "/data/local/config/aria:/conf"
+        "/data/storr/media/downloads:/aria2/data"
+        "/data/local/config/aria:/aria2/conf"
       ];
     };
 
