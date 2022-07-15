@@ -101,13 +101,29 @@
 
     # Web Service Discovery for Microsoft
     shout = {
-        image = "jonasped/wsdd";
-        environment = {
-          TZ = my.config.system.timezone;
-          HOSTNAME = my.path;
-          WORKGROUP = "WORKGROUP";
-        };
-        extraOptions = [ "--network=host" ];
+      image = "jonasped/wsdd";
+      environment = {
+        TZ = my.config.system.timezone;
+        HOSTNAME = my.path;
+        WORKGROUP = "WORKGROUP";
+      };
+      extraOptions = [ "--network=host" ];
+    };
+
+    # Downloading app
+    aria = {
+      image = "abcminiuser/docker-aria2-with-webui:latest";
+      environment = {
+        PGID = 1000;
+        PUID = 1000;
+      };
+      ports = [
+        "6880:6880/tcp"
+      ];
+      volumes = [
+        "/data/storr/media/downloads:/data"
+        "/data/local/config/aria:/conf"
+      ];
     };
 
   };
