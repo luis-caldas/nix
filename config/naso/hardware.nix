@@ -114,8 +114,8 @@
     aria = {
       image = "abcminiuser/docker-aria2-with-webui:latest";
       environment = {
-        PGID = 1000;
-        PUID = 1000;
+        PGID = "1000";
+        PUID = "1000";
       };
       ports = [
         "6880:6880/tcp"
