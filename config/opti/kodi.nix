@@ -71,7 +71,7 @@
 
   # Use plymouth theme
   boot.plymouth = let
-    theme-name = "kodi-plymouth";
+    theme-name = "kodi-animated-logo";
     plymouth-theme = pkgs.stdenv.mkDerivation rec {
       pname = theme-name;
       version = "0.0.1";
@@ -87,8 +87,7 @@
         mkdir -p $out/share/plymouth/themes/
       '';
       installPhase = ''
-        cp -r plymouth-theme-kodi-animated-logo/usr/share/plymouth/themes/kodi-animated-logo $out/share/plymouth/themes/${pname}
-        rm $out/share/plymouth/themes/${pname}/kodi-animated-logo.plymouth
+        cp -r plymouth-theme-kodi-animated-logo/usr/share/plymouth/themes/kodi-animated-logo $out/share/plymouth/themes/.
         cat plymouth-theme-kodi-animated-logo/usr/share/plymouth/themes/kodi-animated-logo/kodi-animated-logo.plymouth | sed  "s@\/usr\/@$out\/@" > $out/share/plymouth/themes/${pname}/${pname}.plymouth
       '';
     };
