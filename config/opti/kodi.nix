@@ -69,6 +69,13 @@
     '';
   };
 
+  # Use plymouth theme
+  plymouth = {
+    enable = true;
+    package = "kodi-plymouth"
+    themePackages = [ pkgs.kodi-plymouth ];
+  };
+
   # Create the kodi user and add it to the audio gruop
   users.users.kodi = {
     isNormalUser = true;
