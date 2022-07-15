@@ -116,9 +116,10 @@
       environment = {
         PUID = "1000";
         PGID = "1000";
+        ARIA2RPCPORT = "6880";
       };
       ports = [
-        "6880:6880/tcp"
+        "6880:8080/tcp"
       ];
       volumes = [
         "/data/storr/media/downloads:/aria2/data"
