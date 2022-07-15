@@ -27,7 +27,7 @@
         "/data/local/docker/config/asterisk/voicemail:/var/spool/asterisk/voicemail"
         "/data/local/docker/config/asterisk/sounds:/var/lib/asterisk/sounds/mine"
       ];
-      extraOptions = [ "--dns=10.0.0.1" "--network=host" ];
+      extraOptions = [ "--dns=172.17.0.1" "--network=host" ];
     };
 
     # DNS updater
@@ -35,6 +35,7 @@
       image = "local/udns";
       imageFile = my.containers.udns;
       environmentFiles = [ /data/local/safe/udns.env ];
+      extraOptions = [ "--dns=172.17.0.1 "];
     };
 
     # DNS Server
@@ -63,7 +64,7 @@
       image = "shadowsocks/shadowsocks-libev";
       environment = {
         METHOD = "aes-256-gcm";
-        DNS_ADDRS = "10.0.0.1";
+        DNS_ADDRS = "172.17.0.1";
       };
       environmentFiles = [ /data/local/safe/shadow.env ];
       ports = [
