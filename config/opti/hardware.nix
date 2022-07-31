@@ -27,6 +27,8 @@
   environment.etc = {
     "nut/upsmon.conf".source = "/data/nut/upsmon.conf";
   };
+  systemd.services.upsd = lib.mkForce {};
+  systemd.services.upsdrv = lib.mkForce {};
 
   # Some containers
   virtualisation.oci-containers.containers = {

@@ -46,6 +46,8 @@
   environment.etc = {
     "nut/upsmon.conf".source = "/data/local/nut/upsmon.conf";
   };
+  systemd.services.upsd = lib.mkForce {};
+  systemd.services.upsdrv = lib.mkForce {};
 
   # Set up docker containers
   virtualisation.oci-containers.containers = {
