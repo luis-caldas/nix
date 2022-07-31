@@ -113,6 +113,35 @@
       ];
     };
 
+    # Add search instance
+    searx = {
+      image = "searxng/searxng:latest";
+      environment = {
+        INSTANCE_NAME = "Search";
+      };
+      volumes = [
+        "/data/local/docker/config/searx:/etc/searxng"
+      ];
+      ports = [
+        "1111:8080/tcp"
+      ];
+      extraOptions = [ "--dns=172.17.0.1 "];
+    };
+
+    # Custom dashbord for all websites
+    dash = {
+      image = "lissy93/dashy:latest";
+      volumes = [
+        "/data/local/docker/config/dash/conf.yml:/app/public/conf.yml"
+      ];
+      ports = [
+        "80:80/tcp"
+      ];
+      extraOptions = [ "--dns=172.17.0.1 "];
+    };
+  };
+
+
   };
 
   fileSystems."/" =
