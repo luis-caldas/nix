@@ -9,6 +9,25 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  # UPS client
+  power.ups = {
+    enable = true;
+    mode = "netclient";
+    schedulerRules = "/data/nut/upssched.conf";
+  };
+  users = {
+    users.nut = {
+      isSystemUser = true;
+      group = "nut";
+      home = "/var/lib/nut";
+      createHome = true;
+    };
+    groups.nut = { };
+  };
+  environment.etc = {
+    "nut/upsmon.conf".source = "/data/nut/upsmon.conf";
+  };
+
   # Some containers
   virtualisation.oci-containers.containers = {
     media = {
