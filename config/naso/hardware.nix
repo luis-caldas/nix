@@ -34,6 +34,15 @@
     mode = "netclient";
     schedulerRules = "/data/local/nut/upssched.conf";
   };
+  users = {
+    users.nut = {
+      isSystemUser = true;
+      group = "nut";
+      home = "/var/lib/nut";
+      createHome = true;
+    };
+    groups.nut = { };
+  };
   environment.etc = {
     "nut/upsmon.conf".source = "/data/local/nut/upsmon.conf";
   };
