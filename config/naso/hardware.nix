@@ -28,6 +28,16 @@
     };
   };
 
+  # UPS client
+  power.ups = {
+    enable = true;
+    mode = "netclient";
+    schedulerRules = "/data/local/nut/upssched.conf";
+  };
+  environment.etc = {
+    "nut/upsmon.conf".source = "/data/local/nut/upsmon.conf";
+  };
+
   # Set up docker containers
   virtualisation.oci-containers.containers = {
 
