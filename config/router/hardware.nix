@@ -83,7 +83,7 @@
       ports = [
         "53:53/tcp"
         "53:53/udp"
-        "80:80/tcp"
+        "81:80/tcp"
       ];
       extraOptions = [ "--dns=127.0.0.1" ];
     };
