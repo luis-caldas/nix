@@ -15,6 +15,35 @@
     modprobe -i vfio-pci
   '';
 
+  # UPS configuration
+  power.ups = {
+    enable = true;
+    mode = "netserver";
+    ups.apc = {
+      port = "auto";
+      driver = "usbhid-ups";
+      description = "APC Smart 2200VA UPS";
+      directives = lib.mapAttrsToList (name: value: "${name} = \"${value}\"") {
+        vendorid = "051D";
+        productid = "0002";
+      };
+    };
+  };
+  users = {
+    users.nut = {
+      isSystemUser = true;
+      group = "nut";
+      home = "/var/lib/nut";
+      createHome = true;
+    };
+    groups.nut = { };
+  };
+  environment.etc = {
+    "nut/upsd.conf".source = "/data/local/nut/upsd.conf";
+    "nut/upsd.users".source = "/data/local/nut/upsd.users";
+    "nut/upsmon.conf".source = "/data/local/nut/upsmon.conf";
+  };
+
   # Set up docker containers
   virtualisation.oci-containers.containers = {
 
@@ -69,6 +98,18 @@
       environmentFiles = [ /data/local/safe/shadow.env ];
       ports = [
         "8388:8388/tcp"
+      ];
+    };
+
+    # Webserver for UPS data
+    nut = {
+      image = "teknologist/webnut";
+      environment = {
+        UPS_HOST = "172.17.0.1";
+      };
+      environmentFiles = [ /data/local/safe/nut.env ];
+      ports = [
+        "6543:6543/tcp"
       ];
     };
 
