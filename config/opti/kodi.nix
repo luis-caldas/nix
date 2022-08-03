@@ -30,7 +30,7 @@
   nixpkgs.config.pulseaudio = true;
 
   # Set graphics drivers
-  services.xserver.videoDrivers = [ "intel" ];
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
   # Add 32 bit support and other acceleration packages
   hardware.opengl = {
@@ -108,6 +108,7 @@
 
   # Packages to be installed
   environment.systemPackages = with pkgs; [
+    mpv
     steam
     (retroarch.override { cores = with libretro; [
       mame
