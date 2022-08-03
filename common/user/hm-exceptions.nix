@@ -36,7 +36,7 @@
 
     # Home manager package overrides
     nixpkgs.config.packageOverrides = pkgs: (
-      config.exceptions.overrides
+      (config.exceptions.overrides pkgs)
       // {
       # Add custom file to flightgear data
       flightgear = pkgs.flightgear.overrideAttrs (oldAttrs: {

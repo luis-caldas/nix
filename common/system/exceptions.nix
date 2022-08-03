@@ -32,7 +32,7 @@
 
     # Overrides
     nixpkgs.config.packageOverrides = pkgs: (
-      config.exceptions.overrides
+      (config.exceptions.overrides pkgs)
       // {
       # Add custom image to OVMF UEFI
       OVMFFull = pkgs.OVMFFull.overrideAttrs (attrs: {
