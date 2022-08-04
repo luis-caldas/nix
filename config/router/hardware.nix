@@ -52,6 +52,32 @@
     "nut/upsmon.conf".source = "/data/local/nut/upsmon.conf";
   };
 
+  # Configure email sender
+  programs.msmtp = {
+    enable = true;
+    setSendmail = true;
+    defaults = {
+      aliases = "/data/local/mail/alias";
+      port = 465;
+      tls_trust_file = "/etc/ssl/certs/ca-certificates.crt";
+      tls = "on";
+      auth = "login";
+      tls_starttls = "off";
+    };
+    accounts = let
+      mailDomain = mfunc.safeReadFile /data/local/mail/domain;
+      accountMail = mfunc.safeReadFile /data/local/mail/account;
+    in
+    {
+      default = {
+        host = mailDomain;
+        passwordeval = "${pkgs.coreutils}/bin/cat /data/local/mail/password";
+        user = accountMail;
+        from = accountMail;
+      };
+    };
+  };
+
   # Set up docker containers
   virtualisation.oci-containers.containers = {
 
