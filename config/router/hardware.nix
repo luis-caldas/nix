@@ -7,6 +7,7 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  # VFIO overrides for vms
   boot.initrd.preDeviceCommands = ''
     devices="0000:05:00.0 0000:05:00.1"
     for each_device in $devices; do
@@ -14,6 +15,13 @@
     done
     modprobe -i vfio-pci
   '';
+
+  # Autostart serial getty connection
+  systemd.services."serial-getty@ttyUSB0" = {
+    enable = true;
+    wantedBy = [ "getty.target" ];
+    serviceConfig.Restart = "always";
+  };
 
   # UPS configuration
   power.ups = {
