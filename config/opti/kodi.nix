@@ -106,15 +106,8 @@
   # Add steam to exceptions
   exceptions.unfree = [ "steam" "steam-runtime" "steam-original" ];
 
-  # Override mpv
-  exceptions.overrides = npkgs: {
-      # Add full ffmpeg to MPV
-      mpv-unwrapped = npkgs.mpv-unwrapped.override { ffmpeg = pkgs.ffmpeg-full; };
-  };
-
   # Packages to be installed
   environment.systemPackages = with pkgs; [
-    mpv
     steam
     (retroarch.override { cores = with libretro; [
       mame
