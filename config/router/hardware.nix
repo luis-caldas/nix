@@ -27,6 +27,7 @@
   power.ups = {
     enable = true;
     mode = "netserver";
+    schedulerRules = "/data/local/nut/upssched.conf";
     ups.apc = {
       port = "auto";
       driver = "usbhid-ups";
