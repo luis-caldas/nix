@@ -484,8 +484,8 @@ in
             mktplcRef = {
               name = "Material-theme";
               publisher = "zhuangtongfa";
-              version = "3.13.20";
-              sha256 = "0jmw8f012mqzbaivz219l4k879sishjac5475fxi93j5gip3sa80";
+              version = "3.15.2";
+              sha256 = "sha256-6YB6Te9rQo9WKfUZZ5eenqoRdk5lKRYftYkmUIpoFRU=";
             };
             meta = with lib; {
               changelog = "https://marketplace.visualstudio.com/items/zhuangtongfa.Material-theme/changelog";
