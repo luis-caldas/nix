@@ -2,37 +2,43 @@
 
 	"policies": {
 
-		"SyncDisabled": true,
-		"BrowserSignin": 0,
-		"SpellcheckEnabled": false,
-		"BackgroundModeEnabled": false,
+		"managed": {
 
-		"AllowDinosaurEasterEgg": false,
+			"SyncDisabled": true,
+			"BrowserSignin": 0,
+			"SpellcheckEnabled": false,
+			"BackgroundModeEnabled": false,
 
-		"ShowFullUrlsInAddressBar": true,
-		"ShowAppsShortcutInBookmarkBar": false,
-		"DefaultSearchProviderEnabled": true,
+			"AllowDinosaurEasterEgg": false,
 
-		"HideWebStoreIcon": true,
+			"ShowFullUrlsInAddressBar": true,
+			"ShowAppsShortcutInBookmarkBar": false,
+			"DefaultSearchProviderEnabled": true,
 
-		"DownloadRestrictions": 0,
+			"HideWebStoreIcon": true,
 
-		"AutofillAddressEnabled": false,
-		"PasswordManagerEnabled": false,
-		"CloudPrintSubmitEnabled": false,
-		"BuiltInDnsClientEnabled": false,
-		"MetricsReportingEnabled": false,
-		"PaymentMethodQueryEnabled": false,
+			"DownloadRestrictions": 0,
 
-		"DefaultCookiesSetting": 1,
-		"BlockThirdPartyCookies": true,
-		"ClearBrowsingDataOnExitList": [
-			 "browsing_history",
-			 "download_history",
-			 "cached_images_and_files",
-			 "password_signin",
-			 "autofill"
-		]
+			"AutofillAddressEnabled": false,
+			"BuiltInDnsClientEnabled": false,
+			"MetricsReportingEnabled": false,
+			"PaymentMethodQueryEnabled": false,
+
+			"PrinterTypeDenyList": [ "cloud" ],
+
+			"DefaultCookiesSetting": 1,
+			"BlockThirdPartyCookies": true,
+			"ClearBrowsingDataOnExitList": [
+				"browsing_history",
+				"download_history",
+				"cached_images_and_files",
+				"autofill"
+			]
+		},
+
+		"recommended": {
+			"PasswordManagerEnabled": false
+		}
 
 	},
 
