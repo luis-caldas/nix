@@ -22,7 +22,7 @@
     "groups": [],
     "admin": true,
     "pass": "functional",
-    "autologin": false
+    "autologin": true
   },
   "git": {
     "name": "Luis",

@@ -5,6 +5,7 @@
   "system": {
     "hostname": "router"
   },
+  "user": { "autologin": false },
   "services": {
     "ssh": true,
     "docker": true,
