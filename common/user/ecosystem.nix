@@ -108,7 +108,7 @@ in
     } {};
 
     # Add arduino libraries
-    home.file = mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86))
+    home.file = mfunc.useDefault (((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) && (!my.config.system.minimal))
     { ".local/share/arduino" = { source = "${pkgs.arduino}/share/arduino"; }; }
     {};
 

@@ -4,7 +4,6 @@
   home.packages = with pkgs; [
 
     # Bin manipulation
-    john
     flips
     xdelta
     hashcat
@@ -13,8 +12,6 @@
     binutils
     geteltorito
     unixtools.xxd
-    mpkgs.steghide
-    python3Packages.binwalk-full
 
     # Disk
     pv
@@ -42,10 +39,7 @@
     atftp
     nload
     socat
-    browsh
-    firefox
     inetutils
-    youtube-dl
 
     # Debugger
     gdb
@@ -120,7 +114,6 @@
     potrace
     imagemagick
     qrencode
-    ffmpeg-full
     ghostscript
     waifu2x-converter-cpp
     python3Packages.pywal
@@ -136,9 +129,6 @@
     # Android
     gitRepo
     simg2img
-
-    # KVM & Virt
-    qemu
 
     # Drives
     hdparm
@@ -246,13 +236,35 @@
     #######
 
   ] ++
-  mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [
+  mfunc.useDefault (!my.config.system.minimal) [
 
-    # Bin
-    apktool
+    # Binary
+    john
+    mpkgs.steghide
+    python3Packages.binwalk-full
+
+    # Web
+    browsh
+    firefox
+    youtube-dl
+
+    # KVM & Virt
+    qemu
+
+    # Video
+    ffmpeg-full
+
+  ] [] ++
+  mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [
 
     # Flash utilities
     flashrom
+
+  ] []++
+  mfunc.useDefault (((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) && (!my.config.system.minimal)) [
+
+    # Bin
+    apktool
 
   ] [] ++
   mfunc.useDefault my.config.services.fingerprint [
