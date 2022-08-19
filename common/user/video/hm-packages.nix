@@ -87,17 +87,10 @@
     # Image editing
     gimp
     gpick
-    krita
     inkscape
-
-    # Video editing
-    kdenlive
 
     # Scan
     gnome3.simple-scan
-
-    # Camera
-    webcamoid
 
     # Document viewer
     evince
@@ -155,7 +148,6 @@
     nodePackages.peerflix
 
     # Radio
-    gqrx
     chirp
 
   ] ++
@@ -166,6 +158,21 @@
     picom
 
   ] ++
+  mfunc.useDefault (!my.config.system.minimal) [
+
+    # Video editing
+    kdenlive
+
+    # Image editing
+    krita
+
+    # Camera
+    webcamoid
+
+    # Radio
+    gqrx
+
+  ] [] ++
   mfunc.useDefault (my.arch == my.reference.x64) [
 
     # Password manager

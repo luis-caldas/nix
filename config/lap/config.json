@@ -9,7 +9,8 @@
   "zram": true,
   "user": { "name": "lakituen" },
   "system": {
-    "hostname": "lap"
+    "hostname": "lap",
+    "minimal": true
   },
   "services": {
     "ssh": true,
