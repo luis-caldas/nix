@@ -36,7 +36,6 @@
       volumes = [ "/mailu/redis:/data" ];
       dependsOn = [ "resolver" ];
       extraOptions = [
-        "--restart=always"
         "--dns=172.20.1.1"
       ];
     };
@@ -63,7 +62,6 @@
       dependsOn = [ "resolver" ];
       extraOptions = [
         "--log-driver=json-file"
-        "--restart=always"
         "--dns=172.20.1.1"
       ];
     };
@@ -72,7 +70,6 @@
       image = "mailu/unbound:1.9";
       environmentFiles = [ /data/mailu.env ];
       extraOptions = [
-        "--restart=always"
         "--net=default"
         "--ip=172.20.1.1"
       ];
@@ -87,7 +84,6 @@
       ];
       dependsOn = [ "redis" "resolver" ];
       extraOptions = [
-        "--restart=always"
         "--dns=172.20.1.1"
       ];
     };
@@ -101,7 +97,6 @@
       ];
       dependsOn = [ "front" "resolver" ];
       extraOptions = [
-        "--restart=always"
         "--dns=172.20.1.1"
       ];
     };
@@ -115,7 +110,6 @@
       ];
       dependsOn = [ "front" "resolver" ];
       extraOptions = [
-        "--restart=always"
         "--dns=172.20.1.1"
       ];
     };
@@ -130,7 +124,6 @@
       dependsOn = [ "front" "resolver" ];
       extraOptions = [
         "--hostname=antispam"
-        "--restart=always"
         "--dns=172.20.1.1"
       ];
     };
@@ -141,7 +134,6 @@
       volumes = [ "/mailu/dav:/data" ];
       dependsOn = [ "resolver" ];
       extraOptions = [
-        "--restart=always"
         "--dns=172.20.1.1"
       ];
     };
@@ -152,7 +144,6 @@
       volumes = [ "/mailu/data/fetchmail:/data" ];
       dependsOn = [ "resolver" ];
       extraOptions = [
-        "--restart=always"
         "--dns=172.20.1.1"
       ];
     };
@@ -167,7 +158,6 @@
       ];
       dependsOn = [ "imap" "resolver" ];
       extraOptions = [
-        "--restart=always"
         "--dns=172.20.1.1"
       ];
     };
