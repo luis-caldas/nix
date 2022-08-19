@@ -16,7 +16,7 @@
   ];
 
   # Create docker subnet
-  system.activationScripts.dockerSubnet = = let
+  system.activationScripts.dockerSubnet = let
     docker = config.virtualisation.oci-containers.backend;
     dockerBin = "${pkgs.${docker}}/bin/${docker}";
   in ''
