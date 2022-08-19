@@ -8,7 +8,7 @@
     enable = true;
     passwordAuthentication = false;
     kbdInteractiveAuthentication = false;
-    permitRootLogin = "no";
+    permitRootLogin = lib.mkForce "no";
   };
 
   users.users."${my.config.user.name}".openssh.authorizedKeys.keyFiles = [
