@@ -15,17 +15,32 @@
     /etc/nixos/ssh/authorized_keys
   ];
 
-  # Create docker subnet
-  system.activationScripts.dockerSubnet = let
-    docker = config.virtualisation.oci-containers.backend;
-    dockerBin = "${pkgs.${docker}}/bin/${docker}";
-  in ''
-    NETNAME=mail
-    SUBNET="172.20.0.0/23"
-    if ! ${dockerBin} network inspect "$NETNAME" >/dev/null 2>&1; then
-      ${dockerBin} network create "$NETNAME" --driver bridge --ipam-driver "$NETNAME" --subnet "$SUBNET"
-    fi
-  '';
+  # Create network service for docker
+  systemd.services."docker-network-mail" = let
+    name = "mail";
+    subnet = "172.20.0.0/23";
+    beforeList = [ "resolver" ];
+    beforeAll = map (input: "docker-${input}.service") beforeList;
+  in rec {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "docker.service" "docker.socket" ];
+    before = beforeAll;
+    requires = after;
+    serviceConfig = {
+      ExecStart = pkgs.writeScript "docker-network-create-${name}" ''
+        #!${pkgs.runtimeShell} -e
+        set -x
+        if [[ -z "$(${pkgs.docker}/bin/docker network ls | grep "${name}" | tr -d '\n')" ]]; then
+          ${pkgs.docker}/bin/docker network create "${name}" --driver bridge --ipam-driver default --subnet "${subnet}"
+        fi
+      '';
+      ExecStop = ''
+        ${pkgs.docker}/bin/docker network rm "${name}"
+      '';
+      RemainAfterExit="true";
+      Type="oneshot";
+    };
+  };
 
   # Set up docker containers
   virtualisation.oci-containers.containers = {
