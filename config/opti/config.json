@@ -10,7 +10,8 @@
     "autologin": false
   },
   "system": {
-    "hostname": "opti"
+    "hostname": "opti",
+    "minimal": true
   },
   "services": {
     "ssh": true,
