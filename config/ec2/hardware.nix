@@ -20,7 +20,7 @@
     docker = config.virtualisation.oci-containers.backend;
     dockerBin = "${pkgs.${docker}}/bin/${docker}";
   in ''
-    NETNAME=default
+    NETNAME=mail
     SUBNET="172.20.0.0/23"
     if ! ${dockerBin} network inspect "$NETNAME" >/dev/null 2>&1; then
       ${dockerBin} network create "$NETNAME" --driver bridge --ipam-driver "$NETNAME" --subnet "$SUBNET"
@@ -36,6 +36,7 @@
       volumes = [ "/mailu/redis:/data" ];
       dependsOn = [ "resolver" ];
       extraOptions = [
+        "--network=mail"
         "--dns=172.20.1.1"
       ];
     };
@@ -61,6 +62,7 @@
       ];
       dependsOn = [ "resolver" ];
       extraOptions = [
+        "--network=mail"
         "--log-driver=json-file"
         "--dns=172.20.1.1"
       ];
@@ -70,6 +72,7 @@
       image = "mailu/unbound:1.9";
       environmentFiles = [ /data/mailu.env ];
       extraOptions = [
+        "--network=mail"
         "--net=default"
         "--ip=172.20.1.1"
       ];
@@ -84,6 +87,7 @@
       ];
       dependsOn = [ "redis" "resolver" ];
       extraOptions = [
+        "--network=mail"
         "--dns=172.20.1.1"
       ];
     };
@@ -97,6 +101,7 @@
       ];
       dependsOn = [ "front" "resolver" ];
       extraOptions = [
+        "--network=mail"
         "--dns=172.20.1.1"
       ];
     };
@@ -110,6 +115,7 @@
       ];
       dependsOn = [ "front" "resolver" ];
       extraOptions = [
+        "--network=mail"
         "--dns=172.20.1.1"
       ];
     };
@@ -123,6 +129,7 @@
       ];
       dependsOn = [ "front" "resolver" ];
       extraOptions = [
+        "--network=mail"
         "--hostname=antispam"
         "--dns=172.20.1.1"
       ];
@@ -134,6 +141,7 @@
       volumes = [ "/mailu/dav:/data" ];
       dependsOn = [ "resolver" ];
       extraOptions = [
+        "--network=mail"
         "--dns=172.20.1.1"
       ];
     };
@@ -144,6 +152,7 @@
       volumes = [ "/mailu/data/fetchmail:/data" ];
       dependsOn = [ "resolver" ];
       extraOptions = [
+        "--network=mail"
         "--dns=172.20.1.1"
       ];
     };
@@ -158,6 +167,7 @@
       ];
       dependsOn = [ "imap" "resolver" ];
       extraOptions = [
+        "--network=mail"
         "--dns=172.20.1.1"
       ];
     };
