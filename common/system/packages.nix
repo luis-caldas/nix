@@ -18,6 +18,9 @@
     nix-tree
     trash-cli
 
+    # Utils
+    killall
+
     # Compatibility
     envsubst
 
