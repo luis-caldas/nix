@@ -73,7 +73,6 @@
       environmentFiles = [ /data/mailu.env ];
       extraOptions = [
         "--network=mail"
-        "--net=default"
         "--ip=172.20.1.1"
       ];
     };
