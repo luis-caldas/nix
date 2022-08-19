@@ -208,9 +208,6 @@
     cmake
     gnumake
 
-    # Haskell
-    ghc
-
     # JSON
     jq
 
@@ -242,6 +239,9 @@
     john
     mpkgs.steghide
     python3Packages.binwalk-full
+
+    # Haskell
+    ghc
 
     # Web
     browsh
