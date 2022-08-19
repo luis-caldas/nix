@@ -98,7 +98,7 @@
       image = "local/udns";
       imageFile = my.containers.udns;
       environmentFiles = [ /data/local/safe/udns.env ];
-      extraOptions = [ "--dns=172.17.0.1 "];
+      extraOptions = [ "--dns=172.17.0.1" ];
     };
 
     # DNS Server
@@ -159,7 +159,7 @@
       ports = [
         "1111:8080/tcp"
       ];
-      extraOptions = [ "--dns=172.17.0.1 "];
+      extraOptions = [ "--dns=172.17.0.1" ];
     };
 
     # Custom dashbord for all websites
@@ -171,7 +171,7 @@
       ports = [
         "80:80/tcp"
       ];
-      extraOptions = [ "--dns=172.17.0.1 "];
+      extraOptions = [ "--dns=172.17.0.1" ];
     };
 
   };
