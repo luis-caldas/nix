@@ -1,0 +1,18 @@
+{
+  "boot": {
+    "efi": false,
+    "timeout": 1
+  },
+  "system": {
+    "hostname": "ec2",
+    "minimal": true
+  },
+  "user": {
+    "admin": false,
+    "autologin": false
+  },
+  "services": {
+    "ssh": true,
+    "docker": true
+  }
+}
