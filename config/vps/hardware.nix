@@ -18,6 +18,14 @@
     /etc/nixos/ssh/authorized_keys
   ];
 
+  users.users.lakituen = {
+    isNormalUser  = true;
+    home = "/home/lakituen";
+    openssh.authorizedKeys.keyFiles = [
+      /etc/nixos/ssh/extra
+    ];
+  };
+
   fileSystems."/" = {
     device = "/dev/sda1";
     fsType = "ext4";
