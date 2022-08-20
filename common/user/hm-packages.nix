@@ -139,11 +139,10 @@
     openssl
     cryptsetup
 
-    # Password managers
-    bitwarden-cli
-
-    # Password hash generator
+    # Password
+    pwgen
     mkpasswd
+    bitwarden-cli
 
     # User tools
     khal
