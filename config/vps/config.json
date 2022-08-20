@@ -3,8 +3,9 @@
     "efi": false,
     "timeout": 1
   },
+  "zram": true,
   "system": {
-    "hostname": "ec2",
+    "hostname": "vps",
     "minimal": true
   },
   "user": {
