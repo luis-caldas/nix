@@ -122,7 +122,7 @@
     dosbox
 
     # Inputs
-    mpkgs.opentrack
+    opentrack
 
     # QR Code
     zbar
