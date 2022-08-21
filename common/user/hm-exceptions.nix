@@ -37,22 +37,7 @@
     # Home manager package overrides
     nixpkgs.config.packageOverrides = ogpkgs: (
       (config.exceptions.overrides ogpkgs)
-      // {
-        # Add custom file to flightgear data
-        flightgear = ogpkgs.flightgear.overrideAttrs (oldAttrs: {
-          data = oldAttrs.data.overrideAttrs (dataOldAttrs: let
-            headTrackFile = pkgs.fetchurl {
-              url = "https://raw.githubusercontent.com/opentrack/opentrack/opentrack-2022.1.1/contrib/FlightGear/Protocol/headtracker.xml";
-              sha256 = "0airpy02jsq87d1vwsiwfxkgkyinlinvwq4rghb8d4h0yjmw7kdw";
-            };
-          in {
-            pname = dataOldAttrs.pname + "-custom";
-            installPhase = (if (builtins.hasAttr "installPhase" dataOldAttrs) then dataOldAttrs.installPhase else "") + ''
-              cp "${headTrackFile}" $out/share/FlightGear/Protocol/headtrack.xml
-            '';
-          });
-        });
-      }
+      // {}
     );
 
   };
