@@ -1,9 +1,9 @@
 {
   "boot": {
     "timeout": 1,
-    "device": "/dev/disk/by-id/usb-Corsair_Survivor_3.0_0700127C3AAE2D57-0:0"
+    "device": "/dev/disk/by-id/usb-Samsung_SSD_970_EVO_1TB_01281700086D-0:0"
   },
-  "system": { "hostname": "survivor" },
+  "system": { "hostname": "side" },
   "services": {
     "ssh": true,
     "docker": true,
