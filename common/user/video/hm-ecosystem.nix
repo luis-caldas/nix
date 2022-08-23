@@ -546,7 +546,6 @@ in
         profile = "gpu-hq";
         force-window = true;
         ytdl-format = "bestvideo+bestaudio";
-        cache-default = 4000000;
         video-sync = "display-resample";
         framedrop = "vo";
         gpu-api = "vulkan";
