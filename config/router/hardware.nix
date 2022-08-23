@@ -97,6 +97,20 @@
       extraOptions = [ "--dns=172.17.0.1" "--network=host" ];
     };
 
+    # HTTP Server for files
+    httpd = {
+      image = "halverneus/static-file-server:latest";
+      volumes = [
+        "/data/local/docker/config/asterisk/voicemail:/content/voicemail:ro"
+        "/data/local/docker/config/asterisk/record:/content/monitor:ro"
+      ];
+      ports = [
+        "82:8080/tcp"
+      ];
+      environmentFiles = [ /data/local/safe/udns.env ];
+      extraOptions = [ "--dns=172.17.0.1" ];
+    };
+
     # DNS updater
     udns = {
       image = "local/udns";
