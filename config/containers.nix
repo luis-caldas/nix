@@ -53,9 +53,16 @@ let
   allContainers = let
 
     # Base nixos with default tools
-    baseImage = pkgs.dockerTools.buildImage {
+    baseImage = let
+      buildScript = pkgs.writeScriptBin "build" ''
+        #!${pkgs.bash}/bin/bash
+        ${pkgs.coreutils}/bin/mkdir /tmp
+        ${pkgs.coreutils}/bin/ln -s /etc/ssl/certs/ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+      '';
+    in pkgs.dockerTools.buildImage {
       name = "local/base";
       tag = "latest";
+      runAsRoot = "${buildScript}/bin/build";
       contents = with pkgs; [
         bash bashInteractive
         vim
