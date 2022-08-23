@@ -188,6 +188,7 @@ let
       contents = with pkgs; [
         asteriskPkg
         perl sox mpg123
+        msmtp
       ];
       config = {
         Cmd = [

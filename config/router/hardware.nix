@@ -90,6 +90,9 @@
         "/data/local/docker/config/asterisk/voicemail:/var/spool/asterisk/voicemail"
         "/data/local/docker/config/asterisk/record:/var/spool/asterisk/monitor"
         "/data/local/docker/config/asterisk/sounds:/var/lib/asterisk/sounds/mine"
+        # Email files
+        "/data/local/mail:/data/local/mail:ro"
+        "/etc/msmtprc:/etc/msmtprc:ro"
       ];
       extraOptions = [ "--dns=172.17.0.1" "--network=host" ];
     };
