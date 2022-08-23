@@ -88,6 +88,7 @@
       volumes = [
         "/data/local/docker/config/asterisk/conf:/etc/asterisk/conf.mine"
         "/data/local/docker/config/asterisk/voicemail:/var/spool/asterisk/voicemail"
+        "/data/local/docker/config/asterisk/record:/var/spool/asterisk/monitor"
         "/data/local/docker/config/asterisk/sounds:/var/lib/asterisk/sounds/mine"
       ];
       extraOptions = [ "--dns=172.17.0.1" "--network=host" ];
