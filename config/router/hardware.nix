@@ -101,8 +101,8 @@
     httpd = {
       image = "halverneus/static-file-server:latest";
       volumes = [
-        "/data/local/docker/config/asterisk/voicemail:/content/voicemail:ro"
-        "/data/local/docker/config/asterisk/record:/content/monitor:ro"
+        "/data/local/docker/config/asterisk/voicemail:/web/voicemail:ro"
+        "/data/local/docker/config/asterisk/record:/web/monitor:ro"
       ];
       ports = [
         "82:8080/tcp"
