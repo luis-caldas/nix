@@ -548,7 +548,6 @@ in
         ytdl-format = "bestvideo+bestaudio";
         video-sync = "display-resample";
         framedrop = "vo";
-        gpu-api = "vulkan";
         gpu-context = "auto";
         spirv-compiler = "auto";
       };
