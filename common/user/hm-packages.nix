@@ -18,7 +18,9 @@
     duf
     ncdu
     parted
+    zerofree
     testdisk
+    squashfsTools
     smartmontools
 
     # Optical
