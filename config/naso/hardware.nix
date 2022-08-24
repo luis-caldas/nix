@@ -132,20 +132,21 @@
     };
 
     # Downloading app
-    aria = {
-      image = "wahyd4/aria2-ui";
-      environment = {
-        PUID = "1000";
-        PGID = "1000";
-      };
-      ports = [
-        "80:8080/tcp"
-      ];
-      volumes = [
-        "/data/storr/media/downloads:/data"
-        "/data/local/config/aria:/app/conf"
-      ];
-    };
+    # aria = {
+    #   image = "hurlenko/aria2-ariang";
+    #   environment = {
+    #     PUID = "1000";
+    #     PGID = "1000";
+    #     ARIA2RPCPORT = "6880";
+    #   };
+    #   ports = [
+    #     "6880:8080/tcp"
+    #   ];
+    #   volumes = [
+    #     "/data/storr/media/downloads:/aria2/data"
+    #     "/data/local/config/aria:/aria2/conf"
+    #   ];
+    # };
 
   };
 

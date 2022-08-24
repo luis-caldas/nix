@@ -153,32 +153,17 @@
       ];
     };
 
-    # Webserver for UPS data
-    nut = {
-      image = "teknologist/webnut";
-      environment = {
-        UPS_HOST = "172.17.0.1";
-      };
-      environmentFiles = [ /data/local/safe/nut.env ];
-      ports = [
-        "6543:6543/tcp"
-      ];
-    };
-
-    # Add search instance
-    searx = {
-      image = "searxng/searxng:latest";
-      environment = {
-        INSTANCE_NAME = "Search";
-      };
-      volumes = [
-        "/data/local/docker/config/searx:/etc/searxng"
-      ];
-      ports = [
-        "1111:8080/tcp"
-      ];
-      extraOptions = [ "--dns=172.17.0.1" ];
-    };
+    # # Webserver for UPS data
+    # nut = {
+    #   image = "teknologist/webnut";
+    #   environment = {
+    #     UPS_HOST = "172.17.0.1";
+    #   };
+    #   environmentFiles = [ /data/local/safe/nut.env ];
+    #   ports = [
+    #     "6543:6543/tcp"
+    #   ];
+    # };
 
     # Custom dashbord for all websites
     dash = {
