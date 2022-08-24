@@ -33,7 +33,19 @@
     # Overrides
     nixpkgs.config.packageOverrides = ogpkgs: (
       (config.exceptions.overrides ogpkgs)
-      // {}
+      // {
+        netdata = ogpkgs.netdata.overrideAttrs (oldAttrs: {
+          nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [ ogpkgs.makeWrapper ];
+          configureFlags = oldAttrs.configureFlags ++ [ "--disable-cloud" ];
+          postFixup = oldAttrs.postFixup + ''
+            wrapProgram $out/libexec/netdata/plugins.d/charts.d.plugin \
+              --set PATH ${lib.makeBinPath [
+                ogpkgs.nut
+                ogpkgs.bash
+              ]}
+          '';
+        })
+      }
     );
 
   };
