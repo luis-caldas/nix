@@ -12,7 +12,7 @@
   networking.firewall = {
     enable = lib.mkForce true;
     allowedTCPPorts = [ 22 ];
-  }
+  };
 
   services.fail2ban = {
     enable = true;
