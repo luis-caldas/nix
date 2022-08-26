@@ -9,6 +9,11 @@
 
   networking.networkmanager.insertNameservers = [ "1.1.1.1" "1.0.0.1" ];
 
+  networking.firewall = {
+    enable = lib.mkForce true;
+    allowedTCPPorts = [ 22 ];
+  }
+
   services.fail2ban = {
     enable = true;
     maxretry = 5;

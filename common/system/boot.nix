@@ -60,7 +60,7 @@ in
   boot = rec {
 
     # Support for zfs
-    supportedFilesystems = [ "xfs" "zfs" "ntfs" "btrfs" "autofs" "nfs" "cifs" ];
+    supportedFilesystems = [ "xfs" "zfs" "ntfs" "btrfs" "autofs" "cifs" ];
     initrd.supportedFilesystems = supportedFilesystems;
 
     # Don't force import zfs pool
