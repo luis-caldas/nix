@@ -44,6 +44,7 @@
                 ogpkgs.nut ogpkgs.iw ogpkgs.apcupsd ogpkgs.libreswan
                 ogpkgs.bash
                 ogpkgs.coreutils
+                ogpkgs.unixtools.xxd
                 ogpkgs.gawk ogpkgs.curl
                 ogpkgs.gnused ogpkgs.gnugrep
               ]}
