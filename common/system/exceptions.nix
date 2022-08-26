@@ -40,6 +40,7 @@
             buildInputs = [
               (pkgs.python3.withPackages (pyPkgs: [ pyPkgs.pyserial ]))
             ];
+            dontUnpack = true;
             installPhase = let
               temperScript = pkgs.fetchurl {
                 url = "https://raw.githubusercontent.com/ccwienk/temper/master/temper.py";
