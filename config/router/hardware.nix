@@ -17,7 +17,7 @@
   '';
 
   # Autostart serial getty connection
-  systemd.services."serial-getty@ttyUSB0" = {
+  systemd.services."serial-getty@ttyRECOVER" = {
     enable = true;
     wantedBy = [ "getty.target" ];
     serviceConfig.Restart = "always";
@@ -152,18 +152,6 @@
         "8388:8388/tcp"
       ];
     };
-
-    # # Webserver for UPS data
-    # nut = {
-    #   image = "teknologist/webnut";
-    #   environment = {
-    #     UPS_HOST = "172.17.0.1";
-    #   };
-    #   environmentFiles = [ /data/local/safe/nut.env ];
-    #   ports = [
-    #     "6543:6543/tcp"
-    #   ];
-    # };
 
     # Custom dashbord for all websites
     dash = {
