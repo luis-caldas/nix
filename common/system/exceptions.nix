@@ -34,25 +34,7 @@
     nixpkgs.config.packageOverrides = ogpkgs: (
       (config.exceptions.overrides ogpkgs)
       // {
-        netdata = let
-          temperProgram = pkgs.stdenv.mkDerivation {
-            name = "temper";
-            buildInputs = [
-              (pkgs.python3.withPackages (pyPkgs: [ pyPkgs.pyserial ]))
-            ];
-            dontUnpack = true;
-            installPhase = let
-              temperScript = pkgs.fetchurl {
-                url = "https://raw.githubusercontent.com/ccwienk/temper/master/temper.py";
-                sha256 = "sha256-qWeBK9Lng0fi1IPhxuAbfgqgkWHAlM1aDpvqBj2yu6k=";
-              };
-            in ''
-              mkdir -p $out/bin
-              cp ${temperScript} $out/bin/myscript
-              chmod +x $out/bin/myscript
-            '';
-          };
-        in ogpkgs.netdata.overrideAttrs (oldAttrs: {
+        netdata = ogpkgs.netdata.overrideAttrs (oldAttrs: {
           buildInputs = oldAttrs.buildInputs ++ [ ogpkgs.makeWrapper ];
           configureFlags = oldAttrs.configureFlags ++ [ "--disable-cloud" ];
           postFixup = oldAttrs.postFixup + ''
@@ -64,7 +46,6 @@
                 ogpkgs.coreutils
                 ogpkgs.gawk ogpkgs.curl
                 ogpkgs.gnused ogpkgs.gnugrep
-                temperProgram
               ]}
           '';
         });
