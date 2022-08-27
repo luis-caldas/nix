@@ -82,7 +82,8 @@
         sha256 = "sha256-e0ps9Fwdcc9iFK8JDRSayamTfAQIbzC+CoN0Yokv7kY=";
       };
       installPhase = ''
-        mkdir -p "$out/share/plymouth/themes/${pname}/"
+        mkdir -p $out/share/plymouth/themes/
+        cp -r plymouth-theme-kodi-animated-logo/usr/share/plymouth/themes/kodi-animated-logo $out/share/plymouth/themes/.
         cat plymouth-theme-kodi-animated-logo/usr/share/plymouth/themes/kodi-animated-logo/kodi-animated-logo.plymouth | sed "s@\/usr\/@$out\/@" > $out/share/plymouth/themes/${pname}/${pname}.plymouth
       '';
     };
