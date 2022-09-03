@@ -22,6 +22,13 @@
   # Virtualisation options
   virtualisation.libvirtd.onShutdown = "shutdown";
 
+  # Enable firewall
+  networking.firewall = {
+    enable = true;
+    allowedTCPPortRanges = [ { from = 0; to = 65535; } ];
+    allowedUDPPortRanges = [ { from = 0; to = 65535; } ];
+  };
+
   # Autostart serial getty connection
   systemd.services."serial-getty@ttyRECOVER" = {
     enable = true;
