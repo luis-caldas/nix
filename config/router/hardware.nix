@@ -16,6 +16,14 @@
     modprobe -i vfio-pci
   '';
 
+  # Enable ip forwarding
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+
+  # Virtualisation options
+  virtualisation.libvirtd = {
+    onShutdown = "shutdown";
+  };
+
   # Autostart serial getty connection
   systemd.services."serial-getty@ttyRECOVER" = {
     enable = true;
