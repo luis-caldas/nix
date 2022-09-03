@@ -20,9 +20,7 @@
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
   # Virtualisation options
-  virtualisation.libvirtd = {
-    onShutdown = "shutdown";
-  };
+  virtualisation.libvirtd.onShutdown = "shutdown";
 
   # Autostart serial getty connection
   systemd.services."serial-getty@ttyRECOVER" = {
