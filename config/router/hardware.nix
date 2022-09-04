@@ -19,15 +19,25 @@
   # Enable ip forwarding
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
+  # Networling
+  networking = {
+    useDHCP = false;
+    dhcpcd.extraConfig = ''
+      noipv4ll
+    '';
+    networkmanager.enable = lib.mkForce false;
+    interfaces = {
+      enp4s0.useDHCP = true;
+      pf-bridge = {
+        useDHCP = true;
+        macAddress = "ff:54:ff:00:00:01";
+      };
+    };
+    bridges.pf-bridge.interfaces = [];
+  };
+
   # Virtualisation options
   virtualisation.libvirtd.onShutdown = "shutdown";
-
-  # Enable firewall
-  networking.firewall = {
-    enable = lib.mkForce true;
-    allowedTCPPortRanges = [ { from = 0; to = 65535; } ];
-    allowedUDPPortRanges = [ { from = 0; to = 65535; } ];
-  };
 
   # Autostart serial getty connection
   systemd.services."serial-getty@ttyRECOVER" = {
