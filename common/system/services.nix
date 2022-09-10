@@ -6,6 +6,7 @@
     enable = my.config.services.ssh;
     # Enable X11 forwarding if graphical is enabled
     forwardX11 = my.config.services.ssh && my.config.graphical.enable;
+    permitRootLogin = lib.mkForce "no";
   };
 
   # Enable avahi
