@@ -10,6 +10,9 @@
     conky
     rofi
 
+    # Xorg
+    xorg.xwininfo
+
     # Video
     xorg.xdpyinfo
 
