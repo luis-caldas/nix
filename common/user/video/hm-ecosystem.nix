@@ -60,6 +60,16 @@ let
     "pdf"       = "org.gnome.Evince";
   };
 
+  # GTK Style
+  gtkStyle = let
+    colourExtBg = mfunc.getElementXRes ("${my.projects.desktop.xresources}/XResources") "MY_COLOUR_0";
+    colourExtFg = mfunc.getElementXRes ("${my.projects.desktop.xresources}/XResources") "MY_FOREGROUND";
+  in ''
+    @define-color accent_color ${colourExtBg};
+    @define-color accent_bg_color ${colourExtBg};
+    @define-color accent_fg_color ${colourExtFg};
+  '';
+
   # Create the .xinitrc link file
   textXInit = { ".xinitrc".text = let
     scaleString = toString my.config.graphical.display.scale;
@@ -391,6 +401,8 @@ in
   xdg.configFile = {
     # Link the fontconfig conf file
     "fontconfig/fonts.conf" = { source = my.projects.fonts + "/fonts.conf"; };
+    # GTK4
+    "gtk-4.0/gtk.css" = { text = gtkStyle; };
   };
 
   # Set icons and themes
@@ -399,41 +411,7 @@ in
   gtk.theme.name     = my.config.graphical.theme;
 
   # Add extra gtk css for colours
-  gtk.gtk3.extraCss = let
-    colourExt = mfunc.getElementXRes ("${my.projects.desktop.xresources}/XResources") "MY_COLOUR_0";
-  in ''
-    @define-color theme_selected_fg_color ${colourExt};
-    @define-color theme_selected_bg_color ${colourExt};
-
-    *:selected{
-        background-color: @theme_selected_bg_color;
-    }
-
-    *.view:selected {
-        background-color: @theme_selected_bg_color;
-    }
-
-    textview selection {
-        background-color: @theme_selected_bg_color;
-    }
-
-    selection {
-        background-color: @theme_selected_bg_color;
-     }
-
-    menu menuitem:hover,
-    .menu menuitem:hover {
-         background-color: @theme_selected_bg_color;
-    }
-
-    switch:checked {
-       background-color: @theme_selected_bg_color;
-    }
-
-    notebook > header.top > tabs > tab:checked {
-        box-shadow: inset 0 -3px  @theme_selected _bg_color;
-    }
-  '';
+  gtk.gtk3.extraCss = gtkStyle;
 
   # Add theming for qt
   qt.enable = true;
@@ -530,6 +508,7 @@ in
         "keyboard.dispatch" = "keyCode";
         "terminal.integrated.shellIntegration.showWelcome" = false;
         "workbench.startupEditor" = "none";
+        "update.mode" = "none";
         "explicitFolding.rules" = {
           "*" = {
               "begin" = "{{{";
