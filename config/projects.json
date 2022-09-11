@@ -16,8 +16,8 @@
         "sha256": "01sykkfgx3hsrksxndvxmyk8pa2438vmqdmyg9bqd6a8kzx3gdiv"
     },
     "myfonts": {
-        "commit": "51bfa43e6bf877813101f28b72b8649ca23f0193",
-        "sha256": "1936bkpahvv39iwfbajmm3h4p7ipmzp0fb7gmxqd1fwvzrdfvzbb"
+        "commit": "479888e4e5ea7e2c4f738d6d272173a1ed2488c4",
+        "sha256": "1zdpynp10p4ppv03f1h9b0zcy3r756sj67ycmpd513qn3mcrcpsb"
     },
     "mygrub": {
         "commit": "e0405542a1d90b6ecbc5ec3b6061c564864b0875",
