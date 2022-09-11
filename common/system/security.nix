@@ -4,7 +4,15 @@
   # Sudo configs for wheel group
   security.sudo = {
     enable = true;
-    extraConfig = "%wheel	ALL=(ALL:ALL)	NOPASSWD: ALL";
+    extraConfig = ''
+      %wheel	ALL=(ALL:ALL)	NOPASSWD: ALL
+
+      Defaults !mail_always
+      Defaults !mail_badpass
+      Defaults !mail_no_host
+      Defaults !mail_no_perms
+      Defaults !mail_no_user
+    '';
   };
 
   # Disable power commands if not super user or on wheel group
