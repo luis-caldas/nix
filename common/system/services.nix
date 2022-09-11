@@ -51,7 +51,7 @@
               --set PATH ${lib.makeBinPath (with pkgs; [
                 nut iw apcupsd libreswan
                 bash
-                coreutils
+                coreutils findutils
                 unixtools.xxd
                 gawk curl
                 gnused gnugrep
