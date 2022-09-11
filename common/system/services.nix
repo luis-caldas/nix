@@ -45,7 +45,7 @@
         buildInputs = [ pkgs.makeWrapper ];
         buildPhase = ''
           mkdir -p "$out"
-          cp "${my.projects.desktop.netdata}"/* "$out"/.
+          cp "${my.projects.desktop.netdata}"/plugins/*.plugin "$out"/.
           for i in $out/*; do
             wrapProgram "$i" \
               --set PATH ${lib.makeBinPath (with pkgs; [
