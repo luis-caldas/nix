@@ -36,6 +36,30 @@
   # Netdata monitor for servers and such
   services.netdata = mfunc.useDefault my.config.services.monitor {
     enable = true;
+    extraPluginPaths = let
+      myPlugins = pkgs.stdenv.mkDerivation rec {
+        pname = "my-netdata-plugins";
+        version = "0.0.1";
+        dontUnpack = true;
+        dontInstall = true;
+        buildInputs = [ pkgs.makeWrapper ];
+        buildPhase = ''
+          mkdir -p "$out"
+          cp "${my.projects.desktop.netdata}"/* "$out"/.
+          for i in $out/*; do
+            wrapProgram "$i" \
+              --set PATH ${lib.makeBinPath (with pkgs; [
+                nut iw apcupsd libreswan
+                bash
+                coreutils
+                unixtools.xxd
+                gawk curl
+                gnused gnugrep
+              ])}
+          done
+        '';
+      };
+    in [ "${myPlugins}" ];
     config = {
       global = {
         "memory mode" = "dbengine";

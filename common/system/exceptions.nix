@@ -33,24 +33,7 @@
     # Overrides
     nixpkgs.config.packageOverrides = ogpkgs: (
       (config.exceptions.overrides ogpkgs)
-      // {
-        netdata = ogpkgs.netdata.overrideAttrs (oldAttrs: {
-          buildInputs = oldAttrs.buildInputs ++ [ ogpkgs.makeWrapper ];
-          configureFlags = oldAttrs.configureFlags ++ [ "--disable-cloud" ];
-          postFixup = oldAttrs.postFixup + ''
-            cp "${my.projects.desktop.netdata}/temper.bash" $out/libexec/netdata/charts.d/temper.chart.sh
-            wrapProgram $out/libexec/netdata/plugins.d/charts.d.plugin \
-              --set PATH ${lib.makeBinPath [
-                ogpkgs.nut ogpkgs.iw ogpkgs.apcupsd ogpkgs.libreswan
-                ogpkgs.bash
-                ogpkgs.coreutils
-                ogpkgs.unixtools.xxd
-                ogpkgs.gawk ogpkgs.curl
-                ogpkgs.gnused ogpkgs.gnugrep
-              ]}
-          '';
-        });
-      }
+      // {}
     );
 
   };
