@@ -130,7 +130,6 @@
       ports = [
         "82:8080/tcp"
       ];
-      environmentFiles = [ /data/local/safe/udns.env ];
       extraOptions = [ "--dns=172.17.0.1" ];
     };
 
@@ -176,14 +175,14 @@
       ];
     };
 
-    # Custom dashbord for all websites
+    # HTTP Server for files
     dash = {
-      image = "lissy93/dashy:latest";
+      image = "halverneus/static-file-server:latest";
       volumes = [
-        "/data/local/docker/config/dash/conf.yml:/app/public/conf.yml"
+        "/data/local/docker/config/dash:/web:ro"
       ];
       ports = [
-        "80:80/tcp"
+        "80:8080/tcp"
       ];
       extraOptions = [ "--dns=172.17.0.1" ];
     };
