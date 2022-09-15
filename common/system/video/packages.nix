@@ -26,7 +26,6 @@
       "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
       "gcbommkclmclpchllfjekcdonpmejbdp" # https everywhere
       "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # privacy badger
-      "fihnjjcciajhdojfnbdddfaoknhalnja" # i dont care about cookies
 
       "cnojnbdhbhnkbcieeekonklommdnndci" # search by image
 
