@@ -131,22 +131,29 @@
       extraOptions = [ "--network=host" ];
     };
 
-    # Downloading app
-    # aria = {
-    #   image = "hurlenko/aria2-ariang";
-    #   environment = {
-    #     PUID = "1000";
-    #     PGID = "1000";
-    #     ARIA2RPCPORT = "6880";
-    #   };
-    #   ports = [
-    #     "6880:8080/tcp"
-    #   ];
-    #   volumes = [
-    #     "/data/storr/media/downloads:/aria2/data"
-    #     "/data/local/config/aria:/aria2/conf"
-    #   ];
-    # };
+    # AriaNG Web App & Aria2
+    aria2 = {
+      image = "p3terx/aria2-pro";
+      environment = {
+          PUID = builtins.toString my.config.user.uid;
+          PGID = builtins.toString my.config.user.gid;
+          UPDATE_TRACKERS = "false";
+          RPC_SECRET = "";
+      };
+      ports = [
+        "6800:6800/tcp"
+      ];
+      volumes = [
+        "/data/storr/media/downloads:/downloads"
+        "/data/local/config/aria:/config"
+      ];
+    };
+    ariang = {
+      image = "p3terx/ariang";
+      ports = [
+        "80:6880/tcp"
+      ];
+    };
 
   };
 
