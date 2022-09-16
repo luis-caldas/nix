@@ -72,11 +72,7 @@ let
         gnugrep findutils moreutils util-linux
         cron openssl cacert
       ];
-      config = {
-        Env = [
-          "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
-        ];
-      };
+      config.Env = [ "TZ=${my.config.system.timezone}" "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" ];
     };
 
   in {
@@ -162,11 +158,7 @@ let
       fromImage = baseImage;
       contents = [ initScript ];
       runAsRoot = "${buildScript}/bin/build";
-      config = {
-        Cmd = [
-          "${pkgs.bash}/bin/bash" "${initScript}/bin/start"
-        ];
-      };
+      config.Cmd = [ "${pkgs.bash}/bin/bash" "${initScript}/bin/start" ];
     };
 
     # Asterisk image
@@ -197,11 +189,7 @@ let
         perl sox mpg123
         msmtp
       ];
-      config = {
-        Cmd = [
-          "${asteriskPkg}/bin/asterisk" "-C" "/etc/asterisk/asterisk.conf" "-T" "-p" "-vvvvv" "-ddddd" "-f"
-        ];
-      };
+      config.Cmd = [ "${asteriskPkg}/bin/asterisk" "-C" "/etc/asterisk/asterisk.conf" "-T" "-p" "-vvvvv" "-ddddd" "-f" ];
     };
 
     # DNS updater image
@@ -275,11 +263,38 @@ let
       fromImage = baseImage;
       contents = [ initScript ];
       runAsRoot = "${buildScript}/bin/build";
-      config = {
-        Cmd = [
-          "${pkgs.bash}/bin/bash" "${initScript}/bin/start"
-        ];
-      };
+      config.Cmd = [ "${pkgs.bash}/bin/bash" "${initScript}/bin/start" ];
+    };
+
+    # Static website with given url
+    web = { name ? null, url ? null }: let
+      # Decide name
+      baseName = "local/web";
+      givenName = if name == null then baseName else "${baseName}-${name}";
+      # Get website
+      website = if url == null then null else builtins.fetchGit { inherit url; ref = "master"; };
+      # Set root folder
+      rootFolder = "/web";
+      # Build script for the image
+      buildScript = let
+        createBuild = functions.create [ rootFolder ];
+      in pkgs.writeScriptBin "build" (''
+        #!${pkgs.bash}/bin/bash
+      '' + (if website == null then ''
+        "${createBuild}/bin/build"
+      '' else ''
+        "${pkgs.coreutils}/bin/cp" -r "${website}" "${rootFolder}"
+      ''));
+    in pkgs.dockerTools.buildImage {
+      name = givenName;
+      tag = "latest";
+      fromImage = baseImage;
+      contents = with pkgs; [ nodePackages.http-server ];
+      runAsRoot = "${buildScript}/bin/build";
+      config.Cmd = [
+        "${pkgs.nodePackages.http-server}/bin/http-server" "${rootFolder}"
+        "-p" "8080" "-i" "--log-ip" "-r" "--no-dotfiles"
+      ];
     };
 
   };

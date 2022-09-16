@@ -32,8 +32,8 @@
 
   # Some containers
   virtualisation.oci-containers.containers = {
-    media = {
-      image = "local/python-scrape";
+    media = rec {
+      image = imageFile.imageName;
       imageFile = my.containers.pythonScrape;
       environmentFiles = [ /data/safe/smtp.env ];
     };

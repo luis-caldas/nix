@@ -105,8 +105,8 @@
   virtualisation.oci-containers.containers = {
 
     # Asterisk container
-    asterisk = {
-      image = "local/asterisk";
+    asterisk = rec {
+      image = imageFile.imageName;
       imageFile = my.containers.asterisk;
       volumes = [
         "/data/local/docker/config/asterisk/conf:/etc/asterisk/conf.mine"
@@ -120,8 +120,22 @@
       extraOptions = [ "--dns=172.17.0.1" "--network=host" ];
     };
 
-    # HTTP Server for files
+    # HTTP Server for users
     httpd = {
+      image = imageFile.imageName;
+      imageFile = my.containers.web {};
+      volumes = [
+        "/data/local/docker/config/asterisk/voicemail:/web/voicemail:ro"
+        "/data/local/docker/config/asterisk/record:/web/monitor:ro"
+      ];
+      ports = [
+        "83:8080/tcp"
+      ];
+      extraOptions = [ "--dns=172.17.0.1" ];
+    };
+
+    # HTTP Server for kodi
+    httpk = rec {
       image = "halverneus/static-file-server:latest";
       volumes = [
         "/data/local/docker/config/asterisk/voicemail:/web/voicemail:ro"
@@ -134,8 +148,8 @@
     };
 
     # DNS updater
-    udns = {
-      image = "local/udns";
+    udns = rec {
+      image = imageFile.imageName;
       imageFile = my.containers.udns;
       environmentFiles = [ /data/local/safe/udns.env ];
       extraOptions = [ "--dns=172.17.0.1" ];
@@ -175,11 +189,12 @@
       ];
     };
 
-    # HTTP Server for files
-    dash = {
-      image = "halverneus/static-file-server:latest";
+    # Dashboard website
+    dash = rec {
+      image = imageFile.imageName;
+      imageFile = my.containers.web { name = "dashboard"; url = "https://github.com/luis-caldas/personal"; };
       volumes = [
-        "/data/local/docker/config/dash:/web:ro"
+        "/data/local/docker/config/dash/others.json:/web/others.json:ro"
       ];
       ports = [
         "80:8080/tcp"
