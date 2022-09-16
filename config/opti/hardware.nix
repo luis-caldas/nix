@@ -30,15 +30,6 @@
   systemd.services.upsd = lib.mkForce {};
   systemd.services.upsdrv = lib.mkForce {};
 
-  # Some containers
-  virtualisation.oci-containers.containers = {
-    media = rec {
-      image = imageFile.imageName;
-      imageFile = my.containers.pythonScrape;
-      environmentFiles = [ /data/safe/smtp.env ];
-    };
-  };
-
   fileSystems."/" =
     { device = "light/root";
       fsType = "zfs";
