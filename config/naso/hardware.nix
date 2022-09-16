@@ -138,7 +138,6 @@
           PUID = builtins.toString my.config.user.uid;
           PGID = builtins.toString my.config.user.gid;
           UPDATE_TRACKERS = "false";
-          RPC_SECRET = "";
       };
       ports = [
         "6800:6800/tcp"
