@@ -8,17 +8,6 @@
 
   boot.zfs.requestEncryptionCredentials = true;
 
-  # Set up docker containers
-  virtualisation.oci-containers.containers = {
-    test = rec {
-      image = imageFile.imageName;
-      imageFile = my.containers.web {};
-      ports = [
-        "80:8080/tcp"
-      ];
-    };
-  };
-
   fileSystems."/" =
     { device = "hill/root";
       fsType = "zfs";
