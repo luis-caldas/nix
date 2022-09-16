@@ -194,7 +194,7 @@
       image = imageFile.imageName;
       imageFile = my.containers.web { name = "dashboard"; url = "https://github.com/luis-caldas/personal"; };
       volumes = [
-        "/data/local/docker/config/dash/others.json:/web/others.json:ro"
+        "/data/local/docker/config/dash/other.json:/web/other.json:ro"
       ];
       ports = [
         "80:8080/tcp"
