@@ -151,7 +151,7 @@
     ariang = {
       image = "p3terx/ariang";
       ports = [
-        "80:6880/tcp"
+        "6880:6880/tcp"
       ];
     };
 
