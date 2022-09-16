@@ -121,7 +121,7 @@
     };
 
     # HTTP Server for users
-    httpd = {
+    httpd = rec {
       image = imageFile.imageName;
       imageFile = my.containers.web {};
       volumes = [
