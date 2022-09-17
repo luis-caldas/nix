@@ -143,6 +143,8 @@
         "6880:8080/tcp"
       ];
       volumes = [
+        "/data/storr/media/downloads:/aria2/data"
+        "/data/local/config/aria:/aria2/conf"
       ];
       extraOptions = [ "--init" ];
     };
