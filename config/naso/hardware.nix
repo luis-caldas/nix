@@ -110,7 +110,7 @@
       environment = {
         TZ = my.config.system.timezone;
       };
-      user = "1000:1000";
+      user = "${builtins.toString my.config.user.uid}:${builtins.toString my.config.user.gid}";
       volumes = [
         "/data/local/config/komga:/config"
         "/data/storr/media/manga:/data:ro"
@@ -132,26 +132,19 @@
     };
 
     # AriaNG Web App & Aria2
-    aria2 = {
-      image = "p3terx/aria2-pro";
+    aria = {
+      image = "hurlenko/aria2-ariang";
       environment = {
-          PUID = builtins.toString my.config.user.uid;
-          PGID = builtins.toString my.config.user.gid;
-          UPDATE_TRACKERS = "false";
+        PUID = builtins.toString my.config.user.uid;
+        PGID = builtins.toString my.config.user.gid;
+        ARIA2RPCPORT = "6880";
       };
       ports = [
-        "6800:6800/tcp"
+        "6880:8080/tcp"
       ];
       volumes = [
-        "/data/storr/media/downloads:/downloads"
-        "/data/local/config/aria:/config"
       ];
-    };
-    ariang = {
-      image = "p3terx/ariang";
-      ports = [
-        "6880:6880/tcp"
-      ];
+      extraOptions = [ "--init" ];
     };
 
   };
