@@ -64,6 +64,7 @@ let
       tag = "latest";
       runAsRoot = "${buildScript}/bin/build";
       contents = with pkgs; [
+        tini
         bash bashInteractive
         vim
         tree
@@ -79,11 +80,9 @@ let
 
     # Python Scrape container
     pythonScrape = let
-
       # Default log files
       logFileScript = "/log/exec.log";
       logFileCron = "/log/cron.log";
-
       # Main application
       projectFull = pkgs.runCommand "add-folder" { project = builtins.fetchGit {
         url = "https://github.com/luis-caldas/get-weathers";
@@ -106,7 +105,6 @@ let
           */1 * * * * "${mainExec}/bin/main" >> "${logFileScript}" 2>&1
         '';
       };
-
       # Build script for the image
       buildScript = let
         createBuild = functions.create [ "/var/spool/cron/crontabs" "/var/run" "/tmp" ];
@@ -119,37 +117,17 @@ let
         "${pkgs.coreutils}/bin/echo" 'root:x:0:0:root:/root:/bin/bash' > /etc/passwd
         "${addBuild}/bin/build"
       '';
-
       # Initialization script for the container
       initScript = pkgs.writeScriptBin "start" ''
         #!${pkgs.bash}/bin/bash
-
-        # Variable that contains all the processes
-        processes=()
-
-        # Catch SIGTERMs
-        _term() {
-          for each_pid in ''${processes[@]}; do
-            "${pkgs.util-linux}/bin/kill" -TERM "$each_pid" 2>/dev/null
-          done
-        }
-        trap _term SIGTERM
-
         # Import ENVs to proper path
         "${pkgs.coreutils}/bin/printenv" | "${pkgs.gnugrep}/bin/grep" "SMTP\|SSL" > /etc/environment
-
         # Start cron process
         "${pkgs.busybox}/bin/crond" -f -l 0 -L /cron.log &
-        processes+=("$!")
-
         # Tail log file
         "${pkgs.coreutils}/bin/tail" -fq "${logFileScript}" "${logFileCron}" &
-        processes+=("$!")
-
         # Wait for all processes
-        for pid in ''${processes[@]}; do
-            wait "$pid"
-        done
+        wait
       '';
 
     in pkgs.dockerTools.buildImage {
@@ -158,7 +136,7 @@ let
       fromImage = baseImage;
       contents = [ initScript ];
       runAsRoot = "${buildScript}/bin/build";
-      config.Cmd = [ "${pkgs.bash}/bin/bash" "${initScript}/bin/start" ];
+      config.Cmd = [ "${pkgs.tini}/bin/tini" "${initScript}/bin/start" ];
     };
 
     # Asterisk image
@@ -194,11 +172,9 @@ let
 
     # DNS updater image
     udns = let
-
       # Default log files
       logFileScript = "/log/exec.log";
       logFileCron = "/log/cron.log";
-
       # Default application
       mainExec = pkgs.writeScriptBin "main" ''
         #!${pkgs.bash}/bin/bash
@@ -209,7 +185,6 @@ let
           */5 * * * * "${mainExec}/bin/main" >> "${logFileScript}" 2>&1
         '';
       };
-
       # Build script for the image
       buildScript = let
         createBuild = functions.create [
@@ -224,46 +199,25 @@ let
         "${pkgs.coreutils}/bin/echo" 'root:x:0:0:root:/root:/bin/bash' > /etc/passwd
         "${addBuild}/bin/build"
       '';
-
       # Initialization script for the container
       initScript = pkgs.writeScriptBin "start" ''
         #!${pkgs.bash}/bin/bash
-
-        # Variable that contains all the processes
-        processes=()
-
-        # Catch SIGTERMs
-        _term() {
-          for each_pid in ''${processes[@]}; do
-            "${pkgs.util-linux}/bin/kill" -TERM "$each_pid" 2>/dev/null
-          done
-        }
-        trap _term SIGTERM
-
         # Import ENVs to proper path
         "${pkgs.coreutils}/bin/printenv" | "${pkgs.gnugrep}/bin/grep" "KEY\|SSL" > /etc/environment
-
         # Start cron process
         "${pkgs.busybox}/bin/crond" -f -l 0 -L /cron.log &
-        processes+=("$!")
-
         # Tail log file
         "${pkgs.coreutils}/bin/tail" -fq "${logFileScript}" "${logFileCron}" &
-        processes+=("$!")
-
         # Wait for all processes
-        for pid in ''${processes[@]}; do
-            wait "$pid"
-        done
+        wait
       '';
-
     in pkgs.dockerTools.buildImage {
       name = "local/udns";
       tag = "latest";
       fromImage = baseImage;
       contents = [ initScript ];
       runAsRoot = "${buildScript}/bin/build";
-      config.Cmd = [ "${pkgs.bash}/bin/bash" "${initScript}/bin/start" ];
+      config.Cmd = [ "${pkgs.tini}/bin/tini" "${initScript}/bin/start" ];
     };
 
     # Static website with given url
