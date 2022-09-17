@@ -250,7 +250,7 @@
     youtube-dl
 
     # KVM & Virt
-    qemu
+    qemu_full
 
     # Video
     ffmpeg-full

@@ -3,8 +3,9 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "uas" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" "kvmgt" "mdev" "vfio-iommu-type1" ];
   boot.extraModulePackages = [ ];
+  boot.kernelParams = [ "intel_iommu=on" "i915.enable_guc=0" "i915.enable_gvt=1" ];
 
   boot.zfs.requestEncryptionCredentials = true;
 
