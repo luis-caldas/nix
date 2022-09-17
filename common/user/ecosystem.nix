@@ -79,6 +79,8 @@ in
     # Add ovmf path
     xdg.configFile = (mfunc.useDefault (((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) && (!my.config.system.minimal)) {
       "virt/ovmf".source = "${pkgs.OVMFFull.fd}";
+    } {}) // (mfunc.useDefault (!my.config.system.minimal) {
+      "virt/qemu".source = "${pkgs.qemu}/share/qemu";
     } {}) // {
       "virt/win/qemu".source = "${pkgs.win-qemu}";
       "virt/win/spice".source = "${pkgs.win-spice}";
