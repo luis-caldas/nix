@@ -22,16 +22,9 @@
       KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="e025", MODE="0666"
       # Add group permissions to vfio
       SUBSYSTEM=="vfio", MODE="0660", GROUP="kvm"
+      # Override tty group to use plugdev and create a static symlink to my serial usb
+      SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", SYMLINK+="ttyRECOVER", MODE="0660", GROUP="plugdev"
     '';
-    packages = [ (pkgs.writeTextFile {
-        name = "custom-top";
-        text = ''
-          # Override tty group to use plugdev and create a static symlink to my serial usb
-          SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", SYMLINK+="ttyRECOVER", MODE="0660", GROUP="plugdev"
-        '';
-        destination = "/etc/udev/rules.d/10-custom-top.rules";
-      })
-    ];
   };
 
   # Fix extra remote codes on g20
