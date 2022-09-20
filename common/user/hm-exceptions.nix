@@ -30,9 +30,7 @@
     ]);
 
     # Allow some insecure packages
-    nixpkgs.config.permittedInsecurePackages = [
-      "openssl-1.0.2u"
-    ];
+    nixpkgs.config.permittedInsecurePackages = [];
 
     # Home manager package overrides
     nixpkgs.config.packageOverrides = ogpkgs: (

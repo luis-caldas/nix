@@ -5,7 +5,7 @@
   home.packages = with pkgs; [
 
     # Emulators
-    # pcsxr  # Uses unsafe ffmpeg
+    pcsxr
     pcsx2
     citra
     desmume
