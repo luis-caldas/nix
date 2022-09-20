@@ -12,8 +12,8 @@
         "sha256": "10nzdpdvp4pwz3w2z980v137yzdj8qwhkr2fwz46vram9400xfv7"
     },
     "mydesktop": {
-        "commit": "48b0d1c38ab73f4e47315247b719ddb11cb18215",
-        "sha256": "1px2lzs5qlam08fgllklphfikjah2h18vzx77mv9xr025a2fdjgr"
+        "commit": "3f4e6c11960972bceaa77ed6940870a3618b04f5",
+        "sha256": "1wx3crsb8ghj70b7r66k2ll4rfwx4gfvagc940v0ddjs73hvnx3v"
     },
     "myfonts": {
         "commit": "479888e4e5ea7e2c4f738d6d272173a1ed2488c4",
@@ -36,8 +36,8 @@
         "sha256": "1f86b40x1d2kz3ci4y643nh22w3k5lfw8cv5jfa4hixkvy4hshp9"
     },
     "myshell": {
-        "commit": "caaf4490bf9b4221cd2d0d6f8e04861144091700",
-        "sha256": "13z05gkhn63nnb39lil825w72sd20z70n4bv4j5483l9cc8xv1d0"
+        "commit": "eba272ca749d20a850ba11ec95de677fc940518f",
+        "sha256": "0bpsab1dxi4rww8982784iskykzsgn1rb6wr7wfbb7v0j25xmr5a"
     },
     "mythemes": {
         "commit": "e55cec84f30af58e2aa36af3145167167cc9fce4",
