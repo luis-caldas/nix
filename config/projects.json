@@ -12,12 +12,12 @@
         "sha256": "10nzdpdvp4pwz3w2z980v137yzdj8qwhkr2fwz46vram9400xfv7"
     },
     "mydesktop": {
-        "commit": "3f4e6c11960972bceaa77ed6940870a3618b04f5",
-        "sha256": "1wx3crsb8ghj70b7r66k2ll4rfwx4gfvagc940v0ddjs73hvnx3v"
+        "commit": "b4ace598c3406033aad5dfd9dd0bfe0a98eef846",
+        "sha256": "15liprqgywi96lwgk15byk6wds6xj9580r20rrbgz04la2rixl58"
     },
     "myfonts": {
-        "commit": "479888e4e5ea7e2c4f738d6d272173a1ed2488c4",
-        "sha256": "1zdpynp10p4ppv03f1h9b0zcy3r756sj67ycmpd513qn3mcrcpsb"
+        "commit": "f3ed7431896e1c6a381a708a5f064bebe063f2bf",
+        "sha256": "08dkjv9p68qrf46fvybys2s3x9119h6w413xilaiarhdjcphgkzj"
     },
     "mygrub": {
         "commit": "e0405542a1d90b6ecbc5ec3b6061c564864b0875",
@@ -48,7 +48,7 @@
         "sha256": "0g30vjzqmhb7i0kcz8nrgbhw5xx4lfh6fn0hspdd7dcx7x10qfc1"
     },
     "mywallpapers": {
-        "commit": "42fb2fe79306bf3be52027ea740d53fa19e838af",
-        "sha256": "10ywkzpigkqk8a040hifqkkndc9cf3sjrdzw8f5lh6v05vbfl2fd"
+        "commit": "1ca737d3bd82e8f392ff4c7cf3f83692d4fd607e",
+        "sha256": "0sx0w8j0jqbw0mgkmxgkwgv3ry4i1ajqa9npdvw9f3dsf2zy56q0"
     }
 }
