@@ -46,6 +46,9 @@
     # File manager
     gnome3.nautilus
 
+    # Image viewer
+    gnome3.eog
+
     # File organizing
     qdirstat
 
