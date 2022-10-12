@@ -26,6 +26,7 @@
       "dwarf-fortress"
       "reaper" "linuxsampler"
       "spotify" "spotify-unwrapped"
+      "zoom"
       "unrar"
     ]);
 

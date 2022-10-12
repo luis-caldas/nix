@@ -113,6 +113,12 @@
     # Voip
     mumble
 
+    # Video
+    zoom-us
+
+    # Editors
+    jetbrains.pycharm-community
+
     # Testing
     gource
     glxinfo
