@@ -53,6 +53,39 @@ let
     else
       "";
 
+  # Concatenate without caring about types
+  agnosticConcat = listInputs: let
+    stringSeparator = "";
+    concatSet = {
+        "list" = builtins.concatLists;
+        "string" = (listInput: builtins.concatStringsSep stringSeparator listInput);
+        "set" = (listInput: builtins.foldl' lib.recursiveUpdate {} listInput);
+        "none" = (listInput: {});
+      };
+    typesList = map builtins.typeOf listInputs;
+    possibleList = builtins.attrNames concatSet;
+    typeNow = let
+      notFound = "none";
+    in if (lib.all (x: builtins.elem x possibleList) typesList) &&
+          ((lib.length typesList) > 0) then let
+        first = builtins.head typesList;
+      in if (lib.all (x: first == x) typesList) then
+        first
+      else notFound
+    else notFound;
+  in ((builtins.getAttr typeNow concatSet) listInputs);
+
+  # Function to insert new attrs in overrides
+  overrideInsert = oldAttrs: newAttrs: let
+    mergeIfNeeded = newName: newValue:
+      if (builtins.hasAttr newName oldAttrs) then
+        agnosticConcat [ newValue (builtins.getAttr newName oldAttrs) ]
+      else
+        newValue;
+    mergedAttrs = lib.mapAttrsToList (name: value: { inherit name; value = mergeIfNeeded name value; }) newAttrs;
+  in
+    builtins.listToAttrs mergedAttrs;
+
 in {
   useDefault = useDefault;
   listFilesInFolder = listFilesInFolder;
@@ -61,4 +94,5 @@ in {
   getFirstIndex = getFirstIndex;
   getElementXRes = getElementXRes;
   safeReadFile = safeReadFile;
+  overrideInsert = overrideInsert;
 }
