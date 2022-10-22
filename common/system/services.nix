@@ -15,6 +15,26 @@
     nssmdns = true;
   };
 
+  # Setup proxychains
+  programs.proxychains = {
+    enable = true;
+    localnet = "127.0.0.0/255.0.0.0";
+    quietMode = false;
+    proxyDNS = true;
+    proxies = {
+      tor = {
+        type = "socks5";
+        host = "127.0.0.1";
+        port = 9050;
+      };
+      local = {
+        type = "socks5";
+        host = "127.0.0.1";
+        port = 30085;
+      };
+    };
+  };
+
   # Vitualisation
   virtualisation.docker.enable = my.config.services.docker;
 
