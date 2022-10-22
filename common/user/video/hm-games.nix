@@ -25,7 +25,7 @@
     zeroad
     openttd
     xonotic
-    # hedgewars
+    # hedgewars  # broken
     teeworlds
     assaultcube
     crispyDoom
@@ -44,7 +44,7 @@
   mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [
 
     # Minecraft
-    polymc
+    # polymc  # compromised
     minecraft
 
     # FPS
