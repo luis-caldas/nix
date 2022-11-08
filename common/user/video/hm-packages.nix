@@ -121,6 +121,9 @@
 
     # Editors
     jetbrains.pycharm-community
+    jetbrains.pycharm-professional
+    jetbrains.webstorm
+    jetbrains.clion
 
     # Testing
     gource

@@ -28,6 +28,7 @@
       "spotify" "spotify-unwrapped"
       "zoom"
       "unrar"
+      "pycharm-professional" "webstorm" "clion"
     ]);
 
     # Allow some insecure packages
