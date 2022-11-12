@@ -116,15 +116,6 @@
     # Voip
     mumble
 
-    # Video
-    zoom-us
-
-    # Editors
-    jetbrains.pycharm-community
-    jetbrains.pycharm-professional
-    jetbrains.webstorm
-    jetbrains.clion
-
     # Testing
     gource
     glxinfo
@@ -214,6 +205,21 @@
 
   ] [] ++
   mfunc.useDefault my.config.graphical.touch [
+  ] [] ++
+  mfunc.useDefault my.config.graphical.production.software [
+
+    # Editors
+    jetbrains.pycharm-community
+    jetbrains.pycharm-professional
+    jetbrains.webstorm
+    jetbrains.clion
+
+  ] [] ++
+  mfunc.useDefault my.config.graphical.production.business [
+
+    # Video
+    zoom-us
+
   ] [] ++
   mfunc.useDefault my.config.graphical.production.electronics [
 

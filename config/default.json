@@ -93,6 +93,8 @@
       "audio": false,
       "video": false,
       "models": false,
+      "software": false,
+      "business": false,
       "electronics": false
     },
     "trackpoint": {
