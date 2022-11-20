@@ -105,6 +105,7 @@
     ntp
     lsof
     iperf
+    hping
     ethtool
     bridge-utils
     shadowsocks-libev
