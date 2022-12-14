@@ -1,7 +1,7 @@
 {
     "myconky": {
-        "commit": "bac1c3284ad885da077f5ce97a4e2336c6ac1f49",
-        "sha256": "11zslx75xmrdak2nw14g5mhkhhkildx2bqvl5hx1jnv9p1nmhnzl"
+        "commit": "d22421785e3f686ee70fd926d185ad713b420d06",
+        "sha256": "0v46hwqk72kx64q83s6ks2gpiq8p60sva73vxd637llg82pmqbb6"
     },
     "mycontainers": {
         "commit": "34f423799f2c0ce66522aae6616319dd7491064b",
@@ -48,7 +48,7 @@
         "sha256": "0g30vjzqmhb7i0kcz8nrgbhw5xx4lfh6fn0hspdd7dcx7x10qfc1"
     },
     "mywallpapers": {
-        "commit": "f3db973a9cc62ff25a4a5f99c714025794fb5bda",
-        "sha256": "1hvxxjallwhqlbfjqp8lqngjva0rr69ypw6aglab5rv4fypw5gij"
+        "commit": "7f1fb968d2be8136c33ee5e8e52299c0399975d7",
+        "sha256": "1k26mavczlz6bvi2lkdjs0z51p8qn8wr4xb4yws0xjhc3ypwlysp"
     }
 }
