@@ -16,6 +16,9 @@
 			"DefaultSearchProviderEnabled": true,
 
 			"HideWebStoreIcon": true,
+			"NTPCardsVisible": false,
+			"NTPContentSuggestionsEnabled": false,
+			"NTPMiddleSlotAnnouncementVisible": false,
 
 			"DownloadRestrictions": 0,
 
