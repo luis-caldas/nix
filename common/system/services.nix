@@ -48,7 +48,7 @@
     onShutdown = "shutdown";
     qemu.ovmf = {
       enable = true;
-      package = pkgs.OVMFFull;
+      packages = [ pkgs.OVMFFull ];
     };
     qemu.swtpm.enable = my.config.services.virt.swtpm;
   } {};
