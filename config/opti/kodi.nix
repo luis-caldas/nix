@@ -114,7 +114,7 @@
       pcsx2
       desmume
       dolphin
-      pcsx_rearmed
+      pcsx-rearmed
     ]; })
   ];
 
