@@ -4,6 +4,17 @@ let
   # Default path for the chosen system that was set on a file
   systemName = lib.replaceStrings ["\n" " "] ["" ""] (builtins.readFile ./system);
 
+  # Extract this version from nixpkgs
+  versionList = lib.splitString "." lib.version;
+  versionConcatenated = (
+    builtins.elemAt versionList 0 +
+    "." +
+    builtins.elemAt versionList 1
+  );
+
+  # System Version
+  version = versionConcatenated;
+
   # Create list for allowed architectures
   archReference = {
     "x64" = "x86_64";
@@ -121,6 +132,7 @@ let
     arch = sysArch;
     path = realName;
     config = configObj;
+    version = version;
     chromium = chromiumObj;
     reference = archReference;
     projects = someProjects // desktopProject;

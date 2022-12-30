@@ -51,6 +51,4 @@
     size = (1024 * 4); # Size in MB
   } ];
 
-  system.stateVersion = "22.05";
-
 }

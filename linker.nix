@@ -47,21 +47,10 @@ let
   # My functions
   mfunc = import ./functions/func.nix { inherit lib; };
 
-  # Extract this version from nixpkgs
-  versionList = lib.splitString "." lib.version;
-  versionConcatenated = (
-    builtins.elemAt versionList 0 +
-    "." +
-    builtins.elemAt versionList 1
-  );
-
-  # System Version
-  version = versionConcatenated;
-
   # Home manager
   home-manager = builtins.fetchGit {
     url = "https://github.com/rycee/home-manager.git";
-    ref = "release-" + version;
+    ref = "release-" + my.version;
   };
 
   # Unstable packages
@@ -167,6 +156,9 @@ let
   ] [];
 
 in {
+
+  # Set nix state version
+  system.stateVersion = my.version;
 
   # Add the system import list
   imports = map (x: impall x args) un-imports-list;

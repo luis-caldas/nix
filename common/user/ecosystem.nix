@@ -58,6 +58,7 @@ in
   # Configure base packages for the root user as well
   home-manager.users.root = { ... }: {
     programs = programsSet;
+    home.stateVersion = my.version;
   };
 
   # Configure packages for main user
@@ -113,6 +114,9 @@ in
     home.file = mfunc.useDefault (((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) && (!my.config.system.minimal))
     { ".local/share/arduino" = { source = "${pkgs.arduino}/share/arduino"; }; }
     {};
+
+    # Set the state version for the user
+    home.stateVersion = my.version;
 
   };
 

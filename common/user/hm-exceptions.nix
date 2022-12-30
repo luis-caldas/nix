@@ -21,7 +21,7 @@
       config.exceptions.unfree
     ++ [
       "assaultcube"
-      "steam" "steam-original" "steam-runtime"
+      "steam" "steam-original" "steam-runtime" "steam-run"
       "minecraft-launcher"
       "dwarf-fortress"
       "reaper" "linuxsampler"

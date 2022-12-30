@@ -7,4 +7,5 @@
   boot.extraModulePackages = [ ];
 
   swapDevices = [ ];
+
 }

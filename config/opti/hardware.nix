@@ -64,6 +64,4 @@
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
-  system.stateVersion = "21.11";
-
 }

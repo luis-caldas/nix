@@ -29,7 +29,7 @@
     teeworlds
     assaultcube
     crispyDoom
-    chocolateDoom
+    # chocolateDoom  # conflicting
     mpkgs.srb2
     mpkgs.srb2kart
 
