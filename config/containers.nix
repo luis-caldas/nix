@@ -63,7 +63,7 @@ let
       name = "local/base";
       tag = "latest";
       runAsRoot = "${buildScript}/bin/build";
-      contents = with pkgs; [
+      copyToRoot = with pkgs; [
         tini
         bash bashInteractive
         vim
@@ -134,7 +134,7 @@ let
       name = "local/python-scrape";
       tag = "latest";
       fromImage = baseImage;
-      contents = [ initScript ];
+      copyToRoot = [ initScript ];
       runAsRoot = "${buildScript}/bin/build";
       config.Cmd = [ "${pkgs.tini}/bin/tini" "${initScript}/bin/start" ];
     };
@@ -162,7 +162,7 @@ let
       tag = "latest";
       fromImage = baseImage;
       runAsRoot = "${buildScript}/bin/build";
-      contents = with pkgs; [
+      copyToRoot = with pkgs; [
         asteriskPkg
         perl sox mpg123
         msmtp
@@ -215,7 +215,7 @@ let
       name = "local/udns";
       tag = "latest";
       fromImage = baseImage;
-      contents = [ initScript ];
+      copyToRoot = [ initScript ];
       runAsRoot = "${buildScript}/bin/build";
       config.Cmd = [ "${pkgs.tini}/bin/tini" "${initScript}/bin/start" ];
     };
@@ -243,7 +243,7 @@ let
       name = givenName;
       tag = "latest";
       fromImage = baseImage;
-      contents = with pkgs; [ nodePackages.http-server ];
+      copyToRoot = with pkgs; [ nodePackages.http-server ];
       runAsRoot = "${buildScript}/bin/build";
       config.Cmd = [
         "${pkgs.nodePackages.http-server}/bin/http-server" "${rootFolder}"
