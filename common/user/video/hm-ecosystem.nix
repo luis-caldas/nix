@@ -408,7 +408,7 @@ in
   # Set icons and themes
   gtk.enable = true;
   gtk.iconTheme.name = my.config.graphical.icons;
-  gtk.theme.name     = my.config.graphical.theme;
+  gtk.theme.name = "Adwaita-dark";
 
   # Add extra gtk css for colours
   gtk.gtk3.extraCss = gtkStyle;
@@ -416,6 +416,13 @@ in
   # Add theming for qt
   qt.enable = true;
   qt.platformTheme = "gtk";
+
+  # Set theme color
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+  };
 
   # Default XDG applications
   xdg.mimeApps.enable = true;
