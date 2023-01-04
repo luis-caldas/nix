@@ -1,8 +1,13 @@
 {
   "boot": { "override": true },
-  "system": { "hostname": "live" },
+  "system": { "hostname": "live", "minimal": true },
+  "zram": true,
   "services": {
     "ssh": true,
     "docker": true
-  }
+  },
+  "graphical": {
+    "enable": true
+  },
+  "audio": true
 }
