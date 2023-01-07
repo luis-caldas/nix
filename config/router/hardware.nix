@@ -121,6 +121,19 @@
     };
 
     # HTTP Server for users
+    manual = rec {
+      image = imageFile.imageName;
+      imageFile = my.containers.web {};
+      volumes = [
+        "${pkgs.nix.doc}/share/doc/nix/manual:/web:ro"
+      ];
+      ports = [
+        "84:8080/tcp"
+      ];
+      extraOptions = [ "--dns=172.17.0.1" ];
+    };
+
+    # HTTP Server for users
     httpd = rec {
       image = imageFile.imageName;
       imageFile = my.containers.web {};
