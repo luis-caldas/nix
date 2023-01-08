@@ -120,8 +120,8 @@
       extraOptions = [ "--dns=172.17.0.1" "--network=host" ];
     };
 
-    # HTTP Server for users
-    manual = rec {
+    # HTTP Server manuals
+    mannix = rec {
       image = imageFile.imageName;
       imageFile = my.containers.web {};
       volumes = [
@@ -129,6 +129,17 @@
       ];
       ports = [
         "84:8080/tcp"
+      ];
+      extraOptions = [ "--dns=172.17.0.1" ];
+    };
+    mannixos = rec {
+      image = imageFile.imageName;
+      imageFile = my.containers.web {};
+      volumes = [
+        "${config.system.build.manual.manualHTML}/share/doc/nixos:/web:ro"
+      ];
+      ports = [
+        "85:8080/tcp"
       ];
       extraOptions = [ "--dns=172.17.0.1" ];
     };
