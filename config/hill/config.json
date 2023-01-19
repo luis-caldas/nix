@@ -17,7 +17,7 @@
   },
   "graphical": {
     "enable": true,
-    "drivers": [ "intel" ],
+    "drivers": [ "amdgpu" ],
     "trackpoint": { "enable": true },
     "touchpad": { "enable": true },
     "production": {

@@ -1,11 +1,11 @@
 { my, lib, config, ... }:
 {
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "uas" "usb_storage" "usbhid" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" "kvmgt" "mdev" "vfio-iommu-type1" ];
+  boot.kernelParams = [ ];
+  boot.kernelModules = [ "kvm-amd" "kvmgt" "mdev" "vfio-iommu-type1" ];
   boot.extraModulePackages = [ ];
-  boot.kernelParams = [ "intel_iommu=on" "i915.enable_guc=0" "i915.enable_gvt=1" ];
 
   boot.zfs.requestEncryptionCredentials = true;
 
@@ -15,13 +15,8 @@
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/E4B6-6B03";
+    { device = "/dev/disk/by-uuid/669A-8E94";
       fsType = "vfat";
-    };
-
-  fileSystems."/data" =
-    { device = "hill/data";
-      fsType = "zfs";
     };
 
   fileSystems."/nix" =
@@ -42,6 +37,6 @@
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
 }
