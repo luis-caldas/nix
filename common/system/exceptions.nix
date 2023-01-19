@@ -23,6 +23,7 @@
       "brgenml1lpr"
       "intel-ocl"
       "memtest86-efi"
+      "nvidia-x11" "nvidia-settings"
     ]);
 
     # Allow some insecure packages

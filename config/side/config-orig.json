@@ -11,6 +11,7 @@
   },
   "graphical": {
     "enable": true,
+    "drivers": [ "amdgpu" ],
     "touchpad": { "enable": true }
   },
   "games": true,
