@@ -20,6 +20,7 @@
     parted
     zerofree
     testdisk
+    ddrescue
     squashfsTools
     smartmontools
 
@@ -74,6 +75,7 @@
     efibootmgr
 
     # System monitoring
+    lshw
     usbutils
     pciutils
 
