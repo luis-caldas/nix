@@ -63,6 +63,10 @@
   # Set locale
   i18n.defaultLocale = my.config.system.locale;
 
+  # Set default keyboard and their consoles
+  services.xserver.layout = my.config.system.layout;
+  i18n.consoleUseXkbConfig = true;
+
   # Enable ZRam if set
   zramSwap.enable = my.config.zram;
   zramSwap.memoryPercent = 50;

@@ -3,7 +3,9 @@
     "timeout": 1
   },
   "system": {
-    "hostname": "hill"
+    "hostname": "hill",
+    "layout": "gb",
+    "numlock": true
   },
   "services": {
     "ssh": true,
@@ -26,9 +28,7 @@
       "software": true,
       "business": true,
       "electronics": true
-    },
-    "touch": true,
-    "display": { "extraCommands": [ "reneoslashtoback" ] }
+    }
   },
   "games": true,
   "audio": true,
