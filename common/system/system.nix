@@ -65,7 +65,7 @@
 
   # Set default keyboard and their consoles
   services.xserver.layout = my.config.system.layout;
-  i18n.consoleUseXkbConfig = true;
+  console.useXkbConfig = true;
 
   # Enable ZRam if set
   zramSwap.enable = my.config.zram;
