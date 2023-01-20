@@ -34,6 +34,27 @@
       fsType = "zfs";
     };
 
+  # Extra encrypted disk
+  fileSystems."/safe" =
+    { device = "hill/safe";
+      fsType = "zfs";
+      options = [ "nofail" ];
+    };
+
+  fileSystems."/data/safe" =
+    { device = "mound/safe";
+      fsType = "zfs";
+      depends = [ "/safe" ];
+      options = [ "nofail" ];
+    };
+
+  fileSystems."/data/store" =
+    { device = "mound/store";
+      fsType = "zfs";
+      depends = [ "/safe" ];
+      options = [ "nofail" ];
+    };
+
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
