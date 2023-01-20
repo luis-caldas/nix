@@ -21,6 +21,7 @@
     zerofree
     testdisk
     ddrescue
+    dislocker
     squashfsTools
     smartmontools
 
