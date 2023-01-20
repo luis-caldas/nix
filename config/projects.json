@@ -12,8 +12,8 @@
         "sha256": "10nzdpdvp4pwz3w2z980v137yzdj8qwhkr2fwz46vram9400xfv7"
     },
     "mydesktop": {
-        "commit": "393ffdfa47d66917a90226fc49d57e3a4d1c79ad",
-        "sha256": "0b7kqg93dfpw5p29yf1flnr0i2wv665g5pb908sjxsrwk2db7hwc"
+        "commit": "7583a286b74e723a21c6ff2d67ca02b3aed58cac",
+        "sha256": "0gvq7aj7zwla41mc6imjzf3iqfb3ikjbmn206h2gd98l95gaak1f"
     },
     "myfonts": {
         "commit": "8a4e49deeaa5c9ea2ca084c7eeaedf6cd5085536",
@@ -48,7 +48,7 @@
         "sha256": "0g30vjzqmhb7i0kcz8nrgbhw5xx4lfh6fn0hspdd7dcx7x10qfc1"
     },
     "mywallpapers": {
-        "commit": "7f1fb968d2be8136c33ee5e8e52299c0399975d7",
-        "sha256": "1k26mavczlz6bvi2lkdjs0z51p8qn8wr4xb4yws0xjhc3ypwlysp"
+        "commit": "29fb59394e3f3e8b00f33014fc3ca4fb6dddb303",
+        "sha256": "11xgwjcc6axw41kqmm940skj7fbwdw4jjg0jzmdhz5bkb3rac7ap"
     }
 }
