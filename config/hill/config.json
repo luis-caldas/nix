@@ -19,7 +19,7 @@
   },
   "graphical": {
     "enable": true,
-    "drivers": [ "amdgpu" ],
+    "drivers": [ "displaylink", "modesetting" ],
     "trackpoint": { "enable": true },
     "touchpad": { "enable": true },
     "production": {
