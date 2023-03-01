@@ -295,10 +295,6 @@
     pamix
     ncpamixer
 
-    # Patchers
-    carla
-    helvum
-
     # MPRIS controller
     playerctl
 

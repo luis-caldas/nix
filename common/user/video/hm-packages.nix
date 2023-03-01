@@ -116,6 +116,9 @@
     # Voip
     mumble
 
+    # Chat
+    signal-desktop
+
     # Testing
     gource
     glxinfo
@@ -252,6 +255,10 @@
     # Audio Control
     paprefs
     pavucontrol
+
+    # Patchers
+    carla
+    # helvum # Not compiling
 
   ] [] ++
   mfunc.useDefault ((my.arch == my.reference.x64) && my.config.audio) [
