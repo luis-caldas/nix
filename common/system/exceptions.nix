@@ -23,6 +23,7 @@
       "brgenml1lpr"
       "intel-ocl"
       "memtest86-efi"
+      "displaylink"
       "nvidia-x11" "nvidia-settings"
     ]);
 
