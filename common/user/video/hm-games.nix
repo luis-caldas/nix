@@ -46,6 +46,7 @@
     # Minecraft
     # polymc  # compromised
     minecraft
+    prismlauncher-qt5
 
     # FPS
     openarena
