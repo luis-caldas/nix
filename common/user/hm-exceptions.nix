@@ -28,7 +28,8 @@
       "spotify" "spotify-unwrapped"
       "zoom"
       "unrar"
-      "pycharm-professional" "webstorm" "clion"
+      "pycharm-professional" "webstorm" "clion" "datagrip"
+      "ciscoPacketTracer8"
     ]);
 
     # Allow some insecure packages

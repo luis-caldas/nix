@@ -214,8 +214,12 @@
     # Editors
     jetbrains.pycharm-community
     jetbrains.pycharm-professional
+    jetbrains.datagrip
     jetbrains.webstorm
     jetbrains.clion
+
+    # Packet tracer
+    ciscoPacketTracer8
 
   ] [] ++
   mfunc.useDefault my.config.graphical.production.business [
@@ -258,7 +262,7 @@
 
     # Patchers
     carla
-    # helvum # Not compiling
+    helvum
 
   ] [] ++
   mfunc.useDefault ((my.arch == my.reference.x64) && my.config.audio) [
