@@ -150,6 +150,11 @@
     mkpasswd
     bitwarden-cli
 
+    # NFC
+    mfoc
+    mfcuk
+    libnfc
+
     # User tools
     khal
     irssi
