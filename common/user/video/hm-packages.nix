@@ -218,8 +218,11 @@
     jetbrains.webstorm
     jetbrains.clion
 
-    # Packet tracer
+    # Packet tracers
     ciscoPacketTracer8
+    gns3-gui
+    gns3-server
+
 
   ] [] ++
   mfunc.useDefault my.config.graphical.production.business [
