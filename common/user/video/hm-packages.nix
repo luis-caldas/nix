@@ -212,8 +212,8 @@
   mfunc.useDefault my.config.graphical.production.software [
 
     # Editors
-    jetbrains.pycharm-community
     jetbrains.pycharm-professional
+    jetbrains.idea-ultimate
     jetbrains.datagrip
     jetbrains.webstorm
     jetbrains.clion
@@ -223,6 +223,9 @@
     gns3-gui
     gns3-server
 
+    # Visual
+    drawio
+    pandoc-drawio-filter
 
   ] [] ++
   mfunc.useDefault my.config.graphical.production.business [
