@@ -28,7 +28,7 @@
       "spotify" "spotify-unwrapped"
       "zoom"
       "unrar"
-      "pycharm-professional" "webstorm" "clion" "datagrip"
+      "pycharm-professional" "webstorm" "clion" "datagrip" "idea-ultimate"
       "ciscoPacketTracer8"
     ]);
 
