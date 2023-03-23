@@ -211,12 +211,16 @@
   ] [] ++
   mfunc.useDefault my.config.graphical.production.software [
 
-    # Editors
+    # Jetbrains paid
     jetbrains.pycharm-professional
     jetbrains.idea-ultimate
     jetbrains.datagrip
     jetbrains.webstorm
     jetbrains.clion
+
+    # Jetbrains free
+    jetbrains.pycharm-community
+    jetbrains.idea-community
 
     # Packet tracers
     ciscoPacketTracer8
