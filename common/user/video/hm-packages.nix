@@ -231,6 +231,9 @@
     drawio
     pandoc-drawio-filter
 
+    # Maths
+    octaveFull
+
   ] [] ++
   mfunc.useDefault my.config.graphical.production.business [
 
