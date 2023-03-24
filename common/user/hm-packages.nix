@@ -129,6 +129,9 @@
     mpkgs.x56linux
     linuxConsoleTools
 
+    # Kernel Drivers
+    v4l-utils
+
     # EXIF
     exiftool
 
