@@ -139,6 +139,9 @@
     gitRepo
     simg2img
 
+    # Video share
+    scrcpy
+
     # Drives
     hdparm
     nvme-cli
