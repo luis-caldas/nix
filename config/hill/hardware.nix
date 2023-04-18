@@ -24,35 +24,33 @@
       fsType = "zfs";
     };
 
-  fileSystems."/home" =
-    { device = "hill/home";
-      fsType = "zfs";
-    };
-
   fileSystems."/tmp" =
     { device = "hill/tmp";
       fsType = "zfs";
     };
 
-  # Extra encrypted disk
+  # Second disk
   fileSystems."/safe" =
     { device = "hill/safe";
       fsType = "zfs";
-      options = [ "nofail" ];
     };
 
-  fileSystems."/data/safe" =
+  fileSystems."/home" =
+    { device = "mound/home";
+      fsType = "zfs";
+      depends = [ "/safe" ];
+    };
+
+  fileSystems."/data" =
     { device = "mound/safe";
       fsType = "zfs";
       depends = [ "/safe" ];
-      options = [ "nofail" ];
     };
 
-  fileSystems."/data/store" =
+  fileSystems."/store" =
     { device = "mound/store";
       fsType = "zfs";
       depends = [ "/safe" ];
-      options = [ "nofail" ];
     };
 
   swapDevices = [ ];
