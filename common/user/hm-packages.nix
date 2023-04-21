@@ -36,6 +36,7 @@
 
     # Web tools
     w3m
+    frp
     wget
     nmap
     aria
