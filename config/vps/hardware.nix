@@ -13,7 +13,16 @@
   networking.networkmanager.insertNameservers = [ "1.1.1.1" "1.0.0.1" ];
 
   # Firewall setup
-  networking.firewall.enable = lib.mkForce true;
+  networking.firewall = {
+    enable = lib.mkForce true;
+    allowedTCPPorts = [
+      22    # SSH port
+      80    # Free port
+      443   # Free port
+      7000  # Reverse proxy
+      7500  # Reverse proxy dashboard
+    ];
+  };
   services.fail2ban = {
     enable = true;
     maxretry = 5;
