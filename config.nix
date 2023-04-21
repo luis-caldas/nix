@@ -75,6 +75,7 @@ let
     "mycursors"
     "myfonts"
     "myicons"
+    "mypub"
     "myshell"
     "mythemes"
     "myvim"

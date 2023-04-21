@@ -31,6 +31,10 @@
         "commit": "9e1c0071780137f9a6461c7c239d0d6c6313a5ec",
         "sha256": "1cm43ncrbahi720sd03jbjvwsw0094wh8aif35s0q9cl0lh423v3"
     },
+    "mypub": {
+        "commit": "917804b9558ed06e630243d9bebdbc52d425abdf",
+        "sha256": "154lnf25xqas6gwjm9kr037sna2ra08fpdsn2ajv7mswhzxbg748"
+    },
     "myradios": {
         "commit": "ebe08eb559e8176de0a10b4506d02d6054e14720",
         "sha256": "1f86b40x1d2kz3ci4y643nh22w3k5lfw8cv5jfa4hixkvy4hshp9"

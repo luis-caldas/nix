@@ -57,6 +57,9 @@
   networking.firewall.enable = my.config.net.firewall.enable;
   networking.firewall.allowPing = my.config.net.firewall.ping;
 
+  # Add my custom certificate authority
+  security.pki.certificateFiles = [ "${my.projects.pub}/ssl/ca.pem" ];
+
   # My timezone
   time.timeZone = my.config.system.timezone;
 
