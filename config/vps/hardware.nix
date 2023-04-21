@@ -17,10 +17,10 @@
     enable = lib.mkForce true;
     allowedTCPPorts = [
       22    # SSH port
-      80    # Free port
-      443   # Free port
+      # 80    # Free port
+      # 443   # Free port
       7000  # Reverse proxy
-      7500  # Reverse proxy dashboard
+      # 7500  # Reverse proxy dashboard
     ];
   };
   services.fail2ban = {
