@@ -13,14 +13,7 @@
   networking.networkmanager.insertNameservers = [ "1.1.1.1" "1.0.0.1" ];
 
   # Firewall setup
-  networking.firewall = {
-    enable = lib.mkForce true;
-    allowedTCPPorts = [
-      22    # SSH port
-      80    # Free port
-      7000  # Reverse proxy
-    ];
-  };
+  networking.firewall.enable = lib.mkForce true;
   services.fail2ban = {
     enable = true;
     maxretry = 5;
@@ -54,9 +47,9 @@
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
     restartIfChanged = true;
-    environment = [ "/safe/env/frp.env" ];
     serviceConfig = {
       ExecStart = "${pkgs.frp}/bin/frps --config ${./frps.ini}";
+      EnvironmentFile = "/safe/env/frp.env";
       Restart = "always";
     };
   };
