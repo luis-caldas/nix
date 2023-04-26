@@ -90,6 +90,7 @@ in
 
     programs = programsSet //
     {
+
       # Configure Git
       git = {
         enable = true;
@@ -98,6 +99,13 @@ in
         package = pkgs.gitAndTools.gitFull;
         extraConfig = { pull = { rebase = false; }; init = { defaultBranch = "master"; }; };
       };
+
+      # SSH configuration
+      ssh = {
+        serverAliveInterval = 60;
+        serverAliveCountMax = 5;
+      };
+
     } //
     # Configure ncspot
     mfunc.useDefault my.config.audio {
