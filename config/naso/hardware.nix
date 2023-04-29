@@ -93,10 +93,12 @@
       environment = {
         TZ = my.config.system.timezone;
         ROCKET_TLS="{certs=\"/ssl/main.pem\",key=\"/ssl/main.key\"}";
+        SIGNUPS_ALLOWED="false";
       };
+      environmentFiles = [ /data/local/safe/warden.env ];
       volumes = [
         "/data/local/ssl:/ssl"
-        "/data/local/config/vault:/data"
+        "/data/local/safe/docker/config/warden:/data"
       ];
       ports = [
         "443:80/tcp"
@@ -262,6 +264,11 @@
 
   fileSystems."/data/local" =
     { device = "into/data";
+      fsType = "zfs";
+    };
+
+  fileSystems."/data/local/redo" =
+    { device = "bunker/safe";
       fsType = "zfs";
     };
 
