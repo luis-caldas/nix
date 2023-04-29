@@ -98,7 +98,6 @@ in
         userEmail = my.config.git.email;
         package = pkgs.gitAndTools.gitFull;
         extraConfig = { pull = { rebase = false; }; init = { defaultBranch = "master"; }; };
-        delta.enable = true;
       };
 
       # SSH configuration
