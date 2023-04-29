@@ -160,22 +160,22 @@
     };
 
     # Matrix server
-    matrix = {
-      image = "matrixdotorg/synapse:latest";
-      environment = {
-        TZ = my.config.system.timezone;
-        UID = builtins.toString my.config.user.uid;
-        GID = builtins.toString my.config.user.gid;
-        SYNAPSE_REPORT_STATS = "no";
-      };
-      volumes = [
-        "/data/local/docker/config/synapse:/data"
-      ];
-      ports = [
-        "83:8008/tcp"
-      ];
-      extraOptions = [ "--dns=172.17.0.1" ];
-    };
+#    matrix = {
+#      image = "matrixdotorg/synapse:latest";
+#      environment = {
+#        TZ = my.config.system.timezone;
+#        UID = builtins.toString my.config.user.uid;
+#        GID = builtins.toString my.config.user.gid;
+#        SYNAPSE_REPORT_STATS = "no";
+#      };
+#      volumes = [
+#        "/data/local/docker/config/synapse:/data"
+#      ];
+#      ports = [
+#        "83:8008/tcp"
+#      ];
+#      extraOptions = [ "--dns=172.17.0.1" ];
+#    };
 
     # Asterisk container
     asterisk = rec {
