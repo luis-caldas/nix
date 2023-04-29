@@ -87,6 +87,22 @@
       ];
     };
 
+    # Vaultwarden
+    warden = {
+      image = "vaultwarden/server:latest";
+      environment = {
+        TZ = my.config.system.timezone;
+        ROCKET_TLS="{certs=\"/ssl/main.pem\",key=\"/ssl/main.key\"}";
+      };
+      volumes = [
+        "/data/local/ssl:/ssl"
+        "/data/local/config/vault:/data"
+      ];
+      ports = [
+        "443:80/tcp"
+      ];
+    };
+
     # Deluge instance for downloading
     delusion = {
         image = "lscr.io/linuxserver/deluge";
