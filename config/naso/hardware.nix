@@ -98,7 +98,7 @@
       environmentFiles = [ /data/local/safe/warden.env ];
       volumes = [
         "/data/local/ssl:/ssl"
-        "/data/local/safe/docker/config/warden:/data"
+        "/data/bunker/safe/docker/config/warden:/data"
       ];
       ports = [
         "443:80/tcp"
@@ -267,7 +267,7 @@
       fsType = "zfs";
     };
 
-  fileSystems."/data/local/redo" =
+  fileSystems."/data/bunker/safe" =
     { device = "bunker/safe";
       fsType = "zfs";
     };
