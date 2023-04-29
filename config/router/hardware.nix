@@ -104,83 +104,8 @@
   # Set up docker containers
   virtualisation.oci-containers.containers = {
 
-    # Asterisk container
-    asterisk = rec {
-      image = imageFile.imageName;
-      imageFile = my.containers.asterisk;
-      volumes = [
-        "/data/local/docker/config/asterisk/conf:/etc/asterisk/conf.mine"
-        "/data/local/docker/config/asterisk/voicemail:/var/spool/asterisk/voicemail"
-        "/data/local/docker/config/asterisk/record:/var/spool/asterisk/monitor"
-        "/data/local/docker/config/asterisk/sounds:/var/lib/asterisk/sounds/mine"
-        # Email files
-        "/data/local/mail:/data/local/mail:ro"
-        "/etc/msmtprc:/etc/msmtprc:ro"
-      ];
-      extraOptions = [ "--dns=172.17.0.1" "--network=host" ];
-    };
-
-    # HTTP Server manuals
-    mannix = rec {
-      image = imageFile.imageName;
-      imageFile = my.containers.web {};
-      volumes = [
-        "${pkgs.nix.doc}/share/doc/nix/manual:/web:ro"
-      ];
-      ports = [
-        "84:8080/tcp"
-      ];
-      extraOptions = [ "--dns=172.17.0.1" ];
-    };
-    mannixos = rec {
-      image = imageFile.imageName;
-      imageFile = my.containers.web {};
-      volumes = [
-        "${config.system.build.manual.manualHTML}/share/doc/nixos:/web:ro"
-      ];
-      ports = [
-        "85:8080/tcp"
-      ];
-      extraOptions = [ "--dns=172.17.0.1" ];
-    };
-
-    # HTTP Server for users
-    httpd = rec {
-      image = imageFile.imageName;
-      imageFile = my.containers.web {};
-      volumes = [
-        "/data/local/docker/config/asterisk/voicemail:/web/voicemail:ro"
-        "/data/local/docker/config/asterisk/record:/web/monitor:ro"
-      ];
-      ports = [
-        "83:8080/tcp"
-      ];
-      extraOptions = [ "--dns=172.17.0.1" ];
-    };
-
-    # HTTP Server for kodi
-    httpk = rec {
-      image = "halverneus/static-file-server:latest";
-      volumes = [
-        "/data/local/docker/config/asterisk/voicemail:/web/voicemail:ro"
-        "/data/local/docker/config/asterisk/record:/web/monitor:ro"
-      ];
-      ports = [
-        "82:8080/tcp"
-      ];
-      extraOptions = [ "--dns=172.17.0.1" ];
-    };
-
-    # DNS updater
-    udns = rec {
-      image = imageFile.imageName;
-      imageFile = my.containers.udns;
-      environmentFiles = [ /data/local/safe/udns.env ];
-      extraOptions = [ "--dns=172.17.0.1" ];
-    };
-
     # DNS Server
-    adblock = {
+    dns = {
       image = "pihole/pihole:latest";
       environment = {
         TZ = my.config.system.timezone;
@@ -200,17 +125,19 @@
       extraOptions = [ "--dns=127.0.0.1" ];
     };
 
-    # Shadow Socks server
-    shadow = {
-      image = "shadowsocks/shadowsocks-libev";
+    #docker run -e UPS_HOST="10.11.12.13" -e UPS_PORT="3493" -e UPS_USER="monuser" -e UPS_PASSWORD="secret" -p 6543:6543 -e teknologist/webnut:latest
+    # NUT server monitor
+    nut = {
+      image = "matrixdotorg/synapse:latest";
       environment = {
-        METHOD = "aes-256-gcm";
-        DNS_ADDRS = "172.17.0.1";
+        TZ = my.config.system.timezone;
+        SYNAPSE_REPORT_STATS = "no";
       };
-      environmentFiles = [ /data/local/safe/shadow.env ];
+      environmentFiles = [ /data/local/safe/ups.env ];
       ports = [
-        "8388:8388/tcp"
+        "82:6543/tcp"
       ];
+      extraOptions = [ "--dns=172.17.0.1" ];
     };
 
     # Dashboard website
@@ -222,6 +149,98 @@
       ];
       ports = [
         "80:8080/tcp"
+      ];
+      extraOptions = [ "--dns=172.17.0.1" ];
+    };
+
+    # DNS updater
+    noip = rec {
+      image = imageFile.imageName;
+      imageFile = my.containers.udns;
+      environmentFiles = [ /data/local/safe/udns.env ];
+      extraOptions = [ "--dns=172.17.0.1" ];
+    };
+
+    # Matrix server
+    matrix = {
+      image = "matrixdotorg/synapse:latest";
+      environment = {
+        TZ = my.config.system.timezone;
+        UID = builtins.toString my.config.user.uid;
+        GID = builtins.toString my.config.user.gid;
+        SYNAPSE_REPORT_STATS = "no";
+      };
+      environmentFiles = [ /data/local/safe/matrix.env ];
+      volumes = [
+        "/data/local/docker/config/synapse:/data"
+      ];
+      ports = [
+        "83:8008/tcp"
+      ];
+      extraOptions = [ "--dns=172.17.0.1" ];
+    };
+
+    # Asterisk container
+    asterisk = rec {
+      image = imageFile.imageName;
+      imageFile = my.containers.asterisk;
+      volumes = [
+        "/data/local/docker/config/asterisk/conf:/etc/asterisk/conf.mine"
+        "/data/local/docker/config/asterisk/voicemail:/var/spool/asterisk/voicemail"
+        "/data/local/docker/config/asterisk/record:/var/spool/asterisk/monitor"
+        "/data/local/docker/config/asterisk/sounds:/var/lib/asterisk/sounds/mine"
+        # Email files
+        "/data/local/mail:/data/local/mail:ro"
+        "/etc/msmtprc:/etc/msmtprc:ro"
+      ];
+      extraOptions = [ "--dns=172.17.0.1" "--network=host" ];
+    };
+    # Asterisk HTTP Server for users
+    http-asterisk-user = rec {
+      image = imageFile.imageName;
+      imageFile = my.containers.web {};
+      volumes = [
+        "/data/local/docker/config/asterisk/voicemail:/web/voicemail:ro"
+        "/data/local/docker/config/asterisk/record:/web/monitor:ro"
+      ];
+      ports = [
+        "8080:8080/tcp"
+      ];
+      extraOptions = [ "--dns=172.17.0.1" ];
+    };
+    # Asterisk HTTP Server for kodi
+    http-asterisk-kodi = rec {
+      image = "halverneus/static-file-server:latest";
+      volumes = [
+        "/data/local/docker/config/asterisk/voicemail:/web/voicemail:ro"
+        "/data/local/docker/config/asterisk/record:/web/monitor:ro"
+      ];
+      ports = [
+        "8081:8080/tcp"
+      ];
+      extraOptions = [ "--dns=172.17.0.1" ];
+    };
+
+    # HTTP Server manuals
+    man-nix = rec {
+      image = imageFile.imageName;
+      imageFile = my.containers.web {};
+      volumes = [
+        "${pkgs.nix.doc}/share/doc/nix/manual:/web:ro"
+      ];
+      ports = [
+        "8090:8080/tcp"
+      ];
+      extraOptions = [ "--dns=172.17.0.1" ];
+    };
+    man-nixos = rec {
+      image = imageFile.imageName;
+      imageFile = my.containers.web {};
+      volumes = [
+        "${config.system.build.manual.manualHTML}/share/doc/nixos:/web:ro"
+      ];
+      ports = [
+        "8091:8080/tcp"
       ];
       extraOptions = [ "--dns=172.17.0.1" ];
     };
