@@ -131,7 +131,7 @@
       environment = {
         TZ = my.config.system.timezone;
       };
-      environmentFiles = [ /data/local/safe/ups.env ];
+      environmentFiles = [ /data/local/safe/nut.env ];
       ports = [
         "82:6543/tcp"
       ];
