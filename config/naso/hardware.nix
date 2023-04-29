@@ -95,7 +95,7 @@
         ROCKET_TLS="{certs=\"/ssl/main.pem\",key=\"/ssl/main.key\"}";
         SIGNUPS_ALLOWED="false";
       };
-      environmentFiles = [ /data/local/safe/warden.env ];
+      environmentFiles = [ /data/local/safe/env/warden.env ];
       volumes = [
         "/data/local/ssl:/ssl"
         "/data/bunker/safe/docker/config/warden:/data"
