@@ -12,7 +12,6 @@
   "services": {
     "ssh": true,
     "docker": true,
-    "monitor": true,
     "startup": {
       "permit": [
         "/dev/cdrom"

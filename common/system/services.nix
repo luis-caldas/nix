@@ -51,43 +51,6 @@
     qemu.swtpm.enable = my.config.services.virt.swtpm;
   } {};
 
-  # Netdata monitor for servers and such
-  services.netdata = mfunc.useDefault my.config.services.monitor {
-    enable = true;
-    extraPluginPaths = let
-      myPlugins = pkgs.stdenv.mkDerivation rec {
-        pname = "my-netdata-plugins";
-        version = "0.0.1";
-        dontUnpack = true;
-        dontInstall = true;
-        buildInputs = [ pkgs.makeWrapper ];
-        buildPhase = ''
-          mkdir -p "$out"
-          cp "${my.projects.desktop.netdata}"/plugins/*.plugin "$out"/.
-          for i in $out/*; do
-            wrapProgram "$i" \
-              --set PATH ${lib.makeBinPath (with pkgs; [
-                nut iw apcupsd libreswan
-                bash
-                coreutils findutils
-                unixtools.xxd
-                gawk curl
-                gnused gnugrep
-              ])}
-          done
-        '';
-      };
-    in [ "${myPlugins}" ];
-    config = {
-      global = {
-        "memory mode" = "dbengine";
-        "page cache size" = 256;
-        "dbengine multihost disk space" = 2048;
-        "error log" = "stderr";
-      };
-    };
-  } {};
-
   # PCSC
   services.pcscd = {
     enable = true;

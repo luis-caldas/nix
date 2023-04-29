@@ -14,8 +14,6 @@
     "minimal": true
   },
   "services": {
-    "ssh": true,
-    "docker": true,
-    "monitor": true
+    "ssh": true
   }
 }
