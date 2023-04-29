@@ -31,6 +31,8 @@
 
       "gbmdgpbipfallnflgajpaliibnhdgobh" # json viewer
 
+      "nngceckbapebfimnlniiiahkandclblb" # bitwarden client
+
       # "pddljdmihkpdfpkgmbhdomeeifpklgnm" # vertical tabs
 
     ] ++
