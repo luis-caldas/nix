@@ -32,7 +32,7 @@
   power.ups = {
     enable = true;
     mode = "netclient";
-    schedulerRules = "/data/local/nut/upssched.conf";
+    schedulerRules = "/data/local/safe/nut/upssched.conf";
   };
   users = {
     users.nut = {
@@ -44,7 +44,7 @@
     groups.nut = { };
   };
   environment.etc = {
-    "nut/upsmon.conf".source = "/data/local/nut/upsmon.conf";
+    "nut/upsmon.conf".source = "/data/local/safe/nut/upsmon.conf";
   };
   systemd.services.upsd = lib.mkForce {};
   systemd.services.upsdrv = lib.mkForce {};
@@ -104,6 +104,22 @@
         "443:80/tcp"
       ];
     };
+
+    # Nextcloud
+#    cloud = {
+#      image = "nextcloud:fpm";
+#      environment = {
+#        TZ = my.config.system.timezone;
+#      };
+#      environmentFiles = [  ];
+#      volumes = [
+#        "/data/local/config/nextcloud:/var/www/html"
+#        "/data/bunker/cloud:/var/www/html/data"
+#      ];
+#      ports = [
+#        "443:80/tcp"
+#      ];
+#    };
 
     # Deluge instance for downloading
     delusion = {
@@ -174,7 +190,7 @@
     enable = true;
     setSendmail = true;
     defaults = {
-      aliases = "/data/local/mail/alias";
+      aliases = "/data/local/safe/mail/alias";
       port = 465;
       tls_trust_file = "/etc/ssl/certs/ca-certificates.crt";
       tls = "on";
@@ -182,13 +198,13 @@
       tls_starttls = "off";
     };
     accounts = let
-      mailDomain = mfunc.safeReadFile /data/local/mail/domain;
-      accountMail = mfunc.safeReadFile /data/local/mail/account;
+      mailDomain = mfunc.safeReadFile /data/local/safe/mail/domain;
+      accountMail = mfunc.safeReadFile /data/local/safe/mail/account;
     in
     {
       default = {
         host = mailDomain;
-        passwordeval = "${pkgs.coreutils}/bin/cat /data/local/mail/password";
+        passwordeval = "${pkgs.coreutils}/bin/cat /data/local/safe/mail/password";
         user = accountMail;
         from = accountMail;
       };
@@ -205,7 +221,7 @@
       wall.enable = false;
       mail = {
         enable = true;
-        sender = builtins.replaceStrings [ "\n" "\t" ] [ "" "" ] (mfunc.safeReadFile /data/local/mail/account);
+        sender = builtins.replaceStrings [ "\n" "\t" ] [ "" "" ] (mfunc.safeReadFile /data/local/safe/mail/account);
         recipient = "root";
         mailer = "${pkgs.msmtp}/bin/msmtp";
       };
