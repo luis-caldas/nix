@@ -272,6 +272,11 @@
       fsType = "zfs";
     };
 
+  fileSystems."/data/bunker/cloud" =
+    { device = "bunker/cloud";
+      fsType = "zfs";
+    };
+
   fileSystems."/data/bunker/main" =
     { device = "bunker/main";
       fsType = "zfs";
