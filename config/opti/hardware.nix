@@ -9,27 +9,6 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  # UPS client
-  power.ups = {
-    enable = true;
-    mode = "netclient";
-    schedulerRules = "/data/nut/upssched.conf";
-  };
-  users = {
-    users.nut = {
-      isSystemUser = true;
-      group = "nut";
-      home = "/var/lib/nut";
-      createHome = true;
-    };
-    groups.nut = { };
-  };
-  environment.etc = {
-    "nut/upsmon.conf".source = "/data/nut/upsmon.conf";
-  };
-  systemd.services.upsd = lib.mkForce {};
-  systemd.services.upsdrv = lib.mkForce {};
-
   fileSystems."/" =
     { device = "light/root";
       fsType = "zfs";
