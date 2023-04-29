@@ -125,13 +125,11 @@
       extraOptions = [ "--dns=127.0.0.1" ];
     };
 
-    #docker run -e UPS_HOST="10.11.12.13" -e UPS_PORT="3493" -e UPS_USER="monuser" -e UPS_PASSWORD="secret" -p 6543:6543 -e teknologist/webnut:latest
     # NUT server monitor
     nut = {
-      image = "matrixdotorg/synapse:latest";
+      image = "teknologist/webnut:latest";
       environment = {
         TZ = my.config.system.timezone;
-        SYNAPSE_REPORT_STATS = "no";
       };
       environmentFiles = [ /data/local/safe/ups.env ];
       ports = [
@@ -170,7 +168,6 @@
         GID = builtins.toString my.config.user.gid;
         SYNAPSE_REPORT_STATS = "no";
       };
-      environmentFiles = [ /data/local/safe/matrix.env ];
       volumes = [
         "/data/local/docker/config/synapse:/data"
       ];
