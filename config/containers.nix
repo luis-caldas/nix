@@ -272,7 +272,7 @@ let
       in
         # Whole activation script
         builtins.listToAttrs (
-          lib.mapAttrsToList (eachName: eachValue: {
+          pkgs.lib.mapAttrsToList (eachName: eachValue: {
             name = "${prefix}-${eachName}";
             value = {
               description = "Create the needed networks for containers";
