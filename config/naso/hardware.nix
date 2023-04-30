@@ -133,7 +133,8 @@ in {
       volumes = [
         "/data/bunker/safe/redis:/data"
       ];
-      extraOptions = [ "--save 60 1" "--network=database" "--ip=172.16.72.110" ];
+      cmd = [ "--save 60 1" ];
+      extraOptions = [ "--network=database" "--ip=172.16.72.110" ];
     };
 
     # Vaultwarden
