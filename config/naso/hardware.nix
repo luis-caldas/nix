@@ -171,7 +171,6 @@ in {
         # Data
         NEXTCLOUD_DATA_DIR = "/var/www/html/data";
       };
-      environmentFiles = [ /data/local/safe/env/cloud.env ];
       volumes = [
         "/data/local/config/nextcloud:/var/www/html"
         "/data/bunker/cloud:/var/www/html/data"
