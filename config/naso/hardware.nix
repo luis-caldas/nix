@@ -101,7 +101,7 @@
         "/data/bunker/safe/docker/config/warden:/data"
       ];
       ports = [
-        "443:80/tcp"
+        "8443:80/tcp"
       ];
     };
 
