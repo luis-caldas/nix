@@ -2,7 +2,7 @@
 let
 
   # Put all functions in attrset
-  allFunctions = {
+  allFunctions = rec {
 
     # useDefault -> Bool -> Any -> Any
     useDefault = should: default: nondefault:
