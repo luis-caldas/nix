@@ -1,4 +1,55 @@
 { my, mfunc, lib, config, pkgs, ... }:
+let
+
+  # Create all the services needed for the containers networks
+  conatinerNetworksService = let
+
+    # Names of the databases that will be created
+    names = [ "database" "media" ];
+
+    # Networks calculation
+    networks = let
+      startRange = "172.16";
+      offset = 70;
+      subnet = "/24";
+    # Create the attrset of networks and names
+    in builtins.listToAttrs (lib.imap0 (index: eachName: {
+      name = eachName;
+      value = "${startRange}.${builtins.toString (offset + index)}.0${subnet}";
+    }) names);
+
+    # Docker binary
+    docker = builtins.trace networks config.virtualisation.oci-containers.backend;
+    dockerBin = "${pkgs.${docker}}/bin/${docker}";
+
+    # Name prefix for service
+    prefix = "container-network-start";
+
+  in
+    # Whole activation script
+    builtins.listToAttrs (
+      lib.mapAttrsToList (eachName: eachValue: {
+        name = "${prefix}-${eachName}";
+        value = {
+          description = "Create the needed networks for containers";
+          after = [ "network.target" ];
+          wantedBy = [ "multi-user.target" ];
+          serviceConfig.Type = "oneshot";
+          script = ''
+            # Put a true at the end to prevent getting non-zero return code,
+            # which will crash the whole service.
+            check=$(${dockerBin} network ls | grep "${eachName}" || true)
+            if [ -z "$check" ]; then
+              "${dockerBin}" network create "${eachName}" --driver bridge --subnet ${eachValue}
+            else
+              echo "${eachName} already exists in docker"
+            fi
+          '';
+        };
+      })
+    ) networks;
+
+in
 {
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "sd_mod" "sr_mod" ];
@@ -46,64 +97,15 @@
   environment.etc = {
     "nut/upsmon.conf".source = "/data/local/safe/nut/upsmon.conf";
   };
-  systemd.services.upsd = lib.mkForce {};
-  systemd.services.upsdrv = lib.mkForce {};
 
-  # Create networks for my containers
-  system.activationScripts.mkVPN = let
-    docker = config.virtualisation.oci-containers.backend;
-    dockerBin = "${pkgs.${docker}}/bin/${docker}";
-  in ''
-    ${dockerBin} network inspect ${networkName} >/dev/null 2>&1 || ${dockerBin} network create vpn --subnet 172.20.0.0/16
-  '';
-
-  # Services for creating my needed containerised networks
-  systemd.services = let
-
-    # Names of the databases that will be created
-    names = [ "database" "media" ];
-
-    # Networks calculation
-    networks = let
-      startRange = "172.16";
-      offset = 70;
-      subnet = "/24";
-    # Create the attrset of networks and names
-    in builtins.listToAttrs (lib.imap0 (index: eachName: {
-      name = eachName;
-      value = "${startRange}.${builtins.toString (offset + index)}.0${subnet}";
-    }) names);
-
-    # Docker binary
-    docker = builtins.trace networks config.virtualisation.oci-containers.backend;
-    dockerBin = "${pkgs.${docker}}/bin/${docker}";
-
-    # Name prefix for service
-    prefix = "container-network-start";
-
-  in
-    # Whole activation script
-    builtins.listToAttrs (
-      lib.mapAttrsToList (eachName: eachValue: {
-        name = "${prefix}-${eachName}";
-        value = {
-          description = "Create the needed networks for containers";
-          after = [ "network.target" ];
-          wantedBy = [ "multi-user.target" ];
-          serviceConfig.Type = "oneshot";
-          script = ''
-            # Put a true at the end to prevent getting non-zero return code,
-            # which will crash the whole service.
-            check=$(${dockerBin} network ls | grep "${eachName}" || true)
-            if [ -z "$check" ]; then
-              "${dockerBin}" network create "${eachName}" --driver bridge --subnet ${eachValue}
-            else
-              echo "${eachName} already exists in docker"
-            fi
-          '';
-        };
-      })
-    ) networks;
+  # Services needed
+  systemd.services = {
+    # To make ups shutdown work
+    upsd = lib.mkForce {};
+    upsdrv = lib.mkForce {};
+  } //
+  # Add the container network services too
+  conatinerNetworksService;
 
   # Set up docker containers
   virtualisation.oci-containers.containers = {
