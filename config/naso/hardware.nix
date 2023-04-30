@@ -46,8 +46,7 @@ let
             fi
           '';
         };
-      })
-    ) networks;
+      }) networks);
 
 in
 {
