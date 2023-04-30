@@ -116,7 +116,6 @@ in {
         TZ = my.config.system.timezone;
         MARIADB_DATABASE = cloudName;
         MARIADB_USER = cloudName;
-        MARIADB_PASSWORD = "";
       };
       environmentFiles = [ /data/local/safe/env/mariadb.env ];
       volumes = [
@@ -165,12 +164,12 @@ in {
         MYSQL_HOST = "172.16.72.100";
         MYSQL_DATABASE = "cloud";
         MYSQL_USER = "cloud";
-        MYSQL_PASSWORD = "";
         # Redis
         REDIS_HOST = "172.16.72.110";
         # Data
         NEXTCLOUD_DATA_DIR = "/var/www/html/data";
       };
+      environmentFiles = [ /data/local/safe/env/cloud.env ];
       volumes = [
         "/data/local/config/nextcloud:/var/www/html"
         "/data/bunker/cloud:/var/www/html/data"
