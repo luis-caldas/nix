@@ -4,22 +4,14 @@ let
   # Create all the services needed for the containers networks
   conatinerNetworksService = let
 
-    # Names of the databases that will be created
-    names = [ "database" "media" ];
-
-    # Networks calculation
-    networks = let
-      startRange = "172.16";
-      offset = 70;
-      subnet = "/24";
-    # Create the attrset of networks and names
-    in builtins.listToAttrs (lib.imap0 (index: eachName: {
-      name = eachName;
-      value = "${startRange}.${builtins.toString (offset + index)}.0${subnet}";
-    }) names);
+    # Names of networks and their subnets
+    networks = {
+      database = "172.16.72.0/24";
+      media = "172.16.73.0/24";
+    };
 
     # Docker binary
-    docker = builtins.trace ([networks.database networks.media]) config.virtualisation.oci-containers.backend;
+    docker = config.virtualisation.oci-containers.backend;
     dockerBin = "${pkgs.${docker}}/bin/${docker}";
 
     # Name prefix for service
@@ -155,7 +147,7 @@ in
       volumes = [
         "/data/bunker/safe/mariadb:/data"
       ];
-      extraOptions = [ "--network=database" ];
+      extraOptions = [ "--network=database" "--ip=172.16.72.1" ];
     };
 
     # Vaultwarden
