@@ -147,7 +147,7 @@ in
       volumes = [
         "/data/bunker/safe/mariadb:/data"
       ];
-      extraOptions = [ "--network=database" "--ip=172.16.72.1" ];
+      extraOptions = [ "--network=database" "--ip=172.16.72.100" ];
     };
 
     # Vaultwarden
