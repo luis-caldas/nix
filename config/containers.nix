@@ -1,4 +1,4 @@
-{ my, pkgs, ... }:
+{ my, pkgs, config, ... }:
 let
 
   # Useful functions for creating containers

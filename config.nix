@@ -1,4 +1,4 @@
-{ pkgs, lib, iso, ... }:
+{ pkgs, lib, config, iso, ... }:
 let
 
   # Default path for the chosen system that was set on a file
@@ -141,7 +141,7 @@ let
   };
 
   # Get container configs
-  containerObj = import (./config + ("/containers.nix")) { inherit pkgs; my = mySome; };
+  containerObj = import (./config + ("/containers.nix")) { inherit pkgs config; my = mySome; };
 
   # Add the containers to the entire list
   myAll = mySome // { containers = containerObj; };
