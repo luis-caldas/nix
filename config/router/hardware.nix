@@ -1,5 +1,18 @@
 { my, lib, config, mfunc, pkgs, ... }:
-{
+let
+
+  # Create all the services needed for the containers networks
+  conatinerNetworksService = let
+    # Names of networks and their subnets
+    networks = {
+      dns = "172.16.72.0/24";
+      web = "172.16.73.0/24";
+      database = "172.16.74.0/24";
+    };
+  in
+    my.containers.functions.addNetworks networks;
+
+in {
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "vfio-pci" ];
   boot.initrd.kernelModules = [ ];
@@ -39,12 +52,17 @@
   # Virtualisation options
   virtualisation.libvirtd.onShutdown = "shutdown";
 
-  # Autostart serial getty connection
-  systemd.services."serial-getty@ttyRECOVER" = {
-    enable = true;
-    wantedBy = [ "getty.target" ];
-    serviceConfig.Restart = "always";
-  };
+  # Services needed
+  systemd.services = {
+    # Autostart serial getty connection
+    "serial-getty@ttyRECOVER" = {
+      enable = true;
+      wantedBy = [ "getty.target" ];
+      serviceConfig.Restart = "always";
+    };
+  } //
+  # Add the container network services too
+  conatinerNetworksService;
 
   # UPS configuration
   power.ups = {
@@ -122,7 +140,20 @@
         "53:53/udp"
         "81:80/tcp"
       ];
-      extraOptions = [ "--dns=127.0.0.1" ];
+      extraOptions = [ "--dns=127.0.0.1" "--network=dns" "--ip=172.16.72.100" ];
+    };
+
+    # Database
+    maria = {
+      image = "mariadb:latest";
+      environment = {
+        TZ = my.config.system.timezone;
+      };
+      environmentFiles = [ /data/local/safe/mariadb.env ];
+      volumes = [
+        "/data/local/docker/config/mariadb:/data"
+      ];
+      extraOptions = [ "--network=database" "--ip=172.16.74.100" ];
     };
 
     # NUT server monitor
@@ -135,52 +166,52 @@
       ports = [
         "82:6543/tcp"
       ];
-      extraOptions = [ "--dns=172.17.0.1" ];
+      extraOptions = [ "--network=web" ];
     };
 
     # Dashboard website
     dash = rec {
       image = imageFile.imageName;
-      imageFile = my.containers.web { name = "dashboard"; url = "https://github.com/luis-caldas/personal"; };
+      imageFile = my.containers.images.web { name = "dashboard"; url = "https://github.com/luis-caldas/personal"; };
       volumes = [
         "/data/local/docker/config/dash/other.json:/web/other.json:ro"
       ];
       ports = [
         "80:8080/tcp"
       ];
-      extraOptions = [ "--dns=172.17.0.1" ];
+      extraOptions = [ "--network=web" ];
     };
 
     # DNS updater
     noip = rec {
       image = imageFile.imageName;
-      imageFile = my.containers.udns;
+      imageFile = my.containers.images.udns;
       environmentFiles = [ /data/local/safe/udns.env ];
-      extraOptions = [ "--dns=172.17.0.1" ];
+      extraOptions = [ "--dns=172.16.72.100" "--network=dns" ];
     };
 
     # Matrix server
-#    matrix = {
-#      image = "matrixdotorg/synapse:latest";
-#      environment = {
-#        TZ = my.config.system.timezone;
-#        UID = builtins.toString my.config.user.uid;
-#        GID = builtins.toString my.config.user.gid;
-#        SYNAPSE_REPORT_STATS = "no";
-#      };
-#      volumes = [
-#        "/data/local/docker/config/synapse:/data"
-#      ];
-#      ports = [
-#        "83:8008/tcp"
-#      ];
-#      extraOptions = [ "--dns=172.17.0.1" ];
-#    };
+    matrix = {
+      image = "matrixdotorg/synapse:latest";
+      environment = {
+        TZ = my.config.system.timezone;
+        UID = builtins.toString my.config.user.uid;
+        GID = builtins.toString my.config.user.gid;
+        SYNAPSE_REPORT_STATS = "no";
+      };
+      volumes = [
+        "/data/local/docker/config/synapse:/data"
+      ];
+      ports = [
+        "83:8008/tcp"
+      ];
+      extraOptions = [ "--network=database" ];
+    };
 
     # Asterisk container
     asterisk = rec {
       image = imageFile.imageName;
-      imageFile = my.containers.asterisk;
+      imageFile = my.containers.images.asterisk;
       volumes = [
         "/data/local/docker/config/asterisk/conf:/etc/asterisk/conf.mine"
         "/data/local/docker/config/asterisk/voicemail:/var/spool/asterisk/voicemail"
@@ -190,12 +221,12 @@
         "/data/local/mail:/data/local/mail:ro"
         "/etc/msmtprc:/etc/msmtprc:ro"
       ];
-      extraOptions = [ "--dns=172.17.0.1" "--network=host" ];
+      extraOptions = [ "--network=host" ];
     };
     # Asterisk HTTP Server for users
     http-asterisk-user = rec {
       image = imageFile.imageName;
-      imageFile = my.containers.web {};
+      imageFile = my.containers.images.web {};
       volumes = [
         "/data/local/docker/config/asterisk/voicemail:/web/voicemail:ro"
         "/data/local/docker/config/asterisk/record:/web/monitor:ro"
@@ -203,7 +234,7 @@
       ports = [
         "8080:8080/tcp"
       ];
-      extraOptions = [ "--dns=172.17.0.1" ];
+      extraOptions = [ "--network=web" ];
     };
     # Asterisk HTTP Server for kodi
     http-asterisk-kodi = rec {
@@ -215,31 +246,31 @@
       ports = [
         "8081:8080/tcp"
       ];
-      extraOptions = [ "--dns=172.17.0.1" ];
+      extraOptions = [ "--network=web" ];
     };
 
     # HTTP Server manuals
     man-nix = rec {
       image = imageFile.imageName;
-      imageFile = my.containers.web {};
+      imageFile = my.containers.images.web {};
       volumes = [
         "${pkgs.nix.doc}/share/doc/nix/manual:/web:ro"
       ];
       ports = [
         "8090:8080/tcp"
       ];
-      extraOptions = [ "--dns=172.17.0.1" ];
+      extraOptions = [ "--network=web" ];
     };
     man-nixos = rec {
       image = imageFile.imageName;
-      imageFile = my.containers.web {};
+      imageFile = my.containers.images.web {};
       volumes = [
         "${config.system.build.manual.manualHTML}/share/doc/nixos:/web:ro"
       ];
       ports = [
         "8091:8080/tcp"
       ];
-      extraOptions = [ "--dns=172.17.0.1" ];
+      extraOptions = [ "--network=web" ];
     };
 
   };

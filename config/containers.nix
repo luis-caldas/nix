@@ -252,4 +252,49 @@ let
     };
 
   };
-in allContainers
+
+  # Helpful functions for the containers
+  allData = {
+
+    # All the images created here
+    images = allContainers;
+
+    # Functions to help manage containers
+    functions = {
+
+      # Adds networks to the container backend
+      addNetworks = (networks: let
+        # Docker binary
+        docker = config.virtualisation.oci-containers.backend;
+        dockerBin = "${pkgs.${docker}}/bin/${docker}";
+        # Name prefix for service
+        prefix = "container-network-start";
+      in
+        # Whole activation script
+        builtins.listToAttrs (
+          lib.mapAttrsToList (eachName: eachValue: {
+            name = "${prefix}-${eachName}";
+            value = {
+              description = "Create the needed networks for containers";
+              after = [ "network.target" ];
+              wantedBy = [ "multi-user.target" ];
+              serviceConfig.Type = "oneshot";
+              script = ''
+                check=$(${dockerBin} network ls | grep "${eachName}" || true)
+                if [ -z "$check" ]; then
+                  "${dockerBin}" network create "${eachName}" --driver bridge --subnet ${eachValue}
+                else
+                  echo "${eachName} already exists in docker"
+                fi
+              '';
+            };
+          })
+          networks
+        )
+      );
+
+    };
+
+  };
+
+in allData

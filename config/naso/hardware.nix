@@ -3,45 +3,15 @@ let
 
   # Create all the services needed for the containers networks
   conatinerNetworksService = let
-
     # Names of networks and their subnets
     networks = {
       database = "172.16.72.0/24";
       media = "172.16.73.0/24";
     };
-
-    # Docker binary
-    docker = config.virtualisation.oci-containers.backend;
-    dockerBin = "${pkgs.${docker}}/bin/${docker}";
-
-    # Name prefix for service
-    prefix = "container-network-start";
-
   in
-    # Whole activation script
-    builtins.listToAttrs (
-      lib.mapAttrsToList (eachName: eachValue: {
-        name = "${prefix}-${eachName}";
-        value = {
-          description = "Create the needed networks for containers";
-          after = [ "network.target" ];
-          wantedBy = [ "multi-user.target" ];
-          serviceConfig.Type = "oneshot";
-          # Put a true at the end of the check script to prevent getting non-zero return code,
-          # which will crash the whole service.
-          script = ''
-            check=$(${dockerBin} network ls | grep "${eachName}" || true)
-            if [ -z "$check" ]; then
-              "${dockerBin}" network create "${eachName}" --driver bridge --subnet ${eachValue}
-            else
-              echo "${eachName} already exists in docker"
-            fi
-          '';
-        };
-      }) networks);
+    my.containers.functions.addNetworks networks;
 
-in
-{
+in {
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
