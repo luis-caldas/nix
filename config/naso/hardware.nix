@@ -110,14 +110,30 @@ in {
     # Database
     maria = {
       image = "mariadb:latest";
-      environment = {
+      environment = let
+        cloudName = "cloud";
+      in {
         TZ = my.config.system.timezone;
+        MARIADB_DATABASE = cloudName;
+        MARIADB_USER = cloudName;
+        MARIADB_PASSWORD = "";
       };
       environmentFiles = [ /data/local/safe/env/mariadb.env ];
       volumes = [
         "/data/bunker/safe/mariadb:/data"
       ];
       extraOptions = [ "--network=database" "--ip=172.16.72.100" ];
+    };
+    # Redis
+    redis = {
+      image = "redis:latest";
+      environment = {
+        TZ = my.config.system.timezone;
+      };
+      volumes = [
+        "/data/bunker/safe/redis:/data"
+      ];
+      extraOptions = [ "--save 60 1" "--network=database" "--ip=172.16.72.110" ];
     };
 
     # Vaultwarden
@@ -144,8 +160,17 @@ in {
       image = "nextcloud";
       environment = {
         TZ = my.config.system.timezone;
+        # Mariadb
+        MYSQL_HOST = "172.16.72.100";
+        MYSQL_DATABASE = "cloud";
+        MYSQL_USER = "cloud";
+        MYSQL_PASSWORD = "";
+        # Redis
+        REDIS_HOST = "172.16.72.110";
+        # Data
+        NEXTCLOUD_DATA_DIR = "/var/www/html/data";
       };
-      environmentFiles = [  ];
+      environmentFiles = [ /data/local/safe/env/cloud.env ];
       volumes = [
         "/data/local/config/nextcloud:/var/www/html"
         "/data/bunker/cloud:/var/www/html/data"
