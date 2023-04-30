@@ -19,7 +19,7 @@ let
     }) names);
 
     # Docker binary
-    docker = builtins.trace networks config.virtualisation.oci-containers.backend;
+    docker = builtins.trace ([networks.database networks.media]) config.virtualisation.oci-containers.backend;
     dockerBin = "${pkgs.${docker}}/bin/${docker}";
 
     # Name prefix for service
@@ -35,9 +35,9 @@ let
           after = [ "network.target" ];
           wantedBy = [ "multi-user.target" ];
           serviceConfig.Type = "oneshot";
+          # Put a true at the end of the check script to prevent getting non-zero return code,
+          # which will crash the whole service.
           script = ''
-            # Put a true at the end to prevent getting non-zero return code,
-            # which will crash the whole service.
             check=$(${dockerBin} network ls | grep "${eachName}" || true)
             if [ -z "$check" ]; then
               "${dockerBin}" network create "${eachName}" --driver bridge --subnet ${eachValue}
@@ -142,7 +142,7 @@ in
         "139:139/tcp"
         "445:445/tcp"
       ];
-      extraDockerOptions = [ "--network=media" ];
+      extraOptions = [ "--network=media" ];
     };
 
     # Database
