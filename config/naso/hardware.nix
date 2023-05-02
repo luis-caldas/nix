@@ -139,6 +139,7 @@ in {
     # Vaultwarden
     warden = {
       image = "vaultwarden/server:latest";
+      dependsOn = [ "maria" ];
       environment = {
         TZ = my.config.system.timezone;
         ROCKET_TLS="{certs=\"/ssl/main.pem\",key=\"/ssl/main.key\"}";
@@ -158,6 +159,7 @@ in {
     # Nextcloud
     cloud = {
       image = "nextcloud";
+      dependsOn = [ "maria" "redis" ];
       environment = {
         TZ = my.config.system.timezone;
         # Mariadb
