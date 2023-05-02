@@ -145,6 +145,7 @@
 
     # Drives
     hdparm
+    hddtemp
     nvme-cli
 
     # Encryption
