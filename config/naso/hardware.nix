@@ -171,7 +171,7 @@ in {
       };
       environmentFiles = [ /data/local/safe/env/cloud.env ];
       volumes = [
-        "/data/local/config/nextcloud:/var/www/html"
+        "/data/local/config/nextcloud:/var/www/html/config"
         "/data/bunker/cloud:/var/www/html/data"
       ];
       ports = [
