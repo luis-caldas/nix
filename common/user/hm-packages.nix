@@ -229,6 +229,9 @@
     # JSON
     jq
 
+    # XML & YAML
+    python3Packages.yq
+
     # Python
     python2Full
     python3Full
