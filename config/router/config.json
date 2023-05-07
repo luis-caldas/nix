@@ -3,7 +3,8 @@
     "timeout": 1
   },
   "system": {
-    "hostname": "router"
+    "hostname": "router",
+    "minimal":  true
   },
   "user": {
     "admin": false,
