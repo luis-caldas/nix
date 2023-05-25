@@ -189,14 +189,14 @@ in {
         TZ = my.config.system.timezone;
         PUID = builtins.toString my.config.user.uid;
         PGID = builtins.toString my.config.user.gid;
-        WEBUI_PORT = "8080";
+        WEBUI_PORT = "8112";
       };
       volumes = [
         "/data/local/config/torrent:/config"
         "/data/storr/media/downloads:/downloads"
       ];
       ports = [
-        "8112:8080/tcp"
+        "8112:8112/tcp"
       ];
       extraOptions = [ "--network=media" ];
     };
