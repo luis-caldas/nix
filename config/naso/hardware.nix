@@ -182,20 +182,21 @@ in {
       extraOptions = [ "--network=database" ];
     };
 
-    # Deluge instance for downloading
+    # QBittorrent instance for torrenting
     delusion = {
-      image = "lscr.io/linuxserver/deluge";
+      image = "lscr.io/linuxserver/qbittorrent:latest";
       environment = {
         TZ = my.config.system.timezone;
         PUID = builtins.toString my.config.user.uid;
         PGID = builtins.toString my.config.user.gid;
+        WEBUI_PORT = 8080;
       };
       volumes = [
+        "/data/local/config/torrent:/config"
         "/data/storr/media/downloads:/downloads"
-        "/data/local/config/deluge:/config"
       ];
       ports = [
-        "8112:8112/tcp"
+        "8112:8080/tcp"
       ];
       extraOptions = [ "--network=media" ];
     };
