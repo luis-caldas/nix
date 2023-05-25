@@ -183,13 +183,13 @@ in {
     };
 
     # QBittorrent instance for torrenting
-    delusion = {
+    torrent = {
       image = "lscr.io/linuxserver/qbittorrent:latest";
       environment = {
         TZ = my.config.system.timezone;
         PUID = builtins.toString my.config.user.uid;
         PGID = builtins.toString my.config.user.gid;
-        WEBUI_PORT = 8080;
+        WEBUI_PORT = "8080";
       };
       volumes = [
         "/data/local/config/torrent:/config"
