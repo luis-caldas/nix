@@ -169,12 +169,12 @@ in {
         # Redis
         REDIS_HOST = "172.16.72.110";
         # Data
-        NEXTCLOUD_DATA_DIR = "/var/www/html/data";
+        NEXTCLOUD_DATA_DIR = "/data";
       };
       environmentFiles = [ /data/local/safe/env/cloud.env ];
       volumes = [
-        "/data/local/config/nextcloud:/var/www/html/config"
-        "/data/bunker/cloud:/var/www/html/data"
+        "/data/local/config/nextcloud:/var/www/html"
+        "/data/bunker/cloud:/data"
       ];
       ports = [
         "443:80/tcp"
