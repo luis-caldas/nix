@@ -280,18 +280,35 @@ let
               wantedBy = [ "multi-user.target" ];
               serviceConfig.Type = "oneshot";
               script = ''
-                check=$(${dockerBin} network ls | grep "${eachName}" || true)
-                if [ -z "$check" ]; then
-                  "${dockerBin}" network create "${eachName}" --driver bridge --subnet ${eachValue}
-                else
+                check="$("${dockerBin}" network ls | grep "${eachName}" || true)"
+                if [ -n "$check" ]; then
                   echo "${eachName} already exists in docker"
+                  subnet_path=".[0].IPAM.Config[0].Subnet"
+                  get_subnet="$(${dockerBin} network inspect "${eachName}" | "${pkgs.jq}/bin/jq" -r "$subnet_path")"
+                  if [ "$get_subnet" == "${eachValue}" ]; then
+                    echo "${eachValue} is the same, doing nothing"
+                    exit 0
+                  else
+                    list_containers="$("${dockerBin}" network inspect -f '{{range .Containers}}{{.Name}} {{end}}' "${eachName}")"
+                    for each_container in $list_containers; do
+                      "${dockerBin}" network disconnect -f "${eachName}" "$each_container"
+                    done
+                    "${dockerBin}" network rm -f "${eachName}"
+                    echo "Disconnected containers from ${eachName} and deleted it"
+                  fi
                 fi
+                "${dockerBin}" network create "${eachName}" --driver bridge --subnet "${eachValue}"
+                echo "Created network ${eachName} with ${eachValue} subnet"
+                exit 0
               '';
             };
           })
           networks
         )
       );
+
+      # Converts all the environment items to strings
+      fixEnv = pkgs.lib.mapAttrs (name: value: builtins.toString value);
 
     };
 

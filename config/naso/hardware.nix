@@ -7,6 +7,7 @@ let
     networks = {
       database = "172.16.72.0/24";
       media = "172.16.73.0/24";
+      vault = "172.16.74.0/24";
     };
   in
     my.containers.functions.addNetworks networks;
@@ -107,35 +108,6 @@ in {
       extraOptions = [ "--network=media" ];
     };
 
-    # Database
-    maria = {
-      image = "mariadb:latest";
-      environment = let
-        cloudName = "cloud";
-      in {
-        TZ = my.config.system.timezone;
-        MARIADB_DATABASE = cloudName;
-        MARIADB_USER = cloudName;
-      };
-      environmentFiles = [ /data/local/safe/env/mariadb.env ];
-      volumes = [
-        "/data/bunker/safe/mariadb:/data"
-      ];
-      extraOptions = [ "--network=database" "--ip=172.16.72.100" ];
-    };
-    # Redis
-    redis = {
-      image = "redis:latest";
-      environment = {
-        TZ = my.config.system.timezone;
-      };
-      volumes = [
-        "/data/bunker/safe/redis:/data"
-      ];
-      cmd = [ "--save 60 1" ];
-      extraOptions = [ "--network=database" "--ip=172.16.72.110" ];
-    };
-
     # Vaultwarden
     warden = {
       image = "vaultwarden/server:latest";
@@ -153,10 +125,39 @@ in {
       ports = [
         "8443:80/tcp"
       ];
-      extraOptions = [ "--network=database" ];
+      extraOptions = [ "--network=vault" ];
     };
 
-    # Nextcloud
+    # ### Nextcloud
+    # Database
+    maria = {
+      image = "mariadb:latest";
+      environment = let
+        cloudName = "cloud";
+      in {
+        TZ = my.config.system.timezone;
+        MARIADB_DATABASE = cloudName;
+        MARIADB_USER = cloudName;
+      };
+      environmentFiles = [ /data/local/safe/env/mariadb.env ];
+      volumes = [
+        "/data/bunker/safe/mariadb:/var/lib/mysql"
+      ];
+      extraOptions = [ "--network=database" "--ip=172.16.72.100" ];
+    };
+    # Redis
+    redis = {
+      image = "redis:latest";
+      environment = {
+        TZ = my.config.system.timezone;
+      };
+      volumes = [
+        "/data/bunker/safe/redis:/data"
+      ];
+      cmd = [ "--save 60 1" ];
+      extraOptions = [ "--network=database" "--ip=172.16.72.110" ];
+    };
+    # Application
     cloud = {
       image = "nextcloud";
       dependsOn = [ "maria" "redis" ];
