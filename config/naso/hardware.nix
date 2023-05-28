@@ -111,7 +111,6 @@ in {
     # Vaultwarden
     warden = {
       image = "vaultwarden/server:latest";
-      dependsOn = [ "maria" ];
       environment = {
         TZ = my.config.system.timezone;
         ROCKET_TLS="{certs=\"/ssl/main.pem\",key=\"/ssl/main.key\"}";
