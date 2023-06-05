@@ -314,7 +314,7 @@ let
       createProxy = info: let
         certPath = "/etc/ssl/custom/default.crt";
         keyPath = "/etc/ssl/custom/default.key";
-        extraConfig = let nameNow = "extraConfig"; in if builtins.hasAttr nameNow list then list."${nameNow}" else "";
+        extraConfig = let nameNow = "extraConfig"; in if builtins.hasAttr nameNow info then info."${nameNow}" else "";
         nginxConfig = pkgs.writeText "${info.name}-nginx-config" ''
           server {
               listen 443 ssl http2;
