@@ -4,7 +4,7 @@
   # SSH
   services.openssh = {
     enable = my.config.services.ssh;
-    permitRootLogin = lib.mkForce "no";
+    settings.PermitRootLogin = lib.mkForce "no";
   };
 
   # Enable avahi

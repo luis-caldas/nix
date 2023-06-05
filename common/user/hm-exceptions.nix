@@ -20,7 +20,7 @@
     nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) (
       config.exceptions.unfree
     ++ [
-      "assaultcube"
+      "assaultcube" "SpaceCadetPinball"
       "steam" "steam-original" "steam-runtime" "steam-run"
       "minecraft-launcher"
       "dwarf-fortress"
@@ -28,6 +28,7 @@
       "spotify" "spotify-unwrapped"
       "zoom"
       "unrar"
+      "android-sdk-tools"
       "pycharm-professional" "webstorm" "clion" "datagrip" "idea-ultimate"
       "ciscoPacketTracer8"
     ]);

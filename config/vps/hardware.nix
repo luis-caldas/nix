@@ -36,7 +36,7 @@
     enable = true;
     passwordAuthentication = false;
     kbdInteractiveAuthentication = false;
-    permitRootLogin = lib.mkForce "no";
+    settings.PermitRootLogin = lib.mkForce "no";
   };
   # User keys for ssh
   users.users."${my.config.user.name}".openssh.authorizedKeys.keyFiles = [

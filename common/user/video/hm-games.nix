@@ -29,6 +29,7 @@
     teeworlds
     assaultcube
     crispyDoom
+    space-cadet-pinball
     # chocolateDoom  # conflicting
     mpkgs.srb2
     mpkgs.srb2kart

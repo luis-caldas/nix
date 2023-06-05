@@ -6,7 +6,6 @@ let
 
     # Basic
     enable = true;
-    version = 2;
 
     # ZFS fixes
     copyKernels = true;

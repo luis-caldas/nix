@@ -13,6 +13,7 @@
       enableIntro = false;
       enableFPS = true;
       enableDFHack = false;
+      enableStoneSense = false;
       enableTWBT = false;
       enableTextMode = true;
     })

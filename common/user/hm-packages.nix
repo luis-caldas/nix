@@ -6,7 +6,6 @@
     # Bin manipulation
     flips
     xdelta
-    hashcat
     radare2
     hexedit
     binutils
@@ -233,7 +232,6 @@
     python3Packages.yq
 
     # Python
-    python2Full
     python3Full
 
     # Ruby
@@ -249,15 +247,21 @@
     adoptopenjdk-jre-openj9-bin-16
 
     # Markdown
+    pandoc
     python3Packages.grip
+
+    # Pentest
+    john
+    hashcat
+
 
     #######
 
   ] ++
   mfunc.useDefault (!my.config.system.minimal) [
 
-    # Binary
-    john
+    # Pentest
+    metasploit
     mpkgs.steghide
     python3Packages.binwalk-full
 
