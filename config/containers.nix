@@ -323,7 +323,7 @@ let
         '';
       in {
         image = "nginx:latest";
-        ports = [ "${httpPort}:${httpPort}/tcp" "${httpsPort}:${httpsPort}/tcp" ];
+        ports = [ "${httpPort}:${httpPort}/tcp" ];
         volumes = [ "${nginxConfig}:/etc/nginx/conf.d/default.conf:ro" ];
       };
 
