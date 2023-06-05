@@ -211,6 +211,7 @@ in {
         UID = builtins.toString my.config.user.uid;
         GID = builtins.toString my.config.user.gid;
         SYNAPSE_REPORT_STATS = "no";
+        SYNAPSE_HTTP_PORT = "10443";
       };
       environmentFiles = [ "/data/local/safe/env/synapse.env" ];
       volumes = [
