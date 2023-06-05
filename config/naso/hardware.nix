@@ -192,7 +192,7 @@ in {
       ports = [ "9443:443/tcp" ];
       ssl = {
         key = "/data/local/ssl/main.key";
-        cert = "/data/local/ssl/main.crt";
+        cert = "/data/local/ssl/main.pem";
       };
     };
 
