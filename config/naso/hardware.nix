@@ -171,8 +171,8 @@ in {
         # Data
         NEXTCLOUD_DATA_DIR = "/data";
         # Apache
-        APACHE_PORT = 11000;
-        APACHE_IP_BINDING = 0.0.0.0;
+        APACHE_PORT = "11000";
+        APACHE_IP_BINDING = "0.0.0.0";
       };
       environmentFiles = [ /data/local/safe/env/cloud.env ];
       volumes = [
