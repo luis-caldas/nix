@@ -186,7 +186,7 @@ in {
         ip = "172.16.72.10";
         port = "80";
       };
-      ports = [ "9443:443/tcp" ];
+      port = "9443";
       ssl = {
         key = "/data/local/ssl/main.key";
         cert = "/data/local/ssl/main.pem";

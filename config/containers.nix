@@ -317,7 +317,7 @@ let
         extraConfig = let nameNow = "extraConfig"; in if builtins.hasAttr nameNow info then info."${nameNow}" else "";
         nginxConfig = pkgs.writeText "${info.name}-nginx-config" ''
           server {
-              listen 443 ssl http2;
+              listen ${info.port} ssl http2;
               server_name _;
               ssl_certificate ${certPath};
               ssl_certificate_key ${keyPath};
@@ -342,7 +342,7 @@ let
       in {
         image = "nginx:latest";
         dependsOn = [ "${info.name}" ];
-        inherit (info) ports;
+        ports = [ "${info.port}:${info.port}/tcp" ];
         volumes = [
           "${nginxConfig}:/etc/nginx/conf.d/default.conf:ro"
           "${info.ssl.key}:${keyPath}:ro"
