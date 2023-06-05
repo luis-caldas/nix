@@ -314,7 +314,7 @@ let
       createRedirector = let
         httpPort = "80";
         httpsPort = "443";
-        nginxConfig = ''
+        nginxConfig = pkgs.writeText "http-redirector" ''
           server {
               listen ${httpPort};
               server_name _;
