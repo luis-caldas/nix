@@ -191,6 +191,7 @@ in {
         key = "/data/local/ssl/main.key";
         cert = "/data/local/ssl/main.pem";
       };
+      extraOptions = [ "--ip=172.16.72.20" ];
     };
 
     # QBittorrent instance for torrenting

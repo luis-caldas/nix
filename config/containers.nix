@@ -320,6 +320,7 @@ let
               server_name _;
               ssl_certificate ${certPath};
               ssl_certificate_key ${keyPath};
+              add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
               location / {
                   proxy_set_header Host $host;
                   proxy_set_header X-Real-IP $remote_addr;
@@ -348,7 +349,10 @@ let
           "${info.ssl.key}:${keyPath}:ro"
           "${info.ssl.cert}:${certPath}:ro"
         ];
-        extraOptions = [ "--network=${info.net.name}" ];
+        extraOptions = let
+          extra = "extraOptions";
+        in [ "--network=${info.net.name}" ] ++
+          (if builtins.hasAttr extra info then info."${extra}" else []);
       };
 
       # Returns both containers configuration
