@@ -321,7 +321,11 @@ let
               server_name _;
               ssl_certificate ${certPath};
               ssl_certificate_key ${keyPath};
-              add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+              add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
+              add_header X-Frame-Options DENY;
+              add_header X-Content-Type-Options nosniff;
+              add_header X-XSS-Protection "1; mode=block";
+              add_header Referrer-Policy "origin";
               location / {
                   proxy_set_header Host $host;
                   proxy_set_header X-Real-IP $remote_addr;
