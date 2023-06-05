@@ -314,6 +314,7 @@ let
       createProxy = info: let
         certPath = "/etc/ssl/custom/default.crt";
         keyPath = "/etc/ssl/custom/default.key";
+        extraConfig = let nameNow = "extraConfig"; in if builtins.hasAttr nameNow list then list."${nameNow}" else "";
         nginxConfig = pkgs.writeText "${info.name}-nginx-config" ''
           server {
               listen 443 ssl http2;
@@ -327,12 +328,7 @@ let
                   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
                   proxy_pass http://${info.net.ip}:${info.net.port};
               }
-              location /.well-known/carddav {
-                  return 301 $scheme://$host/remote.php/dav;
-              }
-              location /.well-known/caldav {
-                  return 301 $scheme://$host/remote.php/dav;
-              }
+              ${extraConfig}
           }
           server {
               listen 80 default_server;

@@ -191,6 +191,14 @@ in {
         key = "/data/local/ssl/main.key";
         cert = "/data/local/ssl/main.pem";
       };
+      extraConfig = ''
+          location /.well-known/carddav {
+              return 301 $scheme://$host/remote.php/dav;
+          }
+          location /.well-known/caldav {
+              return 301 $scheme://$host/remote.php/dav;
+          }
+      '';
       extraOptions = [ "--ip=172.16.72.20" ];
     };
 
