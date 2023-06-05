@@ -326,6 +326,12 @@ let
                   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
                   proxy_pass http://${info.net.ip}:${info.net.port};
               }
+              location /.well-known/carddav {
+                  return 301 $scheme://$host/remote.php/dav;
+              }
+              location /.well-known/caldav {
+                  return 301 $scheme://$host/remote.php/dav;
+              }
           }
           server {
               listen 80 default_server;
