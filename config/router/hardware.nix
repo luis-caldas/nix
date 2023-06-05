@@ -176,10 +176,21 @@ in {
       volumes = [
         "/data/local/docker/config/dash/other.json:/web/other.json:ro"
       ];
-      ports = [
-        "80:8080/tcp"
-      ];
-      extraOptions = [ "--network=web" ];
+      extraOptions = [ "--network=web" "--ip=172.16.73.100" ];
+    };
+    # Proxy HTTPS
+    dash-proxy = my.containers.functions.createProxy {
+      name = "dash";
+      net = {
+        name = "web";
+        ip = "172.16.73.100";
+        port = "8080";
+      };
+      port = "443";
+      ssl = {
+        key = "/data/local/ssl/main.key";
+        cert = "/data/local/ssl/main.pem";
+      };
     };
 
     # DNS updater
@@ -188,24 +199,6 @@ in {
       imageFile = my.containers.images.udns;
       environmentFiles = [ /data/local/safe/udns.env ];
       extraOptions = [ "--dns=172.16.72.100" "--network=dns" ];
-    };
-
-    # Matrix server
-    matrix = {
-      image = "matrixdotorg/synapse:latest";
-      environment = {
-        TZ = my.config.system.timezone;
-        UID = builtins.toString my.config.user.uid;
-        GID = builtins.toString my.config.user.gid;
-        SYNAPSE_REPORT_STATS = "no";
-      };
-      volumes = [
-        "/data/local/docker/config/synapse:/data"
-      ];
-      ports = [
-        "83:8008/tcp"
-      ];
-      extraOptions = [ "--network=database" ];
     };
 
     # Asterisk container

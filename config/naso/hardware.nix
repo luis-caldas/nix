@@ -5,9 +5,10 @@ let
   conatinerNetworksService = let
     # Names of networks and their subnets
     networks = {
-      database = "172.16.72.0/24";
+      cloud = "172.16.72.0/24";
       media = "172.16.73.0/24";
       vault = "172.16.74.0/24";
+      message = "172.16.75.0/24";
     };
   in
     my.containers.functions.addNetworks networks;
@@ -142,7 +143,7 @@ in {
       volumes = [
         "/data/bunker/safe/mariadb:/var/lib/mysql"
       ];
-      extraOptions = [ "--network=database" "--ip=172.16.72.100" ];
+      extraOptions = [ "--network=cloud" "--ip=172.16.72.100" ];
     };
     # Redis
     redis = {
@@ -154,7 +155,7 @@ in {
         "/data/bunker/safe/redis:/data"
       ];
       cmd = [ "--save 60 1" ];
-      extraOptions = [ "--network=database" "--ip=172.16.72.110" ];
+      extraOptions = [ "--network=cloud" "--ip=172.16.72.110" ];
     };
     # Application
     cloud = {
@@ -176,13 +177,13 @@ in {
         "/data/local/config/nextcloud:/var/www/html"
         "/data/bunker/cloud:/data"
       ];
-      extraOptions = [ "--network=database" "--ip=172.16.72.10" ];
+      extraOptions = [ "--network=cloud" "--ip=172.16.72.10" ];
     };
     # Proxy HTTPS
     cloud-proxy = my.containers.functions.createProxy {
       name = "cloud";
       net = {
-        name = "database";
+        name = "cloud";
         ip = "172.16.72.10";
         port = "80";
       };
@@ -200,6 +201,35 @@ in {
           }
       '';
       extraOptions = [ "--ip=172.16.72.20" ];
+    };
+
+    # Matrix server
+    matrix = {
+      image = "matrixdotorg/synapse:latest";
+      environment = {
+        TZ = my.config.system.timezone;
+        UID = builtins.toString my.config.user.uid;
+        GID = builtins.toString my.config.user.gid;
+        SYNAPSE_REPORT_STATS = "no";
+      };
+      volumes = [
+        "/data/bunker/safe/docker/config/matrix:/data"
+      ];
+      extraOptions = [ "--network=message" "--ip=172.16.75.100" ];
+    };
+    # Proxy HTTPS
+    matrix-proxy = my.containers.functions.createProxy {
+      name = "matrix";
+      net = {
+        name = "message";
+        ip = "172.16.75.100";
+        port = "8008";
+      };
+      port = "10443";
+      ssl = {
+        key = "/data/local/ssl/main.key";
+        cert = "/data/local/ssl/main.pem";
+      };
     };
 
     # QBittorrent instance for torrenting
