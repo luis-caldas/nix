@@ -192,6 +192,8 @@ in {
         cert = "/data/local/ssl/main.pem";
       };
     };
+    # Redirector
+    dash-redirector = my.containers.functions.createRedirector;
 
     # DNS updater
     noip = rec {

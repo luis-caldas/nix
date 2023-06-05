@@ -310,6 +310,21 @@ let
       # Converts all the environment items to strings
       fixEnv = pkgs.lib.mapAttrs (name: value: builtins.toString value);
 
+      # Create a HTTP to HTTPS redirector
+      createRedirector = let
+        nginxConfig = ''
+          server {
+              listen 80;
+              server_name _;
+              return 301 https://$host$request_uri;
+          }
+        '';
+      in {
+        image = "nginx:latest";
+        ports = [ "${sourcePort}:${sourcePort}/tcp" "${destinationPort}:${destinationPort}/tcp" ];
+        volumes = [ "${nginxConfig}:/etc/nginx/conf.d/default.conf:ro" ];
+      };
+
       # Create reverse proxy for https on the given container configuration
       createProxy = info: let
         certPath = "/etc/ssl/custom/default.crt";

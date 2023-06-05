@@ -212,25 +212,26 @@ in {
         GID = builtins.toString my.config.user.gid;
         SYNAPSE_REPORT_STATS = "no";
       };
+      environmentFiles = [ "/data/local/safe/env/synapse.env" ];
       volumes = [
         "/data/bunker/safe/docker/config/matrix:/data"
       ];
       extraOptions = [ "--network=message" "--ip=172.16.75.100" ];
     };
     # Proxy HTTPS
-    matrix-proxy = my.containers.functions.createProxy {
-      name = "matrix";
-      net = {
-        name = "message";
-        ip = "172.16.75.100";
-        port = "8008";
-      };
-      port = "10443";
-      ssl = {
-        key = "/data/local/ssl/main.key";
-        cert = "/data/local/ssl/main.pem";
-      };
-    };
+#    matrix-proxy = my.containers.functions.createProxy {
+#      name = "matrix";
+#      net = {
+#        name = "message";
+#        ip = "172.16.75.100";
+#        port = "8008";
+#      };
+#      port = "10443";
+#      ssl = {
+#        key = "/data/local/ssl/main.key";
+#        cert = "/data/local/ssl/main.pem";
+#      };
+#    };
 
     # QBittorrent instance for torrenting
     torrent = {
