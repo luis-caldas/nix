@@ -182,7 +182,7 @@ in {
       extraOptions = [ "--network=database" "--ip=172.16.72.10" ];
     };
     # Proxy HTTPS
-    cloud-proxy = {
+    cloud-proxy = my.containers.functions.createProxy {
       name = "cloud";
       net = {
         name = "database";
