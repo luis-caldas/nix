@@ -176,9 +176,6 @@ in {
         "/data/local/config/nextcloud:/var/www/html"
         "/data/bunker/cloud:/data"
       ];
-      ports = [
-        "443:80/tcp"
-      ];
       extraOptions = [ "--network=database" "--ip=172.16.72.10" ];
     };
     # Proxy HTTPS
