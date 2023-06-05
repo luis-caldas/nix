@@ -204,31 +204,17 @@ in {
     };
 
     # Matrix server
-    matrix = {
-      image = "matrixdotorg/synapse:latest";
-      environment = {
-        TZ = my.config.system.timezone;
-        UID = builtins.toString my.config.user.uid;
-        GID = builtins.toString my.config.user.gid;
-      };
-      volumes = [
-        "/data/bunker/safe/docker/config/matrix:/data"
-      ];
-      extraOptions = [ "--network=message" "--ip=172.16.75.100" ];
-    };
-    # Proxy HTTPS
-#    matrix-proxy = my.containers.functions.createProxy {
-#      name = "matrix";
-#      net = {
-#        name = "message";
-#        ip = "172.16.75.100";
-#        port = "8008";
+#    matrix = {
+#      image = "matrixdotorg/synapse:latest";
+#      environment = {
+#        TZ = my.config.system.timezone;
+#        UID = builtins.toString my.config.user.uid;
+#        GID = builtins.toString my.config.user.gid;
 #      };
-#      port = "10443";
-#      ssl = {
-#        key = "/data/local/ssl/main.key";
-#        cert = "/data/local/ssl/main.pem";
-#      };
+#      volumes = [
+#        "/data/bunker/safe/docker/config/matrix:/data"
+#      ];
+#      extraOptions = [ "--network=message" "--ip=172.16.75.100" ];
 #    };
 
     # QBittorrent instance for torrenting
