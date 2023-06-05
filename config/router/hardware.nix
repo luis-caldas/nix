@@ -7,7 +7,6 @@ let
     networks = {
       dns = "172.16.72.0/24";
       web = "172.16.73.0/24";
-      database = "172.16.74.0/24";
     };
   in
     my.containers.functions.addNetworks networks;
@@ -141,19 +140,6 @@ in {
         "81:80/tcp"
       ];
       extraOptions = [ "--dns=127.0.0.1" "--network=dns" "--ip=172.16.72.100" ];
-    };
-
-    # Database
-    maria = {
-      image = "mariadb:latest";
-      environment = {
-        TZ = my.config.system.timezone;
-      };
-      environmentFiles = [ /data/local/safe/mariadb.env ];
-      volumes = [
-        "/data/local/docker/config/mariadb:/data"
-      ];
-      extraOptions = [ "--network=database" "--ip=172.16.74.100" ];
     };
 
     # NUT server monitor
