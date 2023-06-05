@@ -19,7 +19,7 @@
       22    # SSH port
       # 80    # Free port
       # 443   # Free port
-      7000  # Reverse proxy
+      # 7000  # Reverse proxy
       # 7500  # Reverse proxy dashboard
     ];
   };
@@ -34,9 +34,11 @@
   # SSH setup
   services.openssh = {
     enable = true;
-    passwordAuthentication = false;
-    kbdInteractiveAuthentication = false;
-    settings.PermitRootLogin = lib.mkForce "no";
+    settings = {
+      PermitRootLogin = lib.mkForce "no";
+      KbdInteractiveAuthentication = false;
+      PasswordAuthentication = false;
+    };
   };
   # User keys for ssh
   users.users."${my.config.user.name}".openssh.authorizedKeys.keyFiles = [
