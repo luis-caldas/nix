@@ -312,16 +312,18 @@ let
 
       # Create a HTTP to HTTPS redirector
       createRedirector = let
+        httpPort = "80";
+        httpsPort = "443";
         nginxConfig = ''
           server {
-              listen 80;
+              listen ${httpPort};
               server_name _;
               return 301 https://$host$request_uri;
           }
         '';
       in {
         image = "nginx:latest";
-        ports = [ "${sourcePort}:${sourcePort}/tcp" "${destinationPort}:${destinationPort}/tcp" ];
+        ports = [ "${httpPort}:${httpPort}/tcp" "${httpsPort}:${httpsPort}/tcp" ];
         volumes = [ "${nginxConfig}:/etc/nginx/conf.d/default.conf:ro" ];
       };
 
