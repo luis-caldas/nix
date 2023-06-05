@@ -179,7 +179,21 @@ in {
       ports = [
         "443:80/tcp"
       ];
-      extraOptions = [ "--network=database" ];
+      extraOptions = [ "--network=database" "--ip=172.16.72.10" ];
+    };
+    # Proxy HTTPS
+    cloud-proxy = {
+      name = "cloud";
+      net = {
+        name = "database";
+        ip = "172.16.72.10";
+        port = "80";
+      };
+      ports = [ "9443:443/tcp" ];
+      ssl = {
+        key = "/data/local/ssl/main.key";
+        cert = "/data/local/ssl/main.crt";
+      };
     };
 
     # QBittorrent instance for torrenting

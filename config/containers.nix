@@ -260,7 +260,7 @@ let
     images = allContainers;
 
     # Functions to help manage containers
-    functions = {
+    functions = rec {
 
       # Adds networks to the container backend
       addNetworks = (networks: let
@@ -309,6 +309,54 @@ let
 
       # Converts all the environment items to strings
       fixEnv = pkgs.lib.mapAttrs (name: value: builtins.toString value);
+
+      # Create reverse proxy for https on the given container configuration
+      createProxy = info: let
+        certPath = "/etc/ssl/custom/default.crt";
+        keyPath = "/etc/ssl/custom/default.key";
+        nginxConfig = pkgs.writeText "${info.name}-nginx-config" ''
+          server {
+              listen 443 ssl http2;
+              server_name _;
+              ssl_certificate ${certPath};
+              ssl_certificate_key ${keyPath};
+              location / {
+                  proxy_pass http://${info.net.ip}:${info.net.port};
+              }
+          }
+          server {
+              listen 80 default_server;
+              server_name _;
+              return 301 https://$host$request_uri;
+          }
+        '';
+      in {
+        image = "nginx:latest";
+        dependsOn = [ "${info.name}" ];
+        inherit (info) ports;
+        volumes = [
+          "${nginxConfig}:/etc/nginx/conf.d/default.conf:ro"
+          "${info.ssl.key}:${keyPath}:ro"
+          "${info.ssl.cert}:${certPath}:ro"
+        ];
+        extraOptions = [ "--network=${info.net.name}" ];
+      };
+
+      # Returns both containers configuration
+      addProxy = info: config: {
+        # Proxy create
+        "${info.name}-proxy" = createProxy info;
+        # Original now tied to proxy
+        "${info.name}" = let
+          mergeIfPossible = originalAttrSet: attrName: newList:
+            if builtins.hasAttr attrName originalAttrSet then
+              { "${attrName}" = originalAttrSet."${attrName}" ++ newList; }
+            else
+              { "${attrName}" = newList; };
+        in config //
+          mergeIfPossible config "extraOptions" [ "--network=${info.net.name}" "--ip=${info.net.ip}" ];
+
+      };
 
     };
 
