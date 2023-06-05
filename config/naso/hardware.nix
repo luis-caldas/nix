@@ -170,9 +170,6 @@ in {
         REDIS_HOST = "172.16.72.110";
         # Data
         NEXTCLOUD_DATA_DIR = "/data";
-        # Apache
-        APACHE_PORT = "11000";
-        APACHE_IP_BINDING = "0.0.0.0";
       };
       environmentFiles = [ /data/local/safe/env/cloud.env ];
       volumes = [
@@ -187,7 +184,7 @@ in {
       net = {
         name = "database";
         ip = "172.16.72.10";
-        port = "11000";
+        port = "80";
       };
       ports = [ "9443:443/tcp" ];
       ssl = {
