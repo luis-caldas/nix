@@ -193,10 +193,10 @@ in {
       };
       extraConfig = ''
           location /.well-known/carddav {
-              return 301 $scheme://$host/remote.php/dav;
+              return 301 $scheme://$http_host/remote.php/dav;
           }
           location /.well-known/caldav {
-              return 301 $scheme://$host/remote.php/dav;
+              return 301 $scheme://$http_host/remote.php/dav;
           }
       '';
       extraOptions = [ "--ip=172.16.72.20" ];

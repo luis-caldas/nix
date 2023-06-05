@@ -323,7 +323,7 @@ let
               ssl_certificate_key ${keyPath};
               add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
               location / {
-                  proxy_set_header Host $host;
+                  proxy_set_header Host $http_host;
                   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
                   proxy_set_header X-Forwarded-Port $server_port;
                   proxy_set_header X-Forwarded-Scheme $scheme;
@@ -332,11 +332,6 @@ let
                   proxy_pass http://${info.net.ip}:${info.net.port};
               }
               ${extraConfig}
-          }
-          server {
-              listen 80 default_server;
-              server_name _;
-              return 301 https://$host$request_uri;
           }
         '';
       in {
