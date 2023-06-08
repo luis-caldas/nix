@@ -193,6 +193,9 @@ in {
         cert = "/data/local/ssl/main.pem";
       };
       extraConfig = ''
+          client_max_body_size 512M;
+          client_body_timeout 300s;
+          fastcgi_buffers 64 4K;
           location /.well-known/carddav {
               return 301 $scheme://$http_host/remote.php/dav;
           }
