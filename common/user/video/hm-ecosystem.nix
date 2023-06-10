@@ -195,27 +195,6 @@ let
   # Create local services
   servicesLocal = {
 
-    # Lock screen service
-    xlock = {
-      Unit = {
-        Description = "XServer lock listener";
-        Requires = "graphical-session.target";
-        After = "graphical-session.target";
-      };
-      Service = {
-        Restart = "on-failure";
-        ExecStart = let
-        textFile = pkgs.writeTextFile {
-          name = "neolock"; executable = true;
-          text = ''
-            #!${pkgs.bash}/bin/bash
-            source /etc/profile
-            "${pkgs.xss-lock}/bin/xss-lock" -s "''${XDG_SESSION_ID}" -- "${my.projects.desktop.programs}/public/neolock"
-          '';
-        }; in "${textFile}";
-      };
-    };
-
     # Clipboard service
     clipster = {
       Unit = {
@@ -237,19 +216,6 @@ let
       };
     };
 
-    # Default unclutter program
-    unclutter = {
-      Unit = {
-        Description = "Unclutter desktop";
-        Requires = "graphical-session.target";
-        After = "graphical-session.target";
-      };
-      Service = {
-        Restart = "on-failure";
-        ExecStart = "${pkgs.unclutter-xfixes}/bin/unclutter --timeout 10 --jitter 5 --ignore-buttons 4,5,6,7";
-      };
-    };
-
     # Dunst notification system
     neodunst = {
       Unit = {
@@ -267,27 +233,6 @@ let
             #!${pkgs.bash}/bin/bash
             source /etc/profile
             "${my.projects.desktop.programs}/public/neodunst"
-          '';
-        }; in "${textFile}";
-      };
-    };
-
-    # Picom window compositor
-    neopicom = {
-      Unit = {
-        Description = "Neopicom window compositor";
-        Requires = "graphical-session.target";
-        After = "graphical-session.target";
-      };
-      Service = {
-        Restart = "on-failure";
-        ExecStart = let
-        textFile = pkgs.writeTextFile {
-          name = "neopicom"; executable = true;
-          text = ''
-            #!${pkgs.bash}/bin/bash
-            source /etc/profile
-            "${my.projects.desktop.programs}/public/neopicom"
           '';
         }; in "${textFile}";
       };
@@ -314,26 +259,6 @@ let
       };
     };
 
-  } //
-  # Uncluter + touch support
-  mfunc.useDefault my.config.graphical.touch {
-    unclutter-touch = {
-      Unit = {
-        Description = "Unclutter desktop on touch";
-        Requires = "graphical-session.target";
-        After = "graphical-session.target";
-      };
-      Service = {
-        Restart = "on-failure";
-        ExecStart = "${pkgs.unclutter-xfixes}/bin/unclutter --hide-on-touch";
-      };
-    };
-  } {};
-
-  # Create a alias for the neox startx command
-  neoxAlias = {
-    neox = "${my.projects.desktop.programs}/init/neox";
-    neo2x = "${my.projects.desktop.programs}/init/neox 2";
   };
 
   # Function for creating extensions for chromium based browsers
@@ -378,24 +303,6 @@ let
 
 in
 {
-
-  # Add my bash aliases
-  programs.bash.shellAliases = neoxAlias;
-
-  # Add st to the home packages with my patches and config
-  home.packages = with pkgs; [
-    (st.override {
-      conf = builtins.readFile ("${my.projects.desktop.term}/st/config.h");
-      patches = mfunc.listFullFilesInFolder ("${my.projects.desktop.term}/st/patches");
-      extraLibs = [ pkgs.xorg.libXcursor pkgs.harfbuzz ];
-    })
-  ];
-
-  # Add custom XResources file
-  xresources.extraConfig = builtins.readFile ("${my.projects.desktop.xresources}/XResources");
-
-  # Add xmonad config file
-  xsession.windowManager.xmonad.config = ("${my.projects.desktop.wm}/xmonad/xmonad.hs");
 
   # Some XDG links
   xdg.configFile = {
@@ -543,13 +450,6 @@ in
 
   # Add all the created services
   systemd.user.services = servicesLocal;
-
-  # Enable redshift
-  services.redshift = {
-    enable = true;
-    latitude = my.config.system.location.latitude;
-    longitude = my.config.system.location.longitude;
-  };
 
   # Add all the acquired link sets to the config
   home.file = linkSets;

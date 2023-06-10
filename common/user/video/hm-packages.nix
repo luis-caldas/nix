@@ -6,15 +6,19 @@
     # Basic graphics tools that I use
 
     # Desktop
-    openbox
     conky
-    rofi
-
-    # Xorg
-    xorg.xwininfo
 
     # Video
-    xorg.xdpyinfo
+    wlsunset
+
+    # Launcher
+    wofi
+
+    # Status Bar
+    waybar
+
+    # Terminal
+    kitty
 
     # Notifications
     dunst
@@ -27,7 +31,7 @@
     lxqt.lxqt-policykit
 
     # Clipboard
-    clipster
+    wl-clipboard
 
     # XDG
     awf
@@ -38,10 +42,10 @@
     gnome3.gnome-font-viewer
 
     # Monitors
-    arandr
+    wdisplays
 
     # VNC
-    x11vnc
+    wayvnc
 
     # File manager
     gnome3.nautilus
@@ -52,21 +56,9 @@
     # File organizing
     qdirstat
 
-    # Desktop lock
-    xss-lock
-
-    # Unclutter
-    unclutter-xfixes
-
     # Joysticks
     jstest-gtk
     python3Packages.ds4drv
-
-    # Key reassignment
-    xorg.xev
-
-    # Functional
-    haskellPackages.xmobar
 
     # Graph plotting
     gnuplot
@@ -92,8 +84,10 @@
 
     # Image editing
     gimp
-    gpick
     inkscape
+
+    # Picker
+    hyprpicker
 
     # Scan
     gnome3.simple-scan
@@ -107,11 +101,8 @@
     # Comics
     mcomix3
 
-    # Image viewer
-    sxiv
-
     # Wallpaper
-    nitrogen
+    hyprpaper
 
     # Voip
     mumble
@@ -119,8 +110,10 @@
     # Chat
     signal-desktop
 
-    # Testing
+    # Info
     gource
+
+    # Testing
     glxinfo
     sdl-jstest
 
@@ -143,13 +136,8 @@
     # Casting
     catt
 
-    # Screeshot
-    scrot
-
     # Overlay
-    xmagnify
-    screenkey
-    find-cursor
+    wshowkeys
     mpkgs.boomer
 
     # Streaming
@@ -158,13 +146,6 @@
 
     # Radio
     chirp
-
-  ] ++
-  # Unsable packages
-  [
-
-    # Window Composer
-    picom
 
   ] ++
   mfunc.useDefault (!my.config.system.minimal) [
@@ -263,9 +244,6 @@
   ] [] ++
   mfunc.useDefault my.config.audio [
 
-    # Online radio
-    icecast
-
     # Phone
     twinkle
 
@@ -281,9 +259,7 @@
   mfunc.useDefault ((my.arch == my.reference.x64) && my.config.audio) [
 
     # Audio player
-    (writeShellScriptBin "spotify" ''
-      "${spotify}/bin/spotify" --force-device-scale-factor="''${GDK_SCALE}" "''${@}"
-    '')
+    spotify
 
   ] [] ++
   mfunc.useDefault (my.config.audio && my.config.graphical.production.video) [
