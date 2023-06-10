@@ -71,50 +71,13 @@ let
   '';
 
   # Create the .xinitrc link file
-  textXInit = { ".xinitrc".text = let
+  linkInit = { ".myInit".text = let
     scaleString = toString my.config.graphical.display.scale;
   in ''
     #!${pkgs.bash}/bin/bash
 
-    # Set XOrg variables
-    ${pkgs.systemd}/bin/systemctl --user set-environment DISPLAY="''${DISPLAY}"
-    ${pkgs.systemd}/bin/systemctl --user set-environment XAUTHORITY="''${XAUTHORITY}"
-    ${pkgs.systemd}/bin/systemctl --user set-environment XDG_SESSION_ID="''${XDG_SESSION_ID}"
-
     # Add own programs to PATH
     export PATH="''${PATH}:${my.projects.desktop.programs}/public"
-
-    # Try to import new systemd variable
-    NEW_SCALE="$(${pkgs.systemd}/bin/systemctl --user show-environment | grep NEW_SCALE | cut -d"=" -f2)"
-
-    # Set default scaling variables
-    export GDK_SCALE="${scaleString}"
-
-    # Check if new scaling variable was set and if it was, override scaling
-    if [ -n "$NEW_SCALE" ]; then
-      export GDK_SCALE="''${NEW_SCALE}"
-    fi
-
-    # Ceil the scale and save its original value
-    ceil_scale="$(awk '{printf("%d\n",$0+=$0<0?0:0.999)}' <<< "''${GDK_SCALE}")"
-    export TARGET_SCALE="''${GDK_SCALE}"
-    export GDK_SCALE="''${ceil_scale}"
-
-    # Export defaults
-    export DEFAULT_XORG_DPI=96
-    export DEFAULT_XORG_CURSOR_SIZE=24
-
-    # Get the DPI scale
-    dpiScale="$(awk "BEGIN { printf \"%f\n\",1.0/''${GDK_SCALE} }")"
-    export GDK_DPI_SCALE="''${dpiScale}"
-
-    # Update more scaling variables
-    export ELM_SCALE="''${GDK_SCALE}"
-    export QT_AUTO_SCREEN_SCALE_FACTOR=1
-
-    # Export the scaling to systemd
-    ${pkgs.systemd}/bin/systemctl --user set-environment GDK_SCALE="''${GDK_SCALE}"
-    ${pkgs.systemd}/bin/systemctl --user set-environment TARGET_SCALE="''${TARGET_SCALE}"
 
     # Fix for java applications on tiling window managers
     export _JAVA_AWT_WM_NONREPARENTING=1
@@ -122,55 +85,23 @@ let
     # Enable moz XInput2 for touch
     export MOZ_USE_XINPUT2=1
 
-    # Dont blank screen with DPMS
-    ${pkgs.xorg.xset}/bin/xset s off
-    ${pkgs.xorg.xset}/bin/xset dpms 0 0 0
-
-    # Load the proper xresources
-    "${pkgs.xorg.xrdb}/bin/xrdb" -load "''${HOME}/.Xresources"
-
     # Boot up numlock
-    ${ "numlockx" + " " + (if my.config.system.numlock then "on" else "off") }
-
-    # Change Caps to Ctrl
-    reneocapstoctrl
-
-    # Set X Dpi
-    new_dpi="$(awk "BEGIN { printf \"%f\n\",''${DEFAULT_XORG_DPI}*''${GDK_SCALE} }")"
-    xrandr --dpi "''${new_dpi}"
-
-    # Set cursor size
-    new_cursor_size=$(( DEFAULT_XORG_CURSOR_SIZE * GDK_SCALE ))
-    export XCURSOR_SIZE="''${new_cursor_size}"
 
     # Extra commands from the config to be added
-    ${ (builtins.concatStringsSep "\n" my.config.graphical.display.extraCommands) }
-
-    # Restore the wallpapers
-    neotrogen restore
+    ${ (builtins.concatStringsSep "\n" my.config.graphical.commands) }
 
     # Set DBus variables
     if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
       eval "$(dbus-launch --exit-with-session --sh-syntax)"
     fi
 
-    # Update DBus environment
-    if command -v dbus-update-activation-environment >/dev/null 2>&1; then
-      dbus-update-activation-environment DISPLAY XAUTHORITY
-    fi
-
     # Call the preferred window manager
-    ${my.config.graphical.wm} &
+    Hyprland &
 
     # Announce graphical session started
     ${pkgs.systemd}/bin/systemctl --user start graphical-session.target
 
     # Start all possible services
-    ${pkgs.systemd}/bin/systemctl --user start xlock
-    ${pkgs.systemd}/bin/systemctl --user start clipster
-    ${pkgs.systemd}/bin/systemctl --user start unclutter
-    ${mfunc.useDefault my.config.graphical.touch "${pkgs.systemd}/bin/systemctl --user start unclutter-touch" ""}
-    ${mfunc.useDefault my.config.graphical.compositor "${pkgs.systemd}/bin/systemctl --user start neopicom" ""}
     ${mfunc.useDefault my.config.graphical.conky "${pkgs.systemd}/bin/systemctl --user start neoconky" ""}
     ${pkgs.systemd}/bin/systemctl --user start neodunst
 
@@ -184,7 +115,7 @@ let
   };
 
   # Create the default icons file
-  textIconsCursor = { ".local/share/icons/default/index.theme".text = ''
+  linkIconsCursor = { ".local/share/icons/default/index.theme".text = ''
       [Icon Theme]
       Name = default
       Comment = Default theme linker
@@ -194,27 +125,6 @@ let
 
   # Create local services
   servicesLocal = {
-
-    # Clipboard service
-    clipster = {
-      Unit = {
-        Description = "Clipboard manager";
-        Requires = "graphical-session.target";
-        After = "graphical-session.target";
-      };
-      Service = {
-        Restart = "on-failure";
-        ExecStart = let
-        textFile = pkgs.writeTextFile {
-          name = "clipster"; executable = true;
-          text = ''
-            #!${pkgs.bash}/bin/bash
-            source /etc/profile
-            "${pkgs.clipster}/bin/clipster" -d
-          '';
-        }; in "${textFile}";
-      };
-    };
 
     # Dunst notification system
     neodunst = {
@@ -293,10 +203,10 @@ let
   # Put all the sets together
   linkSets = lib.mkMerge ([
     linkThemes linkFonts linkIcons linkCursors linkPapes
-    textXInit textIconsCursor
+    linkInit linkIconsCursor
     linkVST
     linkSystemIcons
-    listChromeExtensionsFiles
+#    listChromeExtensionsFiles
   ] ++
   linkSystemFonts ++
   linkSystemThemes);

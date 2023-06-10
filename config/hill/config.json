@@ -4,8 +4,7 @@
   },
   "system": {
     "hostname": "hill",
-    "layout": "gb",
-    "numlock": true
+    "layout": "gb"
   },
   "services": {
     "ssh": true,
@@ -20,8 +19,6 @@
   "graphical": {
     "enable": true,
     "drivers": [ "amdgpu" ],
-    "trackpoint": { "enable": true },
-    "touchpad": { "enable": true },
     "production": {
       "audio": true,
       "models": true,

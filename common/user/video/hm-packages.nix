@@ -7,12 +7,14 @@
 
     # Desktop
     conky
+    glib
+    gsettings-desktop-schemas
 
     # Video
     wlsunset
 
     # Launcher
-    wofi
+    rofi-wayland
 
     # Status Bar
     waybar
@@ -24,6 +26,10 @@
     dunst
     libnotify
 
+    # Screenshot
+    grim
+    slurp
+
     # Password manager
     keepass
 
@@ -32,6 +38,9 @@
 
     # Clipboard
     wl-clipboard
+
+    # Keyboard
+    wtype
 
     # XDG
     awf
@@ -138,7 +147,6 @@
 
     # Overlay
     wshowkeys
-    mpkgs.boomer
 
     # Streaming
     streamlink
@@ -187,8 +195,6 @@
     # Reverse engineering
     ghidra-bin
 
-  ] [] ++
-  mfunc.useDefault my.config.graphical.touch [
   ] [] ++
   mfunc.useDefault my.config.graphical.production.software [
 

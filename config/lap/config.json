@@ -24,10 +24,9 @@
   },
   "graphical": {
     "enable": true,
-    "drivers": ["panfrost"],
-    "compositor": false,
-    "touchpad": { "enable": true },
-    "display": { "extraCommands": ["cneogovernor restore"] }
+    "drivers": [ "panfrost" ],
+    "effects": false,
+    "commands": [ "cneogovernor restore" ]
   },
   "audio": true
 }

@@ -38,8 +38,6 @@
     },
     "locale": "en_IE.UTF-8",
     "layout": "us",
-    "filer": "filer",
-    "numlock": false,
     "getty": {
       "greeting": "\\S{PRETTY_NAME} @ \\r \\m \\b\nSystem initiated successfully",
       "help": "You shouldn't need help at this point"
@@ -75,11 +73,12 @@
   "graphical": {
     "enable": false,
     "drivers": [],
-    "latest": true,
-    "wm": "xmonad",
-    "compositor": true,
+    "numlock": true,
+    "commands": [],
+    "displays": [],
+    "effects": true,
     "conky": true,
-    "cursor": "hacked-black",
+    "cursor": "hacked-grey-hd",
     "icons": "Mint-Y-Dark-Grey",
     "chromium": {
       "policies": {},
@@ -96,18 +95,7 @@
       "software": false,
       "business": false,
       "electronics": false
-    },
-    "trackpoint": {
-      "enable": false,
-      "speed": 97,
-      "sense": 128
-    },
-    "touchpad": {
-      "enable": false,
-      "accel": "0.5"
-    },
-    "touch": false,
-    "display": { "scale": 1, "extraCommands": [""] }
+    }
   },
   "games": false,
   "tex": false,

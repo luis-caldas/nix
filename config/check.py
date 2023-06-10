@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Checks if the config files have valid attributes
@@ -18,7 +18,7 @@ SPACINGS = {
 
 def neoprint(string_in, type=2):
     visual = "%s " % ["✗", "!", "✓"][type]
-    print "%s %s %s" % (SPACINGS["info"] * " ", visual, string_in)
+    print("%s %s %s" % (SPACINGS["info"] * " ", visual, string_in))
 
 def list_em_items(data_in):
     if isinstance(data_in, (set, list, tuple)):
@@ -140,7 +140,7 @@ def main():
         check = object_compare(default_config, each_config["data"])
         if check is None:
             neoprint("No mismatches")
-	else:
+        else:
             neoprint("Mismatch", 0)
             # Show each entry missing
             for each_entry in check:

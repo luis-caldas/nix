@@ -57,15 +57,6 @@
     # Sniffer
     wireshark
 
-    # Keyboard
-    xorg.xmodmap
-    xdotool
-    numlockx
-
-    # Window manager manipulation
-    wmctrl
-    xorg.xkill
-
     # Serial
     picocom
     minicom

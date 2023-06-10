@@ -1,47 +1,4 @@
 args@{ my, lib, config, pkgs, utils, ... }:
-
-# Do some assertions before starting the importing
-
-# Touchpad + graphical asserion
-assert lib.asserts.assertMsg
-  (!(my.config.graphical.touchpad.enable && !my.config.graphical.enable))
-  "Cannot enable touchpad without graphical mode";
-
-# Touch + graphical assertion
-assert lib.asserts.assertMsg
-  (!(my.config.graphical.touch && !my.config.graphical.enable))
-  "Cannot enable touch without graphical mode";
-
-# Trackpoint + graphical assertion
-assert lib.asserts.assertMsg
-  (!(my.config.graphical.trackpoint.enable && !my.config.graphical.enable))
-  "Cannot enable trackpoint without graphical mode";
-
-# Audio production + audio assertion
-assert lib.asserts.assertMsg
-  (!(my.config.graphical.production.audio && !my.config.audio))
-  "Cannot install audio production apps without audio";
-
-# Audio production + graphical assertion
-assert lib.asserts.assertMsg
-  (!(my.config.graphical.production.audio && !my.config.graphical.enable))
-  "Cannot install audio production apps without graphical mode";
-
-# Video production + graphical assertion
-assert lib.asserts.assertMsg
-  (!(my.config.graphical.production.video && !my.config.graphical.enable))
-  "Cannot enable video production without graphical mode";
-
-# Model production + graphical assertion
-assert lib.asserts.assertMsg
-  (!(my.config.graphical.production.models && !my.config.graphical.enable))
-  "Cannot enable model production without graphical mode";
-
-# Electronics production + graphical assertion
-assert lib.asserts.assertMsg
-  (!(my.config.graphical.production.electronics && !my.config.graphical.enable))
-  "Cannot enable electronics production without graphical mode";
-
 let
 
   # My functions
@@ -99,20 +56,10 @@ let
   ] ++
   # Check whether we should import the graphical tools
   mfunc.useDefault my.config.graphical.enable [
-    # Install Xorg if graphics are on
+    # Drivers configuration
     ./common/system/video/video.nix
     # Install preferred system wide gui applications
     ./common/system/video/packages.nix
-    # Xorg config for user defined wm
-    ./common/system/video/xorg.nix
-  ] [] ++
-  # Check if there is touchpad and graphical support
-  mfunc.useDefault (my.config.graphical.enable && my.config.graphical.touchpad.enable) [
-    ./common/system/video/touchpad.nix
-  ] [] ++
-  # Check if there is trackpoint
-  mfunc.useDefault (my.config.graphical.enable && my.config.graphical.trackpoint.enable) [
-    ./common/system/video/trackpoint.nix
   ] [] ++
   # Check if audio is supported
   mfunc.useDefault my.config.audio [ ./common/system/audio.nix ] [] ++

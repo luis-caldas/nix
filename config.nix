@@ -46,6 +46,9 @@ let
   # Generate the net id from the system name
   netId = builtins.substring 0 8 (builtins.hashString "sha512" realName);
 
+  # Name for the filer group
+  filer = "filer";
+
   # Import the chosen config file
   configObj = lib.recursiveUpdate
     (builtins.fromJSON (
@@ -132,6 +135,7 @@ let
     id = traceId;
     arch = sysArch;
     path = realName;
+    filer = filer;
     config = configObj;
     version = version;
     chromium = chromiumObj;

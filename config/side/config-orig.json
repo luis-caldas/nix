@@ -11,8 +11,7 @@
   },
   "graphical": {
     "enable": true,
-    "drivers": [ "amdgpu" ],
-    "touchpad": { "enable": true }
+    "drivers": [ "amdgpu" ]
   },
   "games": true,
   "audio": true,

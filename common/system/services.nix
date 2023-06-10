@@ -123,7 +123,7 @@
         map (
           s:
           "touch ${s}" + "\n" +
-          "chown :${my.config.system.filer} ${s}" + "\n" +
+          "chown :${my.filer} ${s}" + "\n" +
           "chmod g+rw ${s}" + "\n"
         )
         my.config.services.startup.create
@@ -136,7 +136,7 @@
       script = lib.concatStrings (
         map (
           s:
-          "chown :${my.config.system.filer} ${s}" + "\n" +
+          "chown :${my.filer} ${s}" + "\n" +
           "chmod g+rw ${s}" + "\n"
         )
         my.config.services.startup.permit
