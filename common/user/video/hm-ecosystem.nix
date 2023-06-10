@@ -75,101 +75,9 @@ let
     scaleString = toString my.config.graphical.display.scale;
   in ''
     #!${pkgs.bash}/bin/bash
-
-    # Add own programs to PATH
-    export PATH="''${PATH}:${my.projects.desktop.programs}/public"
-
-    # Fix for java applications on tiling window managers
-    export _JAVA_AWT_WM_NONREPARENTING=1
-
-    # Enable moz XInput2 for touch
-    export MOZ_USE_XINPUT2=1
-
-    # Boot up numlock
-
-    # Extra commands from the config to be added
+    # Extra commands from the config to be executed
     ${ (builtins.concatStringsSep "\n" my.config.graphical.commands) }
-
-    # Set DBus variables
-    if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
-      eval "$(dbus-launch --exit-with-session --sh-syntax)"
-    fi
-
-    # Call the preferred window manager
-    Hyprland &
-
-    # Announce graphical session started
-    ${pkgs.systemd}/bin/systemctl --user start graphical-session.target
-
-    # Start all possible services
-    ${mfunc.useDefault my.config.graphical.conky "${pkgs.systemd}/bin/systemctl --user start neoconky" ""}
-    ${pkgs.systemd}/bin/systemctl --user start neodunst
-
-    # Wait for all programs to exit
-    wait
-
-    # Announce graphical session stopped
-    ${pkgs.systemd}/bin/systemctl --user stop graphical-session.target
-
-    '';
-  };
-
-  # Create the default icons file
-  linkIconsCursor = { ".local/share/icons/default/index.theme".text = ''
-      [Icon Theme]
-      Name = default
-      Comment = Default theme linker
-      Inherits = ${my.config.graphical.cursor},${my.config.graphical.icons}
-    '';
-  };
-
-  # Create local services
-  servicesLocal = {
-
-    # Dunst notification system
-    neodunst = {
-      Unit = {
-        Description = "Neodunst notification system";
-        Conflicts = "dunst.service";
-        Requires = "graphical-session.target";
-        After = "graphical-session.target";
-      };
-      Service = {
-        Restart = "on-failure";
-        ExecStart = let
-        textFile = pkgs.writeTextFile {
-          name = "neodunst"; executable = true;
-          text = ''
-            #!${pkgs.bash}/bin/bash
-            source /etc/profile
-            "${my.projects.desktop.programs}/public/neodunst"
-          '';
-        }; in "${textFile}";
-      };
-    };
-
-    # Conky
-    neoconky = {
-      Unit = {
-        Description = "Conky system monitor";
-        Requires = "graphical-session.target";
-        After = "graphical-session.target";
-      };
-      Service = {
-        Restart = "on-failure";
-        ExecStart = let
-        textFile = pkgs.writeTextFile {
-          name = "neoconky"; executable = true;
-          text = ''
-            #!${pkgs.bash}/bin/bash
-            source /etc/profile
-            "${pkgs.conky}/bin/conky" -c "${my.projects.conky}/conky.lua"
-          '';
-        }; in "${textFile}";
-      };
-    };
-
-  };
+  ''; };
 
   # Function for creating extensions for chromium based browsers
   extensionJson = ext: browserName:
@@ -203,7 +111,7 @@ let
   # Put all the sets together
   linkSets = lib.mkMerge ([
     linkThemes linkFonts linkIcons linkCursors linkPapes
-    linkInit linkIconsCursor
+    linkInit
     linkVST
     linkSystemIcons
 #    listChromeExtensionsFiles
@@ -213,6 +121,15 @@ let
 
 in
 {
+
+#  # Add my made programs to PATH
+  home.sessionPath = [ "${my.projects.desktop.programs}/public" ];
+  # Add some extra env vars
+  home.sessionVariables = {
+    # Fix for java applications on tiling window managers
+    _JAVA_AWT_WM_NONREPARENTING = "1";
+    NIXOS_OZONE_WL = "1";
+  };
 
   # Some XDG links
   xdg.configFile = {
@@ -226,6 +143,14 @@ in
   gtk.enable = true;
   gtk.iconTheme.name = my.config.graphical.icons;
   gtk.theme.name = "Adwaita-dark";
+
+  # Set cursor
+  home.pointerCursor = {
+    package = my.projects.cursors;
+    gtk.enable = true;
+    name = my.config.graphical.cursor;
+    size = 24;
+  };
 
   # Add extra gtk css for colours
   gtk.gtk3.extraCss = gtkStyle;
@@ -357,9 +282,6 @@ in
     };
 
   };
-
-  # Add all the created services
-  systemd.user.services = servicesLocal;
 
   # Add all the acquired link sets to the config
   home.file = linkSets;

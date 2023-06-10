@@ -7,8 +7,7 @@
 
     # Desktop
     conky
-    glib
-    gsettings-desktop-schemas
+    xorg.xprop  # Needed for xwayland scaling
 
     # Video
     wlsunset
