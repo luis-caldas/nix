@@ -10,17 +10,11 @@
     # Select custom version of mesa drivers
     #package = pkgs.mesa.drivers;
   } //
-  mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) {
+  mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) rec {
     driSupport32Bit = true;
     extraPackages32 = with pkgs; [
-      intel-ocl
-      vaapiIntel
-      vaapiVdpau
-      libvdpau-va-gl
       pkgsi686Linux.libva
-      rocm-opencl-icd
-      rocm-opencl-runtime
-    ];
+    ] ++ extraPackages;
     extraPackages = with pkgs; [
       intel-ocl
       intel-media-driver
