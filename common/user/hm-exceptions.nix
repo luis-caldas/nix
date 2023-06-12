@@ -39,7 +39,11 @@
     # Home manager package overrides
     nixpkgs.config.packageOverrides = ogpkgs: (
       (config.exceptions.overrides ogpkgs)
-      // {}
+      // {
+        waybar = ogpkgs.waybar.overrideAttrs (oldAttrs: {
+          mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+        });
+      }
     );
 
   };
