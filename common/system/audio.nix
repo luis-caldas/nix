@@ -4,6 +4,9 @@
   # Enable rtkit for audio
   security.rtkit.enable = true;
 
+  # Disable pulseaudio
+  hardware.pulseaudio.enable = false;
+
   # Pipewire config
   services.pipewire = {
 

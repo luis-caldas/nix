@@ -30,9 +30,15 @@ let
   );
 
   # Create links from the system themes
-  linkSystemIcons = mfunc.listCreateLinks
-  ("${pkgs.cinnamon.mint-y-icons}" + "/share/icons")
-  ".local/share/icons";
+  linkSystemIcons = lib.forEach (with pkgs; [
+    papirus-icon-theme
+  ]) (
+    pack: (
+      mfunc.listCreateLinks
+      ("${pack}" + "/share/icons")
+      ".local/share/icons"
+    )
+  );
 
   # Create themes from the system themes
   linkSystemThemes = lib.forEach (with pkgs; [
@@ -113,10 +119,10 @@ let
     linkThemes linkFonts linkIcons linkCursors linkPapes
     linkInit
     linkVST
-    linkSystemIcons
 #    listChromeExtensionsFiles
   ] ++
   linkSystemFonts ++
+  linkSystemIcons ++
   linkSystemThemes);
 
 in
@@ -142,7 +148,7 @@ in
   # Set icons and themes
   gtk.enable = true;
   gtk.iconTheme.name = my.config.graphical.icons;
-  gtk.theme.name = "Adwaita-dark";
+  gtk.theme.name = my.config.graphical.theme;
 
   # Set cursor
   home.pointerCursor = {
@@ -159,10 +165,58 @@ in
   qt.enable = true;
   qt.platformTheme = "gtk";
 
-  # Set theme color
-  dconf.settings = {
+  # All gnome configuration
+  dconf.settings = let
+    prefix = "main";
+    default = "df.png";
+    wallpapersDir = "${my.projects.wallpapers}/papes";
+    firstImage = lib.findFirst (x: lib.hasPrefix prefix x) default (mfunc.listFilesInFolder wallpapersDir);
+    backgroundPath = "file://${wallpapersDir}/${firstImage}";
+  in {
+    "org/gnome/desktop/input-sources" = {
+      xkb-options = [ "caps:ctrl_modifier" ];
+    };
+    "org/gnome/desktop/peripherals/touchpad" = {
+      tap-to-click = true;
+      two-finger-scrolling-enabled = true;
+    };
+    "org/gnome/shell".favorite-apps = [
+      "spotify.desktop"
+    ];
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
+      enable-hot-corners = false;
+      clock-show-seconds = true;
+      clock-show-weekday = true;
+      font-antialiasing = "subpixel";
+      font-hinting = "full";
+      gtk-theme = my.config.graphical.theme;
+    };
+    "org/gnome/desktop/privacy" = {
+      recent-files-max-age = -1;
+      remember-recent-files = false;
+    };
+    "org/gnome/desktop/wm/preferences" = {
+      workspace-names = [
+        "Main" "Browse" "Mail" "Docs" "Game" "Design" "Web" "Links" "Music"
+      ];
+    };
+    "org/gnome/desktop/background" = {
+      picture-uri = backgroundPath;
+      picture-uri-dark = backgroundPath;
+    };
+    "org/gnome/desktop/interface" = {
+      font-name = "Sans 10";
+      document-font-name = "Sans 10";
+      monospace-font-name = "Mono 11";
+    };
+    "org/gnome/desktop/screensaver" = {
+      picture-uri = backgroundPath;
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+      name = "Terminal";
+      command = "kitty";
+      binding = "<Super>Return";
     };
   };
 

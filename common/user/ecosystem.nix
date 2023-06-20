@@ -48,12 +48,12 @@ in
   };
 
   # Add packages that dont work with home-manager
-  users.users."${my.config.user.name}".packages = mfunc.useDefault my.config.graphical.enable [
+  users.users."${my.config.user.name}".packages = mfunc.useDefault my.config.graphical.enable (with pkgs; [
 
     # Office package
-    pkgs.libreoffice
+    libreoffice
 
-  ] [];
+  ]) [];
 
   # Configure base packages for the root user as well
   home-manager.users.root = { ... }: {

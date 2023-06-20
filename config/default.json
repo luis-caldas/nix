@@ -79,7 +79,8 @@
     "effects": true,
     "conky": true,
     "cursor": "hacked-grey-hd",
-    "icons": "Mint-Y-Dark-Grey",
+    "icons": "Papirus-Dark",
+    "theme": "Adwaita-dark",
     "chromium": {
       "policies": {},
       "extensions": {

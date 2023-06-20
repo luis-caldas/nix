@@ -1,6 +1,33 @@
 { my, mfunc, config, pkgs, ... }:
 {
 
+  # Set the display manager and window manager
+  services.xserver = {
+    enable = true;
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+  };
+
+  # Enable plymouth
+  boot.plymouth.enable = true;
+
+  # Set gnome packages to install
+  services.gnome = {
+    games.enable = false;
+    core-shell.enable = true;
+    core-utilities.enable = false;
+    core-os-services.enable = true;
+    core-developer-tools.enable = true;
+  };
+
+  # Auto login for the desktop environment
+  services.xserver.displayManager.autoLogin = {
+    enable = true;
+    user = my.config.user.name;
+  };
+  systemd.services."getty@tty1".enable = false;
+  systemd.services."autovt@tty1".enable = false;
+
   # Set graphics drivers
   services.xserver.videoDrivers = my.config.graphical.drivers;
 

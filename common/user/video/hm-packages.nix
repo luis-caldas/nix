@@ -51,6 +51,7 @@
 
     # Monitors
     wdisplays
+    wlr-randr
 
     # VNC
     wayvnc
