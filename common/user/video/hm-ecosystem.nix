@@ -172,7 +172,10 @@ in
     wallpapersDir = "${my.projects.wallpapers}/papes";
     firstImage = lib.findFirst (x: lib.hasPrefix prefix x) default (mfunc.listFilesInFolder wallpapersDir);
     backgroundPath = "file://${wallpapersDir}/${firstImage}";
-  in {
+    workspaces = [
+      "Main" "Browse" "Mail" "Docs" "Game" "Design" "Web" "Links" "Music"
+    ];
+  in lib.mkMerge [{
     "org/gnome/desktop/input-sources" = {
       xkb-options = [ "caps:ctrl_modifier" ];
     };
@@ -190,6 +193,7 @@ in
       clock-show-weekday = true;
       font-antialiasing = "subpixel";
       font-hinting = "full";
+      show-battery-percentage = true;
       gtk-theme = my.config.graphical.theme;
     };
     "org/gnome/desktop/privacy" = {
@@ -197,9 +201,7 @@ in
       remember-recent-files = false;
     };
     "org/gnome/desktop/wm/preferences" = {
-      workspace-names = [
-        "Main" "Browse" "Mail" "Docs" "Game" "Design" "Web" "Links" "Music"
-      ];
+      workspace-names = workspaces;
     };
     "org/gnome/desktop/background" = {
       picture-uri = backgroundPath;
@@ -213,12 +215,98 @@ in
     "org/gnome/desktop/screensaver" = {
       picture-uri = backgroundPath;
     };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-      name = "Terminal";
-      command = "kitty";
-      binding = "<Super>Return";
+    "org/gnome/settings-daemon/plugins/power" = {
+      power-button-action = "nothing";
     };
-  };
+  }
+  # Create custom keybindings
+  (let
+    startMedia = "org/gnome/settings-daemon/plugins/media-keys";
+    keybindingsKey = "custom-keybindings";
+    keybindingsPath = "${startMedia}/${keybindingsKey}";
+    # Custom list of keybindings
+    keybindings = {
+      "Terminal" = {
+        command = "kitty";
+        binding = "<Super>Return";
+      };
+      "Browser" = {
+        command = "chromium";
+        binding = "<Super>N";
+      };
+      "Browser Persistent" = {
+        command = "chromium --user-data-dir=\"${config.xdg.configHome}/${browserNamePersistent}\"";
+        binding = "<Super>M";
+      };
+      "Browser Basic" = {
+        command = "chromium --user-data-dir=\"${config.xdg.configHome}/chromium-work\"";
+        binding = "<Super>B";
+      };
+    };
+    # Convert that list into dconf
+    keybindingsList = let setNow = keybindings; in (map (key:
+      { name = key; value = builtins.getAttr key setNow; }
+    ) (builtins.attrNames setNow));
+    customKeysList = lib.lists.imap0 ( index: item:
+      let
+        customName = "custom${builtins.toString index}";
+      in {
+        name = "${keybindingsPath}/${customName}"; value = {
+          name = item.name;
+          command = item.value.command;
+          binding = item.value.binding;
+        };
+      }
+    ) keybindingsList;
+    customKeys = builtins.listToAttrs customKeysList;
+    # Another entry is needed listing all the created keybindings
+    listOfEntryNames = {
+      "${startMedia}"."${keybindingsKey}" = map (eachName: "/${eachName}/") (builtins.attrNames customKeys);
+    };
+    # Join both dconfs into a single one (both the customs and the name list)
+    allCustom = customKeys // listOfEntryNames;
+  in allCustom)
+  # Overwrite keybindings and set my own
+  (let
+    mapAttrsHelp = attrSetInput:
+      map (key: {name = key; value = builtins.getAttr key attrSetInput;}) (builtins.attrNames attrSetInput);
+    genStrRange = size:
+      map builtins.toString (lib.lists.range 1 size);
+  in {
+    "org/gnome/shell/keybindings" = builtins.listToAttrs ((let
+        simple = {
+          focus-active-notification = [];
+          toggle-message-tray = [ "<Super>V" ];
+        };
+      in (mapAttrsHelp simple)) ++
+      (map (eachIndex:
+        { name = "switch-to-application-${eachIndex}"; value = []; }
+      ) (genStrRange (builtins.length workspaces))));
+    "org/gnome/settings-daemon/plugins/media-keys" = builtins.listToAttrs ((let
+        simple = {
+          help = [];
+          magnifier = [ "<Alt><Super>Z" ];
+        };
+      in (mapAttrsHelp simple)));
+    "org/gnome/desktop/wm/keybindings" = builtins.listToAttrs ((let
+        simple = {
+          close = [ "<Super>BackSpace" "<Alt>F4" ];
+          activate-window-menu = [ "<Alt>Space" ];
+        };
+      in (mapAttrsHelp simple)) ++
+      # Switching workspaces
+      (map (eachIndex:
+        { name = "switch-to-workspace-${eachIndex}"; value = [
+          "<Super>${eachIndex}" "<Super><Alt>${eachIndex}" "<Control><Alt>${eachIndex}"
+        ]; }
+      ) (genStrRange (builtins.length workspaces))) ++
+      # Moving workspaces
+      (map (eachIndex:
+        { name = "move-to-workspace-${eachIndex}"; value = [
+          "<Super><Shift>${eachIndex}" "<Super><Shift><Alt>${eachIndex}" "<Control><Shift><Alt>${eachIndex}"
+        ]; }
+      ) (genStrRange (builtins.length workspaces))));
+  })];
 
   # Default XDG applications
   xdg.mimeApps.enable = true;
