@@ -18,7 +18,7 @@
     "name": "lu",
     "uid": 1000,
     "gid": 1000,
-    "desc": "admin",
+    "desc": "Luis",
     "groups": [],
     "admin": true,
     "pass": "functional",
