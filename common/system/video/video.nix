@@ -1,4 +1,4 @@
-{ my, mfunc, config, pkgs, ... }:
+{ my, mfunc, config, pkgs, lib, ... }:
 {
 
   # Set the display manager and window manager
@@ -9,7 +9,31 @@
   };
 
   # Enable plymouth
-  boot.plymouth.enable = true;
+  boot.plymouth = {
+    enable = true;
+    themePackages = [ pkgs.adi1090x-plymouth-themes ];
+    theme = "hexagon_alt";
+  };
+  # Fix for ZFS password asking
+  boot.initrd = {
+    systemd.enable = true;
+    verbose = false;
+  };
+  # Hide boot
+  boot.loader = {
+    timeout = 1;
+    grub = {
+      extraConfig = ''
+        set timeout_style=hidden
+      '';
+      splashImage = null;
+    };
+  };
+  # Make kernel not show any text
+  boot = {
+    kernelParams = [ "quiet" "splash" ];
+    consoleLogLevel = 0;
+  };
 
   # Set gnome packages to install
   services.gnome = {
@@ -18,6 +42,8 @@
     core-utilities.enable = false;
     core-os-services.enable = true;
     core-developer-tools.enable = true;
+    # Disable some of the unwanted services
+    gnome-keyring.enable = lib.mkForce false;
   };
 
   # Auto login for the desktop environment
