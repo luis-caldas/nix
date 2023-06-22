@@ -74,8 +74,6 @@
     "enable": false,
     "drivers": [],
     "numlock": true,
-    "commands": [],
-    "displays": [],
     "effects": true,
     "conky": true,
     "cursor": "hacked-grey-hd",

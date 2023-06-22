@@ -25,8 +25,7 @@
   "graphical": {
     "enable": true,
     "drivers": [ "panfrost" ],
-    "effects": false,
-    "commands": [ "cneogovernor restore" ]
+    "effects": false
   },
   "audio": true
 }

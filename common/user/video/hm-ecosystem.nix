@@ -68,15 +68,6 @@ let
     @define-color accent_fg_color ${colourExtFg};
   '';
 
-  # Create the .xinitrc link file
-  linkInit = { ".myInit".text = let
-    scaleString = toString my.config.graphical.display.scale;
-  in ''
-    #!${pkgs.bash}/bin/bash
-    # Extra commands from the config to be executed
-    ${ (builtins.concatStringsSep "\n" my.config.graphical.commands) }
-  ''; };
-
   # Function for creating extensions for chromium based browsers
   extensionJson = ext: browserName:
   let
