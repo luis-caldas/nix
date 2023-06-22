@@ -20,6 +20,16 @@
     gnome.gnome-characters
     gnome.gnome-system-monitor
     gnome-connections
+    gnome.file-roller
+
+    # Gnome Extensions
+    gnome-menus
+    gnomeExtensions.arcmenu
+    gnomeExtensions.vitals
+    gnomeExtensions.blur-my-shell
+    gnomeExtensions.date-menu-formatter
+    gnomeExtensions.gsconnect
+    gnomeExtensions.clipboard-indicator
 
     # Video
     wlsunset

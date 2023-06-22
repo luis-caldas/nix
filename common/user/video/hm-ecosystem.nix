@@ -220,7 +220,91 @@ in
     "org/gnome/settings-daemon/plugins/power" = {
       power-button-action = "nothing";
     };
+    # Extensions
+    "org/gnome/shell" = {
+      disable-extension-version-validation = false;
+      disable-user-extensions = false;
+      disabled-extensions = [];
+      enabled-extensions = [
+        # Official
+        "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
+        "places-menu@gnome-shell-extensions.gcampax.github.com"
+        "drive-menu@gnome-shell-extensions.gcampax.github.com"
+        # Others
+        "arcmenu@arcmenu.com"
+        "clipboard-indicator@tudmotu.com"
+        "date-menu-formatter@marcinjakubowski.github.com"
+        "gsconnect@andyholmes.github.io"
+        "Vitals@CoreCoding.com"
+      ];
+    };
   }
+  # Extensions configuration
+  (let
+    startPath = "org/gnome/shell/extensions";
+    buildFull = wholeSet:
+      builtins.listToAttrs (
+        map
+        (key: { name = "${startPath}/${key}"; value = builtins.getAttr key wholeSet; })
+        (builtins.attrNames wholeSet)
+      );
+  in buildFull {
+    "arcmenu" = {
+      application-shortcuts-list = [];
+      dash-to-panel-standalone = true;
+      default-menu-view = "Categories_List";
+      directory-shortcuts-list = [
+        ["Documents"  ". GThemedIcon folder-documents-symbolic folder-symbolic folder-documents folder" "ArcMenu_Documents"]
+        ["Downloads"  ". GThemedIcon folder-download-symbolic folder-symbolic folder-download folder"   "ArcMenu_Downloads"]
+        ["Music"      ". GThemedIcon folder-music-symbolic folder-symbolic folder-music folder"         "ArcMenu_Music"]
+        ["Pictures"   ". GThemedIcon folder-pictures-symbolic folder-symbolic folder-pictures folder"   "ArcMenu_Pictures"]
+        ["Videos"     ". GThemedIcon folder-videos-symbolic folder-symbolic folder-videos folder"       "ArcMenu_Videos"]
+      ];
+      enable-menu-hotkey = false;
+      extra-categories = [
+        (lib.hm.gvariant.mkTuple [1 false]) (lib.hm.gvariant.mkTuple [2 false])
+        (lib.hm.gvariant.mkTuple [3 false]) (lib.hm.gvariant.mkTuple [4 false])
+      ];
+      menu-button-appearance = "Icon_Text";
+      menu-layout = "Default";
+      pinned-app-list = [];
+      power-options = [
+        (lib.hm.gvariant.mkTuple [0 false]) (lib.hm.gvariant.mkTuple [1 false])
+        (lib.hm.gvariant.mkTuple [2 false]) (lib.hm.gvariant.mkTuple [3 false])
+        (lib.hm.gvariant.mkTuple [4 false]) (lib.hm.gvariant.mkTuple [5 false])
+        (lib.hm.gvariant.mkTuple [6 false]) (lib.hm.gvariant.mkTuple [7 false])
+      ];
+      prefs-visible-page = 0;
+      show-activities-button = true;
+      show-bookmarks = false;
+    };
+    "clipboard-indicator" = {
+      disable-down-arrow = false;
+      display-mode = 0;
+      enable-keybindings = false;
+      history-size = 100;
+    };
+    "date-menu-formatter" = {
+      pattern = "y/MM/dd kk:mm:ss EEE X";
+    };
+    "vitals" = {
+      alphabetize = true;
+      fixed-widths = true;
+      hide-icons = false;
+      hot-sensors = [
+        "_processor_usage_" "_processor_frequency_"
+        "_memory_physical_" "_memory_allocated_"
+        "__network-rx_max__" "__network-tx_max__"
+      ];
+      show-fan = false;
+      show-network = true;
+      show-storage = false;
+      show-system = false;
+      show-temperature = false;
+      show-voltage = false;
+      use-higher-precision = false;
+    };
+  })
   # Create custom keybindings
   (let
     startMedia = "org/gnome/settings-daemon/plugins/media-keys";
