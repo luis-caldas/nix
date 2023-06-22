@@ -100,7 +100,6 @@ let
   # Put all the sets together
   linkSets = lib.mkMerge ([
     linkThemes linkFonts linkIcons linkCursors linkPapes
-    linkInit
     linkVST
 #    listChromeExtensionsFiles
   ] ++
@@ -111,7 +110,7 @@ let
 in
 {
 
-#  # Add my made programs to PATH
+  # Add my made programs to PATH
   home.sessionPath = [ "${my.projects.desktop.programs}/public" ];
   # Add some extra env vars
   home.sessionVariables = {
@@ -275,10 +274,11 @@ in
       fixed-widths = true;
       hide-icons = false;
       hot-sensors = [
-        "_processor_usage_" "_processor_frequency_"
-        "_memory_physical_" "_memory_allocated_"
+        "_processor_usage_"
+        "_memory_allocated_"
         "__network-rx_max__" "__network-tx_max__"
       ];
+      position-in-panel = 1;
       show-fan = false;
       show-network = true;
       show-storage = false;
