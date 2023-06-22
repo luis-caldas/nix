@@ -58,14 +58,6 @@ let
     "./.vst/lsp" = { source = "${pkgs.lsp-plugins}/lib/vst"; };
   } {};
 
-  # List of default programs
-  defaultPrograms = {
-    "browser"   = "chromium";
-    "directory" = "org.gnome.Nautilus";
-    "image"     = "sxiv";
-    "pdf"       = "org.gnome.Evince";
-  };
-
   # GTK Style
   gtkStyle = let
     colourExtBg = mfunc.getElementXRes ("${my.projects.desktop.xresources}/XResources") "MY_COLOUR_0";
@@ -224,7 +216,7 @@ in
     "org/gnome/shell" = {
       disable-extension-version-validation = false;
       disable-user-extensions = false;
-      disabled-extensions = [];
+      disabled-extensions = hm.gvariant.mkEmptyArray;
       enabled-extensions = [
         # Official
         "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
@@ -250,7 +242,7 @@ in
       );
   in buildFull {
     "arcmenu" = {
-      application-shortcuts-list = [];
+      application-shortcuts-list = hm.gvariant.mkEmptyArray;
       dash-to-panel-standalone = true;
       default-menu-view = "Categories_List";
       directory-shortcuts-list = [
@@ -267,7 +259,7 @@ in
       ];
       menu-button-appearance = "Icon_Text";
       menu-layout = "Default";
-      pinned-app-list = [];
+      pinned-app-list = hm.gvariant.mkEmptyArray;
       power-options = [
         (lib.hm.gvariant.mkTuple [0 false]) (lib.hm.gvariant.mkTuple [1 false])
         (lib.hm.gvariant.mkTuple [2 false]) (lib.hm.gvariant.mkTuple [3 false])
@@ -361,16 +353,16 @@ in
   in {
     "org/gnome/shell/keybindings" = builtins.listToAttrs ((let
         simple = {
-          focus-active-notification = [];
+          focus-active-notification = hm.gvariant.mkEmptyArray;
           toggle-message-tray = [ "<Super>V" ];
         };
       in (mapAttrsHelp simple)) ++
       (map (eachIndex:
-        { name = "switch-to-application-${eachIndex}"; value = []; }
+        { name = "switch-to-application-${eachIndex}"; value = hm.gvariant.mkEmptyArray; }
       ) (genStrRange (builtins.length workspaces))));
     "org/gnome/settings-daemon/plugins/media-keys" = builtins.listToAttrs ((let
         simple = {
-          help = [];
+          help = hm.gvariant.mkEmptyArray;
           magnifier = [ "<Alt><Super>Z" ];
         };
       in (mapAttrsHelp simple)));
@@ -393,30 +385,6 @@ in
         ]; }
       ) (genStrRange (builtins.length workspaces))));
   })];
-
-  # Default XDG applications
-  xdg.mimeApps.enable = true;
-  xdg.mimeApps.defaultApplications = {
-    # Directories
-    "inode/directory" = [ (defaultPrograms.directory + ".desktop") ];
-    # Images
-    "image/bmp"                = [ (defaultPrograms.image + ".desktop") ];
-    "image/gif"                = [ (defaultPrograms.image + ".desktop") ];
-    "image/vnd.microsoft.icon" = [ (defaultPrograms.image + ".desktop") ];
-    "image/jpeg"               = [ (defaultPrograms.image + ".desktop") ];
-    "image/png"                = [ (defaultPrograms.image + ".desktop") ];
-    "image/svg+xml"            = [ (defaultPrograms.image + ".desktop") ];
-    "image/tiff"               = [ (defaultPrograms.image + ".desktop") ];
-    "image/webp"               = [ (defaultPrograms.image + ".desktop") ];
-    # PDF
-    "application/pdf"          = [ (defaultPrograms.pdf + ".desktop") ];
-    # Browser
-    "text/html"                = [ (defaultPrograms.browser + ".desktop") ];
-    "x-scheme-handler/http"    = [ (defaultPrograms.browser + ".desktop") ];
-    "x-scheme-handler/https"   = [ (defaultPrograms.browser + ".desktop") ];
-    "x-scheme-handler/about"   = [ (defaultPrograms.browser + ".desktop") ];
-    "x-scheme-handler/unknown" = [ (defaultPrograms.browser + ".desktop") ];
-  };
 
   # Home manager programs
   programs = {
