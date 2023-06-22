@@ -20,6 +20,7 @@
 
     # Terminal
     kitty
+    gnome.gnome-terminal
 
     # Notifications
     dunst
