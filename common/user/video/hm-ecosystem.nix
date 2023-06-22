@@ -216,7 +216,7 @@ in
     "org/gnome/shell" = {
       disable-extension-version-validation = false;
       disable-user-extensions = false;
-      disabled-extensions = hm.gvariant.mkEmptyArray;
+      disabled-extensions = lib.hm.gvariant.mkEmptyArray;
       enabled-extensions = [
         # Official
         "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
@@ -242,7 +242,7 @@ in
       );
   in buildFull {
     "arcmenu" = {
-      application-shortcuts-list = hm.gvariant.mkEmptyArray;
+      application-shortcuts-list = lib.hm.gvariant.mkEmptyArray;
       dash-to-panel-standalone = true;
       default-menu-view = "Categories_List";
       directory-shortcuts-list = [
@@ -259,7 +259,7 @@ in
       ];
       menu-button-appearance = "Icon_Text";
       menu-layout = "Default";
-      pinned-app-list = hm.gvariant.mkEmptyArray;
+      pinned-app-list = lib.hm.gvariant.mkEmptyArray;
       power-options = [
         (lib.hm.gvariant.mkTuple [0 false]) (lib.hm.gvariant.mkTuple [1 false])
         (lib.hm.gvariant.mkTuple [2 false]) (lib.hm.gvariant.mkTuple [3 false])
