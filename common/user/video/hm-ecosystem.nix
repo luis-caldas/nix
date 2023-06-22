@@ -216,7 +216,7 @@ in
     "org/gnome/shell" = {
       disable-extension-version-validation = false;
       disable-user-extensions = false;
-      disabled-extensions = lib.hm.gvariant.mkEmptyArray;
+      disabled-extensions = [];
       enabled-extensions = [
         # Official
         "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
@@ -242,7 +242,7 @@ in
       );
   in buildFull {
     "arcmenu" = {
-      application-shortcuts-list = lib.hm.gvariant.mkEmptyArray;
+      application-shortcuts-list = [];
       dash-to-panel-standalone = true;
       default-menu-view = "Categories_List";
       directory-shortcuts-list = [
@@ -259,7 +259,7 @@ in
       ];
       menu-button-appearance = "Icon_Text";
       menu-layout = "Default";
-      pinned-app-list = lib.hm.gvariant.mkEmptyArray;
+      pinned-app-list = [];
       power-options = [
         (lib.hm.gvariant.mkTuple [0 false]) (lib.hm.gvariant.mkTuple [1 false])
         (lib.hm.gvariant.mkTuple [2 false]) (lib.hm.gvariant.mkTuple [3 false])
@@ -353,16 +353,16 @@ in
   in {
     "org/gnome/shell/keybindings" = builtins.listToAttrs ((let
         simple = {
-          focus-active-notification = lib.hm.gvariant.mkEmptyArray;
+          focus-active-notification = [];
           toggle-message-tray = [ "<Super>V" ];
         };
       in (mapAttrsHelp simple)) ++
       (map (eachIndex:
-        { name = "switch-to-application-${eachIndex}"; value = lib.hm.gvariant.mkEmptyArray; }
+        { name = "switch-to-application-${eachIndex}"; value = []; }
       ) (genStrRange (builtins.length workspaces))));
     "org/gnome/settings-daemon/plugins/media-keys" = builtins.listToAttrs ((let
         simple = {
-          help = lib.hm.gvariant.mkEmptyArray;
+          help = [];
           magnifier = [ "<Alt><Super>Z" ];
         };
       in (mapAttrsHelp simple)));
