@@ -353,16 +353,16 @@ in
   in {
     "org/gnome/shell/keybindings" = builtins.listToAttrs ((let
         simple = {
-          focus-active-notification = hm.gvariant.mkEmptyArray;
+          focus-active-notification = lib.hm.gvariant.mkEmptyArray;
           toggle-message-tray = [ "<Super>V" ];
         };
       in (mapAttrsHelp simple)) ++
       (map (eachIndex:
-        { name = "switch-to-application-${eachIndex}"; value = hm.gvariant.mkEmptyArray; }
+        { name = "switch-to-application-${eachIndex}"; value = lib.hm.gvariant.mkEmptyArray; }
       ) (genStrRange (builtins.length workspaces))));
     "org/gnome/settings-daemon/plugins/media-keys" = builtins.listToAttrs ((let
         simple = {
-          help = hm.gvariant.mkEmptyArray;
+          help = lib.hm.gvariant.mkEmptyArray;
           magnifier = [ "<Alt><Super>Z" ];
         };
       in (mapAttrsHelp simple)));
