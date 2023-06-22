@@ -9,6 +9,18 @@
     conky
     xorg.xprop  # Needed for xwayland scaling
 
+    # Gnome
+    gnome.gnome-terminal
+    gnome.baobab
+    gnome.cheese
+    gnome.eog
+    gnome-text-editor
+    gnome.gnome-calendar
+    gnome.gnome-clocks
+    gnome.gnome-characters
+    gnome.gnome-system-monitor
+    gnome-connections
+
     # Video
     wlsunset
 
@@ -20,7 +32,6 @@
 
     # Terminal
     kitty
-    gnome.gnome-terminal
 
     # Notifications
     dunst
@@ -48,7 +59,7 @@
     gnome-themes-extra
 
     # Font
-    gnome3.gnome-font-viewer
+    gnome.gnome-font-viewer
 
     # Monitors
     wdisplays
@@ -90,7 +101,7 @@
     tigervnc
 
     # Calculator
-    gnome3.gnome-calculator
+    gnome.gnome-calculator
 
     # Image editing
     gimp

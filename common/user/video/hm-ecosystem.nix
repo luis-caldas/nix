@@ -227,7 +227,7 @@ in
     # Custom list of keybindings
     keybindings = {
       "Terminal" = {
-        command = "kitty";
+        command = "gnome-terminal";
         binding = "<Super>Return";
       };
       "Browser" = {

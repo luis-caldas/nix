@@ -40,6 +40,12 @@
     # Simulator
     flightgear
 
+    # Gnome
+    gnome.aisleriot
+    gnome.gnome-mines
+    gnome.gnome-sudoku
+    gnome.gnome-chess
+
   ] ++
   # amd64 only games
   mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [
