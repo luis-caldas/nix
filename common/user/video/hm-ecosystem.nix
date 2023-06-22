@@ -184,6 +184,8 @@ in
       two-finger-scrolling-enabled = true;
     };
     "org/gnome/shell".favorite-apps = [
+      "org.gnome.Terminal.desktop"
+      "chromium-browser.desktop"
       "spotify.desktop"
     ];
     "org/gnome/desktop/interface" = {
