@@ -59,14 +59,7 @@ let
   } {};
 
   # GTK Style
-  gtkStyle = let
-    colourExtBg = mfunc.getElementXRes ("${my.projects.desktop.xresources}/XResources") "MY_COLOUR_0";
-    colourExtFg = mfunc.getElementXRes ("${my.projects.desktop.xresources}/XResources") "MY_FOREGROUND";
-  in ''
-    @define-color accent_color ${colourExtBg};
-    @define-color accent_bg_color ${colourExtBg};
-    @define-color accent_fg_color ${colourExtFg};
-  '';
+  gtkStyle = "";
 
   # Function for creating extensions for chromium based browsers
   extensionJson = ext: browserName:

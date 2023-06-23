@@ -49,10 +49,7 @@
     my.config.graphical.chromium.extensions.common;
 
     # Extra options using policy
-    extraOpts = {
-       # Set colour from xresources file
-       "BrowserThemeColor" = mfunc.getElementXRes ("${my.projects.desktop.xresources}/XResources") "MY_BACKGROUND";
-    } //
+    extraOpts = {} //
     my.chromium.policies.managed // my.config.graphical.chromium.policies;
 
   };
