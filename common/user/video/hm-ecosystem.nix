@@ -205,6 +205,7 @@ in
         "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
         "places-menu@gnome-shell-extensions.gcampax.github.com"
         "drive-menu@gnome-shell-extensions.gcampax.github.com"
+        "window-list@gnome-shell-extensions.gcampax.github.com"
         # Others
         "arcmenu@arcmenu.com"
         "clipboard-indicator@tudmotu.com"
