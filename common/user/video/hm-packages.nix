@@ -30,6 +30,7 @@
     gnomeExtensions.date-menu-formatter
     gnomeExtensions.gsconnect
     gnomeExtensions.clipboard-indicator
+    gnomeExtensions.mpris-label
 
     # Video
     wlsunset

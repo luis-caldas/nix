@@ -212,6 +212,7 @@ in
         "date-menu-formatter@marcinjakubowski.github.com"
         "gsconnect@andyholmes.github.io"
         "Vitals@CoreCoding.com"
+        "mprisLabel@moon-0xff.github.com"
       ];
     };
   }
@@ -280,6 +281,18 @@ in
       show-temperature = false;
       show-voltage = false;
       use-higher-precision = false;
+    };
+    mpris-label = {
+      extension-index = 20;
+      extension-place = "center";
+      max-string-length = 20;
+      left-padding = 0;
+      right-padding = 0;
+      first-field = "xesam:artist";
+      second-field = "";
+      right-click-action = "next-track";
+      thumb-backward-action = "none";
+      thumb-forward-action = "none";
     };
   })
   # Create custom keybindings
