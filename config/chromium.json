@@ -1,74 +1,78 @@
 {
 
-	"policies": {
+  "policies": {
 
-		"managed": {
+    "managed": {
 
-			"SyncDisabled": true,
-			"BrowserSignin": 0,
-			"SpellcheckEnabled": false,
-			"BackgroundModeEnabled": false,
+      "SyncDisabled": true,
+      "BrowserSignin": 0,
+      "SpellcheckEnabled": false,
+      "BackgroundModeEnabled": false,
 
-			"AllowDinosaurEasterEgg": false,
+      "AllowDinosaurEasterEgg": false,
 
-			"ShowFullUrlsInAddressBar": true,
-			"ShowAppsShortcutInBookmarkBar": false,
-			"DefaultSearchProviderEnabled": true,
+      "ShowFullUrlsInAddressBar": true,
+      "ShowAppsShortcutInBookmarkBar": false,
+      "DefaultSearchProviderEnabled": true,
 
-			"HideWebStoreIcon": true,
-			"NTPCardsVisible": false,
-			"NTPContentSuggestionsEnabled": false,
-			"NTPMiddleSlotAnnouncementVisible": false,
+      "HideWebStoreIcon": true,
+      "NTPCardsVisible": false,
+      "NTPContentSuggestionsEnabled": false,
+      "NTPMiddleSlotAnnouncementVisible": false,
 
-			"DownloadRestrictions": 0,
+      "DownloadRestrictions": 0,
 
-			"AutofillAddressEnabled": false,
-			"BuiltInDnsClientEnabled": false,
-			"MetricsReportingEnabled": false,
-			"PaymentMethodQueryEnabled": false,
+      "AutofillAddressEnabled": false,
+      "BuiltInDnsClientEnabled": false,
+      "MetricsReportingEnabled": false,
+      "PaymentMethodQueryEnabled": false,
 
-			"PrinterTypeDenyList": [ "cloud" ],
+      "PrinterTypeDenyList": [ "cloud" ],
 
-			"DefaultCookiesSetting": 1,
-			"BlockThirdPartyCookies": true,
-			"ClearBrowsingDataOnExitList": [
-				"browsing_history",
-				"download_history",
-				"cached_images_and_files",
-				"autofill"
-			]
-		},
+      "HomepageIsNewTabPage": true,
+      "ShowHomeButton": true,
+      "NewTabPageLocation": "caldas.ie",
 
-		"recommended": {
-			"PasswordManagerEnabled": false,
-			"AutofillCreditCardEnabled": false
-		}
+      "DefaultCookiesSetting": 1,
+      "BlockThirdPartyCookies": true,
+      "ClearBrowsingDataOnExitList": [
+        "browsing_history",
+        "download_history",
+        "cached_images_and_files",
+        "autofill"
+      ]
+    },
 
-	},
+    "recommended": {
+      "PasswordManagerEnabled": false,
+      "AutofillCreditCardEnabled": false
+    }
 
-	"preferences": {
+  },
 
-		"extensions": {
-			"theme": {
-				"id": "",
-				"use_system": true
-			}
-		},
+  "preferences": {
 
-		"webkit": {
-			"webprefs": {
-				"default_fixed_font_size":12,
-				"default_font_size":12,
-				"fonts": {
-					"fixed": { "Zyyy": "Mono" },
-					"sansserif": { "Zyyy": "Sans" },
-					"serif": { "Zyyy": "Serif" },
-					"standard": { "Zyyy": "Sans" }
-				},
-				"minimum_font_size": 0
-			}
-		}
+    "extensions": {
+      "theme": {
+        "id": "",
+        "use_system": true
+      }
+    },
 
-	}
+    "webkit": {
+      "webprefs": {
+        "default_fixed_font_size":12,
+        "default_font_size":12,
+        "fonts": {
+          "fixed": { "Zyyy": "Mono" },
+          "sansserif": { "Zyyy": "Sans" },
+          "serif": { "Zyyy": "Serif" },
+          "standard": { "Zyyy": "Sans" }
+        },
+        "minimum_font_size": 0
+      }
+    }
+
+  }
 
 }
