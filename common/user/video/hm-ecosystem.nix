@@ -226,7 +226,7 @@ in
         (builtins.attrNames wholeSet)
       );
   in buildFull {
-    "arcmenu" = {
+    arcmenu = {
       application-shortcuts-list = [];
       dash-to-panel-standalone = true;
       default-menu-view = "Categories_List";
@@ -255,16 +255,16 @@ in
       show-activities-button = true;
       show-bookmarks = false;
     };
-    "clipboard-indicator" = {
+    clipboard-indicator = {
       disable-down-arrow = false;
       display-mode = 0;
       enable-keybindings = false;
       history-size = 100;
     };
-    "date-menu-formatter" = {
+    date-menu-formatter = {
       pattern = "y/MM/dd kk:mm:ss EEE X";
     };
-    "vitals" = {
+    vitals= {
       alphabetize = true;
       fixed-widths = true;
       hide-icons = false;
@@ -283,6 +283,7 @@ in
       use-higher-precision = false;
     };
     mpris-label = {
+      auto-switch-to-most-recent = true;
       extension-index = 20;
       extension-place = "center";
       max-string-length = 20;
