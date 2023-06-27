@@ -21,6 +21,7 @@
     gnome.gnome-system-monitor
     gnome-connections
     gnome.file-roller
+    gnome.seahorse
 
     # Gnome Extensions
     gnome-menus

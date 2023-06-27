@@ -43,8 +43,6 @@
     core-utilities.enable = false;
     core-os-services.enable = true;
     core-developer-tools.enable = true;
-    # Disable some of the unwanted services
-    gnome-keyring.enable = lib.mkForce false;
   };
 
   # Auto login for the desktop environment
