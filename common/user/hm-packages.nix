@@ -169,6 +169,9 @@
     # Banner
     figlet
 
+    # Misc
+    element
+
     # Terminal
     cbonsai
     pipes

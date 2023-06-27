@@ -142,6 +142,7 @@
 
     # Chat
     signal-desktop
+    element-desktop
 
     # Info
     gource
