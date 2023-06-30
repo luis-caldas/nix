@@ -203,16 +203,17 @@ in
       enabled-extensions = [
         # Official
         "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
-        "places-menu@gnome-shell-extensions.gcampax.github.com"
         "drive-menu@gnome-shell-extensions.gcampax.github.com"
         "window-list@gnome-shell-extensions.gcampax.github.com"
         # Others
-        "arcmenu@arcmenu.com"
         "clipboard-indicator@tudmotu.com"
         "date-menu-formatter@marcinjakubowski.github.com"
         "gsconnect@andyholmes.github.io"
         "Vitals@CoreCoding.com"
-        "mprisLabel@moon-0xff.github.com"
+        # Disabled
+        #"places-menu@gnome-shell-extensions.gcampax.github.com"
+        #"arcmenu@arcmenu.com"
+        #"mprisLabel@moon-0xff.github.com"
       ];
     };
   }
