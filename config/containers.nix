@@ -318,7 +318,7 @@ let
           server {
               listen ${httpPort};
               server_name _;
-              return 301 https://$host:$server_port$request_uri;
+              return 301 https://$host$request_uri;
           }
         '';
       in {
