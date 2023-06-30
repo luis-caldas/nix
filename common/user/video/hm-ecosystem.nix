@@ -107,9 +107,8 @@ in
   home.sessionPath = [ "${my.projects.desktop.programs}/public" ];
   # Add some extra env vars
   home.sessionVariables = {
-    # Fix for java applications on tiling window managers
-    _JAVA_AWT_WM_NONREPARENTING = "1";
-    NIXOS_OZONE_WL = "1";
+    _JAVA_AWT_WM_NONREPARENTING = "1";  # Fix for java applications on tiling window managers
+    NIXOS_OZONE_WL = "1";  # Ozone wayland
   };
 
   # Some XDG links
