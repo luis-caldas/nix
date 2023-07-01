@@ -276,13 +276,12 @@ in {
 
     # Web Service Discovery for Microsoft
     shout = {
-      image = "jonasped/wsdd";
+      image = "aovestdipaperino/wsdd2";
       environment = {
         TZ = my.config.system.timezone;
         HOSTNAME = my.path;
-        WORKGROUP = "WORKGROUP";
       };
-      extraOptions = [ "--network=host" ];
+      extraOptions = [ "--network=host" ];  # Needed for multicast
     };
 
   };
