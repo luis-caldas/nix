@@ -43,6 +43,7 @@
     atftp
     nload
     socat
+    knot-dns
     inetutils
 
     # Debugger
