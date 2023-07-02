@@ -14,6 +14,7 @@
 
     # Disk
     pv
+    f3
     duf
     ncdu
     parted
