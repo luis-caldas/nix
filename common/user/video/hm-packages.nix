@@ -22,6 +22,7 @@
     gnome-connections
     gnome.file-roller
     gnome.seahorse
+    gnome.gnome-tweaks
 
     # Gnome Extensions
     gnome-menus
@@ -32,6 +33,9 @@
     gnomeExtensions.gsconnect
     gnomeExtensions.clipboard-indicator
     gnomeExtensions.mpris-label
+    gnomeExtensions.remove-app-menu
+    gnomeExtensions.just-perfection
+    gnomeExtensions.dash-to-dock
 
     # Video
     wlsunset

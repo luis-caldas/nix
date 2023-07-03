@@ -201,15 +201,17 @@ in
       disabled-extensions = [];
       enabled-extensions = [
         # Official
-        "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
         "drive-menu@gnome-shell-extensions.gcampax.github.com"
-        "window-list@gnome-shell-extensions.gcampax.github.com"
+        "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
         # Others
         "clipboard-indicator@tudmotu.com"
         "date-menu-formatter@marcinjakubowski.github.com"
         "gsconnect@andyholmes.github.io"
         "Vitals@CoreCoding.com"
+        "dash-to-dock@micxgx.gmail.com"
+        "RemoveAppMenu@Dragon8oy.com"
         # Disabled
+        #"window-list@gnome-shell-extensions.gcampax.github.com"
         #"places-menu@gnome-shell-extensions.gcampax.github.com"
         #"arcmenu@arcmenu.com"
         #"mprisLabel@moon-0xff.github.com"
@@ -260,6 +262,12 @@ in
       display-mode = 0;
       enable-keybindings = false;
       history-size = 100;
+    };
+    dash-to-dock = {
+      disable-overview-on-startup = true;
+      hot-keys = false;
+      isolate-monitors = false;
+      show-mounts-network=true;
     };
     date-menu-formatter = {
       pattern = "y/MM/dd kk:mm:ss EEE X";
