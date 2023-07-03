@@ -216,10 +216,10 @@ in
         "Vitals@CoreCoding.com"
         "dash-to-dock@micxgx.gmail.com"
         "RemoveAppMenu@Dragon8oy.com"
-        "mediacontrols@cliffniff.github.com"
         # Disabled
         #"window-list@gnome-shell-extensions.gcampax.github.com"
         #"places-menu@gnome-shell-extensions.gcampax.github.com"
+        #"mediacontrols@cliffniff.github.com"
         #"arcmenu@arcmenu.com"
         #"mprisLabel@moon-0xff.github.com"
       ];
