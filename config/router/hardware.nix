@@ -253,6 +253,55 @@ in {
       ];
       extraOptions = [ "--network=web" ];
     };
+    man-down = rec {
+      image = imageFile.imageName;
+      imageFile = my.containers.images.web {};
+      volumes = let
+        myDocs = rec {
+          name = "documentation";
+          phases = [ "unpackPhase" "patchPhase" "buildPhase" "installPhase" ];
+          nativeBuildInputs = [ pkgs.python3Packages.mkdocs-material ];
+          mkDocsConfig = pkgs.writeTextFile rec {
+            name = "config";
+            destination = "/mkdocs.yml";
+            text = ''
+              site_name: NixOs Documentation
+              site_url: https://example.com
+              docs_dir: ../doc
+              markdown_extensions:
+                  - extra
+                  - toc:
+                      permalink: True
+              theme:
+                  name: material
+                  palette:
+                      scheme: slate
+                      primary: black
+                      accent: indigo
+            '';
+           };
+           srcs = [ "${<nixpkgs/doc>}" mkDocsConfig ];
+           sourceRoot = ".";
+           patchPhase = ''
+             find doc -iname "*.md" -print0 | xargs -0 sed -i -E 's/^(#{1,6}\s*.*)\s*\{.*\}\s*$/\1/'
+           '';
+           buildPhase = ''
+             mkdir -p "out"
+             "${pkgs.mkdocs}/bin/mkdocs" build --config-file "config/mkdocs.yml" --site-dir ../out
+           '';
+           installPhase = ''
+             mkdir -p "$out"
+             mv out/ "$out/web"
+           '';
+         };
+      in [
+        "${myDocs}/web:/web:ro"
+      ];
+      ports = [
+        "8092:8080/tcp"
+      ];
+      extraOptions = [ "--network=web" ];
+    };
 
   };
 
