@@ -36,6 +36,8 @@
     gnomeExtensions.remove-app-menu
     gnomeExtensions.just-perfection
     gnomeExtensions.dash-to-dock
+    gnomeExtensions.desktop-icons-ng-ding
+    gnomeExtensions.gtk4-desktop-icons-ng-ding
 
     # Video
     wlsunset
