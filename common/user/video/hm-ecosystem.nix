@@ -160,6 +160,11 @@ in
     "org/gnome/shell".favorite-apps = [
       "org.gnome.Terminal.desktop"
       "chromium-browser.desktop"
+      "thunderbird.desktop"
+      "codium.desktop"
+      "writer.desktop"
+      "gimp.desktop"
+      "element-desktop.desktop"
       "spotify.desktop"
     ];
     "org/gnome/desktop/interface" = {
