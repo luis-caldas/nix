@@ -22,6 +22,7 @@
     testdisk
     ddrescue
     dislocker
+    ventoy-full
     squashfsTools
     smartmontools
 
