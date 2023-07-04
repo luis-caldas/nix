@@ -57,11 +57,6 @@
     plugins = [ pkgs.acsccid ];
   };
 
-  # Fingerprint
-  services.fprintd.enable = my.config.services.fingerprint;
-  services.open-fprintd.enable = my.config.services.fingerprint;
-  services.python-validity.enable = my.config.services.fingerprint;
-
   # Software defined radio
   hardware.rtl-sdr.enable = true;
   services.udev.packages = [ pkgs.rtl-sdr ];

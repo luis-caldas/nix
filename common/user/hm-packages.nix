@@ -261,7 +261,7 @@
 
     # Pentest
     metasploit
-    mpkgs.steghide
+    steghide
     python3Packages.binwalk-full
 
     # Haskell
