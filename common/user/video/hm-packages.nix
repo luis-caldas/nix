@@ -47,7 +47,9 @@
     rofi-wayland
 
     # Status Bar
-    waybar
+    (waybar.overrideAttrs (previousAttrs: {
+      mesonFlags = previousAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+    }))
 
     # Terminal
     kitty
@@ -89,6 +91,17 @@
 
     # File manager
     gnome3.nautilus
+
+    # Office
+    # libreoffice
+
+    # Spellchecking (for libreoffice)
+    hunspell
+    hunspellDicts.en-us
+    hunspellDicts.en-gb-ise
+    # hunspellDicts.pt-br  # Merged but not propagated yet
+    hunspellDicts.it-it
+    hunspellDicts.es-es
 
     # Image viewer
     gnome3.eog
