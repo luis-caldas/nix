@@ -24,6 +24,7 @@
       "steam" "steam-original" "steam-runtime" "steam-run"
       "minecraft-launcher"
       "dwarf-fortress"
+      "davinci-resolve"
       "reaper" "linuxsampler"
       "spotify" "spotify-unwrapped"
       "zoom"
@@ -34,7 +35,9 @@
     ]);
 
     # Allow some insecure packages
-    nixpkgs.config.permittedInsecurePackages = [];
+    nixpkgs.config.permittedInsecurePackages = [
+      pkgs.python2.name  # Davinci Resolve
+    ];
 
     # Home manager package overrides
     nixpkgs.config.packageOverrides = ogpkgs: (
