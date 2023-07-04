@@ -257,7 +257,7 @@ in {
       image = imageFile.imageName;
       imageFile = my.containers.images.web {};
       volumes = let
-        myDocs = rec {
+        myDocs = pkgs.stdenv.mkDerivation rec {
           name = "documentation";
           phases = [ "unpackPhase" "patchPhase" "buildPhase" "installPhase" ];
           nativeBuildInputs = [ pkgs.python3Packages.mkdocs-material ];
