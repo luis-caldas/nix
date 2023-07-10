@@ -108,7 +108,7 @@ in
   # Add some extra env vars
   home.sessionVariables = {
     _JAVA_AWT_WM_NONREPARENTING = "1";  # Fix for java applications on tiling window managers
-    NIXOS_OZONE_WL = "1";  # Ozone wayland
+    NIXOS_OZONE_WL = "";  # Ozone wayland remove (still not working with electron)
   };
 
   # Some XDG links
@@ -129,7 +129,6 @@ in
     package = my.projects.cursors;
     gtk.enable = true;
     name = my.config.graphical.cursor;
-    size = 24;
   };
 
   # Add extra gtk css for colours
@@ -169,6 +168,7 @@ in
       "spotify.desktop"
     ];
     "org/gnome/desktop/interface" = {
+      #cursor-size = lib.mkForce 48;
       color-scheme = "prefer-dark";
       enable-hot-corners = false;
       clock-show-seconds = true;
