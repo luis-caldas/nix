@@ -131,7 +131,9 @@ in {
       image = "pihole/pihole:latest";
       environment = {
         TZ = my.config.system.timezone;
+        DNSMASQ_LISTENING = "all";
         DNS1 = "172.16.72.200";
+        DNS2 = "172.16.72.200";
       };
       environmentFiles = [ /data/local/safe/adblock.env ];
       volumes = [
