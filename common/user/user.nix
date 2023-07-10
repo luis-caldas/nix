@@ -28,6 +28,7 @@
                   mfunc.useDefault my.config.audio [ "audio" ] [] ++
                   mfunc.useDefault my.config.graphical.enable [ "video" ] [] ++
                   mfunc.useDefault my.config.services.docker [ "docker" ] [] ++
+                  mfunc.useDefault my.config.services.virt.enable [ "libvirtd" ] [] ++
                   mfunc.useDefault my.config.services.printing [ "scanner" "lp" ] [] ++
                   mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [ "adbusers" ] [] ++
                   my.config.user.groups;
