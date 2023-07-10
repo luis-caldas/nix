@@ -66,7 +66,6 @@ let
       copyToRoot = with pkgs; [
         tini
         bash bashInteractive
-        vim
         tree
         busybox coreutils
         curl wget
@@ -248,6 +247,29 @@ let
       config.Cmd = [
         "${pkgs.nodePackages.http-server}/bin/http-server" "${rootFolder}"
         "-p" "8080" "-i" "--log-ip" "-r" "--no-dotfiles"
+      ];
+    };
+
+    # DNS proxy for DoT
+    dns = let
+      # Decide name
+      baseName = "local/dns";
+      # Get path to the config file
+      configPathOg = "${my.projects.containers}/build/dns/dns.toml";
+      # Set path to config file
+      configPath = "/dns.toml";
+      # Build script for the image
+      buildScript = pkgs.writeScriptBin "build" (''
+        "${pkgs.coreutils}/bin/cp" -r "${configPathOg}" "${configPath}"
+      '');
+    in pkgs.dockerTools.buildImage {
+      name = "local/dns";
+      tag = "latest";
+      fromImage = baseImage;
+      copyToRoot = with pkgs; [ dnscrypt-proxy2 ];
+      runAsRoot = "${buildScript}/bin/build";
+      config.Cmd = with pkgs; [
+        "${dnscrypt-proxy2}/bin/dnscrypt-proxy" "-config" "${configPath}"
       ];
     };
 

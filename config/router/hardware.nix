@@ -122,12 +122,16 @@ in {
   virtualisation.oci-containers.containers = {
 
     # DNS Server
-    dns = {
+    dns-up = rec {
+      image = imageFile.imageName;
+      imageFile = my.containers.images.dns;
+      extraOptions = [ "--network=dns" "--ip=172.16.72.200" ];
+    };
+    dns-block = {
       image = "pihole/pihole:latest";
       environment = {
         TZ = my.config.system.timezone;
-        DNS1 = "1.1.1.1";
-        DNS2 = "1.0.0.1";
+        DNS1 = "172.16.72.200";
       };
       environmentFiles = [ /data/local/safe/adblock.env ];
       volumes = [
