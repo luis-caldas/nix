@@ -40,12 +40,12 @@ in {
     networkmanager.enable = lib.mkForce false;
     interfaces = {
       enp4s0.useDHCP = true;
-      pf-bridge = {
+      firewall-bridge = {
         useDHCP = true;
         macAddress = "ff:54:ff:00:00:01";
       };
     };
-    bridges.pf-bridge.interfaces = [];
+    bridges.firewall-bridge.interfaces = [];
   };
 
   # Virtualisation options
@@ -345,6 +345,11 @@ in {
     { device = "vimmer/tmp";
       fsType = "zfs";
     };
+
+  swapDevices = [ {
+    device = "/swapfile";
+    size = 16 * 1024;
+  } ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
