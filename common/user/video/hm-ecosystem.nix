@@ -280,6 +280,9 @@ in
     date-menu-formatter = {
       pattern = "y/MM/dd kk:mm:ss EEE X";
     };
+    trayIconsReloaded = {
+      icons-limit = 1;
+    };
     vitals= {
       alphabetize = true;
       fixed-widths = true;
