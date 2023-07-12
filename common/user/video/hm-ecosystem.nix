@@ -168,7 +168,7 @@ in
       "spotify.desktop"
     ];
     "org/gnome/desktop/interface" = {
-      #cursor-size = lib.mkForce 48;
+      cursor-size = lib.mkForce 32;
       color-scheme = "prefer-dark";
       enable-hot-corners = false;
       clock-show-seconds = true;
