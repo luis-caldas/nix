@@ -28,12 +28,12 @@
     "/ac/?q={searchTerms}&type=list";
 
     # Extensions all browsers
+    # All should be open source and researched
     extensions = [
 
       "padekgcemlokbadohgkifijomclgjgif" # switchy proxy omega
 
       "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
-      "gcbommkclmclpchllfjekcdonpmejbdp" # https everywhere
       "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # privacy badger
 
       "cnojnbdhbhnkbcieeekonklommdnndci" # search by image
@@ -41,8 +41,6 @@
       "gbmdgpbipfallnflgajpaliibnhdgobh" # json viewer
 
       "nngceckbapebfimnlniiiahkandclblb" # bitwarden client
-
-      # "pddljdmihkpdfpkgmbhdomeeifpklgnm" # vertical tabs
 
     ] ++
     # Add users extensions
