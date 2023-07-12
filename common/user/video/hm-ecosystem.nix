@@ -211,6 +211,7 @@ in
         "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
         # Others
         "clipboard-indicator@tudmotu.com"
+        "trayIconsReloaded@selfmade.pl"
         "date-menu-formatter@marcinjakubowski.github.com"
         "gsconnect@andyholmes.github.io"
         "Vitals@CoreCoding.com"

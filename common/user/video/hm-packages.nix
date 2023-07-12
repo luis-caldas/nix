@@ -39,6 +39,7 @@
     gnomeExtensions.media-controls
     gnomeExtensions.desktop-icons-ng-ding
     gnomeExtensions.gtk4-desktop-icons-ng-ding
+    gnomeExtensions.tray-icons-reloaded
 
     # Video
     wlsunset
