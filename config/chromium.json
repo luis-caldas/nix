@@ -6,7 +6,6 @@
 
       "SyncDisabled": true,
       "BrowserSignin": 0,
-      "SpellcheckEnabled": false,
       "BackgroundModeEnabled": false,
 
       "AllowDinosaurEasterEgg": false,
@@ -14,6 +13,8 @@
       "ShowFullUrlsInAddressBar": true,
       "ShowAppsShortcutInBookmarkBar": false,
       "DefaultSearchProviderEnabled": true,
+
+      "SpellCheckServiceEnabled": false,
 
       "HideWebStoreIcon": true,
       "NTPCardsVisible": false,
@@ -35,15 +36,18 @@
 
       "DefaultCookiesSetting": 1,
       "BlockThirdPartyCookies": true,
+
       "ClearBrowsingDataOnExitList": [
         "browsing_history",
         "download_history",
         "cached_images_and_files",
         "autofill"
       ]
+
     },
 
     "recommended": {
+      "SpellcheckEnabled": true,
       "PasswordManagerEnabled": false,
       "AutofillCreditCardEnabled": false
     }

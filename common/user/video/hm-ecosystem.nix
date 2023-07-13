@@ -74,6 +74,11 @@ let
       });
     };
 
+  # Set the chromium package
+  chromiumBrowserPackage = pkgs.chromium.override {
+    commandLineArgs = "--force-dark-mode --enable-features=WebUIDarkMode";
+  };
+
   # Set browser names
   browserNameMain = "chromium";
   browserNamePersistent = "chromium-persistent";
@@ -410,9 +415,7 @@ in
     # Enable chromium
     chromium = {
       enable = true;
-      package = pkgs.chromium.override {
-        commandLineArgs = "--force-dark-mode --enable-features=WebUIDarkMode";
-      };
+      package = chromiumBrowserPackage;
     };
 
     # Enable vscode
