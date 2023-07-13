@@ -15,6 +15,10 @@
         "commit": "92a8d01c58dc2bcda16df5c2a55683d040e38be6",
         "sha256": "0cz5dzagr97wf26z4lxkzp69w8arxrw580w494flwpf4z3i69a5x"
     },
+    "myextensions": {
+        "commit": "565dcae244e978f326951b3dcf431cf76a219075",
+        "sha256": "10z2v5amvbi95lzgxy7676k9arafj287qi6qnn9601fyrmqb681f"
+    },
     "myfonts": {
         "commit": "c2be29afc3318bfe597b00ad31cc3384003c9b25",
         "sha256": "1cy3392rrcfwwjran58hdhnmqlyif5g0lplb40ld81qqib6srysw"
