@@ -84,9 +84,7 @@ let
   browserNamePersistent = "chromium-persistent";
 
   # List of the extensions
-  listChromeExtensions = [
-    "elidgjfpciimeeeoeneeiifkmhadhkeh" # clean all
-  ] ++ my.config.graphical.chromium.extensions.main;
+  listChromeExtensions = [] ++ my.config.graphical.chromium.extensions.main;
   listChromePersistentExtensions = [] ++ my.config.graphical.chromium.extensions.persistent;
 
   # Create a list with the extensions
@@ -99,7 +97,7 @@ let
   linkSets = lib.mkMerge ([
     linkThemes linkFonts linkIcons linkCursors linkPapes
     linkVST
-#    listChromeExtensionsFiles
+    listChromeExtensionsFiles
   ] ++
   linkSystemFonts ++
   linkSystemIcons ++
