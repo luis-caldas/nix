@@ -36,6 +36,8 @@
       "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
       "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # privacy badger
 
+      "bjilljlpencdcpihofiobpnfgcakfdbe" # clear browsing data
+
       "cnojnbdhbhnkbcieeekonklommdnndci" # search by image
 
       "gbmdgpbipfallnflgajpaliibnhdgobh" # json viewer

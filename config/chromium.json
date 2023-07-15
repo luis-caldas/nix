@@ -36,7 +36,6 @@
       "ShowHomeButton": true,
       "NewTabPageLocation": "caldas.ie",
 
-      "DefaultCookiesSetting": 1,
       "BlockThirdPartyCookies": true,
 
       "ClearBrowsingDataOnExitList": [
@@ -67,8 +66,8 @@
 
     "webkit": {
       "webprefs": {
-        "default_fixed_font_size":12,
-        "default_font_size":12,
+        "default_fixed_font_size": 12,
+        "default_font_size": 12,
         "fonts": {
           "fixed": { "Zyyy": "Mono" },
           "sansserif": { "Zyyy": "Sans" },
