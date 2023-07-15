@@ -28,6 +28,8 @@
       "MetricsReportingEnabled": false,
       "PaymentMethodQueryEnabled": false,
 
+      "AlwaysOpenPdfExternally": true,
+
       "PrinterTypeDenyList": [ "cloud" ],
 
       "HomepageIsNewTabPage": true,

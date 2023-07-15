@@ -61,22 +61,111 @@ let
   # GTK Style
   gtkStyle = "";
 
-  # Function for creating extensions for chromium based browsers
-  extensionJson = ext: browserName:
-  let
-    configDir = "${config.xdg.configHome}/" + browserName;
-    updateUrl = (options.programs.chromium.extensions.type.getSubOptions []).updateUrl.default;
-  in
-    with builtins; {
-      name = "${configDir}/External Extensions/${ext}.json";
-      value.text = toJSON ({
-        external_update_url = updateUrl;
-      });
-    };
-
   # Set the chromium package
   chromiumBrowserPackage = pkgs.chromium.override {
     commandLineArgs = "--force-dark-mode --enable-features=WebUIDarkMode";
+  };
+
+  # Function for creating extensions for chromium based browsers
+  extensionJson = ext: browserName: let
+    configDir = "${config.xdg.configHome}/" + browserName;
+    updateUrl = (options.programs.chromium.extensions.type.getSubOptions []).updateUrl.default;
+  in with builtins; {
+    name = "${configDir}/External Extensions/${ext}.json";
+    value.text = toJSON {
+      external_update_url = updateUrl;
+    };
+  };
+
+  # Puts extension on the browser by path
+  extensionJsonPath = extensionPath: browserName: let
+    configDir = "${config.xdg.configHome}/" + browserName;
+    # Get the extension name from the path
+    exName = lib.lists.last (lib.strings.splitString "/" extensionPath);
+    # Some path assignments
+    extensionTempDir = "extensionSrc";
+    extensionOutputDir = "ext";
+    extensionNewPath = "${extensionOutputDir}/extension.crx";
+    extensionNewId = "${extensionOutputDir}/extension.id";
+    # Build the crx compiler
+    crxCompiler = pkgs.buildNpmPackage rec {
+      pname = "crx";
+      version = "5.0.1";
+      src = pkgs.fetchFromGitHub {
+        owner = "thom4parisot";
+        repo = pname;
+        rev = "v${version}";
+        hash = "sha256-DVoemaPekZaaby4chXxAh12DucKDsTTmaKMgIZOrr4w=";
+      };
+      npmDepsHash = "sha256-9noseRPL7XF25NZT8uqNKOwbfKNqTyGDfENPAvZimrk=";
+      dontNpmBuild = true;
+    };
+    # Find the node package used
+    nodeUsed = builtins.head (builtins.filter (each:
+      lib.strings.hasPrefix (builtins.head (lib.strings.splitString "-" pkgs.nodejs.name)) each.name
+    ) crxCompiler.buildInputs);
+    # Build the ID extractor script
+    crxIdScript = pkgs.writeText "crx-script" ''
+      const fs = require("fs");
+      const path = require("path");
+      const crypto = require("crypto");
+      function getIdFromPublicKey(publicKey) {
+        return crypto
+          .createHash("sha256")
+          .update(Buffer.from(publicKey, "base64"))
+          .digest("hex")
+          .slice(0, 32)
+          .split("")
+          .map(char => {
+            return char >= 'a'
+              ? String.fromCharCode(char.charCodeAt() + 10)
+              : String.fromCharCode('a'.charCodeAt() + char.charCodeAt() - '0'.charCodeAt());
+          })
+          .join("");
+      }
+      function getChromeExtensionsId(crxPath) {
+        return new Promise((resolve, reject) => {
+          fs.readFile(crxPath, (err, buff) => {
+            if (err) return reject(err);
+            if (buff.readUInt32LE(0) !== 0x34327243) {
+              return reject(new Error('Unexpected CRX magic number'));
+            }
+            const version = buff.readUInt32LE(4);
+            if (version !== 2) {
+              return reject(new Error(`Unexpected CRX version, expected 2 but got ''${version}`));
+            }
+            const publicKeyLength = buff.readUInt32LE(8);
+            const metaOffset = 16;
+            const publicKey = Buffer.from(buff.slice(metaOffset, metaOffset + publicKeyLength)).toString('base64');
+            const extensionsId = getIdFromPublicKey(publicKey);
+            return resolve(extensionsId);
+          });
+        });
+      };
+      getChromeExtensionsId(process.argv[2]).then(console.log);
+    '';
+    # Compile the given extension
+    compileExtension = pkgs.stdenv.mkDerivation {
+      name = "${exName}-crx";
+      phases = [ "installPhase" ];
+      installPhase = ''
+        mkdir -p "$out/${extensionOutputDir}"
+        cp -r "${extensionPath}" "${extensionTempDir}"
+        "${crxCompiler}/bin/crx" pack "${extensionTempDir}" --crx-version 2 -o "$out/${extensionNewPath}"
+        "${nodeUsed}/bin/node" "${crxIdScript}" "$out/${extensionNewPath}" > "$out/${extensionNewId}"
+      '';
+    };
+    # Extract id from file
+    newId = lib.replaceStrings ["\n" " "] ["" ""] (builtins.readFile "${compileExtension}/${extensionNewId}");
+  in with builtins; {
+    name = "${configDir}/External Extensions/${newId}.json";
+    value.text = toJSON {
+      external_crx = "${compileExtension}/${extensionNewPath}";
+      external_version = let
+          manifest = builtins.fromJSON (builtins.readFile "${extensionPath}/manifest.json");
+        in
+          manifest.version;
+    };
   };
 
   # Set browser names
@@ -87,8 +176,17 @@ let
   listChromeExtensions = [] ++ my.config.graphical.chromium.extensions.main;
   listChromePersistentExtensions = [] ++ my.config.graphical.chromium.extensions.persistent;
 
+  # List of extensions from path
+  listChromeExtensionsPath = [
+    { path = "${my.projects.extensions}/chrome/user-agent-changer"; browser = browserNameMain; }
+    { path = "${my.projects.extensions}/chrome/clear-start"; browser = browserNameMain; }
+  ];
+
   # Create a list with the extensions
   listChromeExtensionsFiles = lib.listToAttrs (
+    # Extensions that need to be built
+    (map (eachExt: extensionJsonPath eachExt.path eachExt.browser) listChromeExtensionsPath) ++
+    # Extensions that exist in the google store
     (map (eachExt: extensionJson eachExt browserNameMain) listChromeExtensions) ++
     (map (eachExt: extensionJson eachExt browserNamePersistent) listChromePersistentExtensions)
   );
@@ -122,6 +220,9 @@ in
     "gtk-4.0/gtk.css" = { text = gtkStyle; };
   };
 
+  # Add extra gtk css for colours
+  gtk.gtk3.extraCss = gtkStyle;
+
   # Set icons and themes
   gtk.enable = true;
   gtk.iconTheme.name = my.config.graphical.icons;
@@ -133,9 +234,6 @@ in
     gtk.enable = true;
     name = my.config.graphical.cursor;
   };
-
-  # Add extra gtk css for colours
-  gtk.gtk3.extraCss = gtkStyle;
 
   # Add theming for qt
   qt.enable = true;

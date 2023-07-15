@@ -84,6 +84,7 @@ let
     "myvim"
     "mywallpapers"
     "mycontainers"
+    "myextensions"
   ];
 
   someProjects = builtins.listToAttrs (map (
