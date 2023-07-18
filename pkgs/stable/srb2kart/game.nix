@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
   # Owner and repo info
   owner = "STJr";
   repo = "Kart-Public";
-  version = "1.3";
+  version = "1.6";
   fixVersion = builtins.replaceStrings ["."] [""] version;
 
   # Check system compatibility
@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
     owner = owner;
     repo = repo;
     rev = "v${version}";
-    sha256 = "131g9bmc9ihvz0klsc3yzd0pnkhx3mz1vzm8y7nrrsgdz5278y49";
+    sha256 = "sha256-5sIHdeenWZjczyYM2q+F8Y1SyLqL+y77yxYDUM3dVA0=";
   };
 
   nativeBuildInputs = [ gcc curl pkg-config ];

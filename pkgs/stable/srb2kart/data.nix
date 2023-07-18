@@ -1,5 +1,5 @@
 { stdenv, lib
-, p7zip
+, unar
 , fetchurl
 , srb2kart-unwrapped
 , unzip
@@ -11,15 +11,14 @@ stdenv.mkDerivation rec {
   inherit (srb2kart-unwrapped) owner repo version fixVersion;
 
   nativeBuildInputs = [ unzip ];
-  buildInputs = [ unzip ];
 
   src = fetchurl {
     url = "https://github.com/${owner}/${repo}/releases/download/v${version}/srb2kart-v${fixVersion}-Installer.exe";
-    sha256 = "0bk36y7wf6xfdg6j0b8qvk8671hagikzdp5nlfqg478zrj0qf6cs";
+    sha256 = "sha256-Gz2Gqlmd4R5Y1qhZXhFeiWqJ7xjbkKeDu8D38lA/xT8=";
   };
 
   unpackPhase = ''
-    "${p7zip}/bin/7z" -y x "''${src}"
+    "${unar}/bin/unar" -D "''${src}"
   '';
 
   sourceRoot = ".";
