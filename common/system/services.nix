@@ -59,7 +59,7 @@
 
   # Software defined radio
   hardware.rtl-sdr.enable = true;
-  services.udev.packages = [ pkgs.rtl-sdr ];
+  hardware.hackrf.enable = true;
 
   # Enable logiops service (logitech MX mice)
   services.logiops.enable = my.config.graphical.enable;

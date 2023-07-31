@@ -35,10 +35,8 @@ in
     mfunc.useDefault (!my.config.graphical.enable && my.config.kernel.text) textKernelParams [];
 
     # Blacklisted kernel modules
-    # For RTL-SDR
-    blacklistedKernelModules = [ "dvb_usb_rtl28xxu" ] ++
     # For NFC
-    [ "pn533" "pn533_usb" "nfc" ];
+    blacklistedKernelModules = [ "pn533" "pn533_usb" "nfc" ];
 
   };
 
