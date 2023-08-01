@@ -24,6 +24,8 @@
       SUBSYSTEM=="vfio", MODE="0660", GROUP="kvm"
       # Override tty group to use plugdev and create a static symlink to my serial usb
       SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", SYMLINK+="ttyRECOVER", MODE="0660", GROUP="plugdev"
+      # XGecu programmer
+      SUBSYSTEM=="usb", ATTR{idVendor}=="a466", ATTR{idProduct}=="0a53", GROUP="plugdev", MODE="0666"
     '';
   };
 
