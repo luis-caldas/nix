@@ -230,9 +230,9 @@
     arduino
 
     # Wine
+    wine-wayland
     winetricks
     protontricks
-    wineWowPackages.staging
 
     # Video Apps
     obs-studio
