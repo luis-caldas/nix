@@ -166,7 +166,7 @@ in
       "idea-ultimate.desktop"
       "writer.desktop"
       "gimp.desktop"
-      "element-desktop.desktop"
+      "schildichat-desktop.desktop"
       "spotify.desktop"
     ];
     "org/gnome/desktop/interface" = {
