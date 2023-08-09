@@ -163,7 +163,7 @@
 
     # Chat
     signal-desktop
-    schildichat-desktop-wayland
+    schildichat-desktop
 
     # Info
     gource
