@@ -12,7 +12,7 @@
   boot.plymouth = {
     enable = true;
     themePackages = [ pkgs.adi1090x-plymouth-themes ];
-    theme = "hexagon_alt";
+    theme = "spinner_alt";
     font = "${pkgs.iosevka-bin.override { variant = "slab"; }}/share/fonts/truetype/iosevka-slab-regular.ttc";
   };
   # Fix for ZFS password asking
