@@ -169,6 +169,9 @@ in
       "schildichat-desktop.desktop"
       "spotify.desktop"
     ];
+    "org/gnome/mutter" = {
+      "workspaces-only-on-primary" = true;
+    };
     "org/gnome/desktop/interface" = {
       cursor-size = lib.mkForce 32;
       color-scheme = "prefer-dark";
