@@ -218,11 +218,11 @@ in
         "clipboard-indicator@tudmotu.com"
         "trayIconsReloaded@selfmade.pl"
         "date-menu-formatter@marcinjakubowski.github.com"
-        "gsconnect@andyholmes.github.io"
         "Vitals@CoreCoding.com"
         "dash-to-dock@micxgx.gmail.com"
         "RemoveAppMenu@Dragon8oy.com"
         # Disabled
+        #"gsconnect@andyholmes.github.io"
         #"window-list@gnome-shell-extensions.gcampax.github.com"
         #"places-menu@gnome-shell-extensions.gcampax.github.com"
         #"mediacontrols@cliffniff.github.com"
