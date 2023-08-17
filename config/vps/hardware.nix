@@ -75,7 +75,7 @@
         "/data/local/wireguard:/config"
       ];
       ports = [
-        "${DEFAULT_PORT}:${NEW_PORT}/udp"
+        "${NEW_PORT}:${DEFAULT_PORT}/udp"
       ];
       extraOptions = [ "--cap-add=NET_ADMIN" ];
     };
