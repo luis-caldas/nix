@@ -299,6 +299,9 @@
     # Phone
     twinkle
 
+    # Pipewire
+    easyeffects
+
     # Audio Control
     paprefs
     pavucontrol
@@ -306,6 +309,7 @@
     # Patchers
     carla
     helvum
+    qpwgraph
     raysession
 
   ] [] ++
