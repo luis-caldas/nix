@@ -72,7 +72,7 @@
         "/data/local/wireguard:/config"
       ];
       ports = [
-        "51820:51820/udp"
+        "69:69/udp"
       ];
       extraOptions = [ "--cap-add=NET_ADMIN" ];
     };
