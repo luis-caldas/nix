@@ -57,8 +57,8 @@
   # Wireguard containarised
   virtualisation.oci-containers.containers = {
     wireguard = let
-      DEFAULT_PORT = 51820;
-      NEW_PORT = 69;
+      DEFAULT_PORT = builtins.toString 51820;
+      NEW_PORT = builtins.toString 69;
     in {
       image = "lscr.io/linuxserver/wireguard:latest";
       environment = {
