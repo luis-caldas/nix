@@ -70,7 +70,7 @@
         arrayUsersDevices = map
           (eachEntry:
             builtins.concatLists (lib.attrsets.mapAttrsToList
-            (eachUser: allDevices: builtins.lists.imap0
+            (eachUser: allDevices: lib.lists.imap0
               (index: eachDevice: "${eachUser}${builtins.toString index}")
               allDevices
             )
