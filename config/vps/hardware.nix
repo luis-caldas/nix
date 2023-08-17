@@ -60,6 +60,7 @@
       DEFAULT_PORT = builtins.toString 51820;
       NEW_PORT = builtins.toString 69;
       allUsers = [
+        # Names will be changed for numbers starting on zero
         { home = [ "house" "router" "server" ]; }
         { lu = [ "laptop" "phone" "tablet" ]; }
         { lak = [ "laptop" "phone" "desktop" ]; }
@@ -69,8 +70,8 @@
         arrayUsersDevices = map
           (eachEntry:
             builtins.concatLists (lib.attrsets.mapAttrsToList
-            (eachUser: allDevices: map
-              (eachDevice: "${eachUser}-${eachDevice}")
+            (eachUser: allDevices: imap0
+              (index: eachDevice: "${eachUser}${builtins.toString index}")
               allDevices
             )
             eachEntry)
