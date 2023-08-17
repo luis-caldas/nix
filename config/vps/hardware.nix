@@ -27,6 +27,9 @@
       # 7000  # Reverse proxy
       # 7500  # Reverse proxy dashboard
     ];
+    allowedUDPPorts = [
+      51820  # Wireguard
+    ];
   };
   services.fail2ban = {
     enable = true;
