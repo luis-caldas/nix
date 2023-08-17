@@ -10,9 +10,12 @@
   boot.initrd.kernelModules = [ "nvme" ];
 
   # DNS servers
-  networking.networkmanager.insertNameservers = [ "1.1.1.1" "1.0.0.1" ];
+  networking.networkmanager.insertNameservers = [ "9.9.9.10" "149.112.112.10" ];
 
-  # Some kernel config
+  # Disable all ipv6
+  networking.enableIPv6 = false;
+
+  # Some kernel configs
   boot.kernel.sysctl."net.ipv6.conf.all.disable_ipv6" = 1;
   boot.kernel.sysctl."net.ipv6.conf.default.disable_ipv6" = 1;
   boot.kernel.sysctl."net.ipv4.conf.all.src_valid_mark" = 1;
@@ -24,11 +27,14 @@
       22    # SSH port
     ];
   };
+  # Setup Fail 2 Ban
   services.fail2ban = {
     enable = true;
     maxretry = 5;
     ignoreIP = [
       "127.0.0.0/8"         # Local subnet
+      "10.0.0.0/8"          # Local subnet
+      "192.168.0.0/16"      # Local subnet
       "172.17.0.0/16"       # Docker subnet
     ];
   };
@@ -101,19 +107,6 @@
       extraOptions = [ "--cap-add=NET_ADMIN" ];
     };
   };
-
-  # Custom service
-#  systemd.services.frpd = {
-#    description = "Fast Reverse Proxy Server";
-#    wantedBy = [ "multi-user.target" ];
-#    after = [ "network.target" ];
-#    restartIfChanged = true;
-#    serviceConfig = {
-#      ExecStart = "${pkgs.frp}/bin/frps --config ${./frps.ini}";
-#      EnvironmentFile = "/safe/env/frp.env";
-#      Restart = "always";
-#    };
-#  };
 
   # File systems and SWAP
   fileSystems."/" = {
