@@ -63,6 +63,7 @@
     };
     autoLogin.enable = true;
     autoLogin.user = "kodi";
+    # Also disable screen timeout
     setupCommands = ''
       "${pkgs.xorg.xset}/bin/xset" -dpms
       "${pkgs.xorg.xset}/bin/xset" s off
@@ -126,7 +127,7 @@
     inputstream-rtmp inputstreamhelper inputstream-adaptive inputstream-ffmpegdirect
     six kodi-six idna urllib3 chardet certifi requests myconnpy dateutil
     pvr-iptvsimple pvr-hts pvr-hdhomerun
-    youtube netflix
+    youtube netflix jellyfin
     a4ksubtitles
     pdfreader
   ]);
