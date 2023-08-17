@@ -59,6 +59,26 @@
     wireguard = let
       DEFAULT_PORT = builtins.toString 51820;
       NEW_PORT = builtins.toString 69;
+      allUsers = [
+        { home = [ "house" "router" "server" ]; }
+        { lu = [ "laptop" "phone" "tablet" ]; }
+        { lak = [ "laptop" "phone" "desktop" ]; }
+        { extra = [ "first" "second" "third" "fourth" ]; }
+      ];
+      allPeers = let
+        arrayUsersDevices = map
+          (eachEntry:
+            builtins.concatLists (lib.attrsets.mapAttrsToList
+            (eachUser: allDevices: map
+              (eachDevice: "${eachUser}-${eachDevice}")
+              allDevices
+            )
+            eachEntry)
+          )
+          allUsers;
+        usersDevicesList = builtins.concatLists arrayUsersDevices;
+        interspersedList = lib.strings.intersperse "," usersDevicesList;
+      in lib.strings.concatStrings interspersedList;
     in {
       image = "lscr.io/linuxserver/wireguard:latest";
       environment = {
@@ -66,7 +86,7 @@
         PUID = builtins.toString my.config.user.uid;
         GUID = builtins.toString my.config.user.gid;
         INTERNAL_SUBNET = "192.168.100.1";
-        PEERS = "phone,laptop";
+        PEERS = allPeers;
         SERVERURL = "auto";
         SERVERPORT = "${NEW_PORT}";
         PEERDNS = "auto";
