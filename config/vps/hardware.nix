@@ -56,7 +56,10 @@
 
   # Wireguard containarised
   virtualisation.oci-containers.containers = {
-    wireguard = {
+    wireguard = let
+      DEFAULT_PORT = 51820;
+      NEW_PORT = 69;
+    in {
       image = "lscr.io/linuxserver/wireguard:latest";
       environment = {
         TZ = my.config.system.timezone;
@@ -65,14 +68,14 @@
         INTERNAL_SUBNET = "192.168.100.1";
         PEERS = "phone,laptop";
         SERVERURL = "auto";
-        SERVERPORT = "69";
+        SERVERPORT = "${NEW_PORT}";
         PEERDNS = "auto";
       };
       volumes = [
         "/data/local/wireguard:/config"
       ];
       ports = [
-        "69:69/udp"
+        "${DEFAULT_PORT}:${NEW_PORT}/udp"
       ];
       extraOptions = [ "--cap-add=NET_ADMIN" ];
     };
