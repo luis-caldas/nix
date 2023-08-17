@@ -22,21 +22,14 @@
     enable = lib.mkForce true;
     allowedTCPPorts = [
       22    # SSH port
-      # 80    # Free port
-      # 443   # Free port
-      # 7000  # Reverse proxy
-      # 7500  # Reverse proxy dashboard
-    ];
-    allowedUDPPorts = [
-      51820  # Wireguard
     ];
   };
   services.fail2ban = {
     enable = true;
     maxretry = 5;
     ignoreIP = [
-      "127.0.0.0/8"
-      "172.17.0.0/16"  # Docker subnet
+      "127.0.0.0/8"         # Local subnet
+      "172.17.0.0/16"       # Docker subnet
     ];
   };
 
@@ -62,41 +55,41 @@
   };
 
   # Wireguard containarised
-  virtualisation.oci-containers.containers = {
-    wireguard = {
-      image = "lscr.io/linuxserver/wireguard:latest";
-      environment = {
-        TZ = my.config.system.timezone;
-        PUID = builtins.toString my.config.user.uid;
-        GUID = builtins.toString my.config.user.gid;
-        INTERNAL_SUBNET = "192.168.100.1";
-        PEERS = "phone,laptop";
-        SERVERURL = "auto";
-        SERVERPORT = "51820";
-        PEERDNS = "auto";
-      };
-      volumes = [
-        "/data/local/wireguard:/config"
-      ];
-      ports = [
-        "51820:51820/udp"
-      ];
-      extraOptions = [ "--cap-add=NET_ADMIN" ];
-    };
-  };
+#  virtualisation.oci-containers.containers = {
+#    wireguard = {
+#      image = "lscr.io/linuxserver/wireguard:latest";
+#      environment = {
+#        TZ = my.config.system.timezone;
+#        PUID = builtins.toString my.config.user.uid;
+#        GUID = builtins.toString my.config.user.gid;
+#        INTERNAL_SUBNET = "192.168.100.1";
+#        PEERS = "phone,laptop";
+#        SERVERURL = "auto";
+#        SERVERPORT = "51820";
+#        PEERDNS = "auto";
+#      };
+#      volumes = [
+#        "/data/local/wireguard:/config"
+#      ];
+#      ports = [
+#        "51820:51820/udp"
+#      ];
+#      extraOptions = [ "--cap-add=NET_ADMIN" ];
+#    };
+#  };
 
   # Custom service
-  # systemd.services.frpd = {
-  #   description = "Fast Reverse Proxy Server";
-  #   wantedBy = [ "multi-user.target" ];
-  #   after = [ "network.target" ];
-  #   restartIfChanged = true;
-  #    serviceConfig = {
-  #     ExecStart = "${pkgs.frp}/bin/frps --config ${./frps.ini}";
-  #     EnvironmentFile = "/safe/env/frp.env";
-  #     Restart = "always";
-  #   };
-  # };
+#  systemd.services.frpd = {
+#    description = "Fast Reverse Proxy Server";
+#    wantedBy = [ "multi-user.target" ];
+#    after = [ "network.target" ];
+#    restartIfChanged = true;
+#    serviceConfig = {
+#      ExecStart = "${pkgs.frp}/bin/frps --config ${./frps.ini}";
+#      EnvironmentFile = "/safe/env/frp.env";
+#      Restart = "always";
+#    };
+#  };
 
   # File systems and SWAP
   fileSystems."/" = {
