@@ -55,28 +55,28 @@
   };
 
   # Wireguard containarised
-#  virtualisation.oci-containers.containers = {
-#    wireguard = {
-#      image = "lscr.io/linuxserver/wireguard:latest";
-#      environment = {
-#        TZ = my.config.system.timezone;
-#        PUID = builtins.toString my.config.user.uid;
-#        GUID = builtins.toString my.config.user.gid;
-#        INTERNAL_SUBNET = "192.168.100.1";
-#        PEERS = "phone,laptop";
-#        SERVERURL = "auto";
-#        SERVERPORT = "51820";
-#        PEERDNS = "auto";
-#      };
-#      volumes = [
-#        "/data/local/wireguard:/config"
-#      ];
-#      ports = [
-#        "51820:51820/udp"
-#      ];
-#      extraOptions = [ "--cap-add=NET_ADMIN" ];
-#    };
-#  };
+  virtualisation.oci-containers.containers = {
+    wireguard = {
+      image = "lscr.io/linuxserver/wireguard:latest";
+      environment = {
+        TZ = my.config.system.timezone;
+        PUID = builtins.toString my.config.user.uid;
+        GUID = builtins.toString my.config.user.gid;
+        INTERNAL_SUBNET = "192.168.100.1";
+        PEERS = "phone,laptop";
+        SERVERURL = "auto";
+        SERVERPORT = "69";
+        PEERDNS = "auto";
+      };
+      volumes = [
+        "/data/local/wireguard:/config"
+      ];
+      ports = [
+        "51820:51820/udp"
+      ];
+      extraOptions = [ "--cap-add=NET_ADMIN" ];
+    };
+  };
 
   # Custom service
 #  systemd.services.frpd = {
