@@ -18,6 +18,7 @@ let
   programsSet = {
     bash = {
       enable = true;
+      historySize = 1000000000;
       bashrcExtra = configFiles.bash;
     };
     neovim = {
@@ -40,9 +41,6 @@ in
 
   # Enable bash auto completion
   programs.bash.enableCompletion = true;
-
-  # Bigger history size
-  program.bash.historySize = 1000000000;
 
   # Enable gnupg
   programs.gnupg.agent = {
