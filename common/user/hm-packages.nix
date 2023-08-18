@@ -149,6 +149,7 @@
     gnupg
     openssl
     cryptsetup
+    wireguard-tools
 
     # Password
     pwgen
