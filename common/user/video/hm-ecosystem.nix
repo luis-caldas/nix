@@ -19,6 +19,7 @@ let
     courier-prime
     font-awesome
     sarasa-gothic
+    noto-fonts-emoji
   ];
   # Create links from custom fonts
   linkSystemFonts = lib.forEach fontsList (
@@ -54,8 +55,8 @@ let
 
   # Link vst folders
   linkVST = mfunc.useDefault my.config.graphical.production.audio {
-    "./.vst/zynaddsubfx" = { source = "${pkgs.zyn-fusion}/lib/vst"; };
-    "./.vst/lsp" = { source = "${pkgs.lsp-plugins}/lib/vst"; };
+    ".local/share/vst/zynaddsubfx" = { source = "${pkgs.zyn-fusion}/lib/vst"; };
+    ".local/share/vst/lsp" = { source = "${pkgs.lsp-plugins}/lib/vst"; };
   } {};
 
   # GTK Style
@@ -157,6 +158,7 @@ in
     "org/gnome/desktop/peripherals/touchpad" = {
       tap-to-click = true;
       two-finger-scrolling-enabled = true;
+      click-method = "area";
     };
     "org/gnome/shell".favorite-apps = [
       "org.gnome.Terminal.desktop"
@@ -274,7 +276,7 @@ in
       disable-down-arrow = false;
       display-mode = 0;
       enable-keybindings = false;
-      history-size = 100;
+      history-size = 1000000;
     };
     dash-to-dock = {
       disable-overview-on-startup = true;
