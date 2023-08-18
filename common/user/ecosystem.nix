@@ -18,8 +18,8 @@ let
   programsSet = {
     bash = {
       enable = true;
-      historySize = 1000000000;
-      bashrcExtra = configFiles.bash;
+      # My files should always be at the end
+      initExtra = configFiles.bash;
     };
     neovim = {
       enable = true;
