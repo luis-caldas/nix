@@ -81,7 +81,6 @@
     gnome-themes-extra
 
     # Font
-    emote
     gnome.gnome-font-viewer
 
     # Monitors
