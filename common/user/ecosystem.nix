@@ -41,6 +41,9 @@ in
   # Enable bash auto completion
   programs.bash.enableCompletion = true;
 
+  # Bigger history size
+  program.bash.historySize = 1000000000;
+
   # Enable gnupg
   programs.gnupg.agent = {
     enable = true;
