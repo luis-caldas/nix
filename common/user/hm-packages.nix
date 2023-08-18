@@ -51,6 +51,9 @@
     # Debugger
     gdb
 
+    # Review
+    nixpkgs-review
+
     # Pen
     tor
     ncrack
