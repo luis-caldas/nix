@@ -4,15 +4,6 @@
   # Set program to change backlight
   programs.light.enable = true;
 
-  # Enable hyprland
-  programs.hyprland = {
-    enable = true;
-    xwayland = {
-      enable = true;
-      hidpi = true;
-    };
-  };
-
   # Enable chromium custom configs
   programs.chromium = {
 

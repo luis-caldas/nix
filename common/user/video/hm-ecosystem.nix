@@ -141,6 +141,13 @@ in
   qt.enable = true;
   qt.platformTheme = "gtk";
 
+  # Bluetooth applet
+  # Not needed due to gnomes native bluetooth control
+  # services.blueman-applet.enable = my.config.bluetooth;
+
+  # Add a service to manage mpris headset support
+  services.mpris-proxy.enable = my.config.bluetooth;
+
   # All gnome configuration
   dconf.settings = let
     prefix = "main";

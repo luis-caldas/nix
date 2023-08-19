@@ -45,6 +45,10 @@
     core-developer-tools.enable = true;
   };
 
+  # Bluez configuration
+  # Not needed due to gnomes native bluetooth control
+  # services.blueman.enable = my.config.bluetooth;
+
   # Auto login for the desktop environment
   services.xserver.displayManager.autoLogin = {
     enable = true;

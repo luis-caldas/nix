@@ -68,11 +68,7 @@ let
     ./common/system/production.nix
   ] [] ++
   # Check if bluetooth is supported
-  mfunc.useDefault my.config.bluetooth [ ./common/system/bluetooth.nix ] [] ++
-  # Bluetooth and video are enabled
-  mfunc.useDefault (my.config.bluetooth && my.config.graphical.enable) [
-    ./common/system/video/bluetooth.nix
-  ] [];
+  mfunc.useDefault my.config.bluetooth [ ./common/system/bluetooth.nix ] [];
 
   # Home manager importing list
   un-home-manager-imports-list = [
@@ -95,9 +91,6 @@ let
   # Games
   mfunc.useDefault (my.config.graphical.enable && my.config.games) [
     ./common/user/video/hm-games.nix
-  ] [] ++
-  mfunc.useDefault my.config.bluetooth [
-    ./common/user/video/hm-bluetooth.nix
   ] [];
 
 in {
