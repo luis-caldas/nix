@@ -162,7 +162,9 @@
     mumble
 
     # Chat
+    discord
     signal-desktop
+    whatsapp-for-linux
     schildichat-desktop
 
     # Info

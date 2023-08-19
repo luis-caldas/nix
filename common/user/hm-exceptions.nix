@@ -27,7 +27,7 @@
       "davinci-resolve"
       "reaper" "linuxsampler"
       "spotify" "spotify-unwrapped"
-      "zoom"
+      "zoom" "discord"
       "unrar" "p7zip"
       "android-sdk-tools"
       "pycharm-professional" "webstorm" "clion" "datagrip" "idea-ultimate"

@@ -158,7 +158,7 @@ in
     "org/gnome/desktop/peripherals/touchpad" = {
       tap-to-click = true;
       two-finger-scrolling-enabled = true;
-      click-method = "area";
+      click-method = "areas";
     };
     "org/gnome/shell".favorite-apps = [
       "org.gnome.Terminal.desktop"
