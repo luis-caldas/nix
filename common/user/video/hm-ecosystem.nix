@@ -169,6 +169,7 @@ in
       "writer.desktop"
       "gimp.desktop"
       "schildichat-desktop.desktop"
+      "com.github.eneshecan.WhatsAppForLinux.desktop"
       "spotify.desktop"
     ];
     "org/gnome/mutter" = {
