@@ -47,11 +47,6 @@
     # Launcher
     rofi-wayland
 
-    # Status Bar
-    (waybar.overrideAttrs (previousAttrs: {
-      mesonFlags = previousAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-    }))
-
     # Terminal
     kitty
 
