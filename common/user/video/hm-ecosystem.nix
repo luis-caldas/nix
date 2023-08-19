@@ -19,7 +19,7 @@ let
     courier-prime
     font-awesome
     sarasa-gothic
-    noto-fonts-emoji
+    noto-fonts-emoji-blob-bin
   ];
   # Create links from custom fonts
   linkSystemFonts = lib.forEach fontsList (
