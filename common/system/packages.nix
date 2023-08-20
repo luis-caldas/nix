@@ -14,12 +14,12 @@
     screen
     neovim
     nix-top
-    parallel
     nix-tree
     trash-cli
 
     # Utils
     killall
+    moreutils
 
     # Compatibility
     envsubst
