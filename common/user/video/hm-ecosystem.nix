@@ -82,6 +82,13 @@ let
   browserNameMain = "chromium";
   browserNamePersistent = "chromium-persistent";
 
+  # List of applications to be created
+  browserApplications = [
+    { name = "cloud"; icon = "nextcloud"; }
+    { name = "whatsapp-mine"; icon = "whatsapp"; }
+    { name = "discord-mine"; icon = "discord"; }
+  ];
+
   # List of the extensions
   listChromeExtensions = [] ++ my.config.graphical.chromium.extensions.main;
   listChromePersistentExtensions = [] ++ my.config.graphical.chromium.extensions.persistent;
@@ -176,7 +183,8 @@ in
       "writer.desktop"
       "gimp.desktop"
       "schildichat-desktop.desktop"
-      "com.github.eneshecan.WhatsAppForLinux.desktop"
+      "cloud.desktop"
+      #"com.github.eneshecan.WhatsAppForLinux.desktop"
       "spotify.desktop"
     ];
     "org/gnome/mutter" = {
@@ -418,6 +426,22 @@ in
         ]; }
       ) (genStrRange (builtins.length workspaces))));
   })];
+
+  # Add my own custom "applications"
+  xdg.desktopEntries = {} // (
+    # Automatically create the chromium applications from a list
+    builtins.listToAttrs (map (eachEntry: {
+      name = eachEntry.name;
+      value = rec {
+        name = mfunc.capitaliseString (builtins.replaceStrings ["-"] [" "] eachEntry.name);
+        comment = "${name} web page running as an application";
+        exec = ''/usr/bin/env sh -c "chromium --user-data-dir=\\$HOME/.config/chromium-app-${eachEntry.name} --app=https://redirect.caldas.ie"'';
+        icon = eachEntry.icon;
+        terminal = false;
+        categories = [ "Network" "WebBrowser" ];
+      };
+    }) browserApplications)
+  );
 
   # Home manager programs
   programs = {

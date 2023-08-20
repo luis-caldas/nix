@@ -89,6 +89,19 @@ let
     in
       builtins.listToAttrs mergedAttrs;
 
+    # Capitalises first and anything after a space
+    capitaliseString = inputString: let
+        splitChar = " ";
+        listStrings = lib.strings.splitString splitChar inputString;
+        capitalisedList = map (eachWord: let
+            splitWord = lib.strings.stringToCharacters eachWord;
+            firstChar = builtins.head splitWord;
+            restString = lib.strings.concatStrings (lib.lists.drop 1 splitWord);
+            newWord = (lib.strings.toUpper firstChar) + restString;
+          in newWord) listStrings;
+        properName = lib.strings.concatStringsSep splitChar capitalisedList;
+      in properName;
+
   };
 
 in allFunctions
