@@ -32,15 +32,15 @@ in {
   boot.kernel.sysctl."net.ipv4.conf.all.src_valid_mark" = 1;
 
   # Firewall setup
+  # The firewall will only work after the NAT
   networking.firewall = {
     enable = lib.mkForce true;
+    allowPing = false;
     allowedTCPPorts = [
       22    # SSH port
-      124
     ];
     allowedUDPPorts = [
-      123   # Port chosen for the VPN
-      124
+      networkInfo.port
     ];
   };
   # Setup Fail 2 Ban
@@ -86,10 +86,10 @@ in {
     internalInterfaces = [ networkInfo.interface ];
     dmzHost = networkInfo.remote;
     forwardPorts = [
+      # SSH Port redirection to self
       { destination = "${networkInfo.host}:22"; proto = "tcp"; sourcePort = 22; }
+      # Redirect the VPN port to self
       { destination = "${networkInfo.host}:${builtins.toString networkInfo.port}"; proto = "udp"; sourcePort = networkInfo.port; }
-      { destination = "${networkInfo.host}:${builtins.toString (networkInfo.port + 1)}"; proto = "tcp"; sourcePort = networkInfo.port + 1; }
-      { destination = "${networkInfo.host}:${builtins.toString (networkInfo.port + 1)}"; proto = "udp"; sourcePort = networkInfo.port + 1; }
     ];
   };
 
@@ -97,60 +97,13 @@ in {
   networking.wireguard.interfaces."${networkInfo.interface}" = {
     ips = [ "${networkInfo.host}/${builtins.toString networkInfo.prefix}" ];
     listenPort = networkInfo.port;
-    privateKeyFile = "/data/local/wire/host.key";
+    privateKeyFile = "/data/local/wireguard/host.key";
     peers = [{
-      publicKey = mfunc.safeReadFile /data/local/wire/remote.pub;
+      publicKey = mfunc.safeReadFile /data/local/wireguard/remote.pub;
+      presharedKeyFile = "/data/local/wireguard/shared.key";
       allowedIPs = [ "${networkInfo.remote}/32" ];
     }];
   };
-
-  # Wireguard containarised
-#  virtualisation.oci-containers.containers = {
-#    wireguard = let
-#      DEFAULT_PORT = builtins.toString 51820;
-#      NEW_PORT = builtins.toString 69;
-#      allUsers = [
-#        # Names will be changed for numbers starting on zero
-#        { home = [ "house" "router" "server" ]; }
-#        { lu = [ "laptop" "phone" "tablet" ]; }
-#        { lak = [ "laptop" "phone" "desktop" ]; }
-#        { extra = [ "first" "second" "third" "fourth" ]; }
-#      ];
-#      allPeers = let
-#        arrayUsersDevices = map
-#          (eachEntry:
-#            builtins.concatLists (lib.attrsets.mapAttrsToList
-#            (eachUser: allDevices: lib.lists.imap0
-#              (index: eachDevice: "${eachUser}${builtins.toString index}")
-#              allDevices
-#            )
-#            eachEntry)
-#          )
-#          allUsers;
-#        usersDevicesList = builtins.concatLists arrayUsersDevices;
-#        interspersedList = lib.strings.intersperse "," usersDevicesList;
-#      in lib.strings.concatStrings interspersedList;
-#    in {
-#      image = "lscr.io/linuxserver/wireguard:latest";
-#      environment = {
-#        TZ = my.config.system.timezone;
-#        PUID = builtins.toString my.config.user.uid;
-#        GUID = builtins.toString my.config.user.gid;
-#        INTERNAL_SUBNET = "192.168.100.1";
-#        PEERS = allPeers;
-#        SERVERURL = "auto";
-#        SERVERPORT = "${NEW_PORT}";
-#        PEERDNS = "auto";
-#      };
-#      volumes = [
-#        "/data/local/wireguard:/config"
-#      ];
-#      ports = [
-#        "${NEW_PORT}:${DEFAULT_PORT}/udp"
-#      ];
-#      extraOptions = [ "--cap-add=NET_ADMIN" ];
-#    };
-#  };
 
   # File systems and SWAP
   fileSystems."/" = {
