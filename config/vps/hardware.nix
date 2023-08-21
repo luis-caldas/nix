@@ -1,7 +1,7 @@
 { my, lib, config, modulesPath, pkgs, mfunc, ... }: let
 
   # Information for the wireguard and NAT networking
-  networkingInfo = {
+  networkInfo = {
     host = "10.1.0.1";
     remote = "10.1.0.2";
     prefix = 16;
