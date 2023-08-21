@@ -1,5 +1,16 @@
-{ my, lib, config, modulesPath, pkgs, ... }:
-{
+{ my, lib, config, modulesPath, pkgs, mfunc, ... }: let
+
+  # Information for the wireguard and NAT networking
+  networkingInfo = {
+    host = "10.1.0.1";
+    remote = "10.1.0.2";
+    prefix = 16;
+    port = 123;
+    external = "enp1s0";
+    interface = "wg0";
+  };
+
+in {
 
   # Needed for virutalisation
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
@@ -60,53 +71,76 @@
     ];
   };
 
-  # Wireguard containarised
-  virtualisation.oci-containers.containers = {
-    wireguard = let
-      DEFAULT_PORT = builtins.toString 51820;
-      NEW_PORT = builtins.toString 69;
-      allUsers = [
-        # Names will be changed for numbers starting on zero
-        { home = [ "house" "router" "server" ]; }
-        { lu = [ "laptop" "phone" "tablet" ]; }
-        { lak = [ "laptop" "phone" "desktop" ]; }
-        { extra = [ "first" "second" "third" "fourth" ]; }
-      ];
-      allPeers = let
-        arrayUsersDevices = map
-          (eachEntry:
-            builtins.concatLists (lib.attrsets.mapAttrsToList
-            (eachUser: allDevices: lib.lists.imap0
-              (index: eachDevice: "${eachUser}${builtins.toString index}")
-              allDevices
-            )
-            eachEntry)
-          )
-          allUsers;
-        usersDevicesList = builtins.concatLists arrayUsersDevices;
-        interspersedList = lib.strings.intersperse "," usersDevicesList;
-      in lib.strings.concatStrings interspersedList;
-    in {
-      image = "lscr.io/linuxserver/wireguard:latest";
-      environment = {
-        TZ = my.config.system.timezone;
-        PUID = builtins.toString my.config.user.uid;
-        GUID = builtins.toString my.config.user.gid;
-        INTERNAL_SUBNET = "192.168.100.1";
-        PEERS = allPeers;
-        SERVERURL = "auto";
-        SERVERPORT = "${NEW_PORT}";
-        PEERDNS = "auto";
-      };
-      volumes = [
-        "/data/local/wireguard:/config"
-      ];
-      ports = [
-        "${NEW_PORT}:${DEFAULT_PORT}/udp"
-      ];
-      extraOptions = [ "--cap-add=NET_ADMIN" ];
-    };
+  # Set up our NAT configuration
+  networking.nat = {
+    enable = true;
+    externalInterface = networkInfo.external;
+    internalInterfaces = [ networkInfo.interface ];
+    dmzHost = networkInfo.remote;
+    forwardPorts = [
+      { destination = "${networkInfo.host}:22"; proto = "tcp"; sourcePort = 22; }
+      { destination = "${networkInfo.host}:${builtins.toString networkInfo.port}"; proto = "udp"; sourcePort = networkInfo.port; }
+    ];
   };
+
+  # Set up our wireguard configuration
+  networking.wireguard.interfaces."${networkInfo.interface}" = {
+    ips = [ "${networkInfo.host}/${builtins.toString networkInfo.prefix}" ];
+    listenPort = networkInfo.port;
+    privateKeyFile = /data/local/wire/host.key;
+    peers = [{
+      publicKey = mfunc.safeReadFile /data/local/wire/remote.pub;
+      allowedIPs = [ "${networkInfo.remote}/32" ];
+    }];
+  };
+
+  # Wireguard containarised
+#  virtualisation.oci-containers.containers = {
+#    wireguard = let
+#      DEFAULT_PORT = builtins.toString 51820;
+#      NEW_PORT = builtins.toString 69;
+#      allUsers = [
+#        # Names will be changed for numbers starting on zero
+#        { home = [ "house" "router" "server" ]; }
+#        { lu = [ "laptop" "phone" "tablet" ]; }
+#        { lak = [ "laptop" "phone" "desktop" ]; }
+#        { extra = [ "first" "second" "third" "fourth" ]; }
+#      ];
+#      allPeers = let
+#        arrayUsersDevices = map
+#          (eachEntry:
+#            builtins.concatLists (lib.attrsets.mapAttrsToList
+#            (eachUser: allDevices: lib.lists.imap0
+#              (index: eachDevice: "${eachUser}${builtins.toString index}")
+#              allDevices
+#            )
+#            eachEntry)
+#          )
+#          allUsers;
+#        usersDevicesList = builtins.concatLists arrayUsersDevices;
+#        interspersedList = lib.strings.intersperse "," usersDevicesList;
+#      in lib.strings.concatStrings interspersedList;
+#    in {
+#      image = "lscr.io/linuxserver/wireguard:latest";
+#      environment = {
+#        TZ = my.config.system.timezone;
+#        PUID = builtins.toString my.config.user.uid;
+#        GUID = builtins.toString my.config.user.gid;
+#        INTERNAL_SUBNET = "192.168.100.1";
+#        PEERS = allPeers;
+#        SERVERURL = "auto";
+#        SERVERPORT = "${NEW_PORT}";
+#        PEERDNS = "auto";
+#      };
+#      volumes = [
+#        "/data/local/wireguard:/config"
+#      ];
+#      ports = [
+#        "${NEW_PORT}:${DEFAULT_PORT}/udp"
+#      ];
+#      extraOptions = [ "--cap-add=NET_ADMIN" ];
+#    };
+#  };
 
   # File systems and SWAP
   fileSystems."/" = {
