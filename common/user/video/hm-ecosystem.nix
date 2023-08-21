@@ -295,9 +295,11 @@ in
       history-size = 1000000;
     };
     dash-to-dock = {
+      apply-custom-theme = true;
       disable-overview-on-startup = true;
       hot-keys = false;
       isolate-monitors = false;
+      multi-monitor = true;
       show-mounts-network=true;
     };
     date-menu-formatter = {
