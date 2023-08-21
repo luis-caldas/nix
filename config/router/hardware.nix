@@ -354,4 +354,6 @@ in {
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+  system.stateVersion = "23.05";
+
 }

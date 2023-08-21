@@ -57,4 +57,6 @@
   # I don't really need swap on this system
   swapDevices = [];
 
+  system.stateVersion = "23.05";
+
 }

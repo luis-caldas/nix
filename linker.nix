@@ -95,9 +95,6 @@ let
 
 in {
 
-  # Set nix state version
-  system.stateVersion = my.version;
-
   # Add the system import list
   imports = map (x: impall x args) un-imports-list;
 

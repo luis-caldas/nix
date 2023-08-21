@@ -30,4 +30,6 @@
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 
+  system.stateVersion = "23.05";
+
 }

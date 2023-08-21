@@ -59,7 +59,7 @@ in
   # Configure base packages for the root user as well
   home-manager.users.root = { ... }: {
     programs = programsSet;
-    home.stateVersion = my.version;
+    home.stateVersion = my.state;
   };
 
   # Configure packages for main user
@@ -126,7 +126,7 @@ in
     {};
 
     # Set the state version for the user
-    home.stateVersion = my.version;
+    home.stateVersion = my.state;
 
   };
 

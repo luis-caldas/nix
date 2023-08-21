@@ -1,4 +1,4 @@
-{ pkgs, lib, config, iso, ... }:
+{ pkgs, lib, config, iso, options, ... }:
 let
 
   # Default path for the chosen system that was set on a file
@@ -14,6 +14,9 @@ let
 
   # System Version
   version = versionConcatenated;
+
+  # Get the state version from the systems options
+  state = options.system.stateVersion.value;
 
   # Create list for allowed architectures
   archReference = {
@@ -127,7 +130,7 @@ let
 
   # Show some verbose
   traceId = let
-    verboseString = "building for ${realName} @ ${sysArch} - ${netId}";
+    verboseString = "building for ${realName} @ ${sysArch} - ${version} - ${netId}";
   in
     builtins.trace verboseString netId;
 
@@ -138,6 +141,7 @@ let
     path = realName;
     filer = filer;
     config = configObj;
+    state = state;
     version = version;
     chromium = chromiumObj;
     reference = archReference;
