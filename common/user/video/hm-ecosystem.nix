@@ -84,9 +84,10 @@ let
 
   # List of applications to be created
   browserApplications = [
-    { name = "cloud"; icon = "nextcloud"; }
-    { name = "whatsapp-mine"; icon = "whatsapp"; }
-    { name = "discord-mine"; icon = "discord"; }
+    { name = "cloud"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
+    { name = "whatsapp-web"; icon = "whatsapp"; url = "https://web.whatsapp.com"; }
+    { name = "discord-web"; icon = "discord"; url = "https://discord.com/app"; }
+    { name = "github-web"; icon = "github"; url = "https://github.com"; }
   ];
 
   # List of the extensions
@@ -437,7 +438,7 @@ in
       value = rec {
         name = mfunc.capitaliseString (builtins.replaceStrings ["-"] [" "] eachEntry.name);
         comment = "${name} web page running as an application";
-        exec = ''/usr/bin/env sh -c "chromium --user-data-dir=\\$HOME/.config/chromium-app-${eachEntry.name} --app=https://redirect.caldas.ie"'';
+        exec = ''/usr/bin/env sh -c "chromium --user-data-dir=\\$HOME/.config/browser-apps/${eachEntry.name} --app=${eachEntry.url}"'';
         icon = eachEntry.icon;
         terminal = false;
         categories = [ "Network" "WebBrowser" ];
@@ -458,42 +459,10 @@ in
     vscode = {
       enable = true;
       package = pkgs.vscodium;
-      extensions = let
-        custom = [
-          (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
-            mktplcRef = {
-              name = "Material-theme";
-              publisher = "zhuangtongfa";
-              version = "3.15.2";
-              sha256 = "sha256-6YB6Te9rQo9WKfUZZ5eenqoRdk5lKRYftYkmUIpoFRU=";
-            };
-            meta = with lib; {
-              changelog = "https://marketplace.visualstudio.com/items/zhuangtongfa.Material-theme/changelog";
-              description = "Atom's iconic One Dark theme, and one of the most installed themes for VS Code!";
-              downloadPage = "https://marketplace.visualstudio.com/items?itemName=zhuangtongfa.Material-theme";
-              homepage = "https://github.com/Binaryify/OneDark-Pro";
-              license = licenses.mit;
-            };
-          })
-          (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
-            mktplcRef = {
-              name = "explicit-folding";
-              publisher = "zokugun";
-              version = "0.21.0";
-              sha256 = "0kzfrzmvjadg4wq4imgb3m2h81rm5nrcn1nyz8j1993qz6559d4h";
-            };
-            meta = with lib; {
-              changelog = "https://marketplace.visualstudio.com/items/zokugun.explicit-folding/changelog";
-              description = "This extension lets you manually control how and where to fold your code.";
-              downloadPage = "https://marketplace.visualstudio.com/items?itemName=zokugun.explicit-folding";
-              homepage = "https://github.com/zokugun/vscode-explicit-folding";
-              license = licenses.mit;
-            };
-          })
-        ];
-      in [
-        pkgs.vscode-extensions.jnoortheen.nix-ide
-      ] ++ custom;
+      extensions = with pkgs.vscode-extensions; [
+        jnoortheen.nix-ide
+        zhuangtongfa.material-theme
+      ];
       haskell = {
         enable = true;
         hie.enable = false;
