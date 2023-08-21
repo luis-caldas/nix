@@ -87,7 +87,7 @@ in {
   networking.wireguard.interfaces."${networkInfo.interface}" = {
     ips = [ "${networkInfo.host}/${builtins.toString networkInfo.prefix}" ];
     listenPort = networkInfo.port;
-    privateKeyFile = /data/local/wire/host.key;
+    privateKeyFile = "/data/local/wire/host.key";
     peers = [{
       publicKey = mfunc.safeReadFile /data/local/wire/remote.pub;
       allowedIPs = [ "${networkInfo.remote}/32" ];
