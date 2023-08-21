@@ -83,8 +83,8 @@ in {
     forwardPorts = [
       { destination = "${networkInfo.host}:22"; proto = "tcp"; sourcePort = 22; }
       { destination = "${networkInfo.host}:${builtins.toString networkInfo.port}"; proto = "udp"; sourcePort = networkInfo.port; }
-      { destination = "${networkInfo.host}:${builtins.toString networkInfo.port + 1}"; proto = "tcp"; sourcePort = networkInfo.port + 1; }
-      { destination = "${networkInfo.host}:${builtins.toString networkInfo.port + 1}"; proto = "udp"; sourcePort = networkInfo.port + 1; }
+      { destination = "${networkInfo.host}:${builtins.toString (networkInfo.port + 1)}"; proto = "tcp"; sourcePort = networkInfo.port + 1; }
+      { destination = "${networkInfo.host}:${builtins.toString (networkInfo.port + 1)}"; proto = "udp"; sourcePort = networkInfo.port + 1; }
     ];
   };
 
