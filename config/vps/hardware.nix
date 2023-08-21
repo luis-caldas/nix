@@ -36,6 +36,11 @@ in {
     enable = lib.mkForce true;
     allowedTCPPorts = [
       22    # SSH port
+      124
+    ];
+    allowedUDPPorts = [
+      123   # Port chosen for the VPN
+      124
     ];
   };
   # Setup Fail 2 Ban
