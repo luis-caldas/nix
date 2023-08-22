@@ -8,7 +8,7 @@
   networking.hostId = my.id;
 
   # Enable Gnome Virtual Filesystem to browse shares
-  services.gvfs.enable = true;
+  services.gvfs.enable = my.config.graphical.enable;
 
   # Add zfs scrubbing
   services.zfs.autoScrub.enable = true;
