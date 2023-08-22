@@ -12,13 +12,11 @@
 
 in {
 
-  # Needed for virutalisation
-  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
+  # Clear boot configuration
+  boot = lib.mkForce {};
 
-  # Boot information
-  boot.loader.grub.device = "/dev/sda";
-  boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "xen_blkfront" ];
-  boot.initrd.kernelModules = [ "nvme" ];
+  # Needed for virutalisation
+  imports = [ (modulesPath + "/virtualisation/amazon-image.nix") ];
 
   # DNS servers
   networking.networkmanager.insertNameservers = [ "9.9.9.10" "149.112.112.10" ];
@@ -71,13 +69,6 @@ in {
   users.users."${my.config.user.name}".openssh.authorizedKeys.keyFiles = [
     /etc/nixos/ssh/authorized_keys
   ];
-  users.users.lakituen = {
-    isNormalUser  = true;
-    home = "/home/lakituen";
-    openssh.authorizedKeys.keyFiles = [
-      /etc/nixos/ssh/extra
-    ];
-  };
 
   # Set up our NAT configuration
   networking.nat = {
@@ -104,16 +95,6 @@ in {
       allowedIPs = [ "${networkInfo.remote}/32" ];
     }];
   };
-
-  # File systems and SWAP
-  fileSystems."/" = {
-    device = "/dev/sda1";
-    fsType = "ext4";
-  };
-  swapDevices = [ {
-    device = "/swapfile";
-    size = (1024 * 4); # Size in MB
-  } ];
 
   system.stateVersion = "23.05";
 
