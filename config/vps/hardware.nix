@@ -2,9 +2,9 @@
 
   # Information for the wireguard and NAT networking
   networkInfo = {
-    host = "10.1.0.1";
-    remote = "10.1.0.2";
-    prefix = 16;
+    host = "10.255.255.253";
+    remote = "10.255.255.254";
+    prefix = 30;
     port = 123;
     external = "enX0";
     interface = "wg0";
