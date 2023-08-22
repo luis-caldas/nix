@@ -28,7 +28,6 @@
       "reaper" "linuxsampler"
       "spotify" "spotify-unwrapped"
       "zoom" "discord"
-      "unrar" "p7zip"
       "android-sdk-tools"
       "pycharm-professional" "webstorm" "clion" "datagrip" "idea-ultimate"
       "ciscoPacketTracer8"

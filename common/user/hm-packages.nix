@@ -84,9 +84,8 @@
     tree
     file
     pigz
-    (p7zip.override { enableUnfree = true; })  # Enable for rar and others
     unar
-    unrar
+    p7zip
     samba
     jdupes
     rdfind
