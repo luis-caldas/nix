@@ -6,18 +6,19 @@
     remote = "10.1.0.2";
     prefix = 16;
     port = 123;
-    external = "enp1s0";
+    external = "enX0";
     interface = "wg0";
   };
 
 in {
 
-  # Clear boot configuration and force kernel parameters
-  boot = lib.mkForce {
-    kernel.sysctl."net.ipv6.conf.all.disable_ipv6" = 1;
-    kernel.sysctl."net.ipv6.conf.default.disable_ipv6" = 1;
-    kernel.sysctl."net.ipv4.conf.all.src_valid_mark" = 1;
-  };
+  # Clear boot configuration
+  boot.loader = lib.mkForce {};
+
+  # Force IP parameters
+  boot.kernel.sysctl."net.ipv6.conf.all.disable_ipv6" = 1;
+  boot.kernel.sysctl."net.ipv6.conf.default.disable_ipv6" = 1;
+  boot.kernel.sysctl."net.ipv4.conf.all.src_valid_mark" = 1;
 
   # Needed for virutalisation
   imports = [ (modulesPath + "/virtualisation/amazon-image.nix") ];
