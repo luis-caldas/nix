@@ -1,4 +1,4 @@
-{ pkgs, lib, config, iso, options, ... }:
+{ pkgs, lib, config, iso, ... }:
 let
 
   # Default path for the chosen system that was set on a file
@@ -16,7 +16,7 @@ let
   version = versionConcatenated;
 
   # Get the state version from the systems options
-  state = options.system.stateVersion.value;
+  state = config.system.stateVersion;
 
   # Create list for allowed architectures
   archReference = {
