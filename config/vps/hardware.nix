@@ -33,7 +33,6 @@ in {
   # The firewall will only work after the NAT
   networking.firewall = {
     enable = lib.mkForce true;
-    allowPing = lib.mkForce true;  # Enable ping, the system is behind the NAT anyway
     allowedTCPPorts = [
       22    # SSH port
     ];
