@@ -107,13 +107,17 @@
   systemd.services = {
 
     # Auto start stuff
-    starter = {
-      script = lib.concatStrings (map (s: s + "\n") my.config.services.startup.start);
+    starter = let
+      files = my.config.services.startup.start;
+    in mfunc.useDefault (files != []) {
+      script = lib.concatStrings (map (s: s + "\n") files);
       wantedBy = [ "multi-user.target" ];
-    };
+    } {};
 
     # Create and permit files
-    createer = {
+    createer = let
+      files = my.config.services.startup.create;
+    in mfunc.useDefault (files != []) {
       script = lib.concatStrings (
         map (
           s:
@@ -121,20 +125,22 @@
           "chown :${my.filer} ${s}" + "\n" +
           "chmod g+rw ${s}" + "\n"
         )
-        my.config.services.startup.create
+        files
       );
       wantedBy = [ "multi-user.target" ];
-    };
+    } {};
 
     # Files permissions
-    filer = {
+    filer = let
+      files = my.config.services.startup.permit;
+    in mfunc.useDefault (files != []) {
       script = lib.concatStrings (
         map (
           s:
           "chown :${my.filer} ${s}" + "\n" +
           "chmod g+rw ${s}" + "\n"
         )
-        my.config.services.startup.permit
+        files
       );
       wantedBy = [ "multi-user.target" ];
     };
