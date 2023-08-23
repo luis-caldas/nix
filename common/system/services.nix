@@ -104,20 +104,19 @@
     my.config.graphical.enable && my.config.services.printing;
 
   # My own systemd services
-  systemd.services = {
-
-    # Auto start stuff
-    starter = let
-      files = my.config.services.startup.start;
-    in mfunc.useDefault (files != []) {
+  systemd.services = {} //
+  # Auto start stuff
+  (let files = my.config.services.startup.start;
+  in mfunc.useDefault (files != []) {
+    starter = {
       script = lib.concatStrings (map (s: s + "\n") files);
       wantedBy = [ "multi-user.target" ];
-    } {};
-
-    # Create and permit files
-    createer = let
-      files = my.config.services.startup.create;
-    in mfunc.useDefault (files != []) {
+    };
+  } {}) //
+  # Create and permit files
+  (let files = my.config.services.startup.create;
+  in mfunc.useDefault (files != []) {
+    createer = {
       script = lib.concatStrings (
         map (
           s:
@@ -128,12 +127,12 @@
         files
       );
       wantedBy = [ "multi-user.target" ];
-    } {};
-
-    # Files permissions
-    filer = let
-      files = my.config.services.startup.permit;
-    in mfunc.useDefault (files != []) {
+    };
+  } {}) //
+  # Files permissions
+  (let files = my.config.services.startup.permit;
+  in mfunc.useDefault (files != []) {
+    filer =  {
       script = lib.concatStrings (
         map (
           s:
@@ -144,8 +143,9 @@
       );
       wantedBy = [ "multi-user.target" ];
     };
-
-  } // (mfunc.useDefault my.config.boot.top
+  } {}) //
+  # Whole screen tty mode for a nice top window
+  (mfunc.useDefault my.config.boot.top
   # Add gotop on TTY8 if wanted
   ({
     gotopper = {
