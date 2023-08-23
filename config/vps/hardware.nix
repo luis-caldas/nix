@@ -96,7 +96,7 @@ in {
   };
 
   # Add swap
-   swapDevices = [ {
+  swapDevices = [ {
     device = "/swapfile";
     size = 4 * 1024;
   } ];
