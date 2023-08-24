@@ -317,13 +317,14 @@ in
         "_processor_usage_"
         "_memory_allocated_"
         "__network-rx_max__" "__network-tx_max__"
+        "__temperature_avg__" "__temperature_max__"
       ];
       position-in-panel = 1;
       show-fan = false;
       show-network = true;
       show-storage = false;
       show-system = false;
-      show-temperature = false;
+      show-temperature = true;
       show-voltage = false;
       use-higher-precision = false;
     };
