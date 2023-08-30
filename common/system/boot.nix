@@ -46,8 +46,17 @@ let
 
   };
 
-  # Check if the user configuration overrides boot information
-  realGrub = mfunc.useDefault my.config.boot.override {} tempGrub;
+  # Set systemd-boot configuration
+  tempDBoot = {
+
+    # Enable it and disable command line editing
+    enable = true;
+    editor = false;
+
+    # Set the UEFI resolution
+    consoleMode = "keep";
+
+  };
 
 in
 {
@@ -74,10 +83,13 @@ in
       # Just for fast bois
       timeout = my.config.boot.timeout;
 
-      # Set the grub if configured to do so
-      grub = realGrub;
-
-    };
+    } //
+    # Check if boot has been ovrriden
+    mfunc.useDefault my.config.boot.override {} (
+      mfunc.useDefault my.config.boot.efi
+      { systemd-boot = tempDBoot; }
+      { grub = tempGrub; }
+    );
 
   };
 
