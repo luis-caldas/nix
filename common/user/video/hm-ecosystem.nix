@@ -120,6 +120,7 @@ in
   home.sessionVariables = {
     _JAVA_AWT_WM_NONREPARENTING = "1";  # Fix for java applications on tiling window managers
     NIXOS_OZONE_WL = "";  # Ozone wayland remove (still not working with electron)
+    APPLICATION_UNICODE = "true";  # Enable my own unicode support for the terminal emulators
   };
 
   # Some XDG links
