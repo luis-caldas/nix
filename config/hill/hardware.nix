@@ -10,50 +10,33 @@
   boot.zfs.requestEncryptionCredentials = true;
 
   fileSystems."/" =
-    { device = "hill/root";
+    { device = "swamp/root";
       fsType = "zfs";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/669A-8E94";
+    { device = "/dev/disk/by-uuid/F115-254A";
       fsType = "vfat";
     };
 
+  fileSystems."/home" =
+    { device = "swamp/home";
+      fsType = "zfs";
+    };
+
   fileSystems."/nix" =
-    { device = "hill/nix";
+    { device = "swamp/nix";
       fsType = "zfs";
     };
 
   fileSystems."/tmp" =
-    { device = "hill/tmp";
+    { device = "swamp/tmp";
       fsType = "zfs";
     };
 
-  # Second disk
-  fileSystems."/safe" =
-    { device = "hill/safe";
-      fsType = "zfs";
-    };
-
-  fileSystems."/home" =
-    { device = "mound/home";
-      fsType = "zfs";
-      depends = [ "/safe" ];
-    };
-
-  fileSystems."/data" =
-    { device = "mound/safe";
-      fsType = "zfs";
-      depends = [ "/safe" ];
-    };
-
-  fileSystems."/store" =
-    { device = "mound/store";
-      fsType = "zfs";
-      depends = [ "/safe" ];
-    };
-
-  swapDevices = [ ];
+  swapDevices =
+    [ { device = "/dev/zvol/swamp/swap"; }
+    ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
