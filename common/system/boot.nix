@@ -86,7 +86,7 @@ in
     } //
     # Check if boot has been ovrriden
     mfunc.useDefault my.config.boot.override {} (
-      mfunc.useDefault my.config.boot.efi
+      mfunc.useDefault (my.config.boot.efi && (!my.config.boot.force))
       { systemd-boot = tempDBoot; }
       { grub = tempGrub; }
     );

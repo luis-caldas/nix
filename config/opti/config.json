@@ -1,6 +1,7 @@
 {
   "boot": {
-    "timeout": 1
+    "timeout": 1,
+    "force": true
   },
   "kernel": {
     "text": false
