@@ -1,7 +1,7 @@
 {
   "boot": {
     "timeout": 1,
-    "force": true
+    "grub": true
   },
   "kernel": {
     "text": false
