@@ -4,21 +4,6 @@
   # Store audio cards states
   sound.enable = true;
 
-  # Mount network storage locally
-  fileSystems."/naso" = {
-    device = "//naso/media/games";
-    fsType = "cifs";
-    options = [
-      "ro"
-      "nofail"
-      "noauto"
-      "x-systemd.automount"
-      "x-systemd.idle-timeout=60"
-      "x-systemd.device-timeout=5s"
-      "x-systemd.mount-timeout=5s"
-    ];
-  };
-
   # Enable pulseaudio and all the supported codecs
   hardware.pulseaudio = {
     enable = true;
@@ -99,25 +84,6 @@
     isNormalUser = true;
     extraGroups = [ "audio" ];
   };
-
-  # Add steam to exceptions
-  exceptions.unfree = [ "steam" "steam-runtime" "steam-original" ];
-
-  # Packages to be installed
-  environment.systemPackages = with pkgs; [
-    steam
-    (retroarch.override { cores = with libretro; [
-      mame
-      mgba
-      snes9x
-      fceumm
-      mupen64plus
-      pcsx2
-      desmume
-      dolphin
-      pcsx-rearmed
-    ]; })
-  ];
 
   # Enable kodi
   services.xserver.desktopManager.kodi.enable = true;
