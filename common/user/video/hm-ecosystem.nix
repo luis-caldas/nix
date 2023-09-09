@@ -120,6 +120,7 @@ in
   home.sessionVariables = {
     _JAVA_AWT_WM_NONREPARENTING = "1";  # Fix for java applications on tiling window managers
     NIXOS_OZONE_WL = "";  # Ozone wayland remove (still not working with electron)
+    APPLICATION_UNICODE = "true";  # Enable my own unicode support for the terminal emulators
   };
 
   # Some XDG links
@@ -175,6 +176,9 @@ in
       two-finger-scrolling-enabled = true;
       click-method = "areas";
     };
+    "org/gnome/desktop/peripherals/keyboard" = {
+      numlock-state = true;
+    };
     "org/gnome/shell".favorite-apps = [
       "org.gnome.Terminal.desktop"
       "chromium-browser.desktop"
@@ -189,7 +193,8 @@ in
       "spotify.desktop"
     ];
     "org/gnome/mutter" = {
-      "workspaces-only-on-primary" = true;
+      edge-tiling = true;
+      workspaces-only-on-primary = true;
     };
     "org/gnome/desktop/interface" = {
       cursor-size = lib.mkForce 32;
@@ -207,7 +212,9 @@ in
       remember-recent-files = false;
     };
     "org/gnome/desktop/wm/preferences" = {
+      num-workspaces = builtins.length workspaces;
       workspace-names = workspaces;
+      button-layout = "menu,appmenu:minimize,maximize,close";
     };
     "org/gnome/desktop/background" = {
       picture-uri = backgroundPath;
@@ -223,6 +230,9 @@ in
     };
     "org/gnome/settings-daemon/plugins/power" = {
       power-button-action = "nothing";
+    };
+    "org/gnome/shell/app-switcher" = {
+      current-workspace-only = true;
     };
     # Extensions
     "org/gnome/shell" = {

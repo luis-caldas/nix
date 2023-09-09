@@ -39,6 +39,7 @@
   # Set gnome packages to install
   services.gnome = {
     games.enable = false;
+    gnome-keyring.enable = lib.mkForce false;
     core-shell.enable = true;
     core-utilities.enable = false;
     core-os-services.enable = true;

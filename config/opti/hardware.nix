@@ -34,11 +34,6 @@
       fsType = "zfs";
     };
 
-  fileSystems."/data" =
-    { device = "light/data";
-      fsType = "zfs";
-    };
-
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";

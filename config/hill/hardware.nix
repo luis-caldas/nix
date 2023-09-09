@@ -10,31 +10,33 @@
   boot.zfs.requestEncryptionCredentials = true;
 
   fileSystems."/" =
-    { device = "valley/root";
+    { device = "swamp/root";
       fsType = "zfs";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/E119-AD3C";
+    { device = "/dev/disk/by-uuid/F115-254A";
       fsType = "vfat";
     };
 
+  fileSystems."/home" =
+    { device = "swamp/home";
+      fsType = "zfs";
+    };
+
   fileSystems."/nix" =
-    { device = "valley/nix";
+    { device = "swamp/nix";
       fsType = "zfs";
     };
 
   fileSystems."/tmp" =
-    { device = "valley/tmp";
+    { device = "swamp/tmp";
       fsType = "zfs";
     };
 
-  fileSystems."/home" =
-    { device = "valley/home";
-      fsType = "zfs";
-    };
-
-    swapDevices = [ { device = "/dev/zvol/valley/swap"; } ];
+  swapDevices =
+    [ { device = "/dev/zvol/swamp/swap"; }
+    ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
