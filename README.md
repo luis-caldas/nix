@@ -123,3 +123,17 @@ To disable sync on the `tmp` partition:
 To enable autotrim on SSDs:
 
    `-o autotrim=on`
+
+### Data Organising Convention
+
+All data if not at home directory should be stored at `/data`
+
+`/data/{drive name}/{partition name}/{first distinction}/{second distinction}/{specifics}`
+
+Drive name would not be needed in a single drive
+
+Partition name would not be needed if only a single partition from a single drive is used
+
+Second distinction only needed if deemed necessary
+
+Specifics of certain distinction should all be together and not scattered across other folders
