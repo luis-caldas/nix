@@ -38,7 +38,7 @@ Common configuration files for the whole system
 
 ### `user`
 
-Commo user configuration files, also has its files separated between the `home-manager` files and normal files
+Common user configuration files, also has its files separated between the `home-manager` files and normal files
 
 ## `functions`
 
@@ -58,7 +58,7 @@ There is a bash script also with the proper command to generate the iso
 
 ## `linker.nix`
 
-This file links all the projects file into a single point so it can be easily referenced later
+This file links all the projects file into a single point, so it can be easily referenced later
 
 ## `config.nix`
 
@@ -120,7 +120,7 @@ To disable sync on the `tmp` partition:
 
    `-o sync=disabled`
 
-To enable autotrim on SSDs:
+To enable auto-trim on SSDs:
 
    `-o autotrim=on`
 
@@ -130,10 +130,12 @@ All data if not at home directory should be stored at `/data`
 
 `/data/{drive name}/{partition name}/{first distinction}/{second distinction}/{specifics}`
 
-Drive name would not be needed in a single drive
+Drive name would not be needed if there is only one drive, example of drive names are `local`, `store`, `bunker`
 
-Partition name would not be needed if only a single partition from a single drive is used
+Partition name would not be needed if only a single partition from a single drive is used, the name of the folder should reflect the partition name
 
-Second distinction only needed if deemed necessary
+The first distinction should be named specifically as what it is, for example `container`, `storage`
 
-Specifics of certain distinction should all be together and not scattered across other folders
+Second distinction only needed if deemed necessary, it should then be named as what the distinction is about like if a subdivision in an application
+
+Specifics of certain distinction should all be together and not scattered across other folders, certain specifics can be `env`, `safe`, `config`
