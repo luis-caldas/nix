@@ -124,6 +124,23 @@ To enable auto-trim on SSDs:
 
    `-o autotrim=on`
 
+### Swap on ZFS
+
+To create a `zvol` for swap:
+
+```
+zfs create -V {size in GB}G -b 8192 \
+    -o logbias=throughput -o sync=always\
+    -o primarycache=metadata -o secondarycache=none \
+    -o com.sun:auto-snapshot=false {pool name}/swap
+```
+
+Formatting:
+
+```
+mkswap -f /dev/zvol/{pool name}/swap
+```
+
 ### Data Organising Convention
 
 All data if not at home directory should be stored at `/data`

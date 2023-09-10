@@ -346,10 +346,9 @@ in {
       fsType = "zfs";
     };
 
-  swapDevices = [ {
-    device = "/swapfile";
-    size = 16 * 1024;
-  } ];
+  swapDevices =
+    [ { device = "/dev/zvol/vimmer/swap"; }
+    ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
