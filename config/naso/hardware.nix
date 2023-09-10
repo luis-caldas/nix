@@ -175,7 +175,7 @@ in {
       environmentFiles = [ /data/local/containers/cloud/cloud.env ];
       volumes = [
         "/data/bunker/data/containers/cloud/application:/var/www/html"
-        "/data/bunker/cloud:/data"
+        "/data/bunker/cloud/cloud:/data"
       ];
       extraOptions = [ "--network=cloud" "--ip=172.16.72.10" ];
     };
