@@ -248,7 +248,7 @@ in {
       user = "${builtins.toString my.config.user.uid}:${builtins.toString my.config.user.gid}";
       volumes = [
         "/data/local/containers/komga:/config"
-        "/data/storr/media/manga:/data:ro"
+        "/data/storr/media/mangas:/data:ro"
       ];
       ports = [
         "8080:8080/tcp"
