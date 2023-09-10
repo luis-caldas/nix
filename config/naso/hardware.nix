@@ -46,7 +46,7 @@ in {
   power.ups = {
     enable = true;
     mode = "netclient";
-    schedulerRules = "/data/local/safe/nut/upssched.conf";
+    schedulerRules = "/data/local/nut/upssched.conf";
   };
   users = {
     users.nut = {
@@ -58,7 +58,7 @@ in {
     groups.nut = { };
   };
   environment.etc = {
-    "nut/upsmon.conf".source = "/data/local/safe/nut/upsmon.conf";
+    "nut/upsmon.conf".source = "/data/local/nut/upsmon.conf";
   };
 
   # Services needed
@@ -95,7 +95,7 @@ in {
       volumes = [
         # "/data/bunker/everything/vault/untouched/google-parents:/google"
         "/data/storr/media:/media"
-        "/data/local/config/ps2:/ps2"
+        "/data/local/containers/media/ps2:/ps2"
         "/data/storr/media/games/roms/ps2/dvd:/ps2/DVD:ro"
         "/data/storr/media/games/roms/ps2/cd:/ps2/CD:ro"
         "/data/storr/media/games/roms/ps2/art:/ps2/ART:ro"
@@ -114,13 +114,13 @@ in {
       image = "vaultwarden/server:latest";
       environment = {
         TZ = my.config.system.timezone;
-        ROCKET_TLS="{certs=\"/ssl/main.pem\",key=\"/ssl/main.key\"}";
-        SIGNUPS_ALLOWED="false";
+        ROCKET_TLS = "{certs=\"/ssl/main.pem\",key=\"/ssl/main.key\"}";
+        SIGNUPS_ALLOWED = "false";
       };
-      environmentFiles = [ /data/local/safe/env/warden.env ];
+      environmentFiles = [ /data/local/containers/warden/warden.env ];
       volumes = [
-        "/data/local/ssl:/ssl"
-        "/data/bunker/safe/docker/config/warden:/data"
+        "/data/local/containers/warden/ssl:/ssl"
+        "/data/bunker/data/containers/warden:/data"
       ];
       ports = [
         "8443:80/tcp"
@@ -130,7 +130,7 @@ in {
 
     # ### Nextcloud
     # Database
-    maria = {
+    cloud-maria = {
       image = "mariadb:latest";
       environment = let
         cloudName = "cloud";
@@ -139,20 +139,20 @@ in {
         MARIADB_DATABASE = cloudName;
         MARIADB_USER = cloudName;
       };
-      environmentFiles = [ /data/local/safe/env/mariadb.env ];
+      environmentFiles = [ /data/local/containers/cloud/mariadb.env ];
       volumes = [
-        "/data/bunker/safe/mariadb:/var/lib/mysql"
+        "/data/bunker/data/containers/cloud/mariadb:/var/lib/mysql"
       ];
       extraOptions = [ "--network=cloud" "--ip=172.16.72.100" ];
     };
     # Redis
-    redis = {
+    cloud-redis = {
       image = "redis:latest";
       environment = {
         TZ = my.config.system.timezone;
       };
       volumes = [
-        "/data/bunker/safe/redis:/data"
+        "/data/bunker/data/containers/cloud/redis:/data"
       ];
       cmd = [ "--save 60 1" ];
       extraOptions = [ "--network=cloud" "--ip=172.16.72.110" ];
@@ -160,7 +160,7 @@ in {
     # Application
     cloud = {
       image = "nextcloud";
-      dependsOn = [ "maria" "redis" ];
+      dependsOn = [ "cloud-maria" "cloud-redis" ];
       environment = {
         TZ = my.config.system.timezone;
         # Mariadb
@@ -172,9 +172,9 @@ in {
         # Data
         NEXTCLOUD_DATA_DIR = "/data";
       };
-      environmentFiles = [ /data/local/safe/env/cloud.env ];
+      environmentFiles = [ /data/local/containers/cloud/cloud.env ];
       volumes = [
-        "/data/local/config/nextcloud:/var/www/html"
+        "/data/bunker/data/containers/cloud/application:/var/www/html"
         "/data/bunker/cloud:/data"
       ];
       extraOptions = [ "--network=cloud" "--ip=172.16.72.10" ];
@@ -189,8 +189,8 @@ in {
       };
       port = "9443";
       ssl = {
-        key = "/data/local/ssl/main.key";
-        cert = "/data/local/ssl/main.pem";
+        key = "/data/local/containers/cloud/ssl/main.key";
+        cert = "/data/local/containers/cloud/ssl/main.pem";
       };
       extraConfig = ''
           client_max_body_size 512M;
@@ -215,7 +215,7 @@ in {
 #        GID = builtins.toString my.config.user.gid;
 #      };
 #      volumes = [
-#        "/data/bunker/safe/docker/config/matrix:/data"
+#        "/data/bunker/data/containers/matrix:/data"
 #      ];
 #      extraOptions = [ "--network=message" "--ip=172.16.75.100" ];
 #    };
@@ -230,7 +230,7 @@ in {
         WEBUI_PORT = "8112";
       };
       volumes = [
-        "/data/local/config/torrent:/config"
+        "/data/local/containers/torrent:/config"
         "/data/storr/media/downloads:/downloads"
       ];
       ports = [
@@ -247,7 +247,7 @@ in {
       };
       user = "${builtins.toString my.config.user.uid}:${builtins.toString my.config.user.gid}";
       volumes = [
-        "/data/local/config/komga:/config"
+        "/data/local/containers/komga:/config"
         "/data/storr/media/manga:/data:ro"
       ];
       ports = [
@@ -268,8 +268,8 @@ in {
         "6880:8080/tcp"
       ];
       volumes = [
+        "/data/local/containers/aria:/aria2/conf"
         "/data/storr/media/downloads:/aria2/data"
-        "/data/local/config/aria:/aria2/conf"
       ];
       extraOptions = [ "--init" "--network=media" ];
     };
@@ -291,7 +291,7 @@ in {
     enable = true;
     setSendmail = true;
     defaults = {
-      aliases = "/data/local/safe/mail/alias";
+      aliases = "/data/local/mail/alias";
       port = 465;
       tls_trust_file = "/etc/ssl/certs/ca-certificates.crt";
       tls = "on";
@@ -299,13 +299,13 @@ in {
       tls_starttls = "off";
     };
     accounts = let
-      mailDomain = mfunc.safeReadFile /data/local/safe/mail/domain;
-      accountMail = mfunc.safeReadFile /data/local/safe/mail/account;
+      mailDomain = mfunc.safeReadFile /data/local/mail/domain;
+      accountMail = mfunc.safeReadFile /data/local/mail/account;
     in
     {
       default = {
         host = mailDomain;
-        passwordeval = "${pkgs.coreutils}/bin/cat /data/local/safe/mail/password";
+        passwordeval = "${pkgs.coreutils}/bin/cat /data/local/mail/password";
         user = accountMail;
         from = accountMail;
       };
@@ -322,7 +322,7 @@ in {
       wall.enable = false;
       mail = {
         enable = true;
-        sender = builtins.replaceStrings [ "\n" "\t" ] [ "" "" ] (mfunc.safeReadFile /data/local/safe/mail/account);
+        sender = builtins.replaceStrings [ "\n" "\t" ] [ "" "" ] (mfunc.safeReadFile /data/local/mail/account);
         recipient = "root";
         mailer = "${pkgs.msmtp}/bin/msmtp";
       };
@@ -384,8 +384,8 @@ in {
       fsType = "zfs";
     };
 
-  fileSystems."/data/bunker/safe" =
-    { device = "bunker/safe";
+  fileSystems."/data/bunker/data" =
+    { device = "bunker/data";
       fsType = "zfs";
     };
 
