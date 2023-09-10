@@ -135,10 +135,10 @@ in {
         DNS1 = "172.16.72.200";
         DNS2 = "172.16.72.200";
       };
-      environmentFiles = [ /data/local/safe/adblock.env ];
+      environmentFiles = [ /data/local/containers/pihole/env/adblock.env ];
       volumes = [
-        "/data/local/docker/config/pihole/etc:/etc/pihole"
-        "/data/local/docker/config/pihole/dnsmasq:/etc/dnsmasq.d"
+        "/data/local/containers/pihole/config/etc:/etc/pihole"
+        "/data/local/containers/pihole/config/dnsmasq:/etc/dnsmasq.d"
       ];
       ports = [
         "53:53/tcp"
@@ -154,7 +154,7 @@ in {
       environment = {
         TZ = my.config.system.timezone;
       };
-      environmentFiles = [ /data/local/safe/nut.env ];
+      environmentFiles = [ /data/local/containers/nut/nut.env ];
       ports = [
         "82:6543/tcp"
       ];
@@ -166,7 +166,7 @@ in {
       image = imageFile.imageName;
       imageFile = my.containers.images.web { name = "dashboard"; url = "https://github.com/luis-caldas/personal"; };
       volumes = [
-        "/data/local/docker/config/dash/other.json:/web/other.json:ro"
+        "/data/local/containers/dash/config/other.json:/web/other.json:ro"
       ];
       extraOptions = [ "--network=web" "--ip=172.16.73.100" ];
     };
@@ -180,8 +180,8 @@ in {
       };
       port = "443";
       ssl = {
-        key = "/data/local/ssl/main.key";
-        cert = "/data/local/ssl/main.pem";
+        key = "/data/local/containers/dash/ssl/main.key";
+        cert = "/data/local/containers/dash/ssl/main.pem";
       };
     };
     # Redirector
@@ -191,7 +191,7 @@ in {
     noip = rec {
       image = imageFile.imageName;
       imageFile = my.containers.images.udns;
-      environmentFiles = [ /data/local/safe/udns.env ];
+      environmentFiles = [ /data/local/containers/noip/udns.env ];
       extraOptions = [ "--dns=172.16.72.100" "--network=dns" ];
     };
 
@@ -200,10 +200,10 @@ in {
       image = imageFile.imageName;
       imageFile = my.containers.images.asterisk;
       volumes = [
-        "/data/local/docker/config/asterisk/conf:/etc/asterisk/conf.mine"
-        "/data/local/docker/config/asterisk/voicemail:/var/spool/asterisk/voicemail"
-        "/data/local/docker/config/asterisk/record:/var/spool/asterisk/monitor"
-        "/data/local/docker/config/asterisk/sounds:/var/lib/asterisk/sounds/mine"
+        "/data/local/containers/asterisk/config/conf:/etc/asterisk/conf.mine"
+        "/data/local/containers/asterisk/config/voicemail:/var/spool/asterisk/voicemail"
+        "/data/local/containers/asterisk/config/record:/var/spool/asterisk/monitor"
+        "/data/local/containers/asterisk/config/sounds:/var/lib/asterisk/sounds/mine"
         # Email files
         "/data/local/mail:/data/local/mail:ro"
         "/etc/msmtprc:/etc/msmtprc:ro"
@@ -215,8 +215,8 @@ in {
       image = imageFile.imageName;
       imageFile = my.containers.images.web {};
       volumes = [
-        "/data/local/docker/config/asterisk/voicemail:/web/voicemail:ro"
-        "/data/local/docker/config/asterisk/record:/web/monitor:ro"
+        "/data/local/containers/asterisk/config/voicemail:/web/voicemail:ro"
+        "/data/local/containers/asterisk/config/record:/web/monitor:ro"
       ];
       ports = [
         "8080:8080/tcp"
@@ -227,8 +227,8 @@ in {
     http-asterisk-kodi = rec {
       image = "halverneus/static-file-server:latest";
       volumes = [
-        "/data/local/docker/config/asterisk/voicemail:/web/voicemail:ro"
-        "/data/local/docker/config/asterisk/record:/web/monitor:ro"
+        "/data/local/containers/asterisk/config/voicemail:/web/voicemail:ro"
+        "/data/local/containers/asterisk/config/record:/web/monitor:ro"
       ];
       ports = [
         "8081:8080/tcp"

@@ -138,4 +138,4 @@ The first distinction should be named specifically as what it is, for example `c
 
 Second distinction only needed if deemed necessary, it should then be named as what the distinction is about like if a subdivision in an application
 
-Specifics of certain distinction should all be together and not scattered across other folders, certain specifics can be `env`, `safe`, `config`
+Specifics of certain distinction should all be together and not scattered across other folders, sometimes specifications may also not be needed, certain specifics can be `env`, `safe`, `config`
