@@ -6,6 +6,7 @@
     remote = "10.255.255.254";
     prefix = 30;
     port = 123;
+    container = 69;
     external = "enX0";
     interface = "wg0";
   };
@@ -38,6 +39,7 @@ in {
     ];
     allowedUDPPorts = [
       networkInfo.port
+      networkInfo.container
     ];
   };
   # Setup Fail 2 Ban
@@ -78,8 +80,17 @@ in {
     forwardPorts = [
       # SSH Port redirection to self
       { destination = "${networkInfo.host}:22"; proto = "tcp"; sourcePort = 22; }
-      # Redirect the VPN port to self
-      { destination = "${networkInfo.host}:${builtins.toString networkInfo.port}"; proto = "udp"; sourcePort = networkInfo.port; }
+      # Redirect the VPN ports to self
+      {
+        destination = "${networkInfo.host}:${builtins.toString networkInfo.port}";
+        proto = "udp";
+        sourcePort = networkInfo.port;
+      }
+      {
+        destination = "${networkInfo.host}:${builtins.toString networkInfo.container}";
+        proto = "udp";
+        sourcePort = networkInfo.container;
+      }
     ];
   };
 
@@ -93,6 +104,55 @@ in {
       presharedKeyFile = "/data/local/wireguard/shared.key";
       allowedIPs = [ "${networkInfo.remote}/32" ];
     }];
+  };
+
+  # Wireguard containarised for real VPNs
+  virtualisation.oci-containers.containers = {
+    wireguard = let
+      DEFAULT_PORT = builtins.toString 51820;
+      newPort = builtins.toString networkInfo.container;
+      allUsers = [
+        # Names will be changed for numbers starting on zero
+        { home = [ "house" "router" "server" ]; }
+        { lu = [ "laptop" "phone" "tablet" ]; }
+        { m = [ "laptop" "phone" "extra" ]; }
+        { lak = [ "laptop" "phone" "desktop" ]; }
+        { extra = [ "first" "second" "third" "fourth" ]; }
+      ];
+      allPeers = let
+        arrayUsersDevices = map
+          (eachEntry:
+            builtins.concatLists (lib.attrsets.mapAttrsToList
+            (eachUser: allDevices: lib.lists.imap0
+              (index: eachDevice: "${eachUser}${builtins.toString index}")
+              allDevices
+            )
+            eachEntry)
+          )
+          allUsers;
+        usersDevicesList = builtins.concatLists arrayUsersDevices;
+        interspersedList = lib.strings.intersperse "," usersDevicesList;
+      in lib.strings.concatStrings interspersedList;
+    in {
+      image = "lscr.io/linuxserver/wireguard:latest";
+      environment = {
+        TZ = my.config.system.timezone;
+        PUID = builtins.toString my.config.user.uid;
+        GUID = builtins.toString my.config.user.gid;
+        INTERNAL_SUBNET = "192.168.100.1";
+        PEERS = allPeers;
+        SERVERURL = "auto";
+        SERVERPORT = newPort;
+        PEERDNS = "auto";
+      };
+      volumes = [
+        "/data/containers/wireguard:/config"
+      ];
+      ports = [
+        "${newPort}:${DEFAULT_PORT}/udp"
+      ];
+      extraOptions = [ "--cap-add=NET_ADMIN" ];
+    };
   };
 
   # Add swap
