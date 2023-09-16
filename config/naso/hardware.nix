@@ -109,6 +109,27 @@ in {
       extraOptions = [ "--network=media" ];
     };
 
+    # Media proper
+    jellyfin = {
+      image = "lscr.io/linuxserver/jellyfin:latest";
+      environment = {
+        PUID = builtins.toString my.config.user.uid;
+        PGID = builtins.toString my.config.user.gid;
+        TZ = my.config.system.timezone;
+      };
+      volumes = [
+        "/data/local/containers/jellyfin:/config"
+      ] ++ (
+        map (eachFolder: "/data/storr/media/${eachFolder}:/data/${eachFolder}:ro")
+        [ "anime" "cartoons" "films" "series" ]
+      );
+      ports = [
+        "8096:8096/tcp"
+        "7359:7359/udp"
+        "1900:1900/udp"
+      ];
+    };
+
     # Vaultwarden
     warden = {
       image = "vaultwarden/server:latest";
@@ -239,7 +260,7 @@ in {
       extraOptions = [ "--network=media" ];
     };
 
-    # Service for mangas
+    # Service for manga
     komga = {
       image = "gotson/komga";
       environment = {
@@ -248,7 +269,7 @@ in {
       user = "${builtins.toString my.config.user.uid}:${builtins.toString my.config.user.gid}";
       volumes = [
         "/data/local/containers/komga:/config"
-        "/data/storr/media/mangas:/data:ro"
+        "/data/storr/media/manga:/data:ro"
       ];
       ports = [
         "8080:8080/tcp"
@@ -282,6 +303,19 @@ in {
         HOSTNAME = my.path;
       };
       extraOptions = [ "--network=host" ];  # Needed for multicast
+    };
+
+    # Reverse proxy for all those services
+    proxy = {
+      image = "jc21/nginx-proxy-manager:latest";
+      ports = [
+        "80:80/tcp"
+        "443:443/tcp"
+        "8081:81/tcp"
+      ];
+      volumes = [
+        "/data/local/containers/proxy:/data"
+      ];
     };
 
   };
