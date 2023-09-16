@@ -35,6 +35,8 @@
 
       "nngceckbapebfimnlniiiahkandclblb" # bitwarden client
 
+      "hkgfoiooedgoejojocmhlaklaeopbecg" # picture in picture
+
     ] ++
     # Add users extensions
     my.config.graphical.chromium.extensions.common;
