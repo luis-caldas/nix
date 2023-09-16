@@ -98,10 +98,10 @@ in {
   networking.wireguard.interfaces."${networkInfo.interface}" = {
     ips = [ "${networkInfo.host}/${builtins.toString networkInfo.prefix}" ];
     listenPort = networkInfo.port;
-    privateKeyFile = "/data/local/wireguard/host.key";
+    privateKeyFile = "/data/wireguard/host.key";
     peers = [{
-      publicKey = mfunc.safeReadFile /data/local/wireguard/remote.pub;
-      presharedKeyFile = "/data/local/wireguard/shared.key";
+      publicKey = mfunc.safeReadFile /data/wireguard/remote.pub;
+      presharedKeyFile = "/data/wireguard/shared.key";
       allowedIPs = [ "${networkInfo.remote}/32" ];
     }];
   };
