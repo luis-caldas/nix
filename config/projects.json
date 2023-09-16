@@ -1,8 +1,4 @@
 {
-    "myandro": {
-        "commit": "99b014f6ba71607bf60dcbfe704c064049c1a925",
-        "sha256": "01n3bvdprdsfbh3q6xlzq9vv9c56fsvja3v7qmizfbvh0dqhdvpc"
-    },
     "myconky": {
         "commit": "d22421785e3f686ee70fd926d185ad713b420d06",
         "sha256": "0v46hwqk72kx64q83s6ks2gpiq8p60sva73vxd637llg82pmqbb6"
@@ -15,10 +11,6 @@
         "commit": "42b16a3d8b2af5b45ca57df3e4e0c07bd5cd19e9",
         "sha256": "10nzdpdvp4pwz3w2z980v137yzdj8qwhkr2fwz46vram9400xfv7"
     },
-    "mydesktop": {
-        "commit": "92a8d01c58dc2bcda16df5c2a55683d040e38be6",
-        "sha256": "0cz5dzagr97wf26z4lxkzp69w8arxrw580w494flwpf4z3i69a5x"
-    },
     "myextensions": {
         "commit": "565dcae244e978f326951b3dcf431cf76a219075",
         "sha256": "10z2v5amvbi95lzgxy7676k9arafj287qi6qnn9601fyrmqb681f"
@@ -27,25 +19,13 @@
         "commit": "cb4e5c4c14083116f8699dabc9ea73364c0ce7bb",
         "sha256": "0b04lydrpbgyddinyhngi6ls7jjbs7arky1ibgg6v4l1ywsjjaj9"
     },
-    "mygrub": {
-        "commit": "aba3843fd851c74979eb5898964ae747865b709b",
-        "sha256": "1gmilvjz7ry9g21bfrrddsxy1aip22i6ndg7hxajdkfnw320yppb"
-    },
     "myicons": {
         "commit": "fd4692ed166aab23865a45ee154bf23cadb843e9",
         "sha256": "017pqsqhln6hjs2ini4f9fabf7smj628dyavr2w7566vv13hqni6"
     },
-    "mykbds": {
-        "commit": "9e1c0071780137f9a6461c7c239d0d6c6313a5ec",
-        "sha256": "1cm43ncrbahi720sd03jbjvwsw0094wh8aif35s0q9cl0lh423v3"
-    },
     "mypub": {
         "commit": "c1065c4cd12f9a18de99916985d94edbeba36811",
         "sha256": "089i0sg9s8sai6ffaxdyyhz51c8q07kvm8z30xix6xi5v48c113j"
-    },
-    "myradios": {
-        "commit": "ebe08eb559e8176de0a10b4506d02d6054e14720",
-        "sha256": "1f86b40x1d2kz3ci4y643nh22w3k5lfw8cv5jfa4hixkvy4hshp9"
     },
     "myshell": {
         "commit": "1c21eda699244fb259285f144a179627a90753be",
@@ -54,10 +34,6 @@
     "mythemes": {
         "commit": "e55cec84f30af58e2aa36af3145167167cc9fce4",
         "sha256": "1kfwqwpai0yk2i4xq5zgvfy7s5gxbvy5ckqsq3ai6ppz5f4pb2is"
-    },
-    "myventoy": {
-        "commit": "3a6aa1414306b6b95d7eaf5f2dd6f8178bdd87d4",
-        "sha256": "11r28232vq3ipi7ls9hgdamdvsmcyqqq2qfybawaa764imwwmc87"
     },
     "myvim": {
         "commit": "3f82ac39d907cd82b1deb3649a3d58623314ad82",

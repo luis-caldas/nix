@@ -17,6 +17,10 @@ COMMIT_LENGTH = 40
 HASH_LENGTH   = 52
 
 PROJECTS_FILE_NAME = "projects.json"
+NEEDED_PROJECTS_FILE = "my.json"
+
+# Get our current location
+LOCATION = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 
 def main():
@@ -26,6 +30,9 @@ def main():
 
     # Initialize clean name variable
     cleanNames = []
+
+    # Import the list of my projects
+    myProjects = json.load(open(os.path.join(LOCATION, NEEDED_PROJECTS_FILE), 'r'))
 
     # Start pagination index
     pagIndex = 1
@@ -43,7 +50,7 @@ def main():
         if repos:
 
             # Extract repo names
-            cleanNames.extend([each["name"] for each in repos if each["name"].startswith(REPOS_PREFIX)])
+            cleanNames.extend([each["name"] for each in repos if each["name"] in myProjects["projects"]])
 
             # Increment pagination index
             pagIndex += 1
@@ -98,8 +105,7 @@ def main():
         ) , end='\r')
 
     # Import old project
-    location = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-    oldProjects = json.load(open((os.path.join(location, "projects.json")), 'r'))
+    oldProjects = json.load(open(os.path.join(LOCATION, PROJECTS_FILE_NAME), 'r'))
 
     # Create object that it going to house all new projects
     newProjects = dict()
@@ -188,7 +194,7 @@ def main():
             print( formatString % (eachUpdated, updatedProjects[eachUpdated]["commit"], updatedProjects[eachUpdated]["sha256"]) )
 
     # Finally write it to file
-    json.dump(updatedProjects, open((os.path.join(location, "projects.json")), 'w'), sort_keys=True, indent=4)
+    json.dump(updatedProjects, open(os.path.join(LOCATION, PROJECTS_FILE_NAME), 'w'), sort_keys=True, indent=4)
 
 
 if __name__ == "__main__":

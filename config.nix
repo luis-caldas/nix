@@ -76,20 +76,9 @@ let
   allProjectsGitHub = builtins.fromJSON (builtins.readFile (./config + "/projects.json"));
 
   # Link all my projects to the config
-  listSomeProjects = [
-    "myconky"
-    "mycursors"
-    "myfonts"
-    "myicons"
-    "mypub"
-    "myshell"
-    "mythemes"
-    "myvim"
-    "mywallpapers"
-    "mycontainers"
-    "myextensions"
-  ];
+  listSomeProjects = builtins.fromJSON (builtins.readFile (./config + "/my.json"));
 
+  # Extract only the needed projects
   someProjects = builtins.listToAttrs (map (
     eachProjectName: {
       name = replaceName eachProjectName;
@@ -99,7 +88,7 @@ let
         sha256 = allProjectsGitHub."${eachProjectName}".sha256;
       };
     }
-  ) listSomeProjects);
+  ) listSomeProjects.projects);
 
   # Ovewrite desktop project with derivated subfolders
   desktopProject = let
