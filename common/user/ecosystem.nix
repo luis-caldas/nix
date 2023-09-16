@@ -6,7 +6,7 @@ let
     # Shell configuration
     bash = ''
       source "${my.projects.shell}/shell/shell.bash"
-      source "${my.projects.desktop.programs}/functions/functions.bash"
+      source "${my.projects.desktop}/programs/functions/functions.bash"
     '';
     # Vim configuration
     vim = ''

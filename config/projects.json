@@ -11,6 +11,10 @@
         "commit": "42b16a3d8b2af5b45ca57df3e4e0c07bd5cd19e9",
         "sha256": "10nzdpdvp4pwz3w2z980v137yzdj8qwhkr2fwz46vram9400xfv7"
     },
+    "mydesktop": {
+        "commit": "92a8d01c58dc2bcda16df5c2a55683d040e38be6",
+        "sha256": "0cz5dzagr97wf26z4lxkzp69w8arxrw580w494flwpf4z3i69a5x"
+    },
     "myextensions": {
         "commit": "565dcae244e978f326951b3dcf431cf76a219075",
         "sha256": "10z2v5amvbi95lzgxy7676k9arafj287qi6qnn9601fyrmqb681f"

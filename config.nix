@@ -90,33 +90,6 @@ let
     }
   ) listSomeProjects.projects);
 
-  # Ovewrite desktop project with derivated subfolders
-  desktopProject = let
-    myProject = rec {
-      repo = "mydesktop";
-      rev = allProjectsGitHub."${repo}".commit;
-      sha256 = allProjectsGitHub."${repo}".sha256;
-    };
-    fixedName = replaceName myProject.repo;
-    fetchedProject = fetchProject myProject;
-    subFolders = lib.remove null (lib.mapAttrsToList (
-      name: value:
-        if ((value == "directory") && ((builtins.substring 0 1 name) != ".")) then
-          name
-        else
-          null
-      ) (builtins.readDir fetchedProject));
-  in
-  {
-    "${fixedName}" = builtins.listToAttrs (map (
-      eachFolder:
-      {
-        name = eachFolder;
-        value = "${fetchedProject}/${eachFolder}";
-      }
-    ) subFolders);
-  };
-
   # Show some verbose
   traceId = let
     verboseString = "building for ${realName} @ ${sysArch} - ${version} - ${netId}";
@@ -134,7 +107,7 @@ let
     version = version;
     chromium = chromiumObj;
     reference = archReference;
-    projects = someProjects // desktopProject;
+    projects = someProjects;
     containers = containerObj;
   };
 

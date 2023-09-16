@@ -115,7 +115,7 @@ in
 {
 
   # Add my made programs to PATH
-  home.sessionPath = [ "${my.projects.desktop.programs}/public" ];
+  home.sessionPath = [ "${my.projects.desktop}/programs/public" ];
   # Add some extra env vars
   home.sessionVariables = {
     _JAVA_AWT_WM_NONREPARENTING = "1";  # Fix for java applications on tiling window managers
