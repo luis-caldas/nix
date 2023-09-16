@@ -1,4 +1,8 @@
 {
+    "myandro": {
+        "commit": "99b014f6ba71607bf60dcbfe704c064049c1a925",
+        "sha256": "01n3bvdprdsfbh3q6xlzq9vv9c56fsvja3v7qmizfbvh0dqhdvpc"
+    },
     "myconky": {
         "commit": "d22421785e3f686ee70fd926d185ad713b420d06",
         "sha256": "0v46hwqk72kx64q83s6ks2gpiq8p60sva73vxd637llg82pmqbb6"
