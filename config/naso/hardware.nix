@@ -124,7 +124,7 @@ in {
         [ "anime" "cartoons" "films" "series" ]
       );
       ports = [
-        "8096:8096/tcp"
+        "8280:8096/tcp"
         "7359:7359/udp"
         "1900:1900/udp"
       ];
@@ -142,7 +142,7 @@ in {
         "/data/bunker/data/containers/warden:/data"
       ];
       ports = [
-        "8043:80/tcp"
+        "8080:80/tcp"
       ];
       extraOptions = [ "--network=vault" ];
     };
@@ -197,7 +197,7 @@ in {
         "/data/bunker/cloud/cloud:/data"
       ];
       ports = [
-        "8094:80/tcp"
+        "8180:80/tcp"
       ];
       extraOptions = [ "--network=cloud" ];
     };
@@ -216,6 +216,23 @@ in {
 #      extraOptions = [ "--network=message" "--ip=172.16.75.100" ];
 #    };
 
+    # Service for manga
+    komga = {
+      image = "gotson/komga";
+      environment = {
+        TZ = my.config.system.timezone;
+      };
+      user = "${builtins.toString my.config.user.uid}:${builtins.toString my.config.user.gid}";
+      volumes = [
+        "/data/local/containers/komga:/config"
+        "/data/storr/media/manga:/data:ro"
+      ];
+      ports = [
+        "8380:8080/tcp"
+      ];
+      extraOptions = [ "--network=media" ];
+    };
+
     # QBittorrent instance for torrenting
     torrent = {
       image = "lscr.io/linuxserver/qbittorrent:latest";
@@ -230,24 +247,7 @@ in {
         "/data/storr/media/downloads:/downloads"
       ];
       ports = [
-        "8112:8112/tcp"
-      ];
-      extraOptions = [ "--network=media" ];
-    };
-
-    # Service for manga
-    komga = {
-      image = "gotson/komga";
-      environment = {
-        TZ = my.config.system.timezone;
-      };
-      user = "${builtins.toString my.config.user.uid}:${builtins.toString my.config.user.gid}";
-      volumes = [
-        "/data/local/containers/komga:/config"
-        "/data/storr/media/manga:/data:ro"
-      ];
-      ports = [
-        "8080:8080/tcp"
+        "9080:8112/tcp"
       ];
       extraOptions = [ "--network=media" ];
     };
@@ -261,7 +261,7 @@ in {
         ARIA2RPCPORT = "6880";
       };
       ports = [
-        "6880:8080/tcp"
+        "9180:8080/tcp"
       ];
       volumes = [
         "/data/local/containers/aria:/aria2/conf"
@@ -285,8 +285,8 @@ in {
       image = "jc21/nginx-proxy-manager:latest";
       ports = [
         "80:80/tcp"
-        "443:443/tcp"
-        "8081:81/tcp"
+        "8443:443/tcp"  # Temporary high range port
+        "10080:81/tcp"
       ];
       volumes = [
         "/data/local/containers/proxy:/data"
