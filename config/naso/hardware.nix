@@ -16,6 +16,9 @@ let
   in
     my.containers.functions.addNetworks networks;
 
+  # Default ssl port
+  httpsPort = builtins.toString 8443;
+
 in {
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "sd_mod" "sr_mod" ];
@@ -283,7 +286,7 @@ in {
       environment = {
         PUID = builtins.toString my.config.user.uid;
         PGID = builtins.toString my.config.user.gid;
-        ARIA2RPCPORT = "8443";
+        ARIA2RPCPORT = httpsPort;
       };
       ports = [
         "9180:8080/tcp"
@@ -310,7 +313,7 @@ in {
       image = "jc21/nginx-proxy-manager:latest";
       ports = [
         "80:80/tcp"
-        "8443:443/tcp"  # Temporary high range port
+        "${httpsPort}:443/tcp"  # Temporary high range port
         "7080:81/tcp"
       ];
       volumes = [
