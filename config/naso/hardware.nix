@@ -20,6 +20,18 @@ in {
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  # Block some ports
+  networking.firewall = {
+    enable = true;
+    allowedTCPPortRanges = [
+      { from = 0; to = 7999; }
+      { from = 10001; to = 65535; }
+    ];
+    allowedUDPPortRanges = [
+      { from = 0; to = 65535; }
+    ];
+  };
+
   # Publish avahi
   services.avahi = {
     publish = {
