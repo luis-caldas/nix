@@ -286,7 +286,7 @@ in {
       ports = [
         "80:80/tcp"
         "8443:443/tcp"  # Temporary high range port
-        "10080:81/tcp"
+        "7080:81/tcp"
       ];
       volumes = [
         "/data/local/containers/proxy:/data"
