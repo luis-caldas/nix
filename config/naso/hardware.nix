@@ -278,16 +278,17 @@ in {
     };
 
     # AriaNG Web App & Aria2
-    aria = {
+    aria = let
+      port = "9180";
+    in {
       image = "hurlenko/aria2-ariang";
       environment = {
         PUID = builtins.toString my.config.user.uid;
         PGID = builtins.toString my.config.user.gid;
-        ARIA2RPCPORT = "6880";
+        ARIA2RPCPORT = port;
       };
       ports = [
-        "6880:6880/tcp"  # Needed for RPC
-        "9180:8080/tcp"
+        "${port}:8080/tcp"
       ];
       volumes = [
         "/data/local/containers/aria:/aria2/conf"
