@@ -5,10 +5,13 @@ let
   conatinerNetworksService = let
     # Names of networks and their subnets
     networks = {
+      # Default networks for databases and the likes
       cloud = "172.16.72.0/24";
       media = "172.16.73.0/24";
       vault = "172.16.74.0/24";
       message = "172.16.75.0/24";
+      # Proxy network
+      proxy = "172.30.0.0/16";
     };
   in
     my.containers.functions.addNetworks networks;
