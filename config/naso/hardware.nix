@@ -261,6 +261,7 @@ in {
         ARIA2RPCPORT = "6880";
       };
       ports = [
+        "6880:6880/tcp"  # Needed for RPC
         "9180:8080/tcp"
       ];
       volumes = [
