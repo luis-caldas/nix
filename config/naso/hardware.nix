@@ -20,18 +20,6 @@ in {
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  # Block some ports
-  networking.firewall = {
-    enable = lib.mkForce true;
-    allowedTCPPortRanges = [
-      { from = 0; to = 7999; }
-      { from = 10001; to = 65535; }
-    ];
-    allowedUDPPortRanges = [
-      { from = 0; to = 65535; }
-    ];
-  };
-
   # Publish avahi
   services.avahi = {
     publish = {
@@ -274,7 +262,7 @@ in {
       };
       ports = [
         "6880:6880/tcp"  # Needed for RPC
-        "9180:8080/tcp"
+        "127.0.0.1:9180:8080/tcp"
       ];
       volumes = [
         "/data/local/containers/aria:/aria2/conf"
