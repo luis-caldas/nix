@@ -22,7 +22,7 @@ in {
 
   # Block some ports
   networking.firewall = {
-    enable = true;
+    enable = lib.mkForce true;
     allowedTCPPortRanges = [
       { from = 0; to = 7999; }
       { from = 10001; to = 65535; }
