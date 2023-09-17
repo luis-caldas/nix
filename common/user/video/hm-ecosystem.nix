@@ -85,6 +85,7 @@ let
   # List of applications to be created
   browserApplications = [
     { name = "cloud"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
+    { name = "jellyfin-web"; icon = "jellyfin"; url = "https://redirect.caldas.ie"; }
     { name = "whatsapp-web"; icon = "whatsapp"; url = "https://web.whatsapp.com"; }
     { name = "discord-web"; icon = "discord"; url = "https://discord.com/app"; }
     { name = "github-web"; icon = "github"; url = "https://github.com"; }
