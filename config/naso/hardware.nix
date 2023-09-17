@@ -200,7 +200,33 @@ in {
       ports = [
         "8180:80/tcp"
       ];
-      extraOptions = [ "--network=cloud" ];
+      extraOptions = [ "--network=cloud" "--ip=172.16.72.10" ];
+    };
+    # Proxy HTTPS
+    cloud-proxy = my.containers.functions.createProxy {
+      name = "cloud";
+      net = {
+        name = "cloud";
+        ip = "172.16.72.10";
+        port = "80";
+      };
+      port = "9443";
+      ssl = {
+        key = "/data/local/containers/cloud/ssl/main.key";
+        cert = "/data/local/containers/cloud/ssl/main.pem";
+      };
+      extraConfig = ''
+          client_max_body_size 512M;
+          client_body_timeout 300s;
+          fastcgi_buffers 64 4K;
+          location /.well-known/carddav {
+              return 301 $scheme://$host:$server_port/remote.php/dav;
+          }
+          location /.well-known/caldav {
+              return 301 $scheme://$host:$server_port/remote.php/dav;
+          }
+      '';
+      extraOptions = [ "--ip=172.16.72.20" ];
     };
 
     # Matrix server
