@@ -5,13 +5,10 @@ let
   conatinerNetworksService = let
     # Names of networks and their subnets
     networks = {
-      # Default networks for databases and the likes
       cloud = "172.16.72.0/24";
       media = "172.16.73.0/24";
       vault = "172.16.74.0/24";
       message = "172.16.75.0/24";
-      # Proxy network
-      proxy = "172.30.0.0/16";
     };
   in
     my.containers.functions.addNetworks networks;
@@ -127,10 +124,10 @@ in {
         [ "anime" "cartoons" "films" "series" ]
       );
       ports = [
+        "8280:8096/tcp"
         "7359:7359/udp"
         "1900:1900/udp"
       ];
-      extraOptions = [ "--network=proxy" "--ip=172.30.2.1" ];
     };
 
     # Vaultwarden
@@ -144,7 +141,10 @@ in {
       volumes = [
         "/data/bunker/data/containers/warden:/data"
       ];
-      extraOptions = [ "--network=vault" "--network=proxy" "--ip=172.30.1.1" ];
+      ports = [
+        "8080:80/tcp"
+      ];
+      extraOptions = [ "--network=vault" ];
     };
 
     # ### Nextcloud
@@ -196,7 +196,10 @@ in {
         "/data/bunker/data/containers/cloud/application:/var/www/html"
         "/data/bunker/cloud/cloud:/data"
       ];
-      extraOptions = [ "--network=cloud" "--network=proxy" "--ip=172.30.1.2" ];
+      ports = [
+        "8180:80/tcp"
+      ];
+      extraOptions = [ "--network=cloud" ];
     };
 
     # Matrix server
@@ -227,7 +230,6 @@ in {
       ports = [
         "8380:8080/tcp"
       ];
-      extraOptions = [ "--network=proxy" "--ip=172.30.2.2" ];
     };
 
     # QBittorrent instance for torrenting
@@ -246,7 +248,6 @@ in {
       ports = [
         "9080:8112/tcp"
       ];
-      extraOptions = [ "--network=proxy" "--ip=172.30.2.1"  ];
     };
 
     # AriaNG Web App & Aria2
@@ -259,13 +260,13 @@ in {
       };
       ports = [
         "6880:6880/tcp"  # Needed for RPC
-        "127.0.0.1:9180:8080/tcp"
+        "9180:8080/tcp"
       ];
       volumes = [
         "/data/local/containers/aria:/aria2/conf"
         "/data/storr/media/downloads:/aria2/data"
       ];
-      extraOptions = [ "--init" "--network=proxy" "--ip=172.30.3.2" ];
+      extraOptions = [ "--init" ];
     };
 
     # Web Service Discovery for Microsoft
@@ -289,7 +290,6 @@ in {
       volumes = [
         "/data/local/containers/proxy:/data"
       ];
-      extraOptions = [ "--network=proxy" "--ip=172.30.3.1" ];
     };
 
   };
