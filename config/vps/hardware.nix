@@ -2,13 +2,22 @@
 
   # Information for the wireguard and NAT networking
   networkInfo = {
-    host = "10.255.255.253";
-    remote = "10.255.255.254";
-    prefix = 30;
+    # Networking IP range
+    host = "10.255.255.254";
+    remote = "10.255.255.1";
+    prefix = 24;
+    # Default Wireguard port
     port = 123;
-    container = 69;
+    # Interfaces for Wireguard and NAT
     external = "enX0";
     interface = "wg0";
+    # Port (udp) most comonly used by VoIP providers (Zoom, Skype)
+    # Therefore high change of not being blocked
+    # Complete range is 3478 -> 3481
+    # Port needs also be opened on hosting side
+    container = 3478;
+    # Subnet for secondary Wireguard
+    subnet = "10.255.254.0";
   };
 
 in {
@@ -139,7 +148,7 @@ in {
         TZ = my.config.system.timezone;
         PUID = builtins.toString my.config.user.uid;
         GUID = builtins.toString my.config.user.gid;
-        INTERNAL_SUBNET = "192.168.100.1";
+        INTERNAL_SUBNET = networkInfo.subnet;
         PEERS = allPeers;
         SERVERURL = "auto";
         SERVERPORT = newPort;
