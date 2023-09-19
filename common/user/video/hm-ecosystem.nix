@@ -407,27 +407,26 @@ in
     genStrRange = size:
       map builtins.toString (lib.lists.range 1 size);
   in {
-    "org/gnome/shell/keybindings" = builtins.listToAttrs ((let
-        simple = {
-          focus-active-notification = [];
-          toggle-message-tray = [ "<Super>V" ];
-        };
-      in (mapAttrsHelp simple)) ++
+    "org/gnome/shell/keybindings" = builtins.listToAttrs (mapAttrsHelp {
+        focus-active-notification = [];
+        toggle-message-tray = [ "<Super>V" ];
+      }) ++
       (map (eachIndex:
         { name = "switch-to-application-${eachIndex}"; value = []; }
       ) (genStrRange (builtins.length workspaces))));
-    "org/gnome/settings-daemon/plugins/media-keys" = builtins.listToAttrs ((let
-        simple = {
-          help = [];
-          magnifier = [ "<Alt><Super>Z" ];
-        };
-      in (mapAttrsHelp simple)));
-    "org/gnome/desktop/wm/keybindings" = builtins.listToAttrs ((let
-        simple = {
-          close = [ "<Super>BackSpace" "<Alt>F4" ];
-          activate-window-menu = [ "<Alt>Space" ];
-        };
-      in (mapAttrsHelp simple)) ++
+    "org/gnome/settings-daemon/plugins/media-keys" = builtins.listToAttrs (mapAttrsHelp {
+      help = [];
+      magnifier = [ "<Alt><Super>Z" ];
+    });
+    "org/gnome/desktop/wm/keybindings" = builtins.listToAttrs (mapAttrsHelp {
+        close = [ "<Super>BackSpace" "<Alt>F4" ];
+        activate-window-menu = [ "<Alt>Space" ];
+        # Fix window switching
+        switch-applications = [];
+        switch-applications-backward = [];
+        switch-windows = [ "<Alt>Tab" ];
+        switch-windows-backward = [ "<Shift><Alt>Tab" ];
+      }) ++
       # Switching workspaces
       (map (eachIndex:
         { name = "switch-to-workspace-${eachIndex}"; value = [
