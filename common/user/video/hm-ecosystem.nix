@@ -407,7 +407,8 @@ in
     genStrRange = size:
       map builtins.toString (lib.lists.range 1 size);
   in {
-    "org/gnome/shell/keybindings" = builtins.listToAttrs ((mapAttrsHelp {
+    "org/gnome/shell/keybindings" = builtins.listToAttrs (
+      (mapAttrsHelp {
         focus-active-notification = [];
         toggle-message-tray = [ "<Super>V" ];
       }) ++
@@ -419,7 +420,8 @@ in
       help = [];
       magnifier = [ "<Alt><Super>Z" ];
     });
-    "org/gnome/desktop/wm/keybindings" = builtins.listToAttrs (mapAttrsHelp {
+    "org/gnome/desktop/wm/keybindings" = builtins.listToAttrs (
+      (mapAttrsHelp {
         close = [ "<Super>BackSpace" "<Alt>F4" ];
         activate-window-menu = [ "<Alt>Space" ];
         # Fix window switching
@@ -439,7 +441,8 @@ in
         { name = "move-to-workspace-${eachIndex}"; value = [
           "<Super><Shift>${eachIndex}" "<Super><Shift><Alt>${eachIndex}" "<Control><Shift><Alt>${eachIndex}"
         ]; }
-      ) (genStrRange (builtins.length workspaces))));
+      ) (genStrRange (builtins.length workspaces)))
+    );
   })];
 
   # Add my own custom "applications"
