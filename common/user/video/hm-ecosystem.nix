@@ -407,13 +407,14 @@ in
     genStrRange = size:
       map builtins.toString (lib.lists.range 1 size);
   in {
-    "org/gnome/shell/keybindings" = builtins.listToAttrs (mapAttrsHelp {
+    "org/gnome/shell/keybindings" = builtins.listToAttrs ((mapAttrsHelp {
         focus-active-notification = [];
         toggle-message-tray = [ "<Super>V" ];
       }) ++
       (map (eachIndex:
         { name = "switch-to-application-${eachIndex}"; value = []; }
-      ) (genStrRange (builtins.length workspaces))));
+      ) (genStrRange (builtins.length workspaces)))
+    );
     "org/gnome/settings-daemon/plugins/media-keys" = builtins.listToAttrs (mapAttrsHelp {
       help = [];
       magnifier = [ "<Alt><Super>Z" ];
