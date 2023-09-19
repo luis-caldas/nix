@@ -92,6 +92,9 @@
     rmlint
     rmtrash
 
+    # Conversion
+    dos2unix
+
     # File systems
     sshfs
     jmtpfs
