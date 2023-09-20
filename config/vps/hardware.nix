@@ -84,7 +84,7 @@ in {
 
   # Set up our NAT configuration
   networking.nat = {
-    enable = true;
+    enable = false;
     externalInterface = networkInfo.external;
     internalInterfaces = [ networkInfo.interface ];
     forwardPorts = [
