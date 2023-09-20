@@ -105,12 +105,12 @@ in {
       {
         destination = "${networkInfo.remote}:1-${builtins.toString networkInfo.gap}";
         proto = "tcp";
-        sourcePort = "1:${networkInfo.gap}";
+        sourcePort = "1:${builtins.toString networkInfo.gap}";
       }
       {
         destination = "${networkInfo.remote}:1-${builtins.toString networkInfo.gap}";
         proto = "udp";
-        sourcePort = "1:${networkInfo.gap}";
+        sourcePort = "1:${builtins.toString networkInfo.gap}";
       }
     ];
   };
