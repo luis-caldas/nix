@@ -18,6 +18,8 @@
     container = 3478;
     # Subnet for secondary Wireguard
     subnet = "10.255.254.0";
+    # Gap for internal communication
+    gap = 49152;
   };
 
 in {
@@ -34,7 +36,7 @@ in {
   imports = [ (modulesPath + "/virtualisation/amazon-image.nix") ];
 
   # DNS servers
-  networking.networkmanager.insertNameservers = [ "9.9.9.10" "149.112.112.10" ];
+  networking.networkmanager.insertNameservers = [ "127.0.0.1" ];
 
   # Disable all ipv6
   networking.enableIPv6 = false;
@@ -56,7 +58,7 @@ in {
     enable = true;
     maxretry = 5;
     ignoreIP = [
-      "127.0.0.0/8"         # Local subnet
+      "127.0.0.0/8"         # Loopback subnet
       "10.0.0.0/8"          # Local subnet
       "192.168.0.0/16"      # Local subnet
       "172.17.0.0/16"       # Docker subnet
@@ -85,7 +87,6 @@ in {
     enable = true;
     externalInterface = networkInfo.external;
     internalInterfaces = [ networkInfo.interface ];
-    dmzHost = networkInfo.remote;
     forwardPorts = [
       # SSH Port redirection to self
       { destination = "${networkInfo.host}:22"; proto = "tcp"; sourcePort = 22; }
@@ -99,6 +100,17 @@ in {
         destination = "${networkInfo.host}:${builtins.toString networkInfo.container}";
         proto = "udp";
         sourcePort = networkInfo.container;
+      }
+      # Redirect all the rest to tunnel
+      {
+        destination = "${hostInfo.remote}:1-${builtins.toString networkInfo.gap}";
+        proto = "tcp";
+        sourcePort = "1:${networkInfo.gap}";
+      }
+      {
+        destination = "${hostInfo.remote}:1-${builtins.toString networkInfo.gap}";
+        proto = "udp";
+        sourcePort = "1:${networkInfo.gap}";
       }
     ];
   };
@@ -115,8 +127,13 @@ in {
     }];
   };
 
-  # Wireguard containarised for real VPNs
+  # Set up the networking creation service
+  systemd.services = my.containers.functions.addNetworks { dns = "172.16.72.0/24"; };
+
+  # All containers
   virtualisation.oci-containers.containers = {
+
+    # Main client wireguard configuration
     wireguard = let
       DEFAULT_PORT = builtins.toString 51820;
       newPort = builtins.toString networkInfo.container;
@@ -150,18 +167,46 @@ in {
         GUID = builtins.toString my.config.user.gid;
         INTERNAL_SUBNET = networkInfo.subnet;
         PEERS = allPeers;
-        SERVERURL = "auto";
         SERVERPORT = newPort;
-        PEERDNS = "auto";
+        PEERDNS = "172.16.72.100";
       };
+      environmentFiles = [ /data/containers/wireguard/env/wire.env ];
       volumes = [
-        "/data/containers/wireguard:/config"
+        "/data/containers/wireguard/config:/config"
       ];
       ports = [
         "${newPort}:${DEFAULT_PORT}/udp"
       ];
-      extraOptions = [ "--cap-add=NET_ADMIN" ];
+      extraOptions = [ "--cap-add=NET_ADMIN" "--network=dns" ];
     };
+
+    # DNS configuration
+    dns-up = rec {
+      image = imageFile.imageName;
+      imageFile = my.containers.images.dns;
+      extraOptions = [ "--network=dns" "--ip=172.16.72.200" ];
+    };
+    dns-block = {
+      image = "pihole/pihole:latest";
+      environment = {
+        TZ = my.config.system.timezone;
+        DNSMASQ_LISTENING = "all";
+        DNS1 = "172.16.72.200";
+        DNS2 = "172.16.72.200";
+      };
+      environmentFiles = [ /data/containers/pihole/env/adblock.env ];
+      volumes = [
+        "/data/containers/pihole/config/etc:/etc/pihole"
+        "/data/containers/pihole/config/dnsmasq:/etc/dnsmasq.d"
+      ];
+      ports = [
+        "53:53/tcp"
+        "53:53/udp"
+        "81:80/tcp"
+      ];
+      extraOptions = [ "--dns=127.0.0.1" "--network=dns" "--ip=172.16.72.100" ];
+    };
+
   };
 
   # Add swap
