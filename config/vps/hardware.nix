@@ -148,7 +148,6 @@ in {
     # Main client wireguard configuration
     wireguard = let
       DEFAULT_PORT = builtins.toString 51820;
-      newPort = builtins.toString networkInfo.container;
       allUsers = [
         # Names will be changed for numbers starting on zero
         { home = [ "house" "router" "server" ]; }
@@ -179,7 +178,7 @@ in {
         GUID = builtins.toString my.config.user.gid;
         INTERNAL_SUBNET = networkInfo.subnet;
         PEERS = allPeers;
-        SERVERPORT = newPort;
+        SERVERPORT = builtins.toString networkInfo.docker.container;
         PEERDNS = networkInfo.docker.dns;
       };
       environmentFiles = [ /data/containers/wireguard/env/wire.env ];
@@ -187,7 +186,7 @@ in {
         "/data/containers/wireguard/config:/config"
       ];
       ports = [
-        "${newPort}:${DEFAULT_PORT}/udp"
+        "${builtins.toString networkInfo.docker.container}:${DEFAULT_PORT}/udp"
       ];
       extraOptions = [ "--cap-add=NET_ADMIN" "--network=${networkInfo.docker.interface}" "--ip=${networkInfo.docker.wire}" ];
     };
