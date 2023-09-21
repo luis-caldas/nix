@@ -296,9 +296,9 @@ let
       in
         # Whole activation script
         builtins.listToAttrs (
-          pkgs.lib.mapAttrsToList (networkName: { range, interfaceGiven ? "" }: let
+          pkgs.lib.mapAttrsToList (networkName: { range, interface ? "" }: let
               # Name for the interface
-              interfaceName = if interfaceGiven != "" then "${prefixInterface}-${interfaceGiven}" else networkName;
+              interfaceName = if interface != "" then "${prefixInterface}-${interface}" else networkName;
             in {
             name = "${prefix}-${networkName}";
             value = {
