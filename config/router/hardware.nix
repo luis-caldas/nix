@@ -5,8 +5,8 @@ let
   conatinerNetworksService = let
     # Names of networks and their subnets
     networks = {
-      dns = "172.16.72.0/24";
-      web = "172.16.73.0/24";
+      dns = { range = "172.16.72.0/24"; };
+      web = { range = "172.16.73.0/24"; };
     };
   in
     my.containers.functions.addNetworks networks;

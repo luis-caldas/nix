@@ -19,7 +19,8 @@
     gap = 49152;
     # Docker configuration
     docker = {
-      interface = "internal";
+      name = "internal";
+      interface = "int0";
       # Internal docker IPs
       range = "172.16.50.0/24";
       dnsUp = "172.16.50.10";
@@ -98,7 +99,7 @@ in {
   networking.nat = {
     enable = true;
     externalInterface = networkInfo.external;
-    internalInterfaces = [ "br-${networkInfo.docker.interface}" networkInfo.interface ];
+    internalInterfaces = [ networkInfo.docker.interface networkInfo.interface ];
     forwardPorts = [
       # SSH Port redirection to self
       { destination = "${networkInfo.host}:22"; proto = "tcp"; sourcePort = 22; }
@@ -141,7 +142,7 @@ in {
 
   # Set up the networking creation service
   systemd.services = my.containers.functions.addNetworks {
-    "${networkInfo.docker.interface}" = networkInfo.docker.range;
+    "${networkInfo.docker.name}" = { range = networkInfo.docker.range; interface = networkInfo.docker.interface; };
   };
 
   # All containers
@@ -187,14 +188,14 @@ in {
       volumes = [
         "/data/containers/wireguard/config:/config"
       ];
-      extraOptions = [ "--cap-add=NET_ADMIN" "--network=${networkInfo.docker.interface}" "--ip=${networkInfo.docker.wire}" ];
+      extraOptions = [ "--cap-add=NET_ADMIN" "--network=${networkInfo.docker.name}" "--ip=${networkInfo.docker.wire}" ];
     };
 
     # DNS configuration
     dns-up = rec {
       image = imageFile.imageName;
       imageFile = my.containers.images.dns;
-      extraOptions = [ "--network=${networkInfo.docker.interface}" "--ip=${networkInfo.docker.dnsUp}" ];
+      extraOptions = [ "--network=${networkInfo.docker.name}" "--ip=${networkInfo.docker.dnsUp}" ];
     };
     dns = {
       image = "pihole/pihole:latest";
@@ -210,7 +211,7 @@ in {
         "/data/containers/pihole/config/etc:/etc/pihole"
         "/data/containers/pihole/config/dnsmasq:/etc/dnsmasq.d"
       ];
-      extraOptions = [ "--dns=127.0.0.1" "--network=${networkInfo.docker.interface}" "--ip=${networkInfo.docker.dns}" ];
+      extraOptions = [ "--dns=127.0.0.1" "--network=${networkInfo.docker.name}" "--ip=${networkInfo.docker.dns}" ];
     };
 
   };

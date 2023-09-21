@@ -291,36 +291,41 @@ let
         dockerBin = "${pkgs.${docker}}/bin/${docker}";
         # Name prefix for service
         prefix = "container-network-start";
+        # Prefix for the interface name
+        prefixInterface = "br";
       in
         # Whole activation script
         builtins.listToAttrs (
-          pkgs.lib.mapAttrsToList (eachName: eachValue: {
-            name = "${prefix}-${eachName}";
+          pkgs.lib.mapAttrsToList (networkName: { range, interfaceGiven ? "" }: let
+              # Name for the interface
+              interfaceName = if interfaceGiven != "" then "${prefixInterface}-${interfaceGiven}" else networkName;
+            in {
+            name = "${prefix}-${networkName}";
             value = {
               description = "Create the needed networks for containers";
               after = [ "network.target" ];
               wantedBy = [ "multi-user.target" ];
               serviceConfig.Type = "oneshot";
               script = ''
-                check="$("${dockerBin}" network ls | grep "${eachName}" || true)"
+                check="$("${dockerBin}" network ls | grep "${networkName}" || true)"
                 if [ -n "$check" ]; then
-                  echo "${eachName} already exists in docker"
+                  echo "${networkName} already exists in docker"
                   subnet_path=".[0].IPAM.Config[0].Subnet"
-                  get_subnet="$(${dockerBin} network inspect "${eachName}" | "${pkgs.jq}/bin/jq" -r "$subnet_path")"
-                  if [ "$get_subnet" == "${eachValue}" ]; then
-                    echo "${eachValue} is the same, doing nothing"
+                  get_subnet="$(${dockerBin} network inspect "${networkName}" | "${pkgs.jq}/bin/jq" -r "$subnet_path")"
+                  if [ "$get_subnet" == "${range}" ]; then
+                    echo "${range} is the same, doing nothing"
                     exit 0
                   else
-                    list_containers="$("${dockerBin}" network inspect -f '{{range .Containers}}{{.Name}} {{end}}' "${eachName}")"
+                    list_containers="$("${dockerBin}" network inspect -f '{{range .Containers}}{{.Name}} {{end}}' "${networkName}")"
                     for each_container in $list_containers; do
-                      "${dockerBin}" network disconnect -f "${eachName}" "$each_container"
+                      "${dockerBin}" network disconnect -f "${networkName}" "$each_container"
                     done
-                    "${dockerBin}" network rm -f "${eachName}"
-                    echo "Disconnected containers from ${eachName} and deleted it"
+                    "${dockerBin}" network rm -f "${networkName}"
+                    echo "Disconnected containers from ${networkName} and deleted it"
                   fi
                 fi
-                "${dockerBin}" network create "${eachName}" --opt com.docker.network.bridge.name="br-${eachName}" --driver bridge --subnet "${eachValue}"
-                echo "Created network ${eachName} with ${eachValue} subnet"
+                "${dockerBin}" network create "${networkName}" --opt com.docker.network.bridge.name="${interfaceName}" --driver bridge --subnet "${range}"
+                echo "Created network ${networkName} with ${range} subnet"
                 exit 0
               '';
             };
