@@ -298,7 +298,7 @@ let
         builtins.listToAttrs (
           pkgs.lib.mapAttrsToList (networkName: { range, interface ? "" }: let
               # Name for the interface
-              interfaceName = if interface != "" then "${prefixInterface}-${interface}" else networkName;
+              interfaceName = if interface != "" then interface else "${prefixInterface}-${networkName}";
             in {
             name = "${prefix}-${networkName}";
             value = {
