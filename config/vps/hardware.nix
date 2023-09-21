@@ -6,11 +6,13 @@
     host = "10.255.255.254";
     remote = "10.255.255.1";
     prefix = 24;
+    # Original Wireguard port
+    original = 51820;
     # Default Wireguard port
     port = 123;
     # Interfaces for Wireguard and NAT
     external = "enX0";
-    interface = "wg0";
+    interface = "wire0";
     # Subnet for secondary Wireguard
     subnet = "10.255.254.0";
     # Gap for internal communication
@@ -107,7 +109,7 @@ in {
         sourcePort = networkInfo.port;
       }
       {
-        destination = "${networkInfo.docker.wire}:${builtins.toString networkInfo.docker.container}";
+        destination = "${networkInfo.docker.wire}:${builtins.toString networkInfo.docker.original}";
         proto = "udp";
         sourcePort = networkInfo.docker.container;
       }
@@ -147,7 +149,6 @@ in {
 
     # Main client wireguard configuration
     wireguard = let
-      DEFAULT_PORT = builtins.toString 51820;
       allUsers = [
         # Names will be changed for numbers starting on zero
         { home = [ "house" "router" "server" ]; }
@@ -177,6 +178,7 @@ in {
         PUID = builtins.toString my.config.user.uid;
         GUID = builtins.toString my.config.user.gid;
         INTERNAL_SUBNET = networkInfo.subnet;
+        ALLOWED_IPS = "0.0.0.0/0";  # Needed to disable IPv6
         PEERS = allPeers;
         SERVERPORT = builtins.toString networkInfo.docker.container;
         PEERDNS = networkInfo.docker.dns;
@@ -184,9 +186,6 @@ in {
       environmentFiles = [ /data/containers/wireguard/env/wire.env ];
       volumes = [
         "/data/containers/wireguard/config:/config"
-      ];
-      ports = [
-        "${builtins.toString networkInfo.docker.container}:${DEFAULT_PORT}/udp"
       ];
       extraOptions = [ "--cap-add=NET_ADMIN" "--network=${networkInfo.docker.interface}" "--ip=${networkInfo.docker.wire}" ];
     };
