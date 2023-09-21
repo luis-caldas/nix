@@ -19,10 +19,10 @@
     docker = {
       interface = "internal";
       # Internal docker IPs
-      range = "172.17.50.0/24";
-      dnsUp = "172.17.50.2";
-      dns = "172.17.50.1";
-      wire = "172.17.50.10";
+      range = "172.16.50.0/24";
+      dnsUp = "172.16.50.2";
+      dns = "172.16.50.1";
+      wire = "172.16.50.10";
       # Port (udp) most comonly used by VoIP providers (Zoom, Skype)
       # Therefore high change of not being blocked
       # Complete range is 3478 -> 3481
