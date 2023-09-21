@@ -45,6 +45,7 @@
     atftp
     nload
     socat
+    tcpdump
     knot-dns
     inetutils
 
