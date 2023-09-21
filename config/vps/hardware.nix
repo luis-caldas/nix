@@ -63,7 +63,6 @@ in {
     ];
     allowedUDPPorts = [
       networkInfo.port
-      networkInfo.docker.container
     ];
   };
   # Setup Fail 2 Ban
