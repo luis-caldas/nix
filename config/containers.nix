@@ -319,7 +319,7 @@ let
                     echo "Disconnected containers from ${eachName} and deleted it"
                   fi
                 fi
-                "${dockerBin}" network create "${eachName}" --driver bridge --subnet "${eachValue}"
+                "${dockerBin}" network create "${eachName}" --opt com.docker.network.bridge.name="br-${eachName}" --driver bridge --subnet "${eachValue}"
                 echo "Created network ${eachName} with ${eachValue} subnet"
                 exit 0
               '';
