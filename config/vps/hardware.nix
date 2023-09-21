@@ -110,7 +110,7 @@ in {
         sourcePort = networkInfo.port;
       }
       {
-        destination = "${networkInfo.docker.wire}:${builtins.toString networkInfo.docker.original}";
+        destination = "${networkInfo.docker.wire}:${builtins.toString networkInfo.original}";
         proto = "udp";
         sourcePort = networkInfo.docker.container;
       }
