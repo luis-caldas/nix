@@ -20,9 +20,9 @@
       interface = "internal";
       # Internal docker IPs
       range = "172.16.50.0/24";
-      dnsUp = "172.16.50.2";
-      dns = "172.16.50.1";
-      wire = "172.16.50.10";
+      dnsUp = "172.16.50.10";
+      dns = "172.16.50.11";
+      wire = "172.16.50.20";
       # Port (udp) most comonly used by VoIP providers (Zoom, Skype)
       # Therefore high change of not being blocked
       # Complete range is 3478 -> 3481
@@ -197,7 +197,7 @@ in {
       imageFile = my.containers.images.dns;
       extraOptions = [ "--network=${networkInfo.docker.interface}" "--ip=${networkInfo.docker.dnsUp}" ];
     };
-    dns-block = {
+    dns = {
       image = "pihole/pihole:latest";
       environment = {
         TZ = my.config.system.timezone;
@@ -205,6 +205,7 @@ in {
         DNS1 = networkInfo.docker.dnsUp;
         DNS2 = networkInfo.docker.dnsUp;
       };
+      dependsOn = [ "dns-up" ];
       environmentFiles = [ /data/containers/pihole/env/adblock.env ];
       volumes = [
         "/data/containers/pihole/config/etc:/etc/pihole"
