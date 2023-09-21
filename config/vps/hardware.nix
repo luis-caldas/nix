@@ -96,7 +96,7 @@ in {
 
   # Set up our NAT configuration
   networking.nat = {
-    enable = false;
+    enable = true;
     externalInterface = networkInfo.external;
     internalInterfaces = [ "br-${networkInfo.docker.interface}" networkInfo.interface ];
     forwardPorts = [
