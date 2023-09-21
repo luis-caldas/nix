@@ -179,7 +179,7 @@ in {
         PUID = builtins.toString my.config.user.uid;
         GUID = builtins.toString my.config.user.gid;
         INTERNAL_SUBNET = networkInfo.subnet;
-        ALLOWED_IPS = "0.0.0.0/0";  # Needed to disable IPv6
+        ALLOWEDIPS = "0.0.0.0/0";  # Needed to disable IPv6
         PEERS = allPeers;
         SERVERPORT = builtins.toString networkInfo.docker.container;
         PEERDNS = networkInfo.docker.dns;
