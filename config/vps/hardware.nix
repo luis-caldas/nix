@@ -11,15 +11,25 @@
     # Interfaces for Wireguard and NAT
     external = "enX0";
     interface = "wg0";
-    # Port (udp) most comonly used by VoIP providers (Zoom, Skype)
-    # Therefore high change of not being blocked
-    # Complete range is 3478 -> 3481
-    # Port needs also be opened on hosting side
-    container = 3478;
     # Subnet for secondary Wireguard
     subnet = "10.255.254.0";
     # Gap for internal communication
     gap = 49152;
+    # Docker configuration
+    docker = {
+      interface = "internal";
+      # Internal docker IPs
+      range = "172.16.50.0/24";
+      dnsUp = "172.15.50.2";
+      dns = "172.15.50.1";
+      wire = "172.15.50.10";
+      # Port (udp) most comonly used by VoIP providers (Zoom, Skype)
+      # Therefore high change of not being blocked
+      # Complete range is 3478 -> 3481
+      # Port needs also be opened on hosting side
+      container = 3478;
+    };
+
   };
 
 in {
@@ -50,7 +60,7 @@ in {
     ];
     allowedUDPPorts = [
       networkInfo.port
-      networkInfo.container
+      networkInfo.docker.container
     ];
   };
   # Setup Fail 2 Ban
@@ -86,7 +96,7 @@ in {
   networking.nat = {
     enable = false;
     externalInterface = networkInfo.external;
-    internalInterfaces = [ networkInfo.interface ];
+    internalInterfaces = [ "br-${networkInfo.docker.interface}" networkInfo.interface ];
     forwardPorts = [
       # SSH Port redirection to self
       { destination = "${networkInfo.host}:22"; proto = "tcp"; sourcePort = 22; }
@@ -97,9 +107,9 @@ in {
         sourcePort = networkInfo.port;
       }
       {
-        destination = "${networkInfo.host}:${builtins.toString networkInfo.container}";
+        destination = "${networkInfo.docker.wire}:${builtins.toString networkInfo.docker.container}";
         proto = "udp";
-        sourcePort = networkInfo.container;
+        sourcePort = networkInfo.docker.container;
       }
       # Redirect all the rest to tunnel
       {
@@ -128,7 +138,9 @@ in {
   };
 
   # Set up the networking creation service
-  systemd.services = my.containers.functions.addNetworks { dns = "172.16.72.0/24"; };
+  systemd.services = my.containers.functions.addNetworks {
+    "${networkInfo.docker.interface}" = networkInfo.docker.range;
+  };
 
   # All containers
   virtualisation.oci-containers.containers = {
@@ -168,7 +180,7 @@ in {
         INTERNAL_SUBNET = networkInfo.subnet;
         PEERS = allPeers;
         SERVERPORT = newPort;
-        PEERDNS = "172.16.72.100";
+        PEERDNS = networkInfo.docker.dns;
       };
       environmentFiles = [ /data/containers/wireguard/env/wire.env ];
       volumes = [
@@ -177,34 +189,29 @@ in {
       ports = [
         "${newPort}:${DEFAULT_PORT}/udp"
       ];
-      extraOptions = [ "--cap-add=NET_ADMIN" "--network=dns" ];
+      extraOptions = [ "--cap-add=NET_ADMIN" "--network=${networkInfo.docker.interface}" "--ip=${networkInfo.docker.wire}" ];
     };
 
     # DNS configuration
     dns-up = rec {
       image = imageFile.imageName;
       imageFile = my.containers.images.dns;
-      extraOptions = [ "--network=dns" "--ip=172.16.72.200" ];
+      extraOptions = [ "--network=${networkInfo.docker.interface}" "--ip=${networkInfo.docker.dnsUp}" ];
     };
     dns-block = {
       image = "pihole/pihole:latest";
       environment = {
         TZ = my.config.system.timezone;
         DNSMASQ_LISTENING = "all";
-        DNS1 = "172.16.72.200";
-        DNS2 = "172.16.72.200";
+        DNS1 = networkInfo.docker.dnsUp;
+        DNS2 = networkInfo.docker.dnsUp;
       };
       environmentFiles = [ /data/containers/pihole/env/adblock.env ];
       volumes = [
         "/data/containers/pihole/config/etc:/etc/pihole"
         "/data/containers/pihole/config/dnsmasq:/etc/dnsmasq.d"
       ];
-      ports = [
-        "53:53/tcp"
-        "53:53/udp"
-        "81:80/tcp"
-      ];
-      extraOptions = [ "--dns=127.0.0.1" "--network=dns" "--ip=172.16.72.100" ];
+      extraOptions = [ "--dns=127.0.0.1" "--network=${networkInfo.docker.interface}" "--ip=${networkInfo.docker.dns}" ];
     };
 
   };
