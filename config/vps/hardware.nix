@@ -201,14 +201,15 @@ in {
       environment = {
         TZ = my.config.system.timezone;
         DNSMASQ_LISTENING = "all";
-        DNS1 = networkInfo.docker.dnsUp;
-        DNS2 = networkInfo.docker.dnsUp;
+        PIHOLE_DNS_ = networkInfo.docker.dnsUp;
       };
       dependsOn = [ "dns-up" ];
       environmentFiles = [ /data/containers/pihole/env/adblock.env ];
       volumes = [
         "/data/containers/pihole/config/etc:/etc/pihole"
         "/data/containers/pihole/config/dnsmasq:/etc/dnsmasq.d"
+        # Own DNS list
+        "/data/containers/pihole/config/routes.list:/etc/pihole/custom.list"
       ];
       extraOptions = [ "--dns=127.0.0.1" "--network=${networkInfo.docker.name}" "--ip=${networkInfo.docker.dns}" ];
     };

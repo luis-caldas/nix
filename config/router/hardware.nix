@@ -132,8 +132,7 @@ in {
       environment = {
         TZ = my.config.system.timezone;
         DNSMASQ_LISTENING = "all";
-        DNS1 = "172.16.72.200";
-        DNS2 = "172.16.72.200";
+        PIHOLE_DNS_ = "172.16.72.200";
       };
       environmentFiles = [ /data/local/containers/pihole/env/adblock.env ];
       volumes = [
