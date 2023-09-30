@@ -3,7 +3,7 @@
 
   # SSH
   services.openssh = {
-    enable = my.config.services.ssh;
+    enable = true;
     settings = {
       PermitRootLogin = lib.mkForce "no";
       KbdInteractiveAuthentication = false;
@@ -12,10 +12,10 @@
   };
 
   # Enable avahi
-  services.avahi = {
+  services.avahi = mfunc.useDefault my.config.services.avahi {
     enable = true;
     nssmdns = true;
-  };
+  } {};
 
   # Setup proxychains
   programs.proxychains = {
@@ -109,6 +109,13 @@
 
   # My own systemd services
   systemd.services = {} //
+  # Enable SSH only if wanted
+  (mfunc.useDefault (!my.config.services.ssh) {
+    sshd = {
+      wantedBy = lib.mkForce [];
+      restartTriggers = lib.mkForce [];
+    };
+  } {}) //
   # Auto start stuff
   (let files = my.config.services.startup.start;
   in mfunc.useDefault (files != []) {

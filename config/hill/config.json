@@ -7,7 +7,7 @@
     "layout": "gb"
   },
   "services": {
-    "ssh": true,
+    "avahi": true,
     "docker": true,
     "printing": true,
     "startup": {
