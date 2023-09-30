@@ -174,6 +174,9 @@
     neomutt
     tty-clock
 
+    # AI
+    chatgpt-cli
+
     # Clipboard
     xclip
 
