@@ -39,12 +39,15 @@
   # Set gnome packages to install
   services.gnome = {
     games.enable = false;
-    gnome-keyring.enable = lib.mkForce false;
+    gnome-keyring.enable = true;
     core-shell.enable = true;
     core-utilities.enable = false;
     core-os-services.enable = true;
     core-developer-tools.enable = true;
   };
+
+  # Automatically unlock gnome keyring
+  security.pam.services.gdm.enableGnomeKeyring = true;
 
   # Bluez configuration
   # Not needed due to gnomes native bluetooth control
