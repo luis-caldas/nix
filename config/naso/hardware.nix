@@ -87,12 +87,13 @@ in {
         USERID = builtins.toString my.config.user.uid;
         GROUPID = builtins.toString my.config.user.gid;
       };
+      environmentFiles = [ /data/local/containers/media/samba.env ];
       cmd = [
         "-g" "log level = 2" # Global config
         "-n" # NMBF
         "-r" # Remove recycle bin
         "-S" # Disable minimum SMB2
-        "-s" "media;/media;yes;no;yes;all;;;Share for media files" # Share config
+        "-s" "media;/media;yes;no;no;all;;;Share for media files" # Share config
         "-s" "ps2;/ps2;yes;no;yes;all;;;PS2 Games"
         "-w" "WORKGROUP" # Default workgroup
         "-W" # Wide link support
