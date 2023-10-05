@@ -265,6 +265,12 @@
     john
     hashcat
 
+    # Databases
+    mycli
+    pgcli
+    litecli
+    usql
+    mongosh
 
     #######
 
