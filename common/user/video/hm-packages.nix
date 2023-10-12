@@ -23,6 +23,43 @@
     gnome.file-roller
     gnome.seahorse
     gnome.gnome-tweaks
+    gnome.gnome-disk-utility
+    gnome.totem
+    epiphany
+    # gnome.camera ? # TODO 23.11
+
+    # Gnome Extras
+    evolution
+    # cartridges  # TODO 23.11
+    blanket
+    citations
+    # collision   # TODO 23.11
+    curtail
+    gnome-decoder
+    dialect
+    drawing
+    eartag
+    emblem
+    eyedropper
+    raider
+    fragments
+    gaphor
+    identity
+    # impression  # TODO 23.11
+    komikku
+    metadata-cleaner
+    gnome-obfuscate
+    shortwave
+    video-trimmer
+    warp
+    wike
+
+    # Gnome Dev
+    gnome-builder
+    gnome.gnome-boxes
+    d-spy
+    gnome.dconf-editor
+    sysprof
 
     # Gnome Extensions
     gnome-menus
@@ -95,7 +132,7 @@
     hunspell
     hunspellDicts.en-us
     hunspellDicts.en-gb-ise
-    # hunspellDicts.pt-br  # Merged but not propagated yet
+    # hunspellDicts.pt-br  # TODO 23.11
     hunspellDicts.it-it
     hunspellDicts.es-es
 
@@ -119,10 +156,7 @@
     electron
 
     # Email
-    thunderbird
-
-    # Torrenting
-    deluge
+    thunderbird  # TODO Remove if alternative is found
 
     # Remote Desktop
     remmina
