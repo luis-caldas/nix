@@ -25,12 +25,11 @@
     zeroad
     openttd
     xonotic
-    # hedgewars  # broken
+    hedgewars
     teeworlds
     assaultcube
-    crispyDoom
+    crispy-doom
     space-cadet-pinball
-    # chocolateDoom  # conflicting
     mpkgs.srb2
     mpkgs.srb2kart
 
@@ -51,9 +50,8 @@
   mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [
 
     # Minecraft
-    # polymc  # compromised
     minecraft
-    prismlauncher-qt5
+    prismlauncher
 
     # FPS
     openarena
