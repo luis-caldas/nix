@@ -521,6 +521,12 @@ in
 
   };
 
+  # Set up the nextcloud client
+  services.nextcloud-client = {
+  	enable = true;
+  	startInBackground = true;
+  };
+
   # Add all the acquired link sets to the config
   home.file = linkSets;
 
