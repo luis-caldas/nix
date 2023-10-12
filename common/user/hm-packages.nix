@@ -272,6 +272,9 @@
     usql
     mongosh
 
+    # Net
+    subnetcalc
+
     #######
 
   ] ++
