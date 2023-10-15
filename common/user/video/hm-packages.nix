@@ -11,6 +11,7 @@
 
     # Gnome
     gnome.gnome-terminal
+    # gnome-console  # TODO Fix laggyness
     gnome.baobab
     gnome.cheese
     gnome.eog
@@ -45,6 +46,7 @@
     fragments
     gaphor
     identity
+    iotas
     # impression  # TODO 23.11
     komikku
     metadata-cleaner
@@ -292,8 +294,8 @@
     gns3-server
 
     # Visual
-    drawio
-    pandoc-drawio-filter
+    drawio                # TODO Remove if gaphor is good
+    pandoc-drawio-filter  # TODO Remove if gaphor is good
 
     # Maths
     octaveFull
