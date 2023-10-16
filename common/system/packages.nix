@@ -17,6 +17,12 @@
     nix-tree
     trash-cli
 
+    # Network
+    wget
+    nmap
+    socat
+    tcpdump
+
     # Utils
     killall
     moreutils

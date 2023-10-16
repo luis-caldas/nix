@@ -38,14 +38,10 @@
     # Web tools
     w3m
     frp
-    wget
-    nmap
     aria
     bind
     atftp
     nload
-    socat
-    tcpdump
     knot-dns
     inetutils
 
