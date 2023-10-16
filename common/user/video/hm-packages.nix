@@ -33,6 +33,7 @@
     evolution
     # cartridges  # TODO 23.11
     blanket
+    bottles
     citations
     # collision   # TODO 23.11
     curtail
@@ -50,8 +51,13 @@
     # impression  # TODO 23.11
     komikku
     metadata-cleaner
+    newsflash
     gnome-obfuscate
+    plots
+    gnome.polari
     shortwave
+    tangram
+    text-pieces
     video-trimmer
     warp
     wike
