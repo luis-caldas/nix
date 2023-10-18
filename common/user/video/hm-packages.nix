@@ -53,11 +53,11 @@
     metadata-cleaner
     newsflash
     gnome-obfuscate
-    plots
+    # plots  # TODO 23.11
     gnome.polari
     shortwave
     tangram
-    text-pieces
+    # text-pieces  # TODO 23.11
     video-trimmer
     warp
     wike
@@ -300,8 +300,8 @@
     gns3-server
 
     # Visual
-    drawio                # TODO Remove if gaphor is good
-    pandoc-drawio-filter  # TODO Remove if gaphor is good
+    drawio
+    pandoc-drawio-filter
 
     # Maths
     octaveFull
