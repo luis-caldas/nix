@@ -27,6 +27,8 @@
       "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
       "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # privacy badger
 
+      "fnaicdffflnofjppbagibeoednhnbjhg" # floccus bookmarks manager
+
       "bjilljlpencdcpihofiobpnfgcakfdbe" # clear browsing data
 
       "cnojnbdhbhnkbcieeekonklommdnndci" # search by image
