@@ -184,14 +184,8 @@ in
     "org/gnome/shell".favorite-apps = [
       "org.gnome.Terminal.desktop"
       "chromium-browser.desktop"
-      "thunderbird.desktop"
-      #"codium.desktop"
-      "idea-ultimate.desktop"
-      "writer.desktop"
-      "gimp.desktop"
-      "schildichat-desktop.desktop"
       "cloud.desktop"
-      #"com.github.eneshecan.WhatsAppForLinux.desktop"
+      "whatsapp-web.desktop"
       "spotify.desktop"
     ];
     "org/gnome/mutter" = {
