@@ -78,6 +78,7 @@
     pciutils
 
     # File manipulation
+    zip
     tree
     file
     pigz
