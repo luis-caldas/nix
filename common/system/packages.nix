@@ -27,6 +27,10 @@
     killall
     moreutils
 
+    # Monitoring
+    psmisc
+    sysstat
+
     # Compatibility
     envsubst
 

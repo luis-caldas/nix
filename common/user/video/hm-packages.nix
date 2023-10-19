@@ -11,7 +11,7 @@
 
     # Gnome
     gnome.gnome-terminal
-    # gnome-console  # TODO Fix laggyness
+    gnome-console
     gnome.baobab
     gnome.cheese
     gnome.eog
@@ -164,7 +164,7 @@
     electron
 
     # Email
-    thunderbird  # TODO Remove if alternative is found
+    thunderbird
 
     # Remote Desktop
     remmina
