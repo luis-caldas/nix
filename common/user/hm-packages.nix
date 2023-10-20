@@ -90,6 +90,9 @@
     rmlint
     rmtrash
 
+    # Time
+    libfaketime
+
     # Conversion
     dos2unix
 
