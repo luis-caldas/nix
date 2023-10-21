@@ -102,11 +102,32 @@ let
     (map (eachExt: extensionJson eachExt browserNamePersistent) listChromePersistentExtensions)
   );
 
+  # Autostarting programs and commands
+  autoStartPrograms = [
+    { name = "nextcloud.autostart"; command = "${pkgs.nextcloud-client}/bin/nextcloud --background"; icon = "nextcloud"; }
+  ];
+  autoStartApps = builtins.listToAttrs (map
+    (eachItem: let
+      fixedName = mfunc.capitaliseString (builtins.replaceStrings ["_" "-" "."] [" " " " " "] eachItem.name);
+      desktopName = "${eachItem.name}.desktop";
+      desktopItem = pkgs.makeDesktopItem rec{
+        name = eachItem.name;
+        desktopName = fixedName;
+        exec = eachItem.command;
+        icon = eachItem.icon;
+      };
+    in {
+      name = ".config/autostart/${desktopName}";
+      value.source = "${desktopItem}/share/applications/${desktopName}";
+    })
+    autoStartPrograms);
+
   # Put all the sets together
   linkSets = lib.mkMerge ([
     linkThemes linkFonts linkIcons linkCursors linkPapes
     linkVST
     listChromeExtensionsFiles
+    autoStartApps
   ] ++
   linkSystemFonts ++
   linkSystemIcons ++
@@ -514,12 +535,6 @@ in
       };
     };
 
-  };
-
-  # Set up the nextcloud client
-  services.nextcloud-client = {
-  	enable = true;
-  	startInBackground = true;
   };
 
   # Add all the acquired link sets to the config

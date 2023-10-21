@@ -86,25 +86,8 @@
     gnomeExtensions.gtk4-desktop-icons-ng-ding
     gnomeExtensions.tray-icons-reloaded
 
-    # Video
-    wlsunset
-
-    # Launcher
-    rofi-wayland
-
-    # Terminal
-    kitty
-
-    # Notifications
-    dunst
-    libnotify
-
-    # Screenshot
-    grim
-    slurp
-
-    # Password manager
-    keepass
+    # Files
+    nextcloud-client
 
     # Policies
     lxqt.lxqt-policykit
@@ -143,9 +126,6 @@
     # hunspellDicts.pt-br  # TODO 23.11
     hunspellDicts.it-it
     hunspellDicts.es-es
-
-    # Image viewer
-    gnome3.eog
 
     # File organizing
     qdirstat
@@ -226,6 +206,8 @@
     # Video player
     mpv
     vlc
+    memento
+    celluloid
 
     # Casting
     catt
@@ -334,6 +316,9 @@
 
   ] [] ++
   mfunc.useDefault my.config.audio [
+
+    # Player
+    amberol
 
     # Phone
     twinkle
