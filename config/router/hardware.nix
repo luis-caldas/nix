@@ -169,22 +169,6 @@ in {
       ];
       extraOptions = [ "--network=web" "--ip=172.16.73.100" ];
     };
-    # Proxy HTTPS
-    dash-proxy = my.containers.functions.createProxy {
-      name = "dash";
-      net = {
-        name = "web";
-        ip = "172.16.73.100";
-        port = "8080";
-      };
-      port = "443";
-      ssl = {
-        key = "/data/local/containers/dash/ssl/main.key";
-        cert = "/data/local/containers/dash/ssl/main.pem";
-      };
-    };
-    # Redirector
-    dash-redirector = my.containers.functions.createRedirector;
 
     # DNS updater
     noip = rec {
@@ -235,75 +219,16 @@ in {
       extraOptions = [ "--network=web" ];
     };
 
-    # HTTP Server manuals
-    man-nix = rec {
-      image = imageFile.imageName;
-      imageFile = my.containers.images.web {};
+    # Reverse proxy for all those services
+    proxy = {
+      image = "jc21/nginx-proxy-manager:latest";
+      ports = [
+        "80:80/tcp"
+        "443:443/tcp"
+        "7080:81/tcp"
+      ];
       volumes = [
-        "${pkgs.nix.doc}/share/doc/nix/manual:/web:ro"
-      ];
-      ports = [
-        "8090:8080/tcp"
-      ];
-      extraOptions = [ "--network=web" ];
-    };
-    man-nixos = rec {
-      image = imageFile.imageName;
-      imageFile = my.containers.images.web {};
-      volumes = [
-        "${config.system.build.manual.manualHTML}/share/doc/nixos:/web:ro"
-      ];
-      ports = [
-        "8091:8080/tcp"
-      ];
-      extraOptions = [ "--network=web" ];
-    };
-    man-down = rec {
-      image = imageFile.imageName;
-      imageFile = my.containers.images.web {};
-      volumes = let
-        myDocs = pkgs.stdenv.mkDerivation rec {
-          name = "documentation";
-          phases = [ "unpackPhase" "patchPhase" "buildPhase" "installPhase" ];
-          nativeBuildInputs = [ pkgs.python3Packages.mkdocs-material ];
-          mkDocsConfig = pkgs.writeTextFile rec {
-            name = "config";
-            destination = "/mkdocs.yml";
-            text = ''
-              site_name: NixOs Documentation
-              site_url: https://example.com
-              docs_dir: ../doc
-              markdown_extensions:
-                  - extra
-                  - toc:
-                      permalink: True
-              theme:
-                  name: material
-                  palette:
-                      scheme: slate
-                      primary: black
-                      accent: indigo
-            '';
-           };
-           srcs = [ "${<nixpkgs/doc>}" mkDocsConfig ];
-           sourceRoot = ".";
-           patchPhase = ''
-             find doc -iname "*.md" -print0 | xargs -0 sed -i -E 's/^(#{1,6}\s*.*)\s*\{.*\}\s*$/\1/'
-           '';
-           buildPhase = ''
-             mkdir -p "out"
-             "${pkgs.mkdocs}/bin/mkdocs" build --config-file "config/mkdocs.yml" --site-dir ../out
-           '';
-           installPhase = ''
-             mkdir -p "$out"
-             mv out/ "$out/web"
-           '';
-         };
-      in [
-        "${myDocs}/web:/web:ro"
-      ];
-      ports = [
-        "8092:8080/tcp"
+        "/data/local/containers/proxy:/data"
       ];
       extraOptions = [ "--network=web" ];
     };
