@@ -224,6 +224,9 @@ in
       show-battery-percentage = true;
       gtk-theme = my.config.graphical.theme;
     };
+    "org/gnome/desktop/search-providers" = {
+      disable-external = true;
+    };
     "org/gnome/desktop/privacy" = {
       recent-files-max-age = -1;
       remember-recent-files = false;
@@ -262,12 +265,12 @@ in
         "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
         # Others
         "clipboard-indicator@tudmotu.com"
-        "trayIconsReloaded@selfmade.pl"
         "date-menu-formatter@marcinjakubowski.github.com"
         "Vitals@CoreCoding.com"
         "dash-to-dock@micxgx.gmail.com"
         "RemoveAppMenu@Dragon8oy.com"
         # Disabled
+        #"trayIconsReloaded@selfmade.pl"
         #"gsconnect@andyholmes.github.io"
         #"window-list@gnome-shell-extensions.gcampax.github.com"
         #"places-menu@gnome-shell-extensions.gcampax.github.com"
