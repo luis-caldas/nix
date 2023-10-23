@@ -181,8 +181,8 @@
     # Chat
     discord
     signal-desktop
-    whatsapp-for-linux
     schildichat-desktop
+    # whatsapp-for-linux  # Browser version is better
 
     # Info
     gource

@@ -203,6 +203,7 @@ in
     };
     "org/gnome/shell".favorite-apps = [
       "org.gnome.Terminal.desktop"
+      "org.gnome.Nautilus.desktop"
       "chromium-browser.desktop"
       "cloud.desktop"
       "whatsapp-web.desktop"
@@ -382,6 +383,10 @@ in
       "Terminal" = {
         command = "gnome-terminal";
         binding = "<Super>Return";
+      };
+      "File" = {
+        command = "nautilus";
+        binding = "<Super>E";
       };
       "Browser" = {
         command = "chromium";
