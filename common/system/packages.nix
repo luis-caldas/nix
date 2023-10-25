@@ -10,6 +10,7 @@
     tmux
     htop
     less
+    most
     gotop
     screen
     neovim
