@@ -60,6 +60,9 @@
     # Sniffer
     wireshark
 
+    # Logger
+    logkeys
+
     # Serial
     picocom
     minicom
@@ -168,10 +171,7 @@
     libnfc
 
     # User tools
-    khal
     irssi
-    _3llo
-    neomutt
     tty-clock
 
     # AI
