@@ -17,7 +17,7 @@ let
     (iosevka-bin.override { variant = "etoile"; })
     (nerdfonts.override { fonts = [ "Iosevka" ]; })
     courier-prime
-    font-awesome
+    apl386 bqn386
     sarasa-gothic
     noto-fonts-emoji-blob-bin
   ];

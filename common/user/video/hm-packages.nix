@@ -181,7 +181,7 @@
     # Chat
     discord
     signal-desktop
-    schildichat-desktop
+    # schildichat-desktop  # TODO 23.11 electron marked as insecure
     # whatsapp-for-linux  # Browser version is better
 
     # Info
@@ -241,7 +241,7 @@
   mfunc.useDefault (my.arch == my.reference.x64) [
 
     # Password manager
-    bitwarden
+    # bitwarden  # TODO 23.11 electron marked as insecure
 
   ] [] ++
   # Packages that do not work on arm
