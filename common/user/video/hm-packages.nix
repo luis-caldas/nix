@@ -341,6 +341,7 @@
 
     # Audio player
     spotify
+    spot
 
   ] [] ++
   mfunc.useDefault (my.config.audio && my.config.graphical.production.video) [
