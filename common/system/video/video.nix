@@ -13,7 +13,7 @@
     enable = true;
     themePackages = [ pkgs.adi1090x-plymouth-themes ];
     theme = "spinner_alt";
-    font = "${pkgs.iosevka-bin.override { variant = "slab"; }}/share/fonts/truetype/iosevka-slab-regular.ttc";
+    font = "${pkgs.courier-prime}/share/fonts/truetype/CourierPrime-Regular.ttf";
   };
   # Fix for ZFS password asking
   boot.initrd = {
