@@ -8,7 +8,7 @@
       rtl8821cu
 
       # Controllers
-      hid-nintendo
+      #hid-nintendo
 
       # Video loopback
       v4l2loopback

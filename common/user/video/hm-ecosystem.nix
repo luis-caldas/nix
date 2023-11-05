@@ -126,7 +126,6 @@ let
     linkThemes linkFonts linkIcons linkCursors linkPapes
     linkVST
     listChromeExtensionsFiles
-    autoStartApps
   ] ++
   linkSystemFonts ++
   linkSystemIcons ++
@@ -139,8 +138,7 @@ in
   home.sessionPath = [ "${my.projects.desktop}/programs/public" ];
   # Add some extra env vars
   home.sessionVariables = {
-    _JAVA_AWT_WM_NONREPARENTING = "1";  # Fix for java applications on tiling window managers
-    NIXOS_OZONE_WL = "";  # Ozone wayland remove (still not working with electron)
+    NIXOS_OZONE_WL = "1";
     # APPLICATION_UNICODE = "true";  # Enable my own unicode support for the terminal emulators
   };
 
@@ -170,10 +168,6 @@ in
   # Add theming for qt
   qt.enable = true;
   qt.platformTheme = "gtk";
-
-  # Bluetooth applet
-  # Not needed due to gnomes native bluetooth control
-  # services.blueman-applet.enable = my.config.bluetooth;
 
   # Add a service to manage mpris headset support
   services.mpris-proxy.enable = my.config.bluetooth;
@@ -211,7 +205,7 @@ in
     "org/gnome/mutter" = {
       edge-tiling = true;
       workspaces-only-on-primary = true;
-      # experimental-features = [ "scale-monitor-framebuffer" ];
+      experimental-features = [ "scale-monitor-framebuffer" ];
     };
     "org/gnome/desktop/interface" = {
       cursor-size = lib.mkForce 32;
@@ -346,7 +340,6 @@ in
       hot-sensors = [
         "_processor_usage_"
         "_memory_allocated_"
-        "__network-rx_max__" "__network-tx_max__"
         "__temperature_avg__" "__temperature_max__"
       ];
       position-in-panel = 1;

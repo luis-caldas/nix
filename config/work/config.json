@@ -3,18 +3,13 @@
     "timeout": 1
   },
   "system": {
-    "hostname": "hill",
-    "layout": "gb"
+    "hostname": "work",
+    "layout": "us"
   },
   "services": {
     "avahi": true,
     "docker": true,
-    "printing": true,
-    "startup": {
-      "permit": [
-        "/sys/devices/system/cpu/cpu*/cpufreq/*governor"
-      ]
-    }
+    "printing": true
   },
   "graphical": {
     "enable": true,
