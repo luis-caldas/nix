@@ -9,8 +9,7 @@
     "minimal": true
   },
   "user": {
-    "admin": false,
-    "autologin": false
+    "admin": false
   },
   "services": {
     "ssh": true,

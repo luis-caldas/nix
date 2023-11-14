@@ -3,8 +3,7 @@
     "timeout": 1
   },
   "system": {
-    "hostname": "work",
-    "layout": "us"
+    "hostname": "work"
   },
   "services": {
     "avahi": true,

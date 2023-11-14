@@ -7,8 +7,7 @@
     "text": false
   },
   "user": {
-    "admin": false,
-    "autologin": false
+    "admin": false
   },
   "system": {
     "hostname": "opti",
