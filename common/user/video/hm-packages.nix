@@ -85,6 +85,8 @@
     gnomeExtensions.desktop-icons-ng-ding
     gnomeExtensions.gtk4-desktop-icons-ng-ding
     gnomeExtensions.tray-icons-reloaded
+    gnomeExtensions.gtile
+    # gnomeExtensions.wintile-windows-10-window-tiling-for-gnome  # TODO 23.11
 
     # Files
     nextcloud-client

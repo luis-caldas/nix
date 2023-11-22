@@ -263,6 +263,7 @@ in
         "Vitals@CoreCoding.com"
         "dash-to-dock@micxgx.gmail.com"
         "RemoveAppMenu@Dragon8oy.com"
+        "gTile@vibou"
         # Disabled
         #"trayIconsReloaded@selfmade.pl"
         #"gsconnect@andyholmes.github.io"
