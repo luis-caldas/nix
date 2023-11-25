@@ -11,9 +11,12 @@ let
   };
 
   # Unstable packages
-  upkgs = import
-    (builtins.fetchGit "https://github.com/nixos/nixpkgs")
-    { config = config.nixpkgs.config; };
+  upkgs = import (
+    builtins.fetchGit {
+      url = "https://github.com/nixos/nixpkgs";
+      ref = "nixos-unstable";
+    }
+  ) { config = config.nixpkgs.config; };
 
   # My packages
   mpkgs = import ./pkgs/pkgs.nix { inherit pkgs upkgs; };

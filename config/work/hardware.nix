@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, upkgs, ... }:
 {
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "uas" "sd_mod" ];
@@ -9,7 +9,7 @@
 
   boot.zfs.requestEncryptionCredentials = true;
 
-  boot.kernelPackages = (import (builtins.fetchGit { url = "https://github.com/nixos/nixpkgs"; rev = "231e60ee5c1b1f1fcbec7f867e3f57731ccc661e"; }) { config = config.nixpkgs.config; }).linuxKernel.packages.linux_6_5;
+  boot.kernelPackages = upkgs.linuxKernel.packages.linux_6_5;
 
   imports = let
     framework = builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware"; };
@@ -17,7 +17,7 @@
     "${framework}/framework/13-inch/7040-amd"
   ];
 
-
+  services.fprintd.enable = false;
   services.fwupd.enable = true;
 
   fileSystems."/" =
