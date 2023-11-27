@@ -4,39 +4,127 @@
   # Simple packages to get any user going
   environment.systemPackages = with pkgs; [
 
-    # Basic
-    bc
+    # File
+    tree
+    file
+
+    # Encoding
+    dos2unix
+
+    # Compression
+    pigz
+    unar
+    zip
+    p7zip
+
+    # Encryption
+    gnupg
+    openssl
+    cryptsetup
+    wireguard-tools
+
+    # Password
+    pwgen
+    mkpasswd
+
+    # Boot
+    grub2
+    grub2_efi
+    efibootmgr
+
+    # Disks
+    hdparm
+    hddtemp
+    nvme-cli
+
+    # Versioning
     git
-    tmux
-    htop
+
+    # Release
+    lsb-release
+
+    # Data
+    pv
+
+    # Text
     less
     most
-    gotop
-    screen
+    unixtools.xxd
+
+    # Editor
     neovim
+    hexedit
+
+    # Monitor
+    htop
+    gotop
+
+    # Monitoring
+    lsof
+    psmisc
+    sysstat
+
+    # Stress
+    stress
+    evtest
+
+    # Muxer
+    tmux
+    screen
+
+    # Shell
+    bc
+
+    # Nix
     nix-top
     nix-tree
-    trash-cli
 
-    # Network
+    # XDG
+    trash-cli
+    xdg-user-dirs
+
+    # Download
     wget
+
+    # Networking
     nmap
+    hping
     socat
     tcpdump
 
+    # Interfaces
+    bridge-utils
+
+    # Network Speed
+    iperf
+
+    # Network Tools
+    ethtool
+    iproute2
+    shadowsocks-libev
+
     # Utils
     killall
+    binutils
     moreutils
-
-    # Monitoring
-    psmisc
-    sysstat
+    v4l-utils
+    inotify-tools
 
     # Compatibility
     envsubst
 
-    # System monitor
+    # System Monitor
+    lshw
+    usbutils
+    pciutils
     dmidecode
+
+    # Sensors
+    lm_sensors
+
+    # Serial
+    picocom
+    minicom
 
   ];
 

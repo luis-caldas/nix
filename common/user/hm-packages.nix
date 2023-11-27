@@ -3,91 +3,56 @@
 
   home.packages = with pkgs; [
 
-    # Bin manipulation
+    ###########
+    # General #
+    ###########
+
+    # Binary
     flips
     xdelta
-    radare2
-    hexedit
-    binutils
     geteltorito
-    unixtools.xxd
 
-    # Disk
-    pv
-    f3
+    # Usage
     duf
     ncdu
-    parted
-    zerofree
-    testdisk
-    ddrescue
-    dislocker
-    ventoy-full
+
+    # Mounting
+    sshfs
+    jmtpfs
+    archivemount
+
+    # Disk
     squashfsTools
     smartmontools
 
-    # Optical
+    # Disk Clearing
+    zerofree
+
+    # Disk Test
+    f3
+    testdisk
+
+    # Paritioning
+    parted
+
+    # Rescue
+    ddrescue
+
+    # Bootable
+    ventoy-full
+
+    # Bitlocker
+    dislocker
+
+    # Optical Disk Tools
     bchunk
     ccd2iso
 
-    # Flashing tools
-    avrdude
-    heimdall
-    dfu-programmer
+    # Optical Writing
+    cdrkit
+    dvdplusrwtools
 
-    # Web tools
-    w3m
-    frp
-    aria
-    bind
-    atftp
-    nload
-    knot-dns
-    inetutils
-
-    # Debugger
-    gdb
-
-    # Review
-    nixpkgs-review
-
-    # Pen
-    tor
-    ncrack
-    sqlmap
-    thc-hydra
-
-    # Sniffer
-    wireshark
-
-    # Logger
-    logkeys
-
-    # Serial
-    picocom
-    minicom
-
-    # Boot tools
-    grub2
-    (pkgs.writeShellScriptBin
-      "grub-install-efi"
-      "exec -a $0 ${grub2_efi}/bin/grub-install $@"
-    )  # Grub EFI on the same system but with different name
-    efibootmgr
-
-    # System monitoring
-    lshw
-    usbutils
-    pciutils
-
-    # File manipulation
-    zip
-    tree
-    file
-    pigz
-    unar
-    p7zip
-    samba
+    # Duplicates
     jdupes
     rdfind
     rmlint
@@ -96,48 +61,73 @@
     # Time
     libfaketime
 
-    # Conversion
-    dos2unix
-
-    # File systems
-    sshfs
-    jmtpfs
-    archivemount
-
     # Virtualisation
     virt-manager
-
-    # Optical disks
-    cdrkit
-    dvdplusrwtools
-
-    # Net tools
-    ntp
-    lsof
-    iperf
-    hping
-    ethtool
-    bridge-utils
-    shadowsocks-libev
 
     # Versioning
     subversion
 
-    # Audio & Video manipulation
-    potrace
-    imagemagick
-    qrencode
-    ghostscript
-    waifu2x-converter-cpp
-    python3Packages.pywal
+    # Flashing
+    avrdude
+    heimdall
+    dfu-programmer
+
+    # Tor
+    tor
+
+    # NFC
+    mfoc
+    mfcuk
+    libnfc
+    pcsctools
+    pcsclite
+
+    # Devices
+    ltunify  # Logitech
+    rtl-sdr  # RTL-SDR
 
     # Input
     xboxdrv
     mpkgs.x56linux
     linuxConsoleTools
 
-    # Kernel Drivers
-    v4l-utils
+    # Bluetooth
+    bluetooth_battery
+
+    # Web
+    w3m
+
+    # Download
+    aria
+
+    # Web Services
+    frp
+    ntp
+    atftp
+    samba
+
+    # DNS
+    bind
+    knot-dns
+
+    # Web Monitor
+    nload
+
+    # Password
+    bitwarden-cli
+
+    # Messaging
+    irssi
+
+    # AI
+    chatgpt-cli
+
+    # Media Manipulation
+    imagemagick
+    potrace
+    qrencode
+    waifu2x-converter-cpp
+    pywal
 
     # EXIF
     exiftool
@@ -146,95 +136,43 @@
     gitRepo
     simg2img
 
-    # Video share
+    # Android Video
     scrcpy
 
-    # Drives
-    hdparm
-    hddtemp
-    nvme-cli
-
-    # Encryption
-    gnupg
-    openssl
-    cryptsetup
-    wireguard-tools
-
-    # Password
-    pwgen
-    mkpasswd
-    bitwarden-cli
-
-    # NFC
-    mfoc
-    mfcuk
-    libnfc
-
-    # User tools
-    irssi
+    # ASCII
+    jp2a
+    figlet
+    pipes
+    cbonsai
     tty-clock
 
-    # AI
-    chatgpt-cli
-
-    # Clipboard
-    xclip
-
-    # Image
-    jp2a
-
-    # Banner
-    figlet
-
-    # Misc
+    # Chemistry
     element
 
-    # Terminal
-    cbonsai
-    pipes
-
-    # Logitech
-    ltunify
-
-    # Radio
-    rtl-sdr
-
-    # NFC
-    pcsctools
-    pcsclite
-
-    # Bluetooth
-    bluetooth_battery
-
-    # Fetching packages
+    # Fetchers
     pfetch
     neofetch
     screenfetch
-    lsb-release
 
-    # LLVM
-    llvm
 
-    # System
-    stress
-    evtest
-
-    # Sensors
-    lm_sensors
-
-    #######
-    # Dev #
-    #######
+    #########################
+    # Development & Hacking #
+    #########################
 
     # Shell
     shellcheck
-    xdg-user-dirs
-    inotify-tools
+
+    # Srcipting
+    ghostscript
 
     # C
     gcc
+    gdb
     cmake
     gnumake
+
+    # LLVM
+    llvm
 
     # JSON
     jq
@@ -252,7 +190,6 @@
     nodejs
     yarn
     nodePackages.http-server
-    nodePackages.node2nix
 
     # Java
     adoptopenjdk-jre-openj9-bin-16
@@ -262,25 +199,48 @@
     rustc
     rustfmt
 
+    # Nix
+    nixpkgs-review
+
+    # Docker
+    docker-compose
+
     # Markdown
     pandoc
     python3Packages.grip
 
-    # Pentest
-    john
-    hashcat
-
-    # Databases
+    # Databases Clients
     mycli
     pgcli
     litecli
     usql
     mongosh
 
-    # Net
+    # Networking
     subnetcalc
 
-    #######
+    # Password
+    john
+    hashcat
+
+    # Brute
+    ncrack
+    sqlmap
+    thc-hydra
+
+    # Networking
+    inetutils
+
+    # Sniffer
+    wireshark
+
+    # Logger
+    logkeys
+
+    # Reverse
+    radare2
+
+    #########################
 
   ] ++
   mfunc.useDefault (!my.config.system.minimal) [
@@ -288,6 +248,8 @@
     # Pentest
     metasploit
     steghide
+
+    # Binary
     python3Packages.binwalk-full
 
     # Haskell
@@ -298,7 +260,7 @@
     firefox
     youtube-dl
 
-    # KVM & Virt
+    # KVM & Virtualisation
     qemu_full
 
     # Video
@@ -307,31 +269,34 @@
   ] [] ++
   mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [
 
-    # Flash utilities
+    # Flashing
     flashrom
 
   ] []++
   mfunc.useDefault (((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) && (!my.config.system.minimal)) [
 
-    # Bin
+    # Android Programs
     apktool
 
   ] [] ++
-  mfunc.useDefault my.config.services.fingerprint [
-    fwupd
+  mfunc.useDefault my.config.tex [
+
+    # Tex with medium scheme
+    texlive.combined.scheme-medium
+
   ] [] ++
-  mfunc.useDefault my.config.tex [ texlive.combined.scheme-medium ] [] ++
-  mfunc.useDefault my.config.services.docker [ docker-compose ] [] ++
   mfunc.useDefault my.config.audio [
 
     # Local player
     cmus
 
     # Tools
-    pamixer
     pipewire
     alsaUtils
     pulseaudio
+
+    # Mixers
+    pamixer
 
     # Visualizer
     cli-visualizer

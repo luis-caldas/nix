@@ -3,77 +3,140 @@
 
   home.packages = with pkgs; [
 
-    # Basic graphics tools that I use
+    ##################
+    # Gnome Defaults #
+    ##################
 
-    # Desktop
-    xorg.xprop  # Needed for xwayland scaling
-
-    # Gnome
+    # File
     gnome.nautilus
+    gnome.file-roller
+
+    # Terminal
     gnome.gnome-terminal
     gnome-console
-    gnome.baobab
-    gnome.cheese
-    gnome.eog
+
+    # Text
     gnome-text-editor
-    gnome.gnome-calendar
-    gnome.gnome-clocks
     gnome.gnome-characters
-    gnome.gnome-system-monitor
-    gnome-connections
-    gnome.file-roller
-    gnome.seahorse
-    gnome.gnome-tweaks
-    gnome.gnome-disk-utility
-    gnome.totem
-    gnome.simple-scan
-    # gnome.camera ? # TODO 23.11 - Gnome 45
-    epiphany
+
+    # Pictures
+    gnome.eog
     # loupe  # TODO 23.11 - Gnome 45
 
-    # Gnome Programs
-    evolution
-    # cartridges  # TODO 23.11
-    blanket
-    bottles
-    citations
-    # collision   # TODO 23.11
+    # Font
+    gnome.gnome-font-viewer
+
+    # Movies
+    gnome.totem
+
+    # Scan
+    gnome.simple-scan
+
+    # Disk
+    gnome.baobab
+    gnome.gnome-disk-utility
+
+    # Camera
+    gnome.cheese
+    # gnome.camera ? # TODO 23.11 - Gnome 45
+
+    # Organising
+    evince
+    gnome.gnome-clocks
+    gnome.gnome-calendar
+    gnome.gnome-calculator
+    epiphany
+
+    # Monitor
+    gnome.gnome-system-monitor
+
+    # Web
+    gnome-connections
+
+    # Passwords
+    gnome.seahorse
+
+    # Tools
+    gnome.gnome-tweaks
+
+    # Themes
+    gnome-themes-extra
+
+    ###############
+    # Gnome Extra #
+    ###############
+
+    # Files
+    warp
+    raider
     curtail
-    gnome-decoder
+    # collision   # TODO 23.11
+    # Organising
+    evolution
+    citations
     dialect
+    gaphor
+    # plots  # TODO 23.11
+    iotas
+    denaro
+
+    # Disk
+    # impression  # TODO 23.11
+
+    # Audio
+    blanket
+
+    # Image Editing
     drawing
-    eartag
     emblem
     eyedropper
-    raider
-    fragments
-    gaphor
-    identity
-    iotas
-    # impression  # TODO 23.11
-    komikku
-    metadata-cleaner
-    newsflash
     gnome-obfuscate
-    # plots  # TODO 23.11
-    gnome.polari
-    shortwave
-    tangram
-    # text-pieces  # TODO 23.11
+
+    # Video Editing
     video-trimmer
-    warp
+
+    # Download
+    fragments
+
+    # Media
+    shortwave
+    komikku
+    newsflash
     wike
-    denaro
+
+    # Chat
+    gnome.polari
+
+    # Web
+    tangram
+
+    # Encoding
+    eartag
+    identity
+    textpieces
+    gnome-decoder
+    metadata-cleaner
+
+    # Games
+    # cartridges  # TODO 23.11
+
+    # Hardware
     gnome-firmware
 
-    # Gnome Dev
-    gnome-builder
+    # Virtualisation
+    bottles
     gnome.gnome-boxes
-    d-spy
+
+    # Development
     gnome.dconf-editor
+    gnome-builder
+    d-spy
     sysprof
 
-    # Gnome Extensions
+    ####################
+    # Gnome Extensions #
+    ####################
+
     gnome-menus
     gnomeExtensions.arcmenu
     gnomeExtensions.vitals
@@ -91,58 +154,63 @@
     gnomeExtensions.tray-icons-reloaded
     # gnomeExtensions.wintile-windows-10-window-tiling-for-gnome  # TODO 23.11
 
+    ################
+    # Applications #
+    ################
+
+    # XDG
+    awf
+    dconf
+
     # Files
     nextcloud-client
 
-    # Policies
-    lxqt.lxqt-policykit
+    # File organizing
+    qdirstat
+
+    # Terminal
+    cool-retro-term
 
     # Clipboard
     wl-clipboard
 
     # Keyboard
     wtype
+    wshowkeys
 
-    # XDG
-    awf
-    dconf
-    gnome-themes-extra
-
-    # Font
-    gnome.gnome-font-viewer
-
-    # Monitors
+    # Display
     wdisplays
     wlr-randr
 
     # VNC
     wayvnc
 
-    # File manager
+    # Image editing
+    gimp
+    inkscape
 
-    # Office
-    # libreoffice
+    # QR Code
+    zbar
 
-    # Spellchecking (for libreoffice)
-    hunspell
-    hunspellDicts.en-us
-    hunspellDicts.en-gb-ise
-    # hunspellDicts.pt-br  # TODO 23.11
-    hunspellDicts.it-it
-    hunspellDicts.es-es
+    # Comics
+    mcomix
 
-    # File organizing
-    qdirstat
+    # Video player
+    vlc
+    mpv
+    memento
+    celluloid
 
-    # Joysticks
-    jstest-gtk
-    python3Packages.ds4drv
+    # Casting
+    catt
 
-    # Graph plotting
-    gnuplot
+    # Streaming
+    streamlink
+    nodePackages.peerflix
 
-    # Term
-    cool-retro-term
+    # Remote Desktop
+    remmina
+    tigervnc
 
     # Web
     electron
@@ -150,90 +218,57 @@
     # Email
     thunderbird
 
-    # Remote Desktop
-    remmina
-    tigervnc
-
-    # Calculator
-    gnome.gnome-calculator
-
-    # Image editing
-    gimp
-    inkscape
-
-    # Picker
-    hyprpicker
-
-    # Document viewer
-    evince
-
-    # Money
-    gnucash
-
-    # Comics
-    mcomix3
-
-    # Wallpaper
-    hyprpaper
-
-    # Voip
-    mumble
-
     # Chat
     discord
     signal-desktop
     # schildichat-desktop  # TODO 23.11 electron marked as insecure
     # whatsapp-for-linux  # Browser version is better
 
+    # Voice
+    mumble
+
+    # Office
+    # Spellcheck
+    hunspell
+    hunspellDicts.en-us
+    hunspellDicts.en-gb-ise
+    # hunspellDicts.pt-br  # TODO 23.11
+    hunspellDicts.it-it
+    hunspellDicts.es-es
+
+    # Graph plotting
+    gnuplot
+
+    # Money
+    gnucash
+
     # Info
     gource
 
+    # Joysticks
+    jstest-gtk
+    python3Packages.ds4drv
+
     # Testing
-    glxinfo
     sdl-jstest
-
-    # Virtualization
-    spice-gtk
-
-    # Emulation
-    dosbox
-
-    # Inputs
-    opentrack
-
-    # QR Code
-    zbar
-
-    # Video player
-    mpv
-    vlc
-    memento
-    celluloid
-
-    # Casting
-    catt
-
-    # Overlay
-    wshowkeys
-
-    # Streaming
-    streamlink
-    nodePackages.peerflix
 
     # Radio
     chirp
 
+    # Inputs
+    opentrack
+
+    # Emulation
+    dosbox
+
   ] ++
   mfunc.useDefault (!my.config.system.minimal) [
 
-    # Video editing
+    # Video Editing
     kdenlive
 
-    # Image editing
+    # Image Editing
     krita
-
-    # Camera
-    webcamoid
 
     # Radio
     gqrx
@@ -310,7 +345,7 @@
   ] [] ++
   mfunc.useDefault (((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) && my.config.graphical.production.models) [
 
-    # Modeling and cadding
+    # Modeling & CAD
     blender
     freecad
     librecad
@@ -340,31 +375,44 @@
   ] [] ++
   mfunc.useDefault ((my.arch == my.reference.x64) && my.config.audio) [
 
-    # Audio player
+    # Audio Players
     spotify
     spot
 
   ] [] ++
   mfunc.useDefault (my.config.audio && my.config.graphical.production.video) [
 
+    # Video Editors
     davinci-resolve
 
   ] [] ++
   mfunc.useDefault (my.config.audio && my.config.graphical.production.audio) [
 
-    # Music production
-    jack2
+    # Connectors
     cadence
+
+    # DAW
     reaper
+
+    # Sequencer
     tuxguitar
+
+    # Editor
     tenacity
-    calf
+
+    # Live
     guitarix
-    linuxsampler
-    qsampler
+
+    # Plugins
+    calf
+    lsp-plugins
     zyn-fusion
     zita-at1
-    lsp-plugins
+
+    # Samplers
+    qsampler
+    linuxsampler
 
   ] [];
+
 }
