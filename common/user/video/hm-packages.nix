@@ -6,10 +6,10 @@
     # Basic graphics tools that I use
 
     # Desktop
-    conky
     xorg.xprop  # Needed for xwayland scaling
 
     # Gnome
+    gnome.nautilus
     gnome.gnome-terminal
     gnome-console
     gnome.baobab
@@ -26,10 +26,12 @@
     gnome.gnome-tweaks
     gnome.gnome-disk-utility
     gnome.totem
+    gnome.simple-scan
+    # gnome.camera ? # TODO 23.11 - Gnome 45
     epiphany
-    # gnome.camera ? # TODO 23.11
+    # loupe  # TODO 23.11 - Gnome 45
 
-    # Gnome Extras
+    # Gnome Programs
     evolution
     # cartridges  # TODO 23.11
     blanket
@@ -61,6 +63,8 @@
     video-trimmer
     warp
     wike
+    denaro
+    gnome-firmware
 
     # Gnome Dev
     gnome-builder
@@ -115,7 +119,6 @@
     wayvnc
 
     # File manager
-    gnome3.nautilus
 
     # Office
     # libreoffice
@@ -160,9 +163,6 @@
 
     # Picker
     hyprpicker
-
-    # Scan
-    gnome3.simple-scan
 
     # Document viewer
     evince
