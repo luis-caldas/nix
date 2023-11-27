@@ -257,6 +257,11 @@
     # Java
     adoptopenjdk-jre-openj9-bin-16
 
+    # Rust
+    cargo
+    rustc
+    rustfmt
+
     # Markdown
     pandoc
     python3Packages.grip
