@@ -10,8 +10,10 @@
     citra
     desmume
     mednafen
-    mednaffe
     dolphinEmu
+
+    # Emulator GUI
+    mednaffe
 
     # Retroarch
     (retroarch.override { cores = with libretro; [
@@ -21,15 +23,19 @@
       mupen64plus
     ]; })
 
-    # Proper games
+    # Proper
     zeroad
     openttd
     xonotic
     hedgewars
     teeworlds
     assaultcube
+
+    # Retro
     crispy-doom
     space-cadet-pinball
+
+    # Sonic
     mpkgs.srb2
     mpkgs.srb2kart
 
@@ -44,6 +50,13 @@
     gnome.gnome-mines
     gnome.gnome-sudoku
     gnome.gnome-chess
+
+    # Chess
+    gnuchess
+    stockfish
+
+    # Games
+    # cartridges  # TODO 23.11
 
   ] ++
   # amd64 only games

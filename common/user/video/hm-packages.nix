@@ -117,9 +117,6 @@
     gnome-decoder
     metadata-cleaner
 
-    # Games
-    # cartridges  # TODO 23.11
-
     # Hardware
     gnome-firmware
 
