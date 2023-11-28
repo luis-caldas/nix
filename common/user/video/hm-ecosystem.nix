@@ -88,6 +88,7 @@ let
     { name = "whatsapp-web"; icon = "whatsapp"; url = "https://web.whatsapp.com"; }
     { name = "discord-web"; icon = "discord"; url = "https://discord.com/app"; }
     { name = "github-web"; icon = "github"; url = "https://github.com"; }
+    { name = "chess"; icon = "chess"; url = "https://chess.com"; }
   ];
 
   # List of the extensions

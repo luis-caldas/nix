@@ -22,6 +22,7 @@
       "electronics": true
     }
   },
+  "games": true,
   "audio": true,
   "bluetooth": true
 }
