@@ -86,6 +86,9 @@
     # Audio
     blanket
 
+    # Look & Feel
+    gradience
+
     # Image Editing
     drawing
     emblem
