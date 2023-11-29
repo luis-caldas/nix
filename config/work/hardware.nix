@@ -17,8 +17,8 @@
     "${framework}/framework/13-inch/7040-amd"
   ];
 
+  # Disable fingerprint
   services.fprintd.enable = false;
-  services.fwupd.enable = true;
 
   fileSystems."/" =
     { device = "dark/root";
