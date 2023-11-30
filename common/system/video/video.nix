@@ -1,7 +1,7 @@
 { my, mfunc, config, pkgs, lib, ... }:
 {
 
-  # Set the display manager and window manager
+  # Set the Display Manager and Window Manager
   services.xserver = {
     enable = true;
     displayManager.gdm.enable = true;
@@ -15,11 +15,13 @@
     theme = "spinner_alt";
     font = "${pkgs.courier-prime}/share/fonts/truetype/CourierPrime-Regular.ttf";
   };
+
   # Fix for ZFS password asking
   boot.initrd = {
     systemd.enable = true;
     verbose = false;
   };
+
   # Hide boot
   boot.loader = {
     timeout = 1;
@@ -30,6 +32,7 @@
       splashImage = null;
     };
   };
+
   # Make kernel not show any text
   boot = {
     kernelParams = [ "quiet" "splash" ];
@@ -49,17 +52,11 @@
   # Automatically unlock gnome keyring
   security.pam.services.gdm.enableGnomeKeyring = true;
 
-  # Bluez configuration
-  # Not needed due to gnomes native bluetooth control
-  # services.blueman.enable = my.config.bluetooth;
-
   # Auto login for the desktop environment
   services.xserver.displayManager.autoLogin = {
     enable = true;
     user = my.config.user.name;
   };
-  systemd.services."getty@tty1".enable = false;
-  systemd.services."autovt@tty1".enable = false;
 
   # Set graphics drivers
   services.xserver.videoDrivers = my.config.graphical.drivers;
