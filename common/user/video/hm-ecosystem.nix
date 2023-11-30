@@ -177,7 +177,7 @@ in
       click-method = "areas";
     };
     "org/gnome/desktop/peripherals/keyboard" = {
-      numlock-state = true;
+      numlock-state = my.config.graphical.numlock;
     };
     "org/gnome/shell".favorite-apps = [
       "org.gnome.Terminal.desktop"
