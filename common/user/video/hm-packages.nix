@@ -20,8 +20,7 @@
     gnome.gnome-characters
 
     # Pictures
-    gnome.eog
-    # loupe  # TODO 23.11 - Gnome 45
+    loupe
 
     # Font
     gnome.gnome-font-viewer
@@ -37,8 +36,7 @@
     gnome.gnome-disk-utility
 
     # Camera
-    gnome.cheese
-    # gnome.camera ? # TODO 23.11 - Gnome 45
+    snapshot
 
     # Organising
     evince
@@ -70,18 +68,19 @@
     warp
     raider
     curtail
-    # collision   # TODO 23.11
+    collision
+
     # Organising
     evolution
-    citations
+    # citations  # TODO Failing
     dialect
     gaphor
-    # plots  # TODO 23.11
+    plots
     iotas
     denaro
 
     # Disk
-    # impression  # TODO 23.11
+    impression
 
     # Audio
     blanket
@@ -116,7 +115,7 @@
     # Encoding
     eartag
     identity
-    textpieces
+    # textpieces  # TODO Broken
     gnome-decoder
     metadata-cleaner
 
@@ -152,7 +151,7 @@
     gnomeExtensions.desktop-icons-ng-ding
     gnomeExtensions.gtk4-desktop-icons-ng-ding
     gnomeExtensions.tray-icons-reloaded
-    # gnomeExtensions.wintile-windows-10-window-tiling-for-gnome  # TODO 23.11
+    gnomeExtensions.wintile-windows-10-window-tiling-for-gnome
 
     ################
     # Applications #
@@ -221,7 +220,7 @@
     # Chat
     discord
     signal-desktop
-    # schildichat-desktop  # TODO 23.11 electron marked as insecure
+    schildichat-desktop
     # whatsapp-for-linux  # Browser version is better
 
     # Voice
@@ -232,7 +231,7 @@
     hunspell
     hunspellDicts.en-us
     hunspellDicts.en-gb-ise
-    # hunspellDicts.pt-br  # TODO 23.11
+    hunspellDicts.pt-br
     hunspellDicts.it-it
     hunspellDicts.es-es
 
@@ -277,7 +276,7 @@
   mfunc.useDefault (my.arch == my.reference.x64) [
 
     # Password manager
-    # bitwarden  # TODO 23.11 electron marked as insecure
+    bitwarden
 
   ] [] ++
   # Packages that do not work on arm
@@ -387,9 +386,6 @@
 
   ] [] ++
   mfunc.useDefault (my.config.audio && my.config.graphical.production.audio) [
-
-    # Connectors
-    cadence
 
     # DAW
     reaper

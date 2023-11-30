@@ -84,7 +84,7 @@ in
     } {}) // (mfunc.useDefault (!my.config.system.minimal) {
       "virt/qemu".source = "${pkgs.qemu}/share/qemu";
     } {}) // {
-      "virt/win/qemu".source = "${pkgs.win-qemu}";
+      "virt/win/qemu".source = "${pkgs.virtio-win}";
       "virt/win/spice".source = "${pkgs.win-spice}";
       "virt/win/virtio".source = "${pkgs.win-virtio}";
     };

@@ -1,4 +1,4 @@
-{ lib, config, pkgs, upkgs, ... }:
+{ lib, config, pkgs, ... }:
 {
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "uas" "sd_mod" ];
@@ -9,7 +9,7 @@
 
   boot.zfs.requestEncryptionCredentials = true;
 
-  boot.kernelPackages = upkgs.linuxKernel.packages.linux_6_5;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   imports = let
     framework = builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware"; };

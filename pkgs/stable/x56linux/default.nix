@@ -1,6 +1,6 @@
 { lib
 , stdenv
-, pkgconfig
+, pkg-config
 , libusb1
 , fetchFromGitHub
 }:
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    pkgconfig
+    pkg-config
     libusb1
   ];
 

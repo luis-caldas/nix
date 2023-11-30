@@ -56,7 +56,7 @@
     stockfish
 
     # Games
-    # cartridges  # TODO 23.11
+    cartridges
 
   ] ++
   # amd64 only games

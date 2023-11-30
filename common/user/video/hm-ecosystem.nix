@@ -58,9 +58,6 @@ let
     ".local/share/vst/lsp" = { source = "${pkgs.lsp-plugins}/lib/vst"; };
   } {};
 
-  # GTK Style
-  gtkStyle = "";
-
   # Set the chromium package
   chromiumBrowserPackage = pkgs.chromium.override {
     commandLineArgs = "--force-dark-mode --enable-features=WebUIDarkMode";
@@ -124,7 +121,8 @@ let
 
   # Put all the sets together
   linkSets = lib.mkMerge ([
-    linkThemes linkFonts linkIcons linkCursors linkPapes
+    linkThemes linkFonts linkPapes
+    linkCursors linkIcons
     linkVST
     listChromeExtensionsFiles
   ] ++
@@ -147,28 +145,14 @@ in
   xdg.configFile = {
     # Link the fontconfig conf file
     "fontconfig/fonts.conf" = { source = my.projects.fonts + "/fonts.conf"; };
-    # GTK4
-    "gtk-4.0/gtk.css" = { text = gtkStyle; };
-  };
-
-  # Add extra gtk css for colours
-  gtk.gtk3.extraCss = gtkStyle;
-
-  # Set icons and themes
-  gtk.enable = true;
-  gtk.iconTheme.name = my.config.graphical.icons;
-  gtk.theme.name = my.config.graphical.theme;
-
-  # Set cursor
-  home.pointerCursor = {
-    package = my.projects.cursors;
-    gtk.enable = true;
-    name = my.config.graphical.cursor;
   };
 
   # Add theming for qt
-  qt.enable = true;
-  qt.platformTheme = "gtk";
+  qt = {
+    enable = true;
+    platformTheme = "gnome";
+    style.name = lib.strings.toLower my.config.graphical.theme;
+  };
 
   # Add a service to manage mpris headset support
   services.mpris-proxy.enable = my.config.bluetooth;
@@ -210,6 +194,9 @@ in
     };
     "org/gnome/desktop/interface" = {
       cursor-size = lib.mkForce 32;
+      cursor-theme = my.config.graphical.cursor;
+      icon-theme = my.config.graphical.icons;
+      gtk-theme = my.config.graphical.theme;
       color-scheme = "prefer-dark";
       enable-hot-corners = false;
       clock-show-seconds = true;
@@ -217,7 +204,6 @@ in
       font-antialiasing = "subpixel";
       font-hinting = "full";
       show-battery-percentage = true;
-      gtk-theme = my.config.graphical.theme;
     };
     "org/gnome/desktop/search-providers" = {
       disable-external = true;
@@ -257,21 +243,11 @@ in
       enabled-extensions = [
         # Official
         "drive-menu@gnome-shell-extensions.gcampax.github.com"
-        "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
         # Others
         "clipboard-indicator@tudmotu.com"
         "date-menu-formatter@marcinjakubowski.github.com"
         "Vitals@CoreCoding.com"
         "dash-to-dock@micxgx.gmail.com"
-        "RemoveAppMenu@Dragon8oy.com"
-        # Disabled
-        #"trayIconsReloaded@selfmade.pl"
-        #"gsconnect@andyholmes.github.io"
-        #"window-list@gnome-shell-extensions.gcampax.github.com"
-        #"places-menu@gnome-shell-extensions.gcampax.github.com"
-        #"mediacontrols@cliffniff.github.com"
-        #"arcmenu@arcmenu.com"
-        #"mprisLabel@moon-0xff.github.com"
       ];
     };
   }

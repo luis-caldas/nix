@@ -4,7 +4,7 @@
   # Generate config for all packages
   options.exceptions = with lib; {
     unfree = mkOption {
-      type = types.listOf types.string;
+      type = types.listOf types.str;
       default = [];
     };
     overrides = mkOption {
