@@ -209,7 +209,6 @@
 
     # Remote Desktop
     remmina
-    tigervnc
 
     # Web
     electron
