@@ -7,7 +7,7 @@ let
   linkCursors = (mfunc.listCreateLinks (my.projects.cursors + "/my-x11-cursors") ".local/share/icons");
   linkIcons   = (mfunc.listCreateLinks (my.projects.icons + "/my-icons-collection") ".local/share/icons");
   linkFonts   = { ".local/share/fonts/mine" = { source = (my.projects.fonts + "/my-custom-fonts"); }; };
-  linkPapes   = { ".local/share/backgrounds/papes" = { source = (my.projects.wallpapers + "/papes"); }; };
+  linkPapes   = { ".local/share/backgrounds/mine" = { source = (my.projects.images + "/wallpapers"); }; };
 
   # Create custom system fonts
   fontsList = with pkgs; [
@@ -86,6 +86,7 @@ let
     { name = "discord-web"; icon = "discord"; url = "https://discord.com/app"; }
     { name = "github-web"; icon = "github"; url = "https://github.com"; }
     { name = "chess"; icon = "chess"; url = "https://chess.com"; }
+    { name = "defence-forces"; icon = "knavalbattle"; url = "https://irishdefenceforces.workvivo.com"; }
   ];
 
   # List of the extensions
@@ -161,7 +162,7 @@ in
   dconf.settings = let
     prefix = "main";
     default = "df.png";
-    wallpapersDir = "${my.projects.wallpapers}/papes";
+    wallpapersDir = "${my.projects.images}/wallpapers";
     firstImage = lib.findFirst (x: lib.hasPrefix prefix x) default (mfunc.listFilesInFolder wallpapersDir);
     backgroundPath = "file://${wallpapersDir}/${firstImage}";
     workspaces = [

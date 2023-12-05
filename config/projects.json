@@ -27,6 +27,10 @@
         "commit": "fd4692ed166aab23865a45ee154bf23cadb843e9",
         "sha256": "017pqsqhln6hjs2ini4f9fabf7smj628dyavr2w7566vv13hqni6"
     },
+    "myimages": {
+        "commit": "443edb43cb2f00ff91678b0d50271a0480008e0f",
+        "sha256": "1sn67bqfhk8fc93msxbzag5gx314k1zyvxd4qxw3kjfx12zqid2n"
+    },
     "mypub": {
         "commit": "d3f4061f7dab3f338982564820569433a7a5d1bc",
         "sha256": "1nxqr3yxb36sjdz78lkrmcp4l1c2108facyl680yni57jmgj5s4j"
@@ -42,9 +46,5 @@
     "myvim": {
         "commit": "3f82ac39d907cd82b1deb3649a3d58623314ad82",
         "sha256": "0n3i1244a0dv7wcfj1bgf6w9zhw3gnd7nshna2gps1dd1zp3h78h"
-    },
-    "mywallpapers": {
-        "commit": "4a591127b6335707e8b8ec355e61a3f4ed057691",
-        "sha256": "0aylyqh949vrx16jcqfrmrp51ybv7r161c7w04swhwz1fv2w0gdi"
     }
 }
