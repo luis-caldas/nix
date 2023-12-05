@@ -40,7 +40,7 @@
     "locale": "en_IE.UTF-8",
     "layout": "us",
     "getty": {
-      "greeting": "\\S{PRETTY_NAME} @ \\r \\m \\b\nSystem initiated successfully",
+      "greeting": "\\S{PRETTY_NAME} @ \\r \\m \\b \\l\nSystem initiated successfully",
       "help": "You shouldn't need help at this point"
     },
     "motd": "Welcome back"
