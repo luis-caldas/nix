@@ -171,7 +171,8 @@ in
     "org/gnome/desktop/input-sources" = {
       sources = let
         inputs = ["ie" "us"];
-      in map (eachInput: ["xkb" eachInput]) inputs;
+        allSources = map (eachInput: (lib.hm.gvariant.mkTuple ["xkb" eachInput])) inputs;
+      in allSources;
       xkb-options = [ "caps:ctrl_modifier" ];
     };
     "org/gnome/desktop/peripherals/touchpad" = {
