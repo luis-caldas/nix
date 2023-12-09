@@ -2,7 +2,7 @@
 {
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "uas" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "thunderbolt" ];
   boot.kernelParams = [ ];
   boot.kernelModules = [ "kvm-amd" "kvmgt" "mdev" "vfio-iommu-type1" ];
   boot.extraModulePackages = [ ];
@@ -16,6 +16,12 @@
   in [
     "${framework}/framework/13-inch/7040-amd"
   ];
+
+  # eGPU
+  services.udev.extraRules = ''
+    # eGPU for Gnome
+    ENV{DEVNAME}=="/dev/dri/card1", TAG+="mutter-device-preferred-primary"
+  '';
 
   # Disable fingerprint
   services.fprintd.enable = false;
