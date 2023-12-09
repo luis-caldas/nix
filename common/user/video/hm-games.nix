@@ -40,7 +40,7 @@
     mpkgs.srb2kart
 
     # Steam
-    steam
+    # steam
 
     # Simulator
     flightgear
