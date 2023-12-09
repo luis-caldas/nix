@@ -58,9 +58,6 @@
     user = my.config.user.name;
   };
 
-  # Set graphics drivers
-  services.xserver.videoDrivers = my.config.graphical.drivers;
-
   # Add 32 bit support and other acceleration packages
   hardware.opengl = {
     enable = true;
