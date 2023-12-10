@@ -126,13 +126,13 @@ in {
       startLimitIntervalSec = 0;
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${mpkgs.logiops}/bin/logid";
+        ExecStart = "${pkgs.logiops}/bin/logid";
         User = "root";
         ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
         Restart = "on-failure";
       };
       wantedBy = [ "multi-user.target" ];
-      restartTriggers = [ mpkgs.logiops ];
+      restartTriggers = [ pkgs.logiops ];
 
     };
 

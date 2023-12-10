@@ -59,6 +59,9 @@
     htop
     gotop
 
+    # GPU Top
+    radeontop
+
     # Monitoring
     lsof
     psmisc
