@@ -168,6 +168,7 @@
     qdirstat
 
     # Terminal
+    kitty
     cool-retro-term
 
     # Clipboard
