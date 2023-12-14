@@ -173,6 +173,7 @@ in {
         PEERS = allPeers;
         SERVERPORT = builtins.toString networkInfo.docker.container;
         PEERDNS = networkInfo.docker.dns;
+        PERSISTENTKEEPALIVE_PEERS = "all";
       };
       environmentFiles = [ /data/containers/wireguard/env/wire.env ];
       volumes = [
