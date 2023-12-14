@@ -141,6 +141,17 @@ Formatting:
 mkswap -f /dev/zvol/{pool name}/swap
 ```
 
+### AWS EC2
+
+The following things are needed for a proper installation
+
+ - Change root password
+ - SWAP
+ - SSH Keys
+ - Directory Structure
+ - WireGuard Keys
+ - TMPDIR for Rebuild
+
 ### Data Organising Convention
 
 All data if not at home directory should be stored at `/data`
