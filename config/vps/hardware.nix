@@ -169,7 +169,7 @@ in {
         PUID = builtins.toString my.config.user.uid;
         GUID = builtins.toString my.config.user.gid;
         INTERNAL_SUBNET = networkInfo.subnet;
-        ALLOWEDIPS = "0.0.0.0/0,${networkInfo.docker.dns}/32,${networkInfo.remote}${builtins.toString networkInfo.prefix}";
+        ALLOWEDIPS = "0.0.0.0/0,${networkInfo.docker.dns}/32,${networkInfo.remote}/${builtins.toString networkInfo.prefix}";
         PEERS = allPeers;
         SERVERPORT = builtins.toString networkInfo.docker.container;
         PEERDNS = networkInfo.docker.dns;
