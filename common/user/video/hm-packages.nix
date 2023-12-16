@@ -235,6 +235,9 @@
     hunspellDicts.it-it
     hunspellDicts.es-es
 
+    # Learning
+    anki
+
     # Graph plotting
     gnuplot
 
