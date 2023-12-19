@@ -40,4 +40,13 @@
     agentTimeout = "0";
   };
 
+  # Add my custom certificate authority
+  security.pki.certificateFiles = [ "${my.projects.pub}/ssl/ca.pem" ];
+  environment.sessionVariables = {
+    NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt";
+    SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt";
+    SYSTEM_CERTIFICATE_PATH = "/etc/ssl/certs/ca-bundle.crt";
+  };
+
+
 }

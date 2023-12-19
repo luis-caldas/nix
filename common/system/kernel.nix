@@ -2,7 +2,7 @@
 let
 
   # Default kernel params
-  defaultKernelParams = [ "zfs_force=1" "nohibernate" ];
+  defaultKernelParams = [ "zfs_force=1" ];
 
   # Params to set the kernel to text mode
   textKernelParams = [ "vga=normal" "nomodeset" ];
@@ -16,7 +16,7 @@ let
   };
 
   # Set the specialisation if needed
-  dynamicSpecialization = mfunc.useDefault (!my.config.graphical.enable && my.config.kernel.text) {} textConfig;
+  dynamicSpecialization = mkIf my.config.graphical.enable textConfig;
 
 in
 {
@@ -27,16 +27,13 @@ in
   # Main boot configuration
   boot = {
 
-    # Disable pesky kernel messages at boot
+    # Disable kernel messages at boot
     consoleLogLevel = 0;
 
     # Force kernel support for zfs and add user params
     kernelParams = defaultKernelParams ++ my.config.kernel.params ++
-    mfunc.useDefault (!my.config.graphical.enable && my.config.kernel.text) textKernelParams [];
-
-    # Blacklisted kernel modules
-    # For NFC
-    blacklistedKernelModules = [ "pn533" "pn533_usb" "nfc" ];
+    # Check if we need to disable graphics
+    (if (!my.config.graphical.enable) then textKernelParams else []);
 
   };
 

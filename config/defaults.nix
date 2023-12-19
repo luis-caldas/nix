@@ -63,6 +63,17 @@
 
     };
 
+    # Kernel specific options
+    kernel = {
+
+      params = mkOptions {
+        description = "Extra parameters for the kernel line on boot";
+        type = lib.type.listOf lib.type.str;
+        default = [];
+      };
+
+    };
+
   };
 
 }
