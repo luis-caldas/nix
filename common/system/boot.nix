@@ -1,8 +1,8 @@
 { my, mfunc, ... }:
 let
 
-  # Set GRUB
-  tempGrub = {
+  # GRUB Configuration
+  grubConfiguration = {
 
     # Basic
     enable = true;
@@ -33,7 +33,7 @@ let
       terminal_output console
     " +
     # Add a custom tune to the start if set
-    (mfunc.useDefault my.config.boot.tune "play 600 440 1 220 1 880 1 0 1 880 2" "");
+    (if my.config.boot.tune then "play 600 440 1 220 1 880 1 0 1 880 2" else "");
 
     # Which GRUB entry should be booted first
     default = my.config.boot.default;
@@ -42,12 +42,12 @@ let
     splashImage = null;
 
     # Specify the devices
-    devices = [my.config.boot.device];
+    devices = [ my.config.boot.device ];
 
   };
 
   # Set systemd-boot configuration
-  tempDBoot = {
+  systemDBootConfiguration = {
 
     # Enable it and disable command line editing
     enable = true;
@@ -61,13 +61,13 @@ let
 in
 {
 
-  # Unset the nixos font
+  # Unset the default console font
   console.font = "";
 
   # Main boot configuration
   boot = rec {
 
-    # Support for zfs
+    # All the supported filesystems
     supportedFilesystems = [ "xfs" "zfs" "exfat" "ntfs" "btrfs" "autofs" "cifs" ];
     initrd.supportedFilesystems = supportedFilesystems;
 
@@ -80,16 +80,18 @@ in
     # Bootloader configuration
     loader = {
 
-      # Just for fast bois
+      # Set the given timeout
       timeout = my.config.boot.timeout;
 
     } //
     # Check if boot has been ovrriden
-    mfunc.useDefault my.config.boot.override {} (
-      mfunc.useDefault (my.config.boot.efi && (!my.config.boot.grub))
-      { systemd-boot = tempDBoot; }
-      { grub = tempGrub; }
-    );
+    (if my.config.boot.override then {} else (
+      # Check which type of bootloader we are using
+      if (my.config.boot.efi && (!my.config.boot.grub)) then
+        { systemd-boot = systemDBootConfiguration; }
+       else
+        { grub = grubConfiguration; }
+    ));
 
   };
 
