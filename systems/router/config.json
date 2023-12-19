@@ -1,0 +1,17 @@
+{
+  "boot": {
+    "timeout": 1
+  },
+  "system": {
+    "hostname": "router",
+    "minimal":  true
+  },
+  "user": {
+    "admin": false
+  },
+  "services": {
+    "ssh": true,
+    "docker": true,
+    "virt": { "enable": true }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "boot": {
+    "timeout": 1,
+    "device": "/dev/disk/by-id/usb-Samsung_SSD_970_EVO_1TB_01281700086D-0:0"
+  },
+  "system": { "hostname": "side" },
+  "services": {
+    "ssh": true,
+    "docker": true,
+    "printing": true
+  },
+  "graphical": {
+    "enable": true,
+    "drivers": ["amdgpu"],
+    "display": {
+      "scale": 2,
+      "extraCommands": [
+        "xrandr --dpi 192x192",
+        "xrandr --output DisplayPort-1 --mode 1920x1080 --rate 144 --scale 2x2 --pos 0x0 --primary",
+        "xrandr --output DisplayPort-0 --mode 3840x2160 --rate 60 --scale 1x1 --pos -3840x0",
+        "reneoslashtoback"
+      ]
+    },
+    "production": {
+      "audio": true,
+      "video": true,
+      "models": true,
+      "electronics": true
+    },
+    "touchpad": { "enable": true }
+  },
+  "games": true,
+  "audio": true,
+  "bluetooth": true
+}

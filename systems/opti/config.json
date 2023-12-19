@@ -1,0 +1,19 @@
+{
+  "boot": {
+    "timeout": 1,
+    "grub": true
+  },
+  "kernel": {
+    "text": false
+  },
+  "user": {
+    "admin": false
+  },
+  "system": {
+    "hostname": "opti",
+    "minimal": true
+  },
+  "services": {
+    "ssh": true
+  }
+}

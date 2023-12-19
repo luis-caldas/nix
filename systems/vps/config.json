@@ -1,0 +1,18 @@
+{
+  "boot": {
+    "efi": false,
+    "timeout": 1
+  },
+  "zram": true,
+  "system": {
+    "hostname": "vps",
+    "minimal": true
+  },
+  "user": {
+    "admin": false
+  },
+  "services": {
+    "ssh": true,
+    "docker": true
+  }
+}
