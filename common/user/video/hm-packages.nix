@@ -220,7 +220,7 @@
     # Chat
     discord
     signal-desktop
-    schildichat-desktop
+    # schildichat-desktop  # Insecure
     # whatsapp-for-linux  # Browser version is better
 
     # Voice
