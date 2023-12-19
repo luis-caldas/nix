@@ -74,6 +74,76 @@
 
     };
 
+    # User configuration
+    user = rec {
+
+      name = mkOptions {
+        description = "Name of the main user";
+        type = lib.type.str;
+        default = "lu";
+      };
+
+      uid = mkOptions {
+        description = "User ID of the main user";
+        type = lib.type.int;
+        default = 1000;
+      };
+
+      gid = mkOptions {
+        description = "Group ID of the main users group";
+        type = lib.type.int;
+        default = 1000;
+      };
+
+      desc = mkOptions {
+        description = "Description / GECOS / Full Name";
+        type = lib.type.str;
+        default = "Luis";
+      };
+
+      groups = mkOptions {
+        description = "Extra groups for the user";
+        type = lib.type.listOf lib.type.str;
+        default = [];
+      };
+
+      admin = mkOptions {
+        description = "Enable `sudo` command for user";
+        type = lib.type.bool;
+        default = true;
+      };
+
+      pass = mkOptions {
+        description = "Default password for the user";
+        type = lib.type.str;
+        default = "functional";
+      };
+
+      autologin = mkOptions {
+        description = "Enable TTY autologin for the user";
+        type = lib.type.bool;
+        default = false;
+      };
+
+      # Git configuration
+      git = {
+
+        name = mkOption {
+          description = "Name shown for `git`";
+          type = lib.type.str;
+          default = "Luis";
+        };
+
+        email = mkOption {
+          description = "Email shown for `git`";
+          type = lib.type.str;
+          default = "luis@caldas.ie";
+        };
+
+      };
+
+    };
+
   };
 
 }

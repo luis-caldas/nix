@@ -61,10 +61,6 @@
     plugins = [ pkgs.acsccid ];
   };
 
-  # Software defined radio
-  hardware.rtl-sdr.enable = true;
-  hardware.hackrf.enable = true;
-
   # Enable logiops service (logitech MX mice)
   services.logiops.enable = my.config.graphical.enable;
 

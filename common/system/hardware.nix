@@ -1,4 +1,6 @@
-{ ... }: {
+{ ... }:
+{
+
   # Blacklisted kernel modules
   boot.blacklistedKernelModules = [
     # For NFC
@@ -27,4 +29,9 @@
       KEYBOARD_KEY_c0041=enter
       KEYBOARD_KEY_c00cf=search
   '';
+
+  # Software defined radio
+  hardware.rtl-sdr.enable = true;
+  hardware.hackrf.enable = true;
+
 }
