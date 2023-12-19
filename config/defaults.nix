@@ -144,6 +144,94 @@
 
     };
 
+    # System configuration
+    system = {
+
+      hostname = mkOption {
+        description = "Hostname for this system";
+        type = lib.type.str;
+        default = "forgotten";
+      };
+
+      timezone = mkOption {
+        description = "Timezone for the system";
+        type = lib.type.str;
+        default = "Europe/Dublin";
+      };
+
+      locale = mkOption {
+        description = "System locale";
+        type = lib.type.str;
+        default = "en_IE.UTF-8";
+      };
+
+      # The general location of the closest airport
+      location = {
+
+        latitude = mkOptions {
+          description = "Positional latitude";
+          type = lib.type.float;
+          default = 53.3498;
+        };
+
+        longitude = mkOptions {
+          description = "Positional longitude";
+          type = lib.type.float;
+          default = -6.2603;
+        };
+
+      };
+
+      layout = mkOption {
+        description = "Preferred keyboard layouts in order";
+        type = lib.type.listOf lib.type.str;
+        default = [ "ie" "us" ];
+      };
+
+      # Greeting messages for the TTY
+      getty = {
+
+        greeting = mkOption {
+          description = "The greeting message on TTY login";
+          type = lib.type.str;
+          default = "\\S{PRETTY_NAME} @ \\r \\m \\b \\l\nSystem initiated successfully";
+        };
+
+        help = mkOption {
+          description = "The help message on TTY login";
+          type = lib.type.str;
+          default = "You shouldn't need help at this point";
+        };
+
+      };
+
+      motd = mkOptions {
+        description = "The message of the day";
+        type = lib.type.str;
+        default = "Welcome back";
+      };
+
+    };
+
+    # All the system services
+    services = {
+
+    };
+
+    # Whether to make the system minimal
+    # Less stuff to download and install
+    minimal = mkOptions {
+      description = "Make the system minimal";
+      type = lib.type.bool;
+      default = false;
+    };
+
+    zram = mkOption {
+      description = "Use ZRAM";
+      type = lib.type.bool;
+      default = false;
+    };
+
   };
 
 }

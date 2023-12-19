@@ -14,7 +14,7 @@
     "params": [],
     "text": true
   },
-  "zram": false, ///////////////////
+  "zram": false,
   "user": {
     "name": "lu",
     "uid": 1000,
