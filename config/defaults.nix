@@ -226,8 +226,145 @@
       default = false;
     };
 
+    # General networking options
+    network = {
+
+      # MAC configurations for NetworkManager
+      mac = {
+
+        cable = mkOption {
+          description = "MAC address of the ethernet interface";
+          type = lib.type.str;
+          default = "stable";
+        };
+
+        wifi = mkOption {
+          description = "MAC address of the wifi interface";
+          type = lib.type.str;
+          default = "stable";
+        };
+
+      };
+
+      # Firewall options
+      firewall = {
+
+        enable = mkOption {
+          description = "Enable firewall blocking";
+          type = lib.type.bool;
+          default = false;
+        };
+
+        ping = mkOption {
+          description = "Allow device to reply to pings";
+          type = lib.type.bool;
+          default = true;
+        };
+
+      };
+
+    };
+
+    # All the services for the system
+    services = {
+
+      ssh = mkOption {
+        description = "Enable the SSH service";
+        type = lib.type.bool;
+        default = false;
+      };
+
+      avahi = mkOption {
+        description = "Enable avahi service";
+        type = lib.type.bool;
+        default = false;
+      };
+
+      docker = mkOption {
+        description = "Enable the docker service";
+        type = lib.type.bool;
+        default = false;
+      };
+
+      printing = mkOption {
+        description = "Enable the CUPS printing service";
+        type = lib.type.bool;
+        default = false;
+      };
+
+      # Virtualisation configuration
+      virt = {
+
+        enable = mkOption {
+          description = "Enable the libvirt service";
+          type = lib.type.bool;
+          default = false;
+        };
+
+        swtpm = mkOption {
+          description = "Enable TPM emulation for it";
+          type = lib.type.bool;
+          default = false;
+        };
+
+      };
+
+      # Startup custom scripts
+      startup = {
+
+        permit = mkOption {
+          description = "List of files to make permissible to the default user at startup";
+          type = lib.type.listOf lib.type.str;
+          default = [];
+        };
+
+        create = mkOption {
+          description = "List of files to create at startup";
+          type = lib.type.listOf lib.type.str;
+          default = [];
+        };
+
+        start = mkOption {
+          description = "List of scripts to run at startup";
+          type = lib.type.listOf lib.type.str;
+          default = [];
+        };
+
+      };
+
+    };
+
+    # Memory compression
     zram = mkOption {
       description = "Use ZRAM";
+      type = lib.type.bool;
+      default = false;
+    };
+
+    # Enable all the games
+    games = mkOption {
+      description = "Enable games";
+      type = lib.type.bool;
+      default = false;
+    };
+
+    # Enable LaTeX
+    tex = mkOption {
+      description = "Enable LaTeX";
+      type = lib.type.bool;
+      default = false;
+    };
+
+    # Enable audio
+    audio = mkOption {
+      description = "Enable audio";
+      type = lib.type.bool;
+      default = false;
+    };
+
+    # Enable bluetooth
+    bluetooth = mkOption {
+      description = "Enable bluetooth";
       type = lib.type.bool;
       default = false;
     };
