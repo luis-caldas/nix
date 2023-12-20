@@ -2,62 +2,62 @@
 {
 
   # My general configurations for the system
-  options.my.config = {
+  options.my.config = with lib; with type; {
 
     # The boot options be it MBR GRUB or EFI
     boot = {
 
       efi = mkOption {
         description = "Use EFI for boot";
-        type = lib.types.bool;
+        type = bool;
         default = true;
       };
 
       grub = mkOption {
         description = "Use GRUB for boot, otherwise systemd-boot is used";
-        type = lib.types.bool;
+        type = bool;
         default = false;
       };
 
       timeout = mkOption {
         description = "Timeout for the boot entry selection";
-        type = lib.types.int;
+        type = int;
         default = 60;
       };
 
       default = mkOption {
         description = "Default entry to be picked when using GRUB";
-        type = lib.types.int;
+        type = int;
         default = 0;
       };
 
       device = mkOption {
         description = "Device to install MBR GRUB onto";
-        type = lib.types.str;
+        type = str;
         default = "nodev";
       };
 
       prober = mkOption {
         description = "Probe the disks for OSs on GRUB";
-        type = lib.type.bool;
+        type = bool;
         default = false;
       };
 
       tune = mkOption {
         description = "Play tune on GRUB";
-        type = lib.type.bool;
+        type = bool;
         default = false;
       };
 
       top = mkOption {
         description = "Initilise `top` on TTY8";
-        type = lib.type.bool;
+        type = bool;
         default = false;
       };
 
       override = mkOption {
         description = "Do not configure boot";
-        type = lib.type.bool;
+        type = bool;
         default = false;
       };
 
@@ -68,7 +68,7 @@
 
       params = mkOptions {
         description = "Extra parameters for the kernel line on boot";
-        type = lib.type.listOf lib.type.str;
+        type = listOf str;
         default = [];
       };
 
@@ -79,49 +79,49 @@
 
       name = mkOptions {
         description = "Name of the main user";
-        type = lib.type.str;
+        type = str;
         default = "lu";
       };
 
       uid = mkOptions {
         description = "User ID of the main user";
-        type = lib.type.int;
+        type = int;
         default = 1000;
       };
 
       gid = mkOptions {
         description = "Group ID of the main users group";
-        type = lib.type.int;
+        type = int;
         default = 1000;
       };
 
       desc = mkOptions {
         description = "Description / GECOS / Full Name";
-        type = lib.type.str;
+        type = str;
         default = "Luis";
       };
 
       groups = mkOptions {
         description = "Extra groups for the user";
-        type = lib.type.listOf lib.type.str;
+        type = listOf str;
         default = [];
       };
 
       admin = mkOptions {
         description = "Enable `sudo` command for user";
-        type = lib.type.bool;
+        type = bool;
         default = true;
       };
 
       pass = mkOptions {
         description = "Default password for the user";
-        type = lib.type.str;
+        type = str;
         default = "functional";
       };
 
       autologin = mkOptions {
         description = "Enable TTY autologin for the user";
-        type = lib.type.bool;
+        type = bool;
         default = false;
       };
 
@@ -130,13 +130,13 @@
 
         name = mkOption {
           description = "Name shown for `git`";
-          type = lib.type.str;
+          type = str;
           default = "Luis";
         };
 
         email = mkOption {
           description = "Email shown for `git`";
-          type = lib.type.str;
+          type = str;
           default = "luis@caldas.ie";
         };
 
@@ -149,25 +149,25 @@
 
       hostname = mkOption {
         description = "Hostname for this system";
-        type = lib.type.str;
+        type = str;
         default = "forgotten";
       };
 
       timezone = mkOption {
         description = "Timezone for the system";
-        type = lib.type.str;
+        type = str;
         default = "Europe/Dublin";
       };
 
       locale = mkOption {
         description = "System locale";
-        type = lib.type.str;
+        type = str;
         default = "en_IE.UTF-8";
       };
 
-      layout = mkOption {
+      layout = lib.mkOption {
         description = "Preferred keyboard layouts in order";
-        type = lib.type.listOf lib.type.str;
+        type = listOf str;
         default = [ "ie" "us" ];
       };
 
@@ -176,13 +176,13 @@
 
         latitude = mkOptions {
           description = "Positional latitude";
-          type = lib.type.float;
+          type = float;
           default = 53.3498;
         };
 
         longitude = mkOptions {
           description = "Positional longitude";
-          type = lib.type.float;
+          type = float;
           default = -6.2603;
         };
 
@@ -193,13 +193,13 @@
 
         greeting = mkOption {
           description = "The greeting message on TTY login";
-          type = lib.type.str;
+          type = str;
           default = "\\S{PRETTY_NAME} @ \\r \\m \\b \\l\nSystem initiated successfully";
         };
 
         help = mkOption {
           description = "The help message on TTY login";
-          type = lib.type.str;
+          type = str;
           default = "You shouldn't need help at this point";
         };
 
@@ -207,7 +207,7 @@
 
       motd = mkOptions {
         description = "The message of the day";
-        type = lib.type.str;
+        type = str;
         default = "Welcome back";
       };
 
@@ -221,13 +221,13 @@
 
         cable = mkOption {
           description = "MAC address of the ethernet interface";
-          type = lib.type.str;
+          type = str;
           default = "stable";
         };
 
         wifi = mkOption {
           description = "MAC address of the wifi interface";
-          type = lib.type.str;
+          type = str;
           default = "stable";
         };
 
@@ -269,19 +269,19 @@
 
         permit = mkOption {
           description = "List of files to make permissible to the default user at startup";
-          type = lib.type.listOf lib.type.str;
+          type = listOf str;
           default = [];
         };
 
         create = mkOption {
           description = "List of files to create at startup";
-          type = lib.type.listOf lib.type.str;
+          type = listOf str;
           default = [];
         };
 
         start = mkOption {
           description = "List of scripts to run at startup";
-          type = lib.type.listOf lib.type.str;
+          type = listOf str;
           default = [];
         };
 
@@ -296,25 +296,25 @@
 
       numlock = mkOption {
         description = "Startup system with NumLock enabled";
-        type = lib.type.bool;
+        type = bool;
         default = true;
       };
 
       cursor = mkOption {
         description = "Name of the default cursor used";
-        type = lib.type.str;
+        type = str;
         default = "hacked-grey-hd";
       };
 
       icon = mkOption {
         description = "Name of the preferred icon theme to use";
-        type = lib.type.str;
+        type = str;
         default = "Papirus-Dark";
       };
 
       theme = mkOption {
         description = "Name of the preferred system theme to use";
-        type = lib.type.str;
+        type = str;
         default = "Adwaita-Dark";
       };
 
@@ -325,7 +325,7 @@
 
       policies = mkOption {
         description = "Extra policies to add to the default chromium installations";
-        type = lib.type.attrs;
+        type = attrs;
         default = {};
       };
 
@@ -334,19 +334,19 @@
 
         common = mkOption {
           description = "Extensions for the common installation";
-          type = lib.type.listOf lib.type.str;
+          type = listOf str;
           default = [];
         };
 
         main = mkOption {
           description = "Extensions for the main installation";
-          type = lib.type.listOf lib.type.str;
+          type = listOf str;
           default = [];
         };
 
         persistent = mkOption {
           description = "Extensions for the persistent installation";
-          type = lib.type.listOf lib.type.str;
+          type = listOf str;
           default = [];
         };
 
