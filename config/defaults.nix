@@ -75,7 +75,7 @@
     };
 
     # User configuration
-    user = rec {
+    user = {
 
       name = mkOptions {
         description = "Name of the main user";
@@ -165,6 +165,12 @@
         default = "en_IE.UTF-8";
       };
 
+      layout = mkOption {
+        description = "Preferred keyboard layouts in order";
+        type = lib.type.listOf lib.type.str;
+        default = [ "ie" "us" ];
+      };
+
       # The general location of the closest airport
       location = {
 
@@ -180,12 +186,6 @@
           default = -6.2603;
         };
 
-      };
-
-      layout = mkOption {
-        description = "Preferred keyboard layouts in order";
-        type = lib.type.listOf lib.type.str;
-        default = [ "ie" "us" ];
       };
 
       # Greeting messages for the TTY
@@ -213,19 +213,6 @@
 
     };
 
-    # All the system services
-    services = {
-
-    };
-
-    # Whether to make the system minimal
-    # Less stuff to download and install
-    minimal = mkOptions {
-      description = "Make the system minimal";
-      type = lib.type.bool;
-      default = false;
-    };
-
     # General networking options
     network = {
 
@@ -249,17 +236,9 @@
       # Firewall options
       firewall = {
 
-        enable = mkOption {
-          description = "Enable firewall blocking";
-          type = lib.type.bool;
-          default = false;
-        };
+        enable = mkEnableOption "Firewall";
 
-        ping = mkOption {
-          description = "Allow device to reply to pings";
-          type = lib.type.bool;
-          default = true;
-        };
+        ping = mkEnableOption "ICMP Replies";
 
       };
 
@@ -268,44 +247,20 @@
     # All the services for the system
     services = {
 
-      ssh = mkOption {
-        description = "Enable the SSH service";
-        type = lib.type.bool;
-        default = false;
-      };
+      ssh = mkEnableOption "SSH Service";
 
-      avahi = mkOption {
-        description = "Enable avahi service";
-        type = lib.type.bool;
-        default = false;
-      };
+      avahi = mkEnableOption "Avahi";
 
-      docker = mkOption {
-        description = "Enable the docker service";
-        type = lib.type.bool;
-        default = false;
-      };
+      docker = mkEnableOption "docker";
 
-      printing = mkOption {
-        description = "Enable the CUPS printing service";
-        type = lib.type.bool;
-        default = false;
-      };
+      printing = mkEnableOption "CUPS";
 
       # Virtualisation configuration
       virt = {
 
-        enable = mkOption {
-          description = "Enable the libvirt service";
-          type = lib.type.bool;
-          default = false;
-        };
+        enable = mkEnableOption "libvirt";
 
-        swtpm = mkOption {
-          description = "Enable TPM emulation for it";
-          type = lib.type.bool;
-          default = false;
-        };
+        swtpm = mkEnableOption "TPM Emulation";
 
       };
 
@@ -334,40 +289,89 @@
 
     };
 
-    # Memory compression
-    zram = mkOption {
-      description = "Use ZRAM";
-      type = lib.type.bool;
-      default = false;
+    # All the graphical configurations
+    graphical = {
+
+      enable = mkEnableOption "Graphical Inteface";
+
+      numlock = mkOption {
+        description = "Startup system with NumLock enabled";
+        type = lib.type.bool;
+        default = true;
+      };
+
+      cursor = mkOption {
+        description = "Name of the default cursor used";
+        type = lib.type.str;
+        default = "hacked-grey-hd";
+      };
+
+      icon = mkOption {
+        description = "Name of the preferred icon theme to use";
+        type = lib.type.str;
+        default = "Papirus-Dark";
+      };
+
+      theme = mkOption {
+        description = "Name of the preferred system theme to use";
+        type = lib.type.str;
+        default = "Adwaita-Dark";
+      };
+
     };
+
+    # Chromium configuration
+    chromium = {
+
+      policies = mkOption {
+        description = "Extra policies to add to the default chromium installations";
+        type = lib.type.attrs;
+        default = {};
+      };
+
+      # Extension hashes for different chromium types
+      extensions = {
+
+        common = mkOption {
+          description = "Extensions for the common installation";
+          type = lib.type.listOf lib.type.str;
+          default = [];
+        };
+
+        main = mkOption {
+          description = "Extensions for the main installation";
+          type = lib.type.listOf lib.type.str;
+          default = [];
+        };
+
+        persistent = mkOption {
+          description = "Extensions for the persistent installation";
+          type = lib.type.listOf lib.type.str;
+          default = [];
+        };
+
+      };
+
+    };
+
+    # Whether to make the system minimal
+    # Less stuff to download and install
+    minimal = mkEnableOption "Minimal System";
+
+    # Memory compression
+    zram = mkEnableOption "ZRAM";
 
     # Enable all the games
-    games = mkOption {
-      description = "Enable games";
-      type = lib.type.bool;
-      default = false;
-    };
+    games = mkEnableOption "Games";
 
     # Enable LaTeX
-    tex = mkOption {
-      description = "Enable LaTeX";
-      type = lib.type.bool;
-      default = false;
-    };
+    tex = mkEnableOption "LaTeX";
 
     # Enable audio
-    audio = mkOption {
-      description = "Enable audio";
-      type = lib.type.bool;
-      default = false;
-    };
+    audio = mkEnableOption "Audio";
 
     # Enable bluetooth
-    bluetooth = mkOption {
-      description = "Enable bluetooth";
-      type = lib.type.bool;
-      default = false;
-    };
+    bluetooth = mkEnableOption "Bluetooth";
 
   };
 
