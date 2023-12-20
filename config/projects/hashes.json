@@ -1,8 +1,4 @@
 {
-    "myconky": {
-        "commit": "d22421785e3f686ee70fd926d185ad713b420d06",
-        "sha256": "0v46hwqk72kx64q83s6ks2gpiq8p60sva73vxd637llg82pmqbb6"
-    },
     "mycontainers": {
         "commit": "67510a6a3abead51f0c7175348b115ef4f07498a",
         "sha256": "12k96h39gfc27kbixyyrybmdk0briivxqrqf77bsd0i117xs007r"

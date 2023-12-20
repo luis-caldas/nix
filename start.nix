@@ -1,15 +1,15 @@
-args@{ lib, config, pkgs, utils, stdenv, ... }:
-let
+{ ... }:
+{
 
-  # My main config
-  my = import ./config.nix { inherit lib pkgs config; iso = false; };
+  # Start point for everything
+  imports = [
 
-  # Import the linker after configurations have been loaded
-  linker = import ./linker.nix ( { inherit my; } // args );
+    # Default per device configuration and organising
+    start/config.nix
 
-in {
+    # General linker that loads all the necessary files
+    start/linker.nix
 
-  # Add the system import list
-  imports = [ linker ];
+  ];
 
 }
