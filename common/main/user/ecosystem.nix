@@ -34,7 +34,7 @@ in
 {
 
   # Enable adb debugging
-  programs.adb.enable = (pkgs.reference.arch == pkgs.reference.arches.x64) || (pkgs.reference.arch == pkgs.reference.arches.x86);
+  programs.adb.enable = pkgs.reference.arch != pkgs.reference.arches.arm;
 
   # Add wireshark
   programs.wireshark.enable = true;
@@ -66,25 +66,24 @@ in
   home-manager.users."${config.mine.user.name}" = { ... }: {
 
     # Configure XDG custom folders
-    xdg.userDirs = {
+    xdg.userDirs = let
+      commonBase = "$HOME/home";
+    in {
       enable = true;
-      desktop = "$HOME/home/desktop";
-      documents = "$HOME/home/docs";
-      download = "$HOME/home/downloads";
-      music = "$HOME/home/mus";
-      pictures = "$HOME/home/pics";
-      publicShare = "$HOME/home/pub";
-      templates = "$HOME/home/templates";
-      videos = "$HOME/home/vids";
+      desktop = "${commonBase}/desktop";
+      documents = "${commonBase}/docs";
+      download = "${commonBase}/downloads";
+      music = "${commonBase}/mus";
+      pictures = "${commonBase}/pics";
+      publicShare = "${commonBase}/pub";
+      templates = "${commonBase}/templates";
+      videos = "${commonBase}/vids";
     };
 
     # Add ovmf path
     xdg.configFile =
     # Full omvf files only if not minimal
-    (if (
-      ((pkgs.reference.arch == pkgs.reference.arches.x64) || (pkgs.reference.arch == pkgs.reference.arches.x86))
-      && (!config.mine.system.minimal)
-    ) then {
+    (if ((pkgs.reference.arch != pkgs.reference.arches.arm) && (!config.mine.system.minimal)) then {
       "virt/ovmf".source = "${pkgs.OVMFFull.fd}";
     } else {}) //
 
@@ -134,8 +133,7 @@ in
 
     # Add arduino libraries
     home.file = if (
-      ((pkgs.reference.arch == pkgs.reference.arches.x64) || (pkgs.reference.arch == pkgs.reference.arches.x86))
-      && (!config.mine.system.minimal)
+      (pkgs.reference.arch != pkgs.reference.arches.arm) && (!config.mine.system.minimal)
     ) then {
       ".local/share/arduino" = { source = "${pkgs.arduino}/share/arduino"; }; }
     else {};

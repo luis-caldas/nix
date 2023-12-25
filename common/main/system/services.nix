@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ pkgs, lib, config, ... }:
 {
 
   # Open SSH
@@ -82,7 +82,7 @@
         gutenprintBin
       ] else []) ++
       # Brother drivers for supported architectures
-      (if ((pkgs.reference.arch == pkgs.reference.arches.x64) || (pkgs.reference.arch == pkgs.reference.arches.x86)) then [
+      (if (pkgs.reference.arch != pkgs.reference.arches.arm) then [
         brgenml1lpr
         brgenml1cupswrapper
       ] else []);
