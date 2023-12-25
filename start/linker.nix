@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, config, ... }:
 let
 
   # Extract this version from NixPkgs
@@ -15,7 +15,8 @@ let
   };
 
   # Important paths
-  
+  manager = ../common/manager;
+  main = ../common/main;
 
 in {
 
@@ -23,15 +24,17 @@ in {
   imports = [
 
     # First is Home Manager
-    "${home-manager}/nixos"
+    "${homeManager}/nixos"
 
-  ];
+  ]
+  # All the remaining files
+  ++ (lib.filesystem.listFilesRecursive main);
 
   # Import the files needed for the Home Manager package
-  home-manager.users."${my.config.user.name}" = { ... }: {
+  home-manager.users."${config.mine.user.name}" = { ... }: {
 
     # Default imports for Home Manager
-    imports = [];
+    imports = lib.filesystem.listFilesRecursive manager;
 
   };
 

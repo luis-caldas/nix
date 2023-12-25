@@ -8,7 +8,7 @@
     start/config.nix
 
     # Link all the needed files and modules
-#    start/linker.nix
+    start/linker.nix
 
   ];
 
