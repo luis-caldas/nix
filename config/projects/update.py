@@ -16,8 +16,8 @@ PER_PAGE = 10
 COMMIT_LENGTH = 40
 HASH_LENGTH   = 52
 
-PROJECTS_FILE_NAME = "projects.json"
-NEEDED_PROJECTS_FILE = "my.json"
+PROJECTS_FILE_NAME = "hashes.json"
+NEEDED_PROJECTS_FILE = "list.json"
 
 # Get our current location
 LOCATION = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
