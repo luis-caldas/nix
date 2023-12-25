@@ -1,20 +1,19 @@
 { lib, config, pkgs, ... }:
 {
 
+  # Kernel init
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "uas" "sd_mod" ];
-  boot.initrd.kernelModules = [ "thunderbolt" ];
-  boot.kernelParams = [ ];
-  boot.kernelModules = [ "kvm-amd" "kvmgt" "mdev" "vfio-iommu-type1" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [ "kvm-amd" "kvmgt" "mdev" "thunderbolt" "vfio-iommu-type1" ];
 
+  # ZFS ask for password
   boot.zfs.requestEncryptionCredentials = true;
 
+  # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  imports = let
-    framework = builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware"; };
-  in [
-    "${framework}/framework/13-inch/7040-amd"
+  # Hardware from NixOS
+  imports = [
+    "${builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware"; }}/framework/13-inch/7040-amd"
   ];
 
   # eGPU
@@ -25,6 +24,30 @@
 
   # Disable fingerprint
   services.fprintd.enable = false;
+
+  # My specific configuration
+  mine = {
+    boot.timeout = 1;
+    system.hostname = "work";
+    services = {
+      avahi = true;
+      docker = true;
+      printing = true;
+    };
+    graphics.enable = true;
+    production = {
+      audio = true;
+      models = true;
+      software = true;
+      business = true;
+      electronics = true;
+    };
+    audio = true;
+    bluetooth = true;
+    games = true;
+  };
+
+  # File systems
 
   fileSystems."/" =
     { device = "dark/root";
@@ -55,9 +78,11 @@
     [ { device = "/dev/zvol/dark/swap"; }
     ];
 
+  # Governor and arch
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
+  # State initialisation version
   system.stateVersion = "23.05";
 
 }
