@@ -210,6 +210,7 @@
 
     # Remote Desktop
     remmina
+    moonlight-qt
 
     # Web
     electron
