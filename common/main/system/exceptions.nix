@@ -1,16 +1,21 @@
-{ lib, pkgs, mpkgs, my, config, ... }:
+{ lib, config, ... }:
 {
 
   # Generate config for all packages
   options.exceptions = with lib; {
+
+    # Add unfree exceptions on the fly
     unfree = mkOption {
       type = types.listOf types.str;
       default = [];
     };
+
+    # Add overrides on the fly
     overrides = mkOption {
       type = types.functionTo types.attrs;
-      default = n: {};
+      default = input: {};
     };
+
   };
 
   # General config
@@ -26,9 +31,6 @@
       "displaylink"
       "nvidia-x11" "nvidia-settings"
     ]);
-
-    # Allow some insecure packages
-    nixpkgs.config.permittedInsecurePackages = [];
 
     # Overrides
     nixpkgs.config.packageOverrides = ogpkgs: (

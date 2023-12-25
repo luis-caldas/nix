@@ -1,4 +1,7 @@
-{ ... }:
+{ lib, config, ... }:
+
+lib.mkIf (config.mine.audio && config.mine.production.audio)
+
 {
 
   security.pam.loginLimits = [

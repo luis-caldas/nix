@@ -1,7 +1,7 @@
-{ my, mfunc, lib, pkgs, mpkgs, ... }:
+{ lib, config, pkgs, ... }:
 {
 
-  # SSH
+  # Open SSH
   services.openssh = {
     enable = true;
     settings = {
@@ -11,13 +11,13 @@
     };
   };
 
-  # Enable avahi
-  services.avahi = mfunc.useDefault my.config.services.avahi {
+  # Avahi
+  services.avahi = lib.mkIf config.mine.services.avahi {
     enable = true;
     nssmdns = true;
-  } {};
+  };
 
-  # Setup proxychains
+  # Setup ProxyChains
   programs.proxychains = {
     enable = true;
     localnet = "127.0.0.0/255.0.0.0";
@@ -38,13 +38,12 @@
   };
 
   # Vitualisation
-  virtualisation.docker.enable = my.config.services.docker;
-
-  # Set default backend
+  virtualisation.docker.enable = config.mine.services.docker;
+  # Set default backend for containers
   virtualisation.oci-containers.backend = "docker";
 
   # libvirt config
-  virtualisation.libvirtd = mfunc.useDefault my.config.services.virt.enable {
+  virtualisation.libvirtd = lib.mkIf config.services.virtual.enable {
     enable = true;
     onBoot = "start";
     onShutdown = "shutdown";
@@ -52,34 +51,18 @@
       enable = true;
       packages = [ pkgs.OVMFFull.fd ];
     };
-    qemu.swtpm.enable = my.config.services.virt.swtpm;
-  } {};
-
-  # PCSC
-  services.pcscd = {
-    enable = true;
-    plugins = [ pkgs.acsccid ];
+    qemu.swtpm.enable = config.services.virtual.swtpm;
   };
 
-  # Enable logiops service (logitech MX mice)
-  services.logiops.enable = my.config.graphical.enable;
+  # Enable logiops service
+  # services.logiops.enable = config.graphics.enable;
 
   # Printing
-  services.printing = mfunc.useDefault my.config.services.printing {
+  services.printing = lib.mkIf config.mine.services.printing {
     enable = true;
-    drivers = with pkgs; [
-        cups-zj-58
-        brlaser
-        gutenprint
-      ] ++
-      (mfunc.useDefault (my.arch == my.reference.x64) [
-        gutenprintBin
-      ] []) ++
-      (mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [
-        brgenml1lpr
-        brgenml1cupswrapper
-      ] []);
     browsing = true;
+    logLevel = "debug";
+    # Extra configuration
     browsedConf = "
       BrowseDNSSDSubTypes _cups,_print
       BrowseLocalProtocols All
@@ -88,34 +71,50 @@
       CreateIPPPrinterQueues All
       CreateIPPPrinterQueues driverless
     ";
-    logLevel = "debug";
-  } {};
+    # All the available drivers
+    drivers = with pkgs; [
+        cups-zj-58
+        brlaser
+        gutenprint
+      ] ++
+      # GutenPrint for supported architecture
+      (if (pkgs.reference.arch == pkgs.reference.arches.x64) then [
+        gutenprintBin
+      ] else []) ++
+      # Brother drivers for supported architectures
+      (if ((pkgs.reference.arch == pkgs.reference.arches.x64) || (pkgs.reference.arch == pkgs.reference.arches.x86)) then [
+        brgenml1lpr
+        brgenml1cupswrapper
+      ] else []);
+  };
 
   # Scanning
-  hardware.sane = mfunc.useDefault my.config.services.printing {
+  hardware.sane = lib.mkIf config.mine.services.printing {
     enable = true;
     extraBackends = with pkgs; [
       sane-airscan
     ];
-  } {};
+  };
 
   # Printer applets
   programs.system-config-printer.enable =
-    my.config.graphical.enable && my.config.services.printing;
+    config.mine.graphics.enable && config.mine.services.printing;
 
   # My own systemd services
   systemd.services = {} //
+
   # Enable SSH only if wanted
-  (mfunc.useDefault (!my.config.services.ssh) {
+  (lib.mkIf (!config.mine.services.ssh) {
     sshd = {
       wantedBy = lib.mkForce [];
       restartTriggers = lib.mkForce [];
     };
-  } {}) //
+  }) //
+
   # Whole screen tty mode for a nice top window
-  (mfunc.useDefault my.config.boot.top
+  (lib.mkIf config.mine.boot.top
   # Add gotop on TTY8 if wanted
-  ({
+  {
     gotopper = {
       after = [ "getty.target" ];
       serviceConfig = {
@@ -135,6 +134,6 @@
       };
       wantedBy = [ "multi-user.target" ];
     };
-  }) {});
+  });
 
 }

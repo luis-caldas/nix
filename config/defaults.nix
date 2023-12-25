@@ -22,7 +22,7 @@
       timeout = mkOption {
         description = "Timeout for the boot entry selection";
         type = int;
-        default = 60;
+        default = 1;
       };
 
       default = mkOption {
@@ -31,10 +31,10 @@
         default = 0;
       };
 
-      device = mkOption {
+      devices = mkOption {
         description = "Device to install MBR GRUB onto";
-        type = str;
-        default = "nodev";
+        type = listOf str;
+        default = [ "nodev" ];
       };
 
       prober = mkOption {
@@ -217,20 +217,10 @@
     network = {
 
       # MAC configurations for NetworkManager
-      mac = {
-
-        cable = mkOption {
-          description = "MAC address of the ethernet interface";
-          type = str;
-          default = "stable";
-        };
-
-        wifi = mkOption {
-          description = "MAC address of the wifi interface";
-          type = str;
-          default = "stable";
-        };
-
+      mac = mkOption {
+        description = "How to set MAC addresses";
+        type = str;
+        default = "stable";
       };
 
       # Firewall options
@@ -256,7 +246,7 @@
       printing = mkEnableOption "CUPS";
 
       # Virtualisation configuration
-      virt = {
+      virtual = {
 
         enable = mkEnableOption "libvirt";
 
@@ -315,7 +305,7 @@
     };
 
     # Chromium configuration
-    chromium = {
+    browser = {
 
       policies = mkOption {
         description = "Extra policies to add to the default chromium installations";

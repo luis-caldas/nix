@@ -1,7 +1,7 @@
-{ ... }:
+{ pkgs, ... }:
 {
 
-  # Sudo configs for wheel group
+  # Configure sudo to work the way I want
   security.sudo = {
     enable = true;
     extraConfig = ''
@@ -32,6 +32,7 @@
     });
   '';
 
+  # Configure the SSH client
   programs.ssh = {
     # Disable askpass graphical password program
     askPassword = "";
@@ -41,7 +42,8 @@
   };
 
   # Add my custom certificate authority
-  security.pki.certificateFiles = [ "${my.projects.pub}/ssl/ca.pem" ];
+  security.pki.certificateFiles = [ "${pkgs.reference.projects.pub}/ssl/ca.pem" ];
+  # Also set the paths for all the certificates so they stick
   environment.sessionVariables = {
     NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt";
     SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt";

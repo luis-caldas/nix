@@ -1,8 +1,8 @@
-{ my, lib, pkgs, ... }:
+{ config, ... }:
 {
 
   # Enable Gnome Virtual Filesystem to browse shares
-  services.gvfs.enable = my.config.graphical.enable;
+  services.gvfs.enable = config.mine.graphics.enable;
 
   # Add zfs scrubbing
   services.zfs.autoScrub.enable = true;
@@ -11,17 +11,17 @@
   services.zfs.trim.enable = true;
 
   # My timezone
-  time.timeZone = my.config.system.timezone;
+  time.timeZone = config.mine.system.timezone;
 
   # Set locale
-  i18n.defaultLocale = my.config.system.locale;
+  i18n.defaultLocale = config.mine.system.locale;
 
   # Set default keyboard and their consoles
-  services.xserver.layout = my.config.system.layout;
+  services.xserver.layout = builtins.head config.mine.system.layout;
   console.useXkbConfig = true;
 
   # Enable ZRam if set
-  zramSwap.enable = my.config.zram;
+  zramSwap.enable = config.mine.zram;
   zramSwap.memoryPercent = 50;
 
   # Set hardware switches

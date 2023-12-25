@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
 
   # Create some aliases for the file commands

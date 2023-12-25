@@ -113,6 +113,9 @@ in {
         # Browser policies
         browser = chromiumPolicies;
 
+        # My projects
+        projects = myProjects;
+
         # Extra file paths
         extras = extraSpecialisations;
 

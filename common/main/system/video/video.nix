@@ -1,4 +1,7 @@
-{ my, mfunc, config, pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
+
+lib.mkIf config.mine.graphics.enable
+
 {
 
   # Set the Display Manager and Window Manager
@@ -24,7 +27,6 @@
 
   # Hide boot
   boot.loader = {
-    timeout = 1;
     grub = {
       extraConfig = ''
         set timeout_style=hidden
@@ -55,29 +57,24 @@
   # Auto login for the desktop environment
   services.xserver.displayManager.autoLogin = {
     enable = true;
-    user = my.config.user.name;
+    user = config.mine.user.name;
   };
 
   # Add 32 bit support and other acceleration packages
   hardware.opengl = {
     enable = true;
-    # Select custom version of mesa drivers
-    #package = pkgs.mesa.drivers;
   } //
-  mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) rec {
+  # Check architectures and set proper packages
+  (if ((pkgs.reference.arch == pkgs.reference.arches.x64) || (pkgs.reference.arch == pkgs.reference.arches.x86)) then rec {
     driSupport32Bit = true;
+    # Packages for video acceleration
     extraPackages32 = with pkgs; [
       pkgsi686Linux.libva
     ] ++ extraPackages;
     extraPackages = with pkgs; [
-      intel-ocl
-      intel-media-driver
-      vaapiIntel
       vaapiVdpau
       libvdpau-va-gl
-      rocm-opencl-icd
-      rocm-opencl-runtime
     ];
-  } {};
+  } else {});
 
 }

@@ -1,11 +1,11 @@
-{ my, ... }:
+{ lib, config, ... }:
 {
 
   # Needed for ZFS to work
-  networking.hostId = my.id;
+  networking.hostId = config.mine.id;
 
   # Set the hostname
-  networking.hostName = my.config.system.hostname; # Define your hostname.
+  networking.hostName = config.mine.system.hostname; # Define your hostname.
 
   # Force the use of DHCP on the proper interface
   networking.useDHCP = false;
@@ -14,15 +14,15 @@
   networking.networkmanager.enable = true;
 
   # Use custom mac for cable
-  networking.networkmanager.ethernet.macAddress = my.config.net.mac.cable;
-  networking.networkmanager.wifi.macAddress = my.config.net.mac.wifi;
+  networking.networkmanager.ethernet.macAddress = config.mine.network.mac;
+  networking.networkmanager.wifi.macAddress = config.mine.network.mac;
 
   # Disable ipv6
-  networking.enableIPv6 = false;
+  networking.enableIPv6 = lib.mkForce false;
 
   # Firewall configuration
-  networking.firewall.enable = my.config.net.firewall.enable;
-  networking.firewall.allowPing = my.config.net.firewall.ping;
+  networking.firewall.enable = config.mine.network.firewall.enable;
+  networking.firewall.allowPing = config.mine.network.firewall.ping;
 
   # Enable editing of hosts file
   environment.etc.hosts.mode = "0644";

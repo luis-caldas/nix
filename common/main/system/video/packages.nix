@@ -1,4 +1,7 @@
-{ my, mfunc, pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
+
+lib.mkIf config.mine.graphics.enable
+
 {
 
   # Set program to change backlight
@@ -41,16 +44,16 @@
 
     ] ++
     # Add users extensions
-    my.config.graphical.chromium.extensions.common;
+    config.mine.browser.extensions.common;
 
     # Extra options using policy
     extraOpts = {} //
-    my.chromium.policies.managed // my.config.graphical.chromium.policies;
+    pkgs.reference.browser.policies.managed // config.mine.browser.policies;
 
   };
 
   # Add recommended policies as well
   environment.etc."chromium/policies/recommended/default.json".text = builtins.toJSON {};
-  environment.etc."chromium/policies/recommended/extra.json".text = builtins.toJSON my.chromium.policies.recommended;
+  environment.etc."chromium/policies/recommended/extra.json".text = builtins.toJSON pkgs.reference.browser.policies.recommended;
 
 }

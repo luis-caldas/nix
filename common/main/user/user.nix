@@ -1,48 +1,48 @@
-{ my, mfunc, lib, ... }:
+{ my, mfunc, pkgs, lib, config, ... }:
 {
 
   # Make users mutable
   users.mutableUsers = true;
 
   # Automatic login
-  services.getty.autologinUser = mfunc.useDefault my.config.user.autologin my.config.user.name null;
+  services.getty.autologinUser = if config.mine.user.autologin then config.mine.user.name else null;
 
   # My user
-  users.groups."${my.config.user.name}".gid = my.config.user.gid;
-  users.users."${my.config.user.name}" = {
+  users.groups."${config.mine.user.name}".gid = config.mine.user.gid;
+  users.users."${config.mine.user.name}" = {
 
     # Simple user configuration
     isNormalUser = true;
-    home = "/home/" + my.config.user.name;
-    description = my.config.user.desc;
+    home = "/home/" + config.mine.user.name;
+    description = config.mine.user.desc;
 
     # Primary group
-    group = my.config.user.name;
+    group = config.mine.user.name;
 
     # Give extra groups to the user
     extraGroups = [ "networkmanager" "wireshark" "plugdev" "kvm" ] ++
-                  mfunc.useDefault my.config.user.admin [ "wheel" ] [] ++
-                  mfunc.useDefault my.config.audio [ "audio" ] [] ++
-                  mfunc.useDefault my.config.graphical.enable [ "video" ] [] ++
-                  mfunc.useDefault my.config.services.docker [ "docker" ] [] ++
-                  mfunc.useDefault my.config.services.virt.enable [ "libvirtd" ] [] ++
-                  mfunc.useDefault my.config.services.printing [ "scanner" "lp" ] [] ++
-                  mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [ "adbusers" ] [] ++
-                  my.config.user.groups;
+                  (if config.mine.user.admin then [ "wheel" ] else []) ++
+                  (if config.mine.audio then [ "audio" ] else []) ++
+                  (if config.mine.graphical.enable then [ "video" ] else []) ++
+                  (if config.mine.services.docker then [ "docker" ] else []) ++
+                  (if config.mine.services.virt.enable then [ "libvirtd" ] else []) ++
+                  (if config.mine.services.printing then [ "scanner" "lp" ] else []) ++
+                  (if ((pkgs.reference.arch == pkgs.reference.arches.x64) || (pkgs.reference.arch == pkgs.reference.arches.x86)) then [ "adbusers" ] else []) ++
+                  config.mine.user.groups;
 
     # Set out custom uid
-    uid = my.config.user.uid;
+    uid = config.mine.user.uid;
 
     # Set the user to the first default uid
-    initialPassword = my.config.user.pass;
+    initialPassword = config.mine.user.pass;
 
   };
 
   # Add custom getty message
-  services.getty.greetingLine = my.config.system.getty.greeting;
-  services.getty.helpLine = lib.mkOverride 70 ("\n" + my.config.system.getty.help);
+  services.getty.greetingLine = config.mine.system.getty.greeting;
+  services.getty.helpLine = "\n" + config.mine.system.getty.help;
 
   # Add my custom motd
-  users.motd = my.config.system.motd;
+  users.motd = config.mine.system.motd;
 
 }

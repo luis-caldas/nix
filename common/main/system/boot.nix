@@ -1,4 +1,4 @@
-{ my, mfunc, ... }:
+{ config, ... }:
 let
 
   # GRUB Configuration
@@ -11,14 +11,14 @@ let
     copyKernels = true;
 
     # Try to identify other systems
-    useOSProber = my.config.boot.prober;
+    useOSProber = config.mine.boot.prober;
 
     # Enable Memtest
     memtest86.enable = true;
 
     # EFI support
-    efiInstallAsRemovable = my.config.boot.efi;
-    efiSupport = my.config.boot.efi;
+    efiInstallAsRemovable = config.mine.boot.efi;
+    efiSupport = config.mine.boot.efi;
 
     # ZFS support
     zfsSupport = true;
@@ -33,16 +33,16 @@ let
       terminal_output console
     " +
     # Add a custom tune to the start if set
-    (if my.config.boot.tune then "play 600 440 1 220 1 880 1 0 1 880 2" else "");
+    (if config.mine.boot.tune then "play 600 440 1 220 1 880 1 0 1 880 2" else "");
 
     # Which GRUB entry should be booted first
-    default = my.config.boot.default;
+    default = config.mine.boot.default;
 
     # Eye candy
     splashImage = null;
 
     # Specify the devices
-    devices = [ my.config.boot.device ];
+    devices = config.mine.boot.devices;
 
   };
 
@@ -81,13 +81,13 @@ in
     loader = {
 
       # Set the given timeout
-      timeout = my.config.boot.timeout;
+      timeout = config.mine.boot.timeout;
 
     } //
     # Check if boot has been ovrriden
-    (if my.config.boot.override then {} else (
+    (if config.mine.boot.override then {} else (
       # Check which type of bootloader we are using
-      if (my.config.boot.efi && (!my.config.boot.grub)) then
+      if (config.mine.boot.efi && (!config.mine.boot.grub)) then
         { systemd-boot = systemDBootConfiguration; }
        else
         { grub = grubConfiguration; }

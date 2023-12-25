@@ -1,4 +1,4 @@
-{ my, mfunc, pkgs, ... }:
+{ lib, config, ... }:
 let
 
   # Default kernel params
@@ -16,7 +16,7 @@ let
   };
 
   # Set the specialisation if needed
-  dynamicSpecialization = mkIf my.config.graphical.enable textConfig;
+  dynamicSpecialization = lib.mkIf config.mine.graphics.enable textConfig;
 
 in
 {
@@ -30,10 +30,14 @@ in
     # Disable kernel messages at boot
     consoleLogLevel = 0;
 
-    # Force kernel support for zfs and add user params
-    kernelParams = defaultKernelParams ++ my.config.kernel.params ++
+    # Add params
+    kernelParams = [] ++
+    # Add the default ones
+    defaultKernelParams ++
+    # Add my own params
+    config.mine.kernel.params ++
     # Check if we need to disable graphics
-    (if (!my.config.graphical.enable) then textKernelParams else []);
+    (if (!config.mine.graphics.enable) then textKernelParams else []);
 
   };
 
