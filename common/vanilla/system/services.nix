@@ -112,45 +112,6 @@
       restartTriggers = lib.mkForce [];
     };
   } {}) //
-  # Auto start stuff
-  (let files = my.config.services.startup.start;
-  in mfunc.useDefault (files != []) {
-    starter = {
-      script = lib.concatStrings (map (s: s + "\n") files);
-      wantedBy = [ "multi-user.target" ];
-    };
-  } {}) //
-  # Create and permit files
-  (let files = my.config.services.startup.create;
-  in mfunc.useDefault (files != []) {
-    createer = {
-      script = lib.concatStrings (
-        map (
-          s:
-          "touch ${s}" + "\n" +
-          "chown :${my.filer} ${s}" + "\n" +
-          "chmod g+rw ${s}" + "\n"
-        )
-        files
-      );
-      wantedBy = [ "multi-user.target" ];
-    };
-  } {}) //
-  # Files permissions
-  (let files = my.config.services.startup.permit;
-  in mfunc.useDefault (files != []) {
-    filer =  {
-      script = lib.concatStrings (
-        map (
-          s:
-          "chown :${my.filer} ${s}" + "\n" +
-          "chmod g+rw ${s}" + "\n"
-        )
-        files
-      );
-      wantedBy = [ "multi-user.target" ];
-    };
-  } {}) //
   # Whole screen tty mode for a nice top window
   (mfunc.useDefault my.config.boot.top
   # Add gotop on TTY8 if wanted

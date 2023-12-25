@@ -7,9 +7,6 @@
   # Automatic login
   services.getty.autologinUser = mfunc.useDefault my.config.user.autologin my.config.user.name null;
 
-  # Add user to file permission group
-  users.groups."${my.filer}" = {};
-
   # My user
   users.groups."${my.config.user.name}".gid = my.config.user.gid;
   users.users."${my.config.user.name}" = {
@@ -23,7 +20,7 @@
     group = my.config.user.name;
 
     # Give extra groups to the user
-    extraGroups = [ "networkmanager" "wireshark" "plugdev" "kvm" "${my.filer}" ] ++
+    extraGroups = [ "networkmanager" "wireshark" "plugdev" "kvm" ] ++
                   mfunc.useDefault my.config.user.admin [ "wheel" ] [] ++
                   mfunc.useDefault my.config.audio [ "audio" ] [] ++
                   mfunc.useDefault my.config.graphical.enable [ "video" ] [] ++
