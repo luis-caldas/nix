@@ -1,10 +1,13 @@
-{ pkgs, lib, config, iso, ... }:
+{ pkgs, lib, config, ... }:
 let
 
   # Default path for the chosen system that was set on a file
-  systemName = lib.replaceStrings ["\n" " "] ["" ""] (builtins.readFile ./system);
+  systemName = lib.replaceStrings ["\n" " "] ["" ""] (builtins.readFile ../system);
   # Generate the net id from the system name
   systemId = builtins.substring 0 8 (builtins.hashString "sha512" systemName);
+
+  # Get the system version
+  systemVersion = config.system.nixos.release;
 
   # The owner name
   ownerName = "luis-caldas";
@@ -19,9 +22,10 @@ let
   # Get the system architecture and throw error if not supported
   systemArch = let
     linuxSuffix = "-linux";
+    arch = lib.removeSuffix linuxSuffix pkgs.stdenv.system;
   in
     if builtins.elem arch (builtins.attrValues archReference) then
-      lib.removeSuffix linuxSuffix pkgs.stdenv.system
+      arch
     else
       throw "Unsupported architecture ${arch}";
 
@@ -45,20 +49,37 @@ let
     in {
       name = fixedName;
       value = pkgs.fetchFromGithub {
-        owner = owner-name;
+        owner = ownerName;
         repo = eachProjectName;
-        rev = allProjectsGitHub."${eachProjectName}".commit;
-        sha256 = allProjectsGitHub."${eachProjectName}".sha256;
+        rev = allProjects."${eachProjectName}".commit;
+        sha256 = allProjects."${eachProjectName}".sha256;
       };
     }
 
   ) allProjectNames);
 
+  # Build the system path
+  systemPath = ../systems + ("/" + systemName);
+  # Save the name of the default file
+  defaultSystemFile = "default.nix";
+  # Save all the extra files in the directory
+  extraSpecialisations = let
+    # All directory structures
+    dirStructures = builtins.readDir systemPath;
+    # All file structures
+    fileStructures = lib.attrsets.filterAttrs (name: value: value == "regular") dirStructures;
+    # All the file names
+    filesListAll = builtins.attrNames fileStructures;
+    # Files list
+    filesList = lib.lists.remove defaultSystemFile filesListAll;
+  in
+    filesList;
+
   # Show some verbose
   printId = let
-    verboseString = "building for ${systemName} @ ${systemArch} - ${config.system.nixos.release} - ${systemId}";
+    verboseString = "building for ${systemName} @ ${systemArch} - ${systemVersion} - ${systemId}";
   in
-    builtins.trace verboseString netId;
+    builtins.trace verboseString systemId;
 
 in {
 
@@ -67,6 +88,9 @@ in {
 
     # Defaults
     ../config/defaults.nix
+
+    # Import the default system file
+    (systemPath + ("/" + defaultSystemFile))
 
   ];
 
@@ -86,11 +110,11 @@ in {
         arch = systemArch;
         arches = archReference;
 
-        # My projects
-        projects = myProjects;
-
         # Browser policies
         browser = chromiumPolicies;
+
+        # Extra file paths
+        extras = extraSpecialisations;
 
       };
 

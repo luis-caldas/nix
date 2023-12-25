@@ -2,7 +2,7 @@
 {
 
   # My general configurations for the system
-  options.my.config = with lib; with types; {
+  options.mine = with lib; with types; {
 
     # The boot options be it MBR GRUB or EFI
     boot = {
@@ -267,7 +267,7 @@
     };
 
     # All the graphical configurations
-    graphical = {
+    graphics = {
 
       enable = mkEnableOption "Graphical Inteface";
 
