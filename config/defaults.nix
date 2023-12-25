@@ -2,7 +2,7 @@
 {
 
   # My general configurations for the system
-  options.my.config = with lib; with type; {
+  options.my.config = with lib; with types; {
 
     # The boot options be it MBR GRUB or EFI
     boot = {
@@ -66,7 +66,7 @@
     # Kernel specific options
     kernel = {
 
-      params = mkOptions {
+      params = mkOption {
         description = "Extra parameters for the kernel line on boot";
         type = listOf str;
         default = [];
@@ -77,49 +77,49 @@
     # User configuration
     user = {
 
-      name = mkOptions {
+      name = mkOption {
         description = "Name of the main user";
         type = str;
         default = "lu";
       };
 
-      uid = mkOptions {
+      uid = mkOption {
         description = "User ID of the main user";
         type = int;
         default = 1000;
       };
 
-      gid = mkOptions {
+      gid = mkOption {
         description = "Group ID of the main users group";
         type = int;
         default = 1000;
       };
 
-      desc = mkOptions {
+      desc = mkOption {
         description = "Description / GECOS / Full Name";
         type = str;
         default = "Luis";
       };
 
-      groups = mkOptions {
+      groups = mkOption {
         description = "Extra groups for the user";
         type = listOf str;
         default = [];
       };
 
-      admin = mkOptions {
+      admin = mkOption {
         description = "Enable `sudo` command for user";
         type = bool;
         default = true;
       };
 
-      pass = mkOptions {
+      pass = mkOption {
         description = "Default password for the user";
         type = str;
         default = "functional";
       };
 
-      autologin = mkOptions {
+      autologin = mkOption {
         description = "Enable TTY autologin for the user";
         type = bool;
         default = false;
@@ -174,13 +174,13 @@
       # The general location of the closest airport
       location = {
 
-        latitude = mkOptions {
+        latitude = mkOption {
           description = "Positional latitude";
           type = float;
           default = 53.3498;
         };
 
-        longitude = mkOptions {
+        longitude = mkOption {
           description = "Positional longitude";
           type = float;
           default = -6.2603;
@@ -205,7 +205,7 @@
 
       };
 
-      motd = mkOptions {
+      motd = mkOption {
         description = "The message of the day";
         type = str;
         default = "Welcome back";
@@ -264,29 +264,6 @@
 
       };
 
-      # Startup custom scripts
-      startup = {
-
-        permit = mkOption {
-          description = "List of files to make permissible to the default user at startup";
-          type = listOf str;
-          default = [];
-        };
-
-        create = mkOption {
-          description = "List of files to create at startup";
-          type = listOf str;
-          default = [];
-        };
-
-        start = mkOption {
-          description = "List of scripts to run at startup";
-          type = listOf str;
-          default = [];
-        };
-
-      };
-
     };
 
     # All the graphical configurations
@@ -317,6 +294,23 @@
         type = str;
         default = "Adwaita-Dark";
       };
+
+    };
+
+    # All software packages for specific tasks
+    production = {
+
+       audio = mkEnableOption "Audio Production Software";
+
+       video = mkEnableOption "Video Production Software";
+
+       models = mkEnableOption "3D Modelling Software";
+
+       software = mkEnableOption "Software Development";
+
+       business = mkEnableOption "Professional Productivity Software";
+
+       electronics = mkEnableOption "Electronics Design";
 
     };
 
