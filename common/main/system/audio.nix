@@ -1,4 +1,7 @@
-{ my, mfunc, pkgs, ... }:
+{ lib, config, ... }:
+
+lib.mkIf config.mine.audio
+
 {
 
   # Enable rtkit for audio

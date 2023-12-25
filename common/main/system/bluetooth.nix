@@ -1,4 +1,7 @@
-{ ... }:
+{ lib, config, ... }:
+
+lib.mkIf config.mine.bluetooth
+
 {
 
   # Allow bluetooth
