@@ -1,13 +1,17 @@
-args@{ my, lib, config, pkgs, utils, ... }:
+{ ... }:
 let
 
-  # My functions
-  mfunc = import ./functions/func.nix { inherit lib; };
+  # Extract this version from NixPkgs
+  version = let
+    versionList = lib.splitString "." lib.version;
+  in builtins.elemAt versionList 0 +
+    "." +
+    builtins.elemAt versionList 1;
 
   # Home manager
   home-manager = builtins.fetchGit {
     url = "https://github.com/rycee/home-manager.git";
-    ref = "release-" + my.version;
+    ref = "release-" + version;
   };
 
   # Unstable packages
