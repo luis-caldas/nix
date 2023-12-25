@@ -53,19 +53,4 @@
   environment.etc."chromium/policies/recommended/default.json".text = builtins.toJSON {};
   environment.etc."chromium/policies/recommended/extra.json".text = builtins.toJSON my.chromium.policies.recommended;
 
-  # Add chromium initial config
-  # environment.etc."chromium/master_preferences".text = builtins.toJSON my.chromium.preferences; # chromium needs a patch to read this path
-
-  # Other needed packages
-  environment.systemPackages = with pkgs; [
-
-    # Package for locking the screen
-    xsecurelock
-    alock
-
-    # CL info
-    clinfo
-
-  ];
-
 }

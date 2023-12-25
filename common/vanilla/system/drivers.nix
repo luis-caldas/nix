@@ -7,9 +7,6 @@
       # Wifi
       rtl8821cu
 
-      # Controllers
-      #hid-nintendo
-
       # Video loopback
       v4l2loopback
 

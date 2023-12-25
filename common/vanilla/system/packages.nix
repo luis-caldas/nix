@@ -62,6 +62,9 @@
     # GPU Top
     radeontop
 
+    # OpenCL
+    clinfo
+
     # Monitoring
     lsof
     psmisc
