@@ -282,7 +282,7 @@
       theme = mkOption {
         description = "Name of the preferred system theme to use";
         type = str;
-        default = "Adwaita-Dark";
+        default = "Adwaita-dark";
       };
 
     };
