@@ -1,5 +1,26 @@
-{ lib, pkgs, ... }:
+{ lib, ... }:
 {
+
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
+
+  ########
+  # Mine #
+  ########
+
+  mine = {
+    minimal = true;
+    boot.grub = true;
+    user.admin = false;
+    system.hostname = "opti";
+    services.ssh = true;
+  };
+
+  ########
+  # Kodi #
+  ########
 
   # Store audio cards states
   sound.enable = true;
@@ -15,7 +36,7 @@
   nixpkgs.config.pulseaudio = true;
 
   # Set graphics drivers
-  services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
 
   # Add 32 bit support and other acceleration packages
   hardware.opengl = {
@@ -97,5 +118,36 @@
     a4ksubtitles
     pdfreader
   ]);
+
+  fileSystems."/" =
+    { device = "light/root";
+      fsType = "zfs";
+    };
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/40FB-1D4B";
+      fsType = "vfat";
+    };
+
+  fileSystems."/tmp" =
+    { device = "light/tmp";
+      fsType = "zfs";
+    };
+
+  fileSystems."/home" =
+    { device = "light/home";
+      fsType = "zfs";
+    };
+
+  fileSystems."/nix" =
+    { device = "light/nix";
+      fsType = "zfs";
+    };
+
+  swapDevices = [ ];
+
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+
+  system.stateVersion = "23.05";
 
 }
