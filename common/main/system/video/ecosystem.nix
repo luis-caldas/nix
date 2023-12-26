@@ -52,6 +52,9 @@ lib.mkIf config.mine.graphics.enable
 
   };
 
+  # Enable widevine on chromium
+  nixpkgs.config.chromium.enableWideVine = true;
+
   # Add recommended policies as well
   environment.etc."chromium/policies/recommended/default.json".text = builtins.toJSON {};
   environment.etc."chromium/policies/recommended/extra.json".text = builtins.toJSON pkgs.reference.browser.policies.recommended;
