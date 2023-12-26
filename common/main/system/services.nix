@@ -55,8 +55,7 @@
   };
 
   # Enable logiops service
-  # TODO Reenable when working
-  # services.logiops.enable = config.mine.graphics.enable;
+  services.logiops.enable = config.mine.graphics.enable;
 
   # Printing
   services.printing = lib.mkIf config.mine.services.printing {

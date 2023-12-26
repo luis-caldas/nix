@@ -3,7 +3,8 @@
 
   # Kernel init
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "uas" "sd_mod" ];
-  boot.kernelModules = [ "kvm-amd" "kvmgt" "mdev" "thunderbolt" "vfio-iommu-type1" ];
+  boot.initrd.kernelModules = [ "thunderbolt" ];
+  boot.kernelModules = [ "kvm-amd" "kvmgt" "mdev" "vfio-iommu-type1" ];
 
   # ZFS ask for password
   boot.zfs.requestEncryptionCredentials = true;
@@ -13,7 +14,7 @@
 
   # Hardware from NixOS
   imports = [
-    "${builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware"; }}/framework/13-inch/7040-amd"
+    "${builtins.fetchGit "https://github.com/NixOS/nixos-hardware"}/framework/13-inch/7040-amd"
   ];
 
   # eGPU
