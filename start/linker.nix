@@ -14,10 +14,6 @@ let
     ref = "release-" + version;
   };
 
-  # Important paths
-  manager = ../common/manager;
-  main = ../common/main;
-
 in {
 
   # The default imports for the system
@@ -26,9 +22,12 @@ in {
     # First is Home Manager
     "${homeManager}/nixos"
 
+    # Exceptions
+    ../common/exceptions.nix
+
   ]
   # All the remaining files
-  ++ (lib.filesystem.listFilesRecursive main);
+  ++ (lib.filesystem.listFilesRecursive ../common/main);
 
   # Set Home Manager to use global Pkgs
   home-manager.useGlobalPkgs = true;
@@ -37,7 +36,7 @@ in {
   home-manager.users."${config.mine.user.name}" = { ... }: {
 
     # Default imports for Home Manager
-    imports = lib.filesystem.listFilesRecursive manager;
+    imports = lib.filesystem.listFilesRecursive ../common/manager;
 
   };
 
