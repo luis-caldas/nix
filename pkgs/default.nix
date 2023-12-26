@@ -10,12 +10,9 @@ let
   listDirs = folderPath:
     builtins.attrNames (lib.attrsets.filterAttrs (name: value: value == "directory") (builtins.readDir folderPath));
 
-  # All the packages
-  allPackages = listDirs packagesFolder;
-
   # Create set of package names and calls
   packageSet = (
-    lib.genAttrs stablePackages (
+    lib.genAttrs (listDirs packagesFolder) (
       folderName: lib.callPackageWith pkgs (packagesFolder + ("/" + folderName)) { }
     )
   );
