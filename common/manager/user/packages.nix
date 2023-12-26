@@ -88,7 +88,7 @@
 
     # Input
     xboxdrv
-    # mpkgs.x56linux  # TODO Add
+    pkgs.custom.x56linux
     linuxConsoleTools
 
     # Bluetooth

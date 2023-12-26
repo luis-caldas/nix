@@ -93,6 +93,9 @@ in {
     # Functions
     ../lib/functions.nix
 
+    # Extra packages and options
+    ../pkgs/default.nix
+
     # Import the default system file
     (systemPath + ("/" + defaultSystemFile))
 
