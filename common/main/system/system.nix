@@ -17,7 +17,7 @@
   i18n.defaultLocale = config.mine.system.locale;
 
   # Set default keyboard and their consoles
-  services.xserver.layout = builtins.head config.mine.system.layout;
+  services.xserver.xkb.layout = builtins.head config.mine.system.layout;
   console.useXkbConfig = true;
 
   # Enable ZRam if set

@@ -40,4 +40,7 @@
   hardware.rtl-sdr.enable = true;
   hardware.hackrf.enable = true;
 
+  # Enable firmware
+  hardware.enableRedistributableFirmware = true;
+
 }

@@ -84,6 +84,7 @@
     # Nix
     nix-top
     nix-tree
+    nix-diff
 
     # XDG
     trash-cli
