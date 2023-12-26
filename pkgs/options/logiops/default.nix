@@ -1,4 +1,4 @@
-{ config, lib, pkgs, mpkgs, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 let
 
@@ -103,19 +103,6 @@ in {
       '';
     };
 
-    # settings = mkOption {
-    #   type = types.submodule {
-    #     # Declare that the settings option supports arbitrary format values, libconfig here
-    #     freeformType = settingsFormat.type;
-    #   };
-    #   default = {};
-    #   # Add upstream documentation to the settings description
-    #   description = ''
-    #     Configuration for `logiops`, see
-    #     <link xlink:href="https://github.com/PixlOne/logiops/wiki/Configuration"/>
-    #     for supported values.
-    #   '';
-    # };
   };
 
   config = mkIf cfg.enable {
@@ -136,7 +123,6 @@ in {
 
     };
 
-    # environment.etc."logid.cfg".source = settingsFormat.generate "logid.cfg" cfg.settings;
     environment.etc."logid.cfg".text = cfg.extraConfig;
 
   };
