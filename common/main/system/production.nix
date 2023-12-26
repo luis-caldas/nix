@@ -16,5 +16,4 @@ lib.mkIf (config.mine.audio && config.mine.production.audio)
     KERNEL=="hpet", GROUP="audio"
   '';
 
-
 }

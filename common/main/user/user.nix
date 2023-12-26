@@ -1,4 +1,4 @@
-{ my, mfunc, pkgs, lib, config, ... }:
+{ pkgs, config, ... }:
 {
 
   # Make users mutable
