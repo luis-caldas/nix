@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ lib, pkgs, config, ... }:
 {
 
   # Make users mutable
@@ -40,7 +40,7 @@
 
   # Add custom getty message
   services.getty.greetingLine = config.mine.system.getty.greeting;
-  services.getty.helpLine = "\n" + config.mine.system.getty.help;
+  services.getty.helpLine = lib.mkForce ("\n" + config.mine.system.getty.help);
 
   # Add my custom motd
   users.motd = config.mine.system.motd;
