@@ -49,7 +49,7 @@ in
   };
 
   # Add packages that dont work with home manager
-  users.users."${config.mine.user.name}".packages = if config.mine.graphical.enable then (with pkgs; [
+  users.users."${config.mine.user.name}".packages = if config.mine.graphics.enable then (with pkgs; [
 
     # Office package
     libreoffice
@@ -83,12 +83,12 @@ in
     # Add ovmf path
     xdg.configFile =
     # Full omvf files only if not minimal
-    (if ((pkgs.reference.arch != pkgs.reference.arches.arm) && (!config.mine.system.minimal)) then {
+    (if ((pkgs.reference.arch != pkgs.reference.arches.arm) && (!config.mine.minimal)) then {
       "virt/ovmf".source = "${pkgs.OVMFFull.fd}";
     } else {}) //
 
     # QEmu only linked if not minial
-    (if (!config.mine.system.minimal) then {
+    (if (!config.mine.minimal) then {
       "virt/qemu".source = "${pkgs.qemu}/share/qemu";
     } else {}) //
 
@@ -133,7 +133,7 @@ in
 
     # Add arduino libraries
     home.file = if (
-      (pkgs.reference.arch != pkgs.reference.arches.arm) && (!config.mine.system.minimal)
+      (pkgs.reference.arch != pkgs.reference.arches.arm) && (!config.mine.minimal)
     ) then {
       ".local/share/arduino" = { source = "${pkgs.arduino}/share/arduino"; }; }
     else {};

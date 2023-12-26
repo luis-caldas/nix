@@ -1,11 +1,14 @@
-{ my, mfunc, pkgs, ... }:
+{ pkgs, lib, config, ... }:
+
+lib.mkIf config.mine.games
+
 {
 
   # Games
   home.packages = with pkgs; [
   ] ++
   # amd64 only games
-  mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [
+  (if (pkgs.reference.arch != pkgs.reference.arches.arm) then [
 
     # Dwarf Fortress
     (pkgs.dwarf-fortress-packages.dwarf-fortress-full.override {
@@ -18,6 +21,6 @@
       enableTextMode = true;
     })
 
-  ] [];
+  ] else []);
 
 }

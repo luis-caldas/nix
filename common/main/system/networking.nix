@@ -1,8 +1,8 @@
-{ lib, config, ... }:
+{ pkgs, lib, config, ... }:
 {
 
   # Needed for ZFS to work
-  networking.hostId = config.mine.id;
+  networking.hostId = pkgs.reference.id;
 
   # Set the hostname
   networking.hostName = config.mine.system.hostname; # Define your hostname.

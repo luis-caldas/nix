@@ -89,6 +89,9 @@ in {
     # Defaults
     ../config/defaults.nix
 
+    # Functions
+    ../lib/functions.nix
+
     # Import the default system file
     (systemPath + ("/" + defaultSystemFile))
 

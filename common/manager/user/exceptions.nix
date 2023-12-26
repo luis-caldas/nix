@@ -9,7 +9,7 @@
     };
     overrides = mkOption {
       type = types.functionTo types.attrs;
-      default = n: {};
+      default = value: {};
     };
   };
 
@@ -41,9 +41,8 @@
     # Home manager package overrides
     nixpkgs.config.packageOverrides = ogpkgs: (
       (config.exceptions.overrides ogpkgs)
-      // {
-
-      }
+      //
+      {}
     );
 
   };

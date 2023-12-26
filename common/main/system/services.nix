@@ -43,7 +43,7 @@
   virtualisation.oci-containers.backend = "docker";
 
   # libvirt config
-  virtualisation.libvirtd = lib.mkIf config.services.virtual.enable {
+  virtualisation.libvirtd = lib.mkIf config.mine.services.virtual.enable {
     enable = true;
     onBoot = "start";
     onShutdown = "shutdown";
@@ -55,7 +55,8 @@
   };
 
   # Enable logiops service
-  # services.logiops.enable = config.graphics.enable;
+  # TODO Reenable when working
+  # services.logiops.enable = config.mine.graphics.enable;
 
   # Printing
   services.printing = lib.mkIf config.mine.services.printing {

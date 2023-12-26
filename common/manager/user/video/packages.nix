@@ -1,4 +1,7 @@
-{ my, mfunc, config, pkgs, mpkgs, ... }:
+{ pkgs, lib, config, ... }:
+
+lib.mkIf config.mine.graphics.enable
+
 {
 
   home.packages = with pkgs; [
@@ -265,7 +268,9 @@
     dosbox
 
   ] ++
-  mfunc.useDefault (!my.config.system.minimal) [
+
+  # Non minimal system packages
+  (if (!config.mine.minimal) then [
 
     # Video Editing
     kdenlive
@@ -276,15 +281,18 @@
     # Radio
     gqrx
 
-  ] [] ++
-  mfunc.useDefault (my.arch == my.reference.x64) [
+  ] else []) ++
+
+  # 64 bit only applications
+  (if (pkgs.reference.arch == pkgs.reference.arches.x64) then [
 
     # Password manager
     bitwarden
 
-  ] [] ++
+  ] else []) ++
+
   # Packages that do not work on arm
-  mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [
+  (if (pkgs.reference.arch != pkgs.reference.arches.arm) then [
 
     # IDE
     arduino
@@ -301,8 +309,10 @@
     # Reverse engineering
     ghidra-bin
 
-  ] [] ++
-  mfunc.useDefault my.config.graphical.production.software [
+  ] else []) ++
+
+  # Software production software
+  (if config.mine.production.software then [
 
     # Jetbrains paid
     jetbrains.pycharm-professional
@@ -327,34 +337,44 @@
     # Maths
     octaveFull
 
-  ] [] ++
-  mfunc.useDefault my.config.graphical.production.business [
+  ] else []) ++
+
+  # Business software
+  (if config.mine.production.business then [
 
     # Video
     zoom-us
 
-  ] [] ++
-  mfunc.useDefault my.config.graphical.production.electronics [
+  ] else []) ++
+
+  # Electronics production software
+  (if config.mine.production.electronics then [
 
     # Electronics
     kicad
 
-  ] [] ++
-  mfunc.useDefault (((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) && my.config.graphical.production.electronics) [
+  ] else []) ++
+
+  # Electronics and non arm
+  (if ((pkgs.reference.arch != pkgs.reference.arches.arm) && config.mine.production.electronics) then [
 
     # Electronics
     logisim
 
-  ] [] ++
-  mfunc.useDefault (((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) && my.config.graphical.production.models) [
+  ] else []) ++
+
+  # 3D modelling software
+  (if ((pkgs.reference.arch != pkgs.reference.arches.arm) && config.mine.production.models) then [
 
     # Modeling & CAD
     blender
     freecad
     librecad
 
-  ] [] ++
-  mfunc.useDefault my.config.audio [
+  ] else []) ++
+
+  # Audio packages
+  (if config.mine.audio then [
 
     # Player
     amberol
@@ -375,21 +395,27 @@
     qpwgraph
     raysession
 
-  ] [] ++
-  mfunc.useDefault ((my.arch == my.reference.x64) && my.config.audio) [
+  ] else []) ++
+
+  # Audio for amd64
+  (if ((pkgs.reference.arch == pkgs.reference.arches.x64) && config.mine.audio) then [
 
     # Audio Players
     spotify
     spot
 
-  ] [] ++
-  mfunc.useDefault (my.config.audio && my.config.graphical.production.video) [
+  ] else []) ++
+
+  # Video production
+  (if (config.mine.audio && config.mine.graphics.production.video) then [
 
     # Video Editors
     davinci-resolve
 
-  ] [] ++
-  mfunc.useDefault (my.config.audio && my.config.graphical.production.audio) [
+  ] else []) ++
+
+  # Audio production
+  (if (config.mine.audio && config.mine.graphics.production.audio) then [
 
     # DAW
     reaper
@@ -413,6 +439,6 @@
     qsampler
     linuxsampler
 
-  ] [];
+  ] else []);
 
 }

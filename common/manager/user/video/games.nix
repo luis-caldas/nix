@@ -1,4 +1,7 @@
-{ my, mfunc, pkgs, mpkgs, ... }:
+{ pkgs, lib, config, ... }:
+
+lib.mkIf (config.mine.graphics.enable && config.mine.games)
+
 {
 
   # Games
@@ -36,8 +39,8 @@
     space-cadet-pinball
 
     # Sonic
-    mpkgs.srb2
-    mpkgs.srb2kart
+    # mpkgs.srb2
+    # mpkgs.srb2kart
 
     # Steam
     # steam
@@ -59,8 +62,9 @@
     cartridges
 
   ] ++
+
   # amd64 only games
-  mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [
+  (if (pkgs.reference.arch != pkgs.reference.arches.arm) then [
 
     # Minecraft
     minecraft
@@ -72,6 +76,6 @@
     # N64
     mupen64plus
 
-  ] [];
+  ] else []);
 
 }

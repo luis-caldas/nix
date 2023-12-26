@@ -1,13 +1,16 @@
-{ my, mfunc, lib, pkgs, mpkgs, config, options, ... }:
-let
+{ pkgs, lib, osConfig, config, options, ... }:
+
+lib.mkIf osConfig.mine.graphics.enable
+
+(let
 
   # Link all the themes
-  linkThemes  = (mfunc.listCreateLinks (my.projects.themes + "/collection") ".local/share/themes") //
-                (mfunc.listCreateLinks (my.projects.themes + "/openbox") ".local/share/themes");
-  linkCursors = (mfunc.listCreateLinks (my.projects.cursors + "/my-x11-cursors") ".local/share/icons");
-  linkIcons   = (mfunc.listCreateLinks (my.projects.icons + "/my-icons-collection") ".local/share/icons");
-  linkFonts   = { ".local/share/fonts/mine" = { source = (my.projects.fonts + "/my-custom-fonts"); }; };
-  linkPapes   = { ".local/share/backgrounds/mine" = { source = (my.projects.images + "/wallpapers"); }; };
+  linkThemes  = (pkgs.functions.listCreateLinks (pkgs.reference.projects.themes + "/collection") ".local/share/themes") //
+                (pkgs.functions.listCreateLinks (pkgs.reference.projects.themes + "/openbox") ".local/share/themes");
+  linkCursors = (pkgs.functions.listCreateLinks (pkgs.reference.projects.cursors + "/my-x11-cursors") ".local/share/icons");
+  linkIcons   = (pkgs.functions.listCreateLinks (pkgs.reference.projects.icons + "/my-icons-collection") ".local/share/icons");
+  linkFonts   = { ".local/share/fonts/mine" = { source = (pkgs.reference.projects.fonts + "/my-custom-fonts"); }; };
+  linkPapes   = { ".local/share/backgrounds/mine" = { source = (pkgs.reference.projects.images + "/wallpapers"); }; };
 
   # Create custom system fonts
   fontsList = with pkgs; [
@@ -23,7 +26,7 @@ let
   # Create links from custom fonts
   linkSystemFonts = lib.forEach fontsList (
     pack: (
-      mfunc.listCreateLinks
+      pkgs.functions.listCreateLinks
       ("${pack}" + "/share/fonts")
       (".local/share/fonts/system/" + pack.name)
     )
@@ -34,7 +37,7 @@ let
     papirus-icon-theme
   ]) (
     pack: (
-      mfunc.listCreateLinks
+      pkgs.functions.listCreateLinks
       ("${pack}" + "/share/icons")
       ".local/share/icons"
     )
@@ -46,17 +49,17 @@ let
     cinnamon.mint-themes
   ]) (
     pack: (
-      mfunc.listCreateLinks
+      pkgs.functions.listCreateLinks
       ("${pack}" + "/share/themes")
       ".local/share/themes"
     )
   );
 
   # Link vst folders
-  linkVST = mfunc.useDefault my.config.graphical.production.audio {
+  linkVST = lib.mkIf osConfig.mine.production.audio {
     ".local/share/vst/zynaddsubfx" = { source = "${pkgs.zyn-fusion}/lib/vst"; };
     ".local/share/vst/lsp" = { source = "${pkgs.lsp-plugins}/lib/vst"; };
-  } {};
+  };
 
   # Set the chromium package
   chromiumBrowserPackage = pkgs.chromium.override {
@@ -80,18 +83,19 @@ let
 
   # List of applications to be created
   browserApplications = [
-    { name = "cloud"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
+    { name = "deck"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
+    { name = "notes"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
     { name = "jellyfin-web"; icon = "jellyfin"; url = "https://redirect.caldas.ie"; }
     { name = "whatsapp-web"; icon = "whatsapp"; url = "https://web.whatsapp.com"; }
     { name = "discord-web"; icon = "discord"; url = "https://discord.com/app"; }
     { name = "github-web"; icon = "github"; url = "https://github.com"; }
-    { name = "chess"; icon = "chess"; url = "https://chess.com"; }
+    { name = "chess-web"; icon = "chess"; url = "https://chess.com"; }
     { name = "defence-forces"; icon = "knavalbattle"; url = "https://irishdefenceforces.workvivo.com"; }
   ];
 
   # List of the extensions
-  listChromeExtensions = [] ++ my.config.graphical.chromium.extensions.main;
-  listChromePersistentExtensions = [] ++ my.config.graphical.chromium.extensions.persistent;
+  listChromeExtensions = [] ++ osConfig.mine.browser.extensions.main;
+  listChromePersistentExtensions = [] ++ osConfig.mine.browser.extensions.persistent;
 
   # Create a list with the extensions
   listChromeExtensionsFiles = lib.listToAttrs (
@@ -106,7 +110,7 @@ let
   ];
   autoStartApps = builtins.listToAttrs (map
     (eachItem: let
-      fixedName = mfunc.capitaliseString (builtins.replaceStrings ["_" "-" "."] [" " " " " "] eachItem.name);
+      fixedName = pkgs.functions.capitaliseString (builtins.replaceStrings ["_" "-" "."] [" " " " " "] eachItem.name);
       desktopName = "${eachItem.name}.desktop";
       desktopItem = pkgs.makeDesktopItem rec{
         name = eachItem.name;
@@ -122,7 +126,7 @@ let
 
   # Put all the sets together
   linkSets = lib.mkMerge ([
-    linkThemes linkFonts linkPapes
+    (builtins.trace pkgs.reference linkThemes) linkFonts linkPapes
     linkCursors linkIcons
     linkVST
     listChromeExtensionsFiles
@@ -135,7 +139,7 @@ in
 {
 
   # Add my made programs to PATH
-  home.sessionPath = [ "${my.projects.desktop}/programs/public" ];
+  home.sessionPath = [ "${pkgs.reference.projects.desktop}/programs/public" ];
   # Add some extra env vars
   home.sessionVariables = {
     NIXOS_OZONE_WL = "1";
@@ -145,303 +149,18 @@ in
   # Some XDG links
   xdg.configFile = {
     # Link the fontconfig conf file
-    "fontconfig/fonts.conf" = { source = my.projects.fonts + "/fonts.conf"; };
+    "fontconfig/fonts.conf" = { source = pkgs.reference.projects.fonts + "/fonts.conf"; };
   };
 
   # Add theming for qt
   qt = {
     enable = true;
     platformTheme = "gnome";
-    style.name = lib.strings.toLower my.config.graphical.theme;
+    style.name = lib.strings.toLower osConfig.mine.graphics.theme;
   };
 
   # Add a service to manage mpris headset support
-  services.mpris-proxy.enable = my.config.bluetooth;
-
-  # All gnome configuration
-  dconf.settings = let
-    prefix = "main";
-    default = "df.png";
-    wallpapersDir = "${my.projects.images}/wallpapers";
-    firstImage = lib.findFirst (x: lib.hasPrefix prefix x) default (mfunc.listFilesInFolder wallpapersDir);
-    backgroundPath = "file://${wallpapersDir}/${firstImage}";
-    workspaces = [
-      "Main" "Browse" "Mail" "Docs" "Game" "Design" "Web" "Links" "Music"
-    ];
-  in lib.mkMerge [{
-    "org/gnome/desktop/input-sources" = {
-      sources = let
-        inputs = ["ie" "us"];
-        allSources = map (eachInput: (lib.hm.gvariant.mkTuple ["xkb" eachInput])) inputs;
-      in allSources;
-      xkb-options = [ "caps:ctrl_modifier" ];
-    };
-    "org/gnome/desktop/peripherals/touchpad" = {
-      tap-to-click = true;
-      two-finger-scrolling-enabled = true;
-      click-method = "areas";
-    };
-    "org/gnome/desktop/peripherals/keyboard" = {
-      numlock-state = my.config.graphical.numlock;
-    };
-    "org/gnome/shell".favorite-apps = [
-      "org.gnome.Terminal.desktop"
-      "org.gnome.Nautilus.desktop"
-      "chromium-browser.desktop"
-      "cloud.desktop"
-      "whatsapp-web.desktop"
-      "spotify.desktop"
-    ];
-    "org/gnome/mutter" = {
-      edge-tiling = true;
-      workspaces-only-on-primary = true;
-      experimental-features = [ "scale-monitor-framebuffer" ];
-    };
-    "org/gnome/desktop/interface" = {
-      cursor-size = lib.mkForce 32;
-      cursor-theme = my.config.graphical.cursor;
-      icon-theme = my.config.graphical.icons;
-      gtk-theme = my.config.graphical.theme;
-      color-scheme = "prefer-dark";
-      enable-hot-corners = false;
-      clock-show-seconds = true;
-      clock-show-weekday = true;
-      font-antialiasing = "subpixel";
-      font-hinting = "full";
-      show-battery-percentage = true;
-    };
-    "org/gnome/desktop/search-providers" = {
-      disable-external = true;
-    };
-    "org/gnome/desktop/privacy" = {
-      recent-files-max-age = -1;
-      remember-recent-files = false;
-    };
-    "org/gnome/desktop/wm/preferences" = {
-      num-workspaces = builtins.length workspaces;
-      workspace-names = workspaces;
-      button-layout = "menu,appmenu:minimize,maximize,close";
-    };
-    "org/gnome/desktop/background" = {
-      picture-uri = backgroundPath;
-      picture-uri-dark = backgroundPath;
-    };
-    "org/gnome/desktop/interface" = {
-      font-name = "Sans 10";
-      document-font-name = "Sans 10";
-      monospace-font-name = "Mono 11";
-    };
-    "org/gnome/desktop/screensaver" = {
-      picture-uri = backgroundPath;
-    };
-    "org/gnome/settings-daemon/plugins/power" = {
-      power-button-action = "nothing";
-    };
-    "org/gnome/shell/app-switcher" = {
-      current-workspace-only = true;
-    };
-    # Extensions
-    "org/gnome/shell" = {
-      disable-extension-version-validation = false;
-      disable-user-extensions = false;
-      disabled-extensions = [];
-      enabled-extensions = [
-        # Official
-        "drive-menu@gnome-shell-extensions.gcampax.github.com"
-        # Others
-        "clipboard-indicator@tudmotu.com"
-        "date-menu-formatter@marcinjakubowski.github.com"
-        "Vitals@CoreCoding.com"
-        "dash-to-dock@micxgx.gmail.com"
-      ];
-    };
-  }
-  # Extensions configuration
-  (let
-    startPath = "org/gnome/shell/extensions";
-    buildFull = wholeSet:
-      builtins.listToAttrs (
-        map
-        (key: { name = "${startPath}/${key}"; value = builtins.getAttr key wholeSet; })
-        (builtins.attrNames wholeSet)
-      );
-  in buildFull {
-    arcmenu = {
-      application-shortcuts-list = [];
-      dash-to-panel-standalone = true;
-      default-menu-view = "Categories_List";
-      directory-shortcuts-list = [
-        ["Documents"  ". GThemedIcon folder-documents-symbolic folder-symbolic folder-documents folder" "ArcMenu_Documents"]
-        ["Downloads"  ". GThemedIcon folder-download-symbolic folder-symbolic folder-download folder"   "ArcMenu_Downloads"]
-        ["Music"      ". GThemedIcon folder-music-symbolic folder-symbolic folder-music folder"         "ArcMenu_Music"]
-        ["Pictures"   ". GThemedIcon folder-pictures-symbolic folder-symbolic folder-pictures folder"   "ArcMenu_Pictures"]
-        ["Videos"     ". GThemedIcon folder-videos-symbolic folder-symbolic folder-videos folder"       "ArcMenu_Videos"]
-      ];
-      enable-menu-hotkey = false;
-      extra-categories = [
-        (lib.hm.gvariant.mkTuple [1 false]) (lib.hm.gvariant.mkTuple [2 false])
-        (lib.hm.gvariant.mkTuple [3 false]) (lib.hm.gvariant.mkTuple [4 false])
-      ];
-      menu-button-appearance = "Icon_Text";
-      menu-layout = "Default";
-      pinned-app-list = [];
-      power-options = [
-        (lib.hm.gvariant.mkTuple [0 false]) (lib.hm.gvariant.mkTuple [1 false])
-        (lib.hm.gvariant.mkTuple [2 false]) (lib.hm.gvariant.mkTuple [3 false])
-        (lib.hm.gvariant.mkTuple [4 false]) (lib.hm.gvariant.mkTuple [5 false])
-        (lib.hm.gvariant.mkTuple [6 false]) (lib.hm.gvariant.mkTuple [7 false])
-      ];
-      prefs-visible-page = 0;
-      show-activities-button = true;
-      show-bookmarks = false;
-    };
-    clipboard-indicator = {
-      disable-down-arrow = false;
-      display-mode = 0;
-      enable-keybindings = false;
-      history-size = 1000000;
-    };
-    dash-to-dock = {
-      apply-custom-theme = true;
-      disable-overview-on-startup = true;
-      hot-keys = false;
-      isolate-monitors = false;
-      multi-monitor = true;
-      show-mounts-network=true;
-    };
-    date-menu-formatter = {
-      pattern = "y/MM/dd kk:mm:ss EEE X";
-    };
-    trayIconsReloaded = {
-      icons-limit = 1;
-    };
-    vitals= {
-      alphabetize = true;
-      fixed-widths = true;
-      hide-icons = false;
-      hot-sensors = [
-        "_processor_usage_"
-        "_memory_allocated_"
-        "__temperature_avg__" "__temperature_max__"
-      ];
-      position-in-panel = 1;
-      show-fan = false;
-      show-network = true;
-      show-storage = false;
-      show-system = false;
-      show-temperature = true;
-      show-voltage = false;
-      use-higher-precision = false;
-    };
-    mpris-label = {
-      auto-switch-to-most-recent = true;
-      extension-index = 20;
-      extension-place = "center";
-      max-string-length = 20;
-      left-padding = 0;
-      right-padding = 0;
-      first-field = "xesam:artist";
-      second-field = "";
-      right-click-action = "next-track";
-      thumb-backward-action = "none";
-      thumb-forward-action = "none";
-    };
-  })
-  # Create custom keybindings
-  (let
-    startMedia = "org/gnome/settings-daemon/plugins/media-keys";
-    keybindingsKey = "custom-keybindings";
-    keybindingsPath = "${startMedia}/${keybindingsKey}";
-    # Custom list of keybindings
-    keybindings = {
-      "Terminal" = {
-        command = "gnome-terminal";
-        binding = "<Super>Return";
-      };
-      "File" = {
-        command = "nautilus";
-        binding = "<Super>E";
-      };
-      "Browser" = {
-        command = "chromium";
-        binding = "<Super>N";
-      };
-      "Browser Persistent" = {
-        command = "chromium --user-data-dir=\"${config.xdg.configHome}/${browserNamePersistent}\"";
-        binding = "<Super>M";
-      };
-      "Browser Basic" = {
-        command = "chromium --user-data-dir=\"${config.xdg.configHome}/chromium-work\"";
-        binding = "<Super>B";
-      };
-    };
-    # Convert that list into dconf
-    keybindingsList = let setNow = keybindings; in (map (key:
-      { name = key; value = builtins.getAttr key setNow; }
-    ) (builtins.attrNames setNow));
-    customKeysList = lib.lists.imap0 ( index: item:
-      let
-        customName = "custom${builtins.toString index}";
-      in {
-        name = "${keybindingsPath}/${customName}"; value = {
-          name = item.name;
-          command = item.value.command;
-          binding = item.value.binding;
-        };
-      }
-    ) keybindingsList;
-    customKeys = builtins.listToAttrs customKeysList;
-    # Another entry is needed listing all the created keybindings
-    listOfEntryNames = {
-      "${startMedia}"."${keybindingsKey}" = map (eachName: "/${eachName}/") (builtins.attrNames customKeys);
-    };
-    # Join both dconfs into a single one (both the customs and the name list)
-    allCustom = customKeys // listOfEntryNames;
-  in allCustom)
-  # Overwrite keybindings and set my own
-  (let
-    mapAttrsHelp = attrSetInput:
-      map (key: {name = key; value = builtins.getAttr key attrSetInput;}) (builtins.attrNames attrSetInput);
-    genStrRange = size:
-      map builtins.toString (lib.lists.range 1 size);
-  in {
-    "org/gnome/shell/keybindings" = builtins.listToAttrs (
-      (mapAttrsHelp {
-        focus-active-notification = [];
-        toggle-message-tray = [ "<Super>V" ];
-      }) ++
-      (map (eachIndex:
-        { name = "switch-to-application-${eachIndex}"; value = []; }
-      ) (genStrRange (builtins.length workspaces)))
-    );
-    "org/gnome/settings-daemon/plugins/media-keys" = builtins.listToAttrs (mapAttrsHelp {
-      help = [];
-      magnifier = [ "<Alt><Super>Z" ];
-    });
-    "org/gnome/desktop/wm/keybindings" = builtins.listToAttrs (
-      (mapAttrsHelp {
-        close = [ "<Super>BackSpace" "<Alt>F4" ];
-        activate-window-menu = [ "<Alt>Space" ];
-        # Fix window switching
-        switch-applications = [];
-        switch-applications-backward = [];
-        switch-windows = [ "<Alt>Tab" ];
-        switch-windows-backward = [ "<Shift><Alt>Tab" ];
-      }) ++
-      # Switching workspaces
-      (map (eachIndex:
-        { name = "switch-to-workspace-${eachIndex}"; value = [
-          "<Super>${eachIndex}" "<Super><Alt>${eachIndex}" "<Control><Alt>${eachIndex}"
-        ]; }
-      ) (genStrRange (builtins.length workspaces))) ++
-      # Moving workspaces
-      (map (eachIndex:
-        { name = "move-to-workspace-${eachIndex}"; value = [
-          "<Super><Shift>${eachIndex}" "<Super><Shift><Alt>${eachIndex}" "<Control><Shift><Alt>${eachIndex}"
-        ]; }
-      ) (genStrRange (builtins.length workspaces)))
-    );
-  })];
+  services.mpris-proxy.enable = osConfig.mine.bluetooth;
 
   # Add my own custom "applications"
   xdg.desktopEntries = {} // (
@@ -449,7 +168,7 @@ in
     builtins.listToAttrs (map (eachEntry: {
       name = eachEntry.name;
       value = rec {
-        name = mfunc.capitaliseString (builtins.replaceStrings ["-"] [" "] eachEntry.name);
+        name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] eachEntry.name);
         comment = "${name} web page running as an application";
         exec = ''/usr/bin/env sh -c "chromium --user-data-dir=\\$HOME/.config/browser-apps/${eachEntry.name} --app=${eachEntry.url}"'';
         icon = eachEntry.icon;
@@ -521,4 +240,4 @@ in
   # Add all the acquired link sets to the config
   home.file = linkSets;
 
-}
+})

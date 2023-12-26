@@ -1,4 +1,4 @@
-{ my, mfunc, pkgs, mpkgs, config, ... }:
+{ pkgs, config, ... }:
 {
 
   home.packages = with pkgs; [
@@ -243,7 +243,9 @@
     #########################
 
   ] ++
-  mfunc.useDefault (!my.config.system.minimal) [
+
+  # Packages for a non minimal systems
+  (if (!config.mine.minimal) then [
 
     # Pentest
     metasploit
@@ -266,26 +268,34 @@
     # Video
     ffmpeg-full
 
-  ] [] ++
-  mfunc.useDefault ((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) [
+  ] else []) ++
+
+  # Packages for non arm systems
+  (if (pkgs.reference.arch != pkgs.reference.arches.arm) then [
 
     # Flashing
     flashrom
 
-  ] []++
-  mfunc.useDefault (((my.arch == my.reference.x64) || (my.arch == my.reference.x86)) && (!my.config.system.minimal)) [
+  ] else []) ++
+
+  # Minimal and non arm
+  (if ((pkgs.reference.arch != pkgs.reference.arches.arm) && (!config.mine.minimal)) then [
 
     # Android Programs
     apktool
 
-  ] [] ++
-  mfunc.useDefault my.config.tex [
+  ] else []) ++
+
+  # LaTeX support
+  (if config.mine.tex then [
 
     # Tex with medium scheme
     texlive.combined.scheme-medium
 
-  ] [] ++
-  mfunc.useDefault my.config.audio [
+  ] else []) ++
+
+  # Audio support
+  (if config.mine.audio then [
 
     # Local player
     cmus
@@ -311,6 +321,6 @@
     # Morse code training
     aldo
 
-  ] [];
+  ] else []);
 
 }
