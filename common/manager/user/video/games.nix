@@ -1,6 +1,6 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, osConfig, ... }:
 
-lib.mkIf (config.mine.graphics.enable && config.mine.games)
+lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
 
 {
 
@@ -60,6 +60,9 @@ lib.mkIf (config.mine.graphics.enable && config.mine.games)
 
     # Games
     cartridges
+
+    # Streaming
+    chiaki
 
   ] ++
 

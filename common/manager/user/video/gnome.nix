@@ -247,7 +247,7 @@ lib.mkIf osConfig.mine.graphics.enable
     # Join both dconfs into a single one (both the customs and the name list)
     allCustom = customKeys // listOfEntryNames;
 
-  in builtins.trace allCustom allCustom)
+  in allCustom)
 
   # Overwriting keybindings and setting alternatives
   (let

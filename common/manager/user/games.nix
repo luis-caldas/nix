@@ -1,6 +1,6 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, osConfig, ... }:
 
-lib.mkIf config.mine.games
+lib.mkIf osConfig.mine.games
 
 {
 

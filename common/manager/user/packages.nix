@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, osConfig, ... }:
 {
 
   home.packages = with pkgs; [
@@ -88,7 +88,7 @@
 
     # Input
     xboxdrv
-    mpkgs.x56linux
+    # mpkgs.x56linux  # TODO Add
     linuxConsoleTools
 
     # Bluetooth
@@ -245,7 +245,7 @@
   ] ++
 
   # Packages for a non minimal systems
-  (if (!config.mine.minimal) then [
+  (if (!osConfig.mine.minimal) then [
 
     # Pentest
     metasploit
@@ -279,7 +279,7 @@
   ] else []) ++
 
   # Minimal and non arm
-  (if ((pkgs.reference.arch != pkgs.reference.arches.arm) && (!config.mine.minimal)) then [
+  (if ((pkgs.reference.arch != pkgs.reference.arches.arm) && (!osConfig.mine.minimal)) then [
 
     # Android Programs
     apktool
@@ -287,7 +287,7 @@
   ] else []) ++
 
   # LaTeX support
-  (if config.mine.tex then [
+  (if osConfig.mine.tex then [
 
     # Tex with medium scheme
     texlive.combined.scheme-medium
@@ -295,7 +295,7 @@
   ] else []) ++
 
   # Audio support
-  (if config.mine.audio then [
+  (if osConfig.mine.audio then [
 
     # Local player
     cmus

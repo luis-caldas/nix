@@ -1,6 +1,6 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, osConfig, ... }:
 
-lib.mkIf config.mine.graphics.enable
+lib.mkIf osConfig.mine.graphics.enable
 
 {
 
@@ -270,7 +270,7 @@ lib.mkIf config.mine.graphics.enable
   ] ++
 
   # Non minimal system packages
-  (if (!config.mine.minimal) then [
+  (if (!osConfig.mine.minimal) then [
 
     # Video Editing
     kdenlive
@@ -312,7 +312,7 @@ lib.mkIf config.mine.graphics.enable
   ] else []) ++
 
   # Software production software
-  (if config.mine.production.software then [
+  (if osConfig.mine.production.software then [
 
     # Jetbrains paid
     jetbrains.pycharm-professional
@@ -340,7 +340,7 @@ lib.mkIf config.mine.graphics.enable
   ] else []) ++
 
   # Business software
-  (if config.mine.production.business then [
+  (if osConfig.mine.production.business then [
 
     # Video
     zoom-us
@@ -348,7 +348,7 @@ lib.mkIf config.mine.graphics.enable
   ] else []) ++
 
   # Electronics production software
-  (if config.mine.production.electronics then [
+  (if osConfig.mine.production.electronics then [
 
     # Electronics
     kicad
@@ -356,7 +356,7 @@ lib.mkIf config.mine.graphics.enable
   ] else []) ++
 
   # Electronics and non arm
-  (if ((pkgs.reference.arch != pkgs.reference.arches.arm) && config.mine.production.electronics) then [
+  (if ((pkgs.reference.arch != pkgs.reference.arches.arm) && osConfig.mine.production.electronics) then [
 
     # Electronics
     logisim
@@ -364,7 +364,7 @@ lib.mkIf config.mine.graphics.enable
   ] else []) ++
 
   # 3D modelling software
-  (if ((pkgs.reference.arch != pkgs.reference.arches.arm) && config.mine.production.models) then [
+  (if ((pkgs.reference.arch != pkgs.reference.arches.arm) && osConfig.mine.production.models) then [
 
     # Modeling & CAD
     blender
@@ -374,7 +374,7 @@ lib.mkIf config.mine.graphics.enable
   ] else []) ++
 
   # Audio packages
-  (if config.mine.audio then [
+  (if osConfig.mine.audio then [
 
     # Player
     amberol
@@ -398,7 +398,7 @@ lib.mkIf config.mine.graphics.enable
   ] else []) ++
 
   # Audio for amd64
-  (if ((pkgs.reference.arch == pkgs.reference.arches.x64) && config.mine.audio) then [
+  (if ((pkgs.reference.arch == pkgs.reference.arches.x64) && osConfig.mine.audio) then [
 
     # Audio Players
     spotify
@@ -407,7 +407,7 @@ lib.mkIf config.mine.graphics.enable
   ] else []) ++
 
   # Video production
-  (if (config.mine.audio && config.mine.graphics.production.video) then [
+  (if (osConfig.mine.audio && osConfig.mine.production.video) then [
 
     # Video Editors
     davinci-resolve
@@ -415,7 +415,7 @@ lib.mkIf config.mine.graphics.enable
   ] else []) ++
 
   # Audio production
-  (if (config.mine.audio && config.mine.graphics.production.audio) then [
+  (if (osConfig.mine.audio && osConfig.mine.production.audio) then [
 
     # DAW
     reaper
