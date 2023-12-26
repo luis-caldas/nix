@@ -30,6 +30,9 @@ in {
   # All the remaining files
   ++ (lib.filesystem.listFilesRecursive main);
 
+  # Set Home Manager to use global Pkgs
+  home-manager.useGlobalPkgs = true;
+
   # Import the files needed for the Home Manager package
   home-manager.users."${config.mine.user.name}" = { ... }: {
 

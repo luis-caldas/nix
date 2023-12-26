@@ -4,7 +4,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
 (let
 
-  # Link all the themes
+  # Links for everything used on my desktop
   linkThemes  = (pkgs.functions.listCreateLinks (pkgs.reference.projects.themes + "/collection") ".local/share/themes") //
                 (pkgs.functions.listCreateLinks (pkgs.reference.projects.themes + "/openbox") ".local/share/themes");
   linkCursors = (pkgs.functions.listCreateLinks (pkgs.reference.projects.cursors + "/my-x11-cursors") ".local/share/icons");
@@ -61,18 +61,13 @@ lib.mkIf osConfig.mine.graphics.enable
     ".local/share/vst/lsp" = { source = "${pkgs.lsp-plugins}/lib/vst"; };
   };
 
-  # Set the chromium package
-  chromiumBrowserPackage = pkgs.chromium.override {
-    commandLineArgs = "--force-dark-mode --enable-features=WebUIDarkMode";
-  };
-
   # Function for creating extensions for chromium based browsers
   extensionJson = ext: browserName: let
     configDir = "${config.xdg.configHome}/" + browserName;
     updateUrl = (options.programs.chromium.extensions.type.getSubOptions []).updateUrl.default;
-  in with builtins; {
+  in {
     name = "${configDir}/External Extensions/${ext}.json";
-    value.text = toJSON {
+    value.text = builtins.toJSON {
       external_update_url = updateUrl;
     };
   };
@@ -90,6 +85,7 @@ lib.mkIf osConfig.mine.graphics.enable
     { name = "discord-web"; icon = "discord"; url = "https://discord.com/app"; }
     { name = "github-web"; icon = "github"; url = "https://github.com"; }
     { name = "chess-web"; icon = "chess"; url = "https://chess.com"; }
+    { name = "spotify-web"; icon = "spotify"; url = "https://open.spotify.com/"; }
     { name = "defence-forces"; icon = "knavalbattle"; url = "https://irishdefenceforces.workvivo.com"; }
   ];
 
@@ -126,7 +122,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
   # Put all the sets together
   linkSets = lib.mkMerge ([
-    (builtins.trace pkgs.reference linkThemes) linkFonts linkPapes
+    linkThemes linkFonts linkPapes
     linkCursors linkIcons
     linkVST
     listChromeExtensionsFiles
@@ -184,7 +180,9 @@ in
     # Enable chromium
     chromium = {
       enable = true;
-      package = chromiumBrowserPackage;
+      package = pkgs.chromium.override {
+        commandLineArgs = "--force-dark-mode --enable-features=WebUIDarkMode";
+      };
     };
 
     # Enable vscode
@@ -208,6 +206,7 @@ in
         "telemetry.telemetryLevel" = "off";
         "editor.fontLigatures" = true;
         "files.trimTrailingWhitespace" = true;
+        "files.autoSave" = "onFocusChange";
         "keyboard.dispatch" = "keyCode";
         "terminal.integrated.shellIntegration.showWelcome" = false;
         "workbench.startupEditor" = "none";
