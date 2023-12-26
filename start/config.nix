@@ -30,7 +30,7 @@ let
       throw "Unsupported architecture ${arch}";
 
   # Import the browser config
-  chromiumPolicies = builtins.fromJSON (builtins.readFile (../config/browser + "/chromium.json"));
+  chromiumPolicies = builtins.fromJSON (builtins.readFile (../config/browsers + "/chromium.json"));
 
   # Extract only the needed projects
   myProjects = let
@@ -48,7 +48,8 @@ let
 
     in {
       name = fixedName;
-      value = pkgs.fetchFromGithub {
+      value = pkgs.fetchFromGitHub {
+        name = fixedName;
         owner = ownerName;
         repo = eachProjectName;
         rev = allProjects."${eachProjectName}".commit;
@@ -56,7 +57,7 @@ let
       };
     }
 
-  ) allProjectNames);
+  ) allProjectNames.projects);
 
   # Build the system path
   systemPath = ../systems + ("/" + systemName);

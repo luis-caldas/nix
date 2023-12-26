@@ -5,12 +5,12 @@ lib.mkIf osConfig.mine.graphics.enable
 (let
 
   # Links for everything used on my desktop
-  linkThemes  = (pkgs.functions.listCreateLinks (pkgs.reference.projects.themes + "/collection") ".local/share/themes") //
-                (pkgs.functions.listCreateLinks (pkgs.reference.projects.themes + "/openbox") ".local/share/themes");
-  linkCursors = (pkgs.functions.listCreateLinks (pkgs.reference.projects.cursors + "/my-x11-cursors") ".local/share/icons");
-  linkIcons   = (pkgs.functions.listCreateLinks (pkgs.reference.projects.icons + "/my-icons-collection") ".local/share/icons");
-  linkFonts   = { ".local/share/fonts/mine" = { source = (pkgs.reference.projects.fonts + "/my-custom-fonts"); }; };
-  linkPapes   = { ".local/share/backgrounds/mine" = { source = (pkgs.reference.projects.images + "/wallpapers"); }; };
+  linkThemes  = (pkgs.functions.listCreateLinks ("${pkgs.reference.projects.themes}/collection") ".local/share/themes") //
+                (pkgs.functions.listCreateLinks ("${pkgs.reference.projects.themes}/openbox") ".local/share/themes");
+  linkCursors = (pkgs.functions.listCreateLinks ("${pkgs.reference.projects.cursors}/my-x11-cursors") ".local/share/icons");
+  linkIcons   = (pkgs.functions.listCreateLinks ("${pkgs.reference.projects.icons}/my-icons-collection") ".local/share/icons");
+  linkFonts   = { ".local/share/fonts/mine" = { source = ("${pkgs.reference.projects.fonts}/my-custom-fonts"); }; };
+  linkPapes   = { ".local/share/backgrounds/mine" = { source = ("${pkgs.reference.projects.images}/wallpapers"); }; };
 
   # Create custom system fonts
   fontsList = with pkgs; [

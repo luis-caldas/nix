@@ -31,7 +31,7 @@ lib.mkIf osConfig.mine.graphics.enable
   {
 
     "org/gnome/desktop/input-sources" = {
-      sources = map (eachInput: (lib.hm.gvariant.mkTuple ["xkb" eachInput])) config.mine.system.layout;
+      sources = map (eachInput: (lib.hm.gvariant.mkTuple ["xkb" eachInput])) osConfig.mine.system.layout;
       xkb-options = [ "caps:ctrl_modifier" ];
     };
     "org/gnome/desktop/peripherals/touchpad" = {
@@ -58,7 +58,7 @@ lib.mkIf osConfig.mine.graphics.enable
     "org/gnome/desktop/interface" = {
       cursor-size = lib.mkForce 32;
       cursor-theme = osConfig.mine.graphics.cursor;
-      icon-theme = osConfig.mine.graphics.icons;
+      icon-theme = osConfig.mine.graphics.icon;
       gtk-theme = osConfig.mine.graphics.theme;
       color-scheme = "prefer-dark";
       enable-hot-corners = false;
