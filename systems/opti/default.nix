@@ -14,6 +14,7 @@
     minimal = true;
     boot.grub = true;
     kernel.text = false;
+    kernel.params = [ "nomodeset" ];
     user.admin = false;
     system.hostname = "opti";
     services.ssh = true;
@@ -37,7 +38,7 @@
   nixpkgs.config.pulseaudio = true;
 
   # Set graphics drivers
-  services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
+  services.xserver.videoDrivers = [ "radeon" ];
 
   # Add 32 bit support and other acceleration packages
   hardware.opengl = {
