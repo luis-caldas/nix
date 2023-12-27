@@ -12,7 +12,6 @@
 
   mine = {
     minimal = true;
-    boot.grub = true;
     kernel.text = false;
     kernel.params = [ "nomodeset" ];
     user.admin = false;
