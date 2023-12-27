@@ -16,7 +16,7 @@ let
   };
 
   # Set the specialisation if needed
-  dynamicSpecialization = lib.mkIf config.mine.graphics.enable textConfig;
+  dynamicSpecialization = lib.mkIf (config.mine.graphics.enable || !config.mine.kernel.text) textConfig;
 
 in
 {
@@ -37,7 +37,7 @@ in
     # Add my own params
     config.mine.kernel.params ++
     # Check if we need to disable graphics
-    (if (!config.mine.graphics.enable) then textKernelParams else []);
+    (if (!config.mine.graphics.enable && config.mine.kernel.text) then textKernelParams else []);
 
   };
 

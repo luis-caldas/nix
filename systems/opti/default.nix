@@ -13,6 +13,7 @@
   mine = {
     minimal = true;
     boot.grub = true;
+    kernel.text = false;
     user.admin = false;
     system.hostname = "opti";
     services.ssh = true;

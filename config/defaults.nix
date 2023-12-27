@@ -66,6 +66,12 @@
     # Kernel specific options
     kernel = {
 
+      text = mkOption {
+        description = "Extra text mode for the systems";
+        type = bool;
+        default = true;
+      };
+
       params = mkOption {
         description = "Extra parameters for the kernel line on boot";
         type = listOf str;
