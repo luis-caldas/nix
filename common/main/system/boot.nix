@@ -1,4 +1,4 @@
-{ config, ... }:
+{ lib, config, ... }:
 let
 
   # GRUB Configuration
@@ -58,8 +58,7 @@ let
 
   };
 
-in
-{
+in {
 
   # Unset the default console font
   console.font = "";
@@ -77,20 +76,18 @@ in
       forceImportAll = false;
     };
 
-    # Bootloader configuration
-    loader = {
+    # Check if boot has to be ovewritten
+    loader = if config.mine.boot.override then (lib.mkForce {}) else ({
 
       # Set the given timeout
       timeout = config.mine.boot.timeout;
 
     } //
-    # Check if boot has been ovrriden
-    (if config.mine.boot.override then {} else (
-      # Check which type of bootloader we are using
-      if (config.mine.boot.efi && (!config.mine.boot.grub)) then
-        { systemd-boot = systemDBootConfiguration; }
-       else
-        { grub = grubConfiguration; }
+    # Check which type of bootloader we are using
+    (if (config.mine.boot.efi && (!config.mine.boot.grub)) then
+      { systemd-boot = systemDBootConfiguration; }
+    else
+      { grub = grubConfiguration; }
     ));
 
   };

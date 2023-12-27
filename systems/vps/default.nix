@@ -37,6 +37,17 @@
 
 in {
 
+  # My own part of configuring
+  mine = {
+    minimal = true;
+    zram = true;
+    boot.override = true;
+    system.hostname = "vps";
+    user.admin = false;
+    services.ssh = true;
+    services.docker = true;
+  };
+
   # Clear boot configuration
   boot.loader = lib.mkForce {};
 
