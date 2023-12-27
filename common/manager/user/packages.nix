@@ -240,6 +240,12 @@
     # Reverse
     radare2
 
+    # Flashing
+    avrdude
+    micronucleus
+    dfu-util
+    dfu-programmer
+
     #########################
 
   ] ++
