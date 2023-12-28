@@ -100,26 +100,6 @@ lib.mkIf osConfig.mine.graphics.enable
     (map (eachExt: extensionJson eachExt browserNamePersistent) listChromePersistentExtensions)
   );
 
-  # Autostarting programs and commands
-  autoStartPrograms = [
-    { name = "nextcloud.autostart"; command = "${pkgs.nextcloud-client}/bin/nextcloud --background"; icon = "nextcloud"; }
-  ];
-  autoStartApps = builtins.listToAttrs (map
-    (eachItem: let
-      fixedName = pkgs.functions.capitaliseString (builtins.replaceStrings ["_" "-" "."] [" " " " " "] eachItem.name);
-      desktopName = "${eachItem.name}.desktop";
-      desktopItem = pkgs.makeDesktopItem rec{
-        name = eachItem.name;
-        desktopName = fixedName;
-        exec = eachItem.command;
-        icon = eachItem.icon;
-      };
-    in {
-      name = ".config/autostart/${desktopName}";
-      value.source = "${desktopItem}/share/applications/${desktopName}";
-    })
-    autoStartPrograms);
-
   # Put all the sets together
   linkSets = lib.mkMerge ([
     linkThemes linkFonts linkPapes
