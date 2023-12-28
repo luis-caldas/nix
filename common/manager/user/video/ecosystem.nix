@@ -72,20 +72,11 @@ lib.mkIf osConfig.mine.graphics.enable
     };
   };
 
-  # Set browser names
-  browserNameMain = "chromium";
-  browserNamePersistent = "chromium-persistent";
-
-  # List of the extensions
-  listChromeExtensions = [] ++ osConfig.mine.browser.extensions.main;
-  listChromePersistentExtensions = [] ++ osConfig.mine.browser.extensions.persistent;
-
-  # Create a list with the extensions
-  listChromeExtensionsFiles = lib.listToAttrs (
-    # Extensions that exist in the google store
-    (map (eachExt: extensionJson eachExt browserNameMain) listChromeExtensions) ++
-    (map (eachExt: extensionJson eachExt browserNamePersistent) listChromePersistentExtensions)
-  );
+  # Install all the needed extensions
+  listBrowserExtensionFiles = lib.listToAttrs (builtins.concatLists (lib.attrsets.mapAttrsToList
+    (name: value: map (eachExt: extensionJson eachExt value.path) value.extensions)
+    (lib.attrsets.filterAttrs (name: value: value.extensions != []) osConfig.mine.browser.extensions.others)
+  ));
 
 in
 {
@@ -138,7 +129,7 @@ in
     linkThemes linkFonts linkPapes
     linkCursors linkIcons
     linkVST
-    listChromeExtensionsFiles
+    listBrowserExtensionFiles
   ] ++
   linkSystemFonts ++
   linkSystemIcons ++

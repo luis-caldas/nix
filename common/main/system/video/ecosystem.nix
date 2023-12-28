@@ -23,28 +23,7 @@ lib.mkIf config.mine.graphics.enable
 
     # Extensions all browsers
     # All should be open source and researched
-    extensions = [
-
-      "padekgcemlokbadohgkifijomclgjgif" # switchy proxy omega
-
-      "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
-      "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # privacy badger
-
-      "fnaicdffflnofjppbagibeoednhnbjhg" # floccus bookmarks manager
-
-      "bjilljlpencdcpihofiobpnfgcakfdbe" # clear browsing data
-
-      "cnojnbdhbhnkbcieeekonklommdnndci" # search by image
-
-      "gbmdgpbipfallnflgajpaliibnhdgobh" # json viewer
-
-      "nngceckbapebfimnlniiiahkandclblb" # bitwarden client
-
-      "hkgfoiooedgoejojocmhlaklaeopbecg" # picture in picture
-
-    ] ++
-    # Add users extensions
-    config.mine.browser.extensions.common;
+    extensions = config.mine.browser.extensions.common;
 
     # Extra options using policy
     extraOpts = pkgs.reference.more.chromium.policies.managed // config.mine.browser.policies;

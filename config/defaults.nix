@@ -323,21 +323,49 @@
       extensions = {
 
         common = mkOption {
-          description = "Extensions for the common installation";
+          description = "Extensions for all the installations";
           type = listOf str;
-          default = [];
+          default = [
+            "padekgcemlokbadohgkifijomclgjgif" # switchy proxy omega
+            "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
+            "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # privacy badger
+            "fnaicdffflnofjppbagibeoednhnbjhg" # floccus bookmarks manager
+            "cnojnbdhbhnkbcieeekonklommdnndci" # search by image
+            "gbmdgpbipfallnflgajpaliibnhdgobh" # json viewer
+            "nngceckbapebfimnlniiiahkandclblb" # bitwarden client
+            "hkgfoiooedgoejojocmhlaklaeopbecg" # picture in picture
+          ];
         };
 
-        main = mkOption {
-          description = "Extensions for the main installation";
-          type = listOf str;
-          default = [];
-        };
+        others = mkOption {
+          description = "Extensions for specific installations";
+          type = attrs;
+          default = {
 
-        persistent = mkOption {
-          description = "Extensions for the persistent installation";
-          type = listOf str;
-          default = [];
+            # The main installation
+            main = {
+              path = "chromium";
+              key = "N";
+              extensions = [
+                "bjilljlpencdcpihofiobpnfgcakfdbe" # clear browsing data
+              ];
+            };
+
+            # The persistent installation
+            persistent = {
+              path = "chromium-persistent";
+              key = "M";
+              extensions = [];
+            };
+
+            # The unchanged installation
+            normal = {
+              path = "chromium-normal";
+              key = "B";
+              extensions = [];
+            };
+
+          };
         };
 
       };
