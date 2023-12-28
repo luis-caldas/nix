@@ -48,7 +48,7 @@ lib.mkIf config.mine.graphics.enable
 
     # Extra options using policy
     extraOpts = {} //
-    pkgs.reference.browser.policies.managed // config.mine.browser.policies;
+    pkgs.reference.more.chromium.policies.managed // config.mine.browser.policies;
 
   };
 
@@ -57,6 +57,6 @@ lib.mkIf config.mine.graphics.enable
 
   # Add recommended policies as well
   environment.etc."chromium/policies/recommended/default.json".text = builtins.toJSON {};
-  environment.etc."chromium/policies/recommended/extra.json".text = builtins.toJSON pkgs.reference.browser.policies.recommended;
+  environment.etc."chromium/policies/recommended/extra.json".text = builtins.toJSON pkgs.reference.more.chromium.policies.recommended;
 
 }

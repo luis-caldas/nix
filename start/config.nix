@@ -29,8 +29,29 @@ let
     else
       throw "Unsupported architecture ${arch}";
 
-  # Import the browser config
-  chromiumPolicies = builtins.fromJSON (builtins.readFile (../config/browsers + "/chromium.json"));
+  # Import all the extra configurations present
+  extraConfigurations = let
+
+    # Constants
+    configurationsFolder = ../config/extra;
+    extensions = ".json";
+
+    # Get all the files in the directory with the extension
+    allFiles = lib.attrsets.filterAttrs
+      (name: value: value == "regular" && lib.strings.hasSuffix extensions name)
+      (builtins.readDir configurationsFolder);
+
+    # Read all the files to a big set
+    allFilesContents = lib.attrsets.mapAttrs'
+      (name: value:
+        lib.attrsets.nameValuePair
+        (lib.strings.removeSuffix extensions name)
+        (builtins.fromJSON (builtins.readFile (configurationsFolder + ("/" + name))))
+      )
+      allFiles;
+
+  in
+    allFilesContents;
 
   # Extract only the needed projects
   myProjects = let
@@ -117,8 +138,8 @@ in {
         arch = systemArch;
         arches = archReference;
 
-        # Browser policies
-        browser = chromiumPolicies;
+        # Extra configurations that are easier to set with specific files
+        more = extraConfigurations;
 
         # My projects
         projects = myProjects;

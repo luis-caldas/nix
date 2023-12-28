@@ -197,27 +197,7 @@ in
         enable = true;
         hie.enable = false;
       };
-      userSettings = {
-        "workbench.colorTheme" = "One Dark Pro";
-        "editor.fontFamily" = "Monospace";
-        "workbench.preferredDarkColorTheme" = "One Dark Pro";
-        "oneDarkPro.vivid" = true;
-        "oneDarkPro.bold" = true;
-        "telemetry.telemetryLevel" = "off";
-        "editor.fontLigatures" = true;
-        "files.trimTrailingWhitespace" = true;
-        "files.autoSave" = "onFocusChange";
-        "keyboard.dispatch" = "keyCode";
-        "terminal.integrated.shellIntegration.showWelcome" = false;
-        "workbench.startupEditor" = "none";
-        "update.mode" = "none";
-        "explicitFolding.rules" = {
-          "*" = {
-              "begin" = "{{{";
-              "end" = "}}}";
-          };
-        };
-      };
+      userSettings = pkgs.reference.more.codium.settings;
     };
 
     # Enable mpv with config
