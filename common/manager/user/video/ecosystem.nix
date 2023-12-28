@@ -87,7 +87,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
   in lib.listToAttrs (builtins.concatLists (lib.attrsets.mapAttrsToList
     (name: value: map (eachExt: extensionJson eachExt value.path) value.extensions)
-    (lib.attrsets.filterAttrs (name: value: value.extensions != []) osConfig.mine.browser.extensions.others)
+    (lib.attrsets.filterAttrs (name: value: value.extensions != []) osConfig.mine.browser.others)
   ));
 
 in

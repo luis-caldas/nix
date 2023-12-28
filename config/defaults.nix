@@ -320,54 +320,50 @@
       };
 
       # Extension hashes for different chromium types
-      extensions = {
+      common = mkOption {
+        description = "Extensions for all the installations";
+        type = listOf str;
+        default = [
+          "padekgcemlokbadohgkifijomclgjgif" # switchy proxy omega
+          "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
+          "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # privacy badger
+          "fnaicdffflnofjppbagibeoednhnbjhg" # floccus bookmarks manager
+          "cnojnbdhbhnkbcieeekonklommdnndci" # search by image
+          "gbmdgpbipfallnflgajpaliibnhdgobh" # json viewer
+          "nngceckbapebfimnlniiiahkandclblb" # bitwarden client
+          "hkgfoiooedgoejojocmhlaklaeopbecg" # picture in picture
+        ];
+      };
 
-        common = mkOption {
-          description = "Extensions for all the installations";
-          type = listOf str;
-          default = [
-            "padekgcemlokbadohgkifijomclgjgif" # switchy proxy omega
-            "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
-            "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # privacy badger
-            "fnaicdffflnofjppbagibeoednhnbjhg" # floccus bookmarks manager
-            "cnojnbdhbhnkbcieeekonklommdnndci" # search by image
-            "gbmdgpbipfallnflgajpaliibnhdgobh" # json viewer
-            "nngceckbapebfimnlniiiahkandclblb" # bitwarden client
-            "hkgfoiooedgoejojocmhlaklaeopbecg" # picture in picture
-          ];
-        };
+      others = mkOption {
+        description = "Extensions for specific installations";
+        type = attrs;
+        default = {
 
-        others = mkOption {
-          description = "Extensions for specific installations";
-          type = attrs;
-          default = {
-
-            # The main installation
-            main = {
-              path = "chromium";
-              key = "N";
-              extensions = [
-                "bjilljlpencdcpihofiobpnfgcakfdbe" # clear browsing data
-              ];
-            };
-
-            # The persistent installation
-            persistent = {
-              path = "chromium-persistent";
-              key = "M";
-              extensions = [];
-            };
-
-            # The unchanged installation
-            normal = {
-              path = "chromium-normal";
-              key = "B";
-              extensions = [];
-            };
-
+          # The main installation
+          main = {
+            path = "chromium";
+            key = "N";
+            extensions = [
+              "bjilljlpencdcpihofiobpnfgcakfdbe" # clear browsing data
+            ];
           };
-        };
 
+          # The persistent installation
+          persistent = {
+            path = "chromium-persistent";
+            key = "M";
+            extensions = [];
+          };
+
+          # The unchanged installation
+          normal = {
+            path = "chromium-normal";
+            key = "B";
+            extensions = [];
+          };
+
+        };
       };
 
     };
