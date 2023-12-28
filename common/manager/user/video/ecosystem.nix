@@ -134,8 +134,6 @@ lib.mkIf osConfig.mine.graphics.enable
 in
 {
 
-  # Add my made programs to PATH
-  home.sessionPath = [ "${pkgs.reference.projects.desktop}/programs/public" ];
   # Add some extra env vars
   home.sessionVariables = {
     NIXOS_OZONE_WL = "1";
