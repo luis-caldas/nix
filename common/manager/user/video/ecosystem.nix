@@ -90,23 +90,10 @@ lib.mkIf osConfig.mine.graphics.enable
 in
 {
 
-  # Add some extra env vars
-  home.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
-    # APPLICATION_UNICODE = "true";  # Enable my own unicode support for the terminal emulators
-  };
-
   # Some XDG links
   xdg.configFile = {
     # Link the fontconfig conf file
     "fontconfig/fonts.conf" = { source = pkgs.reference.projects.fonts + "/fonts.conf"; };
-  };
-
-  # Add theming for qt
-  qt = {
-    enable = true;
-    platformTheme = "gnome";
-    style.name = lib.strings.toLower osConfig.mine.graphics.theme;
   };
 
   # Add a service to manage mpris headset support

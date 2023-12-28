@@ -47,8 +47,7 @@ lib.mkIf config.mine.graphics.enable
     config.mine.browser.extensions.common;
 
     # Extra options using policy
-    extraOpts = {} //
-    pkgs.reference.more.chromium.policies.managed // config.mine.browser.policies;
+    extraOpts = pkgs.reference.more.chromium.policies.managed // config.mine.browser.policies;
 
   };
 

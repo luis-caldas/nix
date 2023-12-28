@@ -22,7 +22,7 @@ let
   # Get the system architecture and throw error if not supported
   systemArch = let
     linuxSuffix = "-linux";
-    arch = lib.removeSuffix linuxSuffix pkgs.stdenv.system;
+    arch = lib.strings.removeSuffix linuxSuffix pkgs.stdenv.system;
   in
     if builtins.elem arch (builtins.attrValues archReference) then
       arch

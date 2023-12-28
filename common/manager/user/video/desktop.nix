@@ -305,6 +305,19 @@ lib.mkIf osConfig.mine.graphics.enable
 
   })];
 
+  # Add some extra env vars
+  home.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    # APPLICATION_UNICODE = "true";  # Enable my own unicode support for the terminal emulators
+  };
+
+  # Add theming for qt
+  qt = {
+    enable = true;
+    platformTheme = "gnome";
+    style.name = lib.strings.toLower osConfig.mine.graphics.theme;
+  };
+
   # Add my own custom "applications"
   xdg.desktopEntries = let
 
