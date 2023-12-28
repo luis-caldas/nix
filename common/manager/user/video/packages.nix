@@ -155,6 +155,7 @@ lib.mkIf osConfig.mine.graphics.enable
     gnomeExtensions.gtk4-desktop-icons-ng-ding
     gnomeExtensions.tray-icons-reloaded
     gnomeExtensions.wintile-windows-10-window-tiling-for-gnome
+    gnomeExtensions.panel-date-format
 
     ################
     # Applications #

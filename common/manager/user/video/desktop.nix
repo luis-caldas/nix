@@ -109,7 +109,7 @@ lib.mkIf osConfig.mine.graphics.enable
         "drive-menu@gnome-shell-extensions.gcampax.github.com"
         # Others
         "clipboard-indicator@tudmotu.com"
-        "date-menu-formatter@marcinjakubowski.github.com"
+        "panel-date-format@keiii.github.com"
         "Vitals@CoreCoding.com"
         "dash-to-dock@micxgx.gmail.com"
       ];
@@ -149,6 +149,10 @@ lib.mkIf osConfig.mine.graphics.enable
 
     date-menu-formatter = {
       pattern = "y/MM/dd kk:mm:ss EEE X";
+    };
+
+    panel-date-format = {
+      format = "%Y/%m/%d %H:%M:%S %a %z";
     };
 
     trayIconsReloaded = {
