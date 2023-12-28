@@ -108,7 +108,7 @@ in
     # Enable chromium
     chromium = {
       enable = true;
-      package = pkgs.chromium.override {
+      package = pkgs.ungoogled-chromium.override {
         commandLineArgs = "--force-dark-mode --enable-features=WebUIDarkMode";
       };
     };

@@ -44,7 +44,8 @@
       "nvidia-x11" "nvidia-settings"
 
       # Browser
-      "chromium" "chromium-unwrapped" "chrome-widevine-cdm"  # WideVine
+      "chromium" "chromium-unwrapped" "chrome-widevine-cdm"
+      "ungoogled-chromium" "ungoogled-chromium-unwrapped"
 
       ################
       # Home Manager #
