@@ -76,19 +76,6 @@ lib.mkIf osConfig.mine.graphics.enable
   browserNameMain = "chromium";
   browserNamePersistent = "chromium-persistent";
 
-  # List of applications to be created
-  browserApplications = [
-    { name = "deck"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
-    { name = "notes"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
-    { name = "jellyfin-web"; icon = "jellyfin"; url = "https://redirect.caldas.ie"; }
-    { name = "whatsapp-web"; icon = "whatsapp"; url = "https://web.whatsapp.com"; }
-    { name = "discord-web"; icon = "discord"; url = "https://discord.com/app"; }
-    { name = "github-web"; icon = "github"; url = "https://github.com"; }
-    { name = "chess-web"; icon = "chess"; url = "https://chess.com"; }
-    { name = "spotify-web"; icon = "spotify"; url = "https://open.spotify.com/"; }
-    { name = "defence-forces"; icon = "knavalbattle"; url = "https://irishdefenceforces.workvivo.com"; }
-  ];
-
   # List of the extensions
   listChromeExtensions = [] ++ osConfig.mine.browser.extensions.main;
   listChromePersistentExtensions = [] ++ osConfig.mine.browser.extensions.persistent;
@@ -135,22 +122,6 @@ in
 
   # Add a service to manage mpris headset support
   services.mpris-proxy.enable = osConfig.mine.bluetooth;
-
-  # Add my own custom "applications"
-  xdg.desktopEntries = {} // (
-    # Automatically create the chromium applications from a list
-    builtins.listToAttrs (map (eachEntry: {
-      name = eachEntry.name;
-      value = rec {
-        name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] eachEntry.name);
-        comment = "${name} web page running as an application";
-        exec = ''/usr/bin/env sh -c "chromium --user-data-dir=\\$HOME/.config/browser-apps/${eachEntry.name} --app=${eachEntry.url}"'';
-        icon = eachEntry.icon;
-        terminal = false;
-        categories = [ "Network" "WebBrowser" ];
-      };
-    }) browserApplications)
-  );
 
   # Home manager programs
   programs = {
