@@ -87,17 +87,6 @@ lib.mkIf osConfig.mine.graphics.enable
     (map (eachExt: extensionJson eachExt browserNamePersistent) listChromePersistentExtensions)
   );
 
-  # Put all the sets together
-  linkSets = lib.mkMerge ([
-    linkThemes linkFonts linkPapes
-    linkCursors linkIcons
-    linkVST
-    listChromeExtensionsFiles
-  ] ++
-  linkSystemFonts ++
-  linkSystemIcons ++
-  linkSystemThemes);
-
 in
 {
 
@@ -152,20 +141,20 @@ in
     # Enable mpv with config
     mpv = {
       enable = true;
-      config = {
-        profile = "gpu-hq";
-        force-window = true;
-        ytdl-format = "bestvideo+bestaudio";
-        video-sync = "display-resample";
-        framedrop = "vo";
-        gpu-context = "auto";
-        spirv-compiler = "auto";
-      };
+      config = pkgs.reference.more.mpv.settings;
     };
 
   };
 
-  # Add all the acquired link sets to the config
-  home.file = linkSets;
+  # All the needed links for the system to have its flair
+  home.file = lib.mkMerge ([
+    linkThemes linkFonts linkPapes
+    linkCursors linkIcons
+    linkVST
+    listChromeExtensionsFiles
+  ] ++
+  linkSystemFonts ++
+  linkSystemIcons ++
+  linkSystemThemes);
 
 })
