@@ -4,39 +4,49 @@ lib.mkIf osConfig.mine.graphics.enable
 
 (let
 
-  # Links for everything used on my desktop
-  linkThemes  = (pkgs.functions.listCreateLinks ("${pkgs.reference.projects.themes}/collection") ".local/share/themes") //
-                (pkgs.functions.listCreateLinks ("${pkgs.reference.projects.themes}/openbox") ".local/share/themes");
-  linkCursors = (pkgs.functions.listCreateLinks ("${pkgs.reference.projects.cursors}/my-x11-cursors") ".local/share/icons");
-  linkIcons   = (pkgs.functions.listCreateLinks ("${pkgs.reference.projects.icons}/my-icons-collection") ".local/share/icons");
-  linkFonts   = { ".local/share/fonts/mine" = { source = ("${pkgs.reference.projects.fonts}/my-custom-fonts"); }; };
-  linkPapes   = { ".local/share/backgrounds/mine" = { source = ("${pkgs.reference.projects.images}/wallpapers"); }; };
-
-  # Fonts
-  fontsList = with pkgs; [
-    iosevka-bin
-    (iosevka-bin.override { variant = "aile"; })
-    (iosevka-bin.override { variant = "slab"; })
-    (iosevka-bin.override { variant = "etoile"; })
-    courier-prime
-    apl386 bqn386
-    sarasa-gothic
-    noto-fonts-emoji-blob-bin
-  ];
-
-  # Icons
-  iconsList = with pkgs; [
-    papirus-icon-theme
-  ];
-
-  # Themes
-  themesList = with pkgs; [
-    gnome.gnome-themes-extra
-    cinnamon.mint-themes
+  # Links for all the theming that I have setup for me
+  linkAllPersonalPackage = [
+    # Themes
+    (
+      (pkgs.functions.listCreateLinks "${pkgs.reference.projects.themes}/collection" ".local/share/themes") //
+      (pkgs.functions.listCreateLinks "${pkgs.reference.projects.themes}/openbox" ".local/share/themes")
+    )
+    # Cursors
+    (pkgs.functions.listCreateLinks "${pkgs.reference.projects.cursors}/my-x11-cursors" ".local/share/icons")
+    # Icons
+    (pkgs.functions.listCreateLinks "${pkgs.reference.projects.icons}/my-icons-collection" ".local/share/icons")
+    # Fonts
+    { ".local/share/fonts/mine".source = "${pkgs.reference.projects.fonts}/my-custom-fonts"; }
+    # Wallpapers
+    { ".local/share/backgrounds/mine".source = "${pkgs.reference.projects.images}/wallpapers"; }
   ];
 
   # Link all the packages manuall
   linkAllPackages = let
+
+    # Fonts
+    fontsList = with pkgs; [
+      iosevka-bin
+      (iosevka-bin.override { variant = "aile"; })
+      (iosevka-bin.override { variant = "slab"; })
+      (iosevka-bin.override { variant = "etoile"; })
+      courier-prime
+      apl386 bqn386
+      sarasa-gothic
+      noto-fonts-emoji-blob-bin
+    ];
+
+    # Icons
+    iconsList = with pkgs; [
+      papirus-icon-theme
+    ];
+
+    # Themes
+    themesList = with pkgs; [
+      gnome.gnome-themes-extra
+      cinnamon.mint-themes
+    ];
+
     # The packing function
     packIt = items: original: destination: extraDir:
       lib.forEach items
@@ -45,6 +55,7 @@ lib.mkIf osConfig.mine.graphics.enable
           "${pack}/${original}"
           (if extraDir then "${destination}/${pack.name}" else destination)
         );
+
   in builtins.concatLists [
     # Fonts
     (packIt fontsList "share/fonts" ".local/share/fonts/system" true)
@@ -55,7 +66,7 @@ lib.mkIf osConfig.mine.graphics.enable
   ];
 
   # Link vst folders
-  linkVST = lib.mkIf osConfig.mine.production.audio {
+  linkPossibleVSTs = lib.mkIf osConfig.mine.production.audio {
     ".local/share/vst/zynaddsubfx" = { source = "${pkgs.zyn-fusion}/lib/vst"; };
     ".local/share/vst/lsp" = { source = "${pkgs.lsp-plugins}/lib/vst"; };
   };
@@ -65,7 +76,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Function for creating extensions for chromium based browsers
     extensionJson = ext: browserName: let
-      configDir = "${config.xdg.configHome}/" + browserName;
+      configDir = "${config.xdg.configHome}/${browserName}";
       updateUrl = (options.programs.chromium.extensions.type.getSubOptions []).updateUrl.default;
     in {
       name = "${configDir}/External Extensions/${ext}.json";
@@ -85,7 +96,7 @@ in
   # Some XDG links
   xdg.configFile = {
     # Link the fontconfig conf file
-    "fontconfig/fonts.conf" = { source = pkgs.reference.projects.fonts + "/fonts.conf"; };
+    "fontconfig/fonts.conf" = { source = "${pkgs.reference.projects.fonts}/fonts.conf"; };
   };
 
   # Add a service to manage mpris headset support
@@ -126,14 +137,15 @@ in
   };
 
   # All the needed links for the system to have its flair
-  home.file = lib.mkMerge ([
-    linkThemes linkFonts linkPapes
-    linkCursors linkIcons
-    linkVST
-    listBrowserExtensionFiles
-  ] ++
+  home.file = lib.mkMerge (
 
-  # Link to all the packaged files
-  linkAllPackages);
+    # My own links
+    linkAllPersonalPackage ++
+    # Link to all the packaged files
+    linkAllPackages ++
+    # Extra linking for extra functionalities
+    [ linkPossibleVSTs listBrowserExtensionFiles ]
+
+  );
 
 })
