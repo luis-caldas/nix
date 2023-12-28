@@ -3,7 +3,7 @@
 
   # Kernel init
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "uas" "sd_mod" ];
-  boot.initrd.kernelModules = [ "thunderbolt" ];
+  boot.initrd.kernelModules = [ "thunderbolt" "xhci_hcd" ];
   boot.kernelModules = [ "kvm-amd" "kvmgt" "mdev" "vfio-iommu-type1" ];
 
   # ZFS ask for password
