@@ -12,7 +12,7 @@ lib.mkIf osConfig.mine.graphics.enable
   linkFonts   = { ".local/share/fonts/mine" = { source = ("${pkgs.reference.projects.fonts}/my-custom-fonts"); }; };
   linkPapes   = { ".local/share/backgrounds/mine" = { source = ("${pkgs.reference.projects.images}/wallpapers"); }; };
 
-  # Create custom system fonts
+  # Fonts
   fontsList = with pkgs; [
     iosevka-bin
     (iosevka-bin.override { variant = "aile"; })
@@ -23,37 +23,36 @@ lib.mkIf osConfig.mine.graphics.enable
     sarasa-gothic
     noto-fonts-emoji-blob-bin
   ];
-  # Create links from custom fonts
-  linkSystemFonts = lib.forEach fontsList (
-    pack: (
-      pkgs.functions.listCreateLinks
-      ("${pack}" + "/share/fonts")
-      (".local/share/fonts/system/" + pack.name)
-    )
-  );
 
-  # Create links from the system themes
-  linkSystemIcons = lib.forEach (with pkgs; [
+  # Icons
+  iconsList = with pkgs; [
     papirus-icon-theme
-  ]) (
-    pack: (
-      pkgs.functions.listCreateLinks
-      ("${pack}" + "/share/icons")
-      ".local/share/icons"
-    )
-  );
+  ];
 
-  # Create themes from the system themes
-  linkSystemThemes = lib.forEach (with pkgs; [
+  # Themes
+  themesList = with pkgs; [
     gnome.gnome-themes-extra
     cinnamon.mint-themes
-  ]) (
-    pack: (
-      pkgs.functions.listCreateLinks
-      ("${pack}" + "/share/themes")
-      ".local/share/themes"
-    )
-  );
+  ];
+
+  # Link all the packages manuall
+  linkAllPackages = let
+    # The packing function
+    packIt = items: original: destination: extraDir:
+      lib.forEach items
+        (pack:
+          pkgs.functions.listCreateLinks
+          "${pack}/${original}"
+          (if extraDir then "${destination}/${pack.name}" else destination)
+        );
+  in builtins.concatLists [
+    # Fonts
+    (packIt fontsList "share/fonts" ".local/share/fonts/system" true)
+    # Icons
+    (packIt iconsList "share/icons" ".local/share/icons" false)
+    # Themes
+    (packIt themesList "share/themes" ".local/share/themes" false)
+  ];
 
   # Link vst folders
   linkVST = lib.mkIf osConfig.mine.production.audio {
@@ -61,19 +60,21 @@ lib.mkIf osConfig.mine.graphics.enable
     ".local/share/vst/lsp" = { source = "${pkgs.lsp-plugins}/lib/vst"; };
   };
 
-  # Function for creating extensions for chromium based browsers
-  extensionJson = ext: browserName: let
-    configDir = "${config.xdg.configHome}/" + browserName;
-    updateUrl = (options.programs.chromium.extensions.type.getSubOptions []).updateUrl.default;
-  in {
-    name = "${configDir}/External Extensions/${ext}.json";
-    value.text = builtins.toJSON {
-      external_update_url = updateUrl;
-    };
-  };
-
   # Install all the needed extensions
-  listBrowserExtensionFiles = lib.listToAttrs (builtins.concatLists (lib.attrsets.mapAttrsToList
+  listBrowserExtensionFiles = let
+
+    # Function for creating extensions for chromium based browsers
+    extensionJson = ext: browserName: let
+      configDir = "${config.xdg.configHome}/" + browserName;
+      updateUrl = (options.programs.chromium.extensions.type.getSubOptions []).updateUrl.default;
+    in {
+      name = "${configDir}/External Extensions/${ext}.json";
+      value.text = builtins.toJSON {
+        external_update_url = updateUrl;
+      };
+    };
+
+  in lib.listToAttrs (builtins.concatLists (lib.attrsets.mapAttrsToList
     (name: value: map (eachExt: extensionJson eachExt value.path) value.extensions)
     (lib.attrsets.filterAttrs (name: value: value.extensions != []) osConfig.mine.browser.extensions.others)
   ));
@@ -131,8 +132,8 @@ in
     linkVST
     listBrowserExtensionFiles
   ] ++
-  linkSystemFonts ++
-  linkSystemIcons ++
-  linkSystemThemes);
+
+  # Link to all the packaged files
+  linkAllPackages);
 
 })
