@@ -212,19 +212,20 @@ lib.mkIf osConfig.mine.graphics.enable
         command = "nautilus";
         binding = "<Super>E";
       };
-      "Browser" = {
-        command = "chromium";
-        binding = "<Super>N";
-      };
-      "Browser Persistent" = {
-        command = "chromium --user-data-dir=\"${config.xdg.configHome}/chromium-persistent\"";
-        binding = "<Super>M";
-      };
-      "Browser Basic" = {
-        command = "chromium --user-data-dir=\"${config.xdg.configHome}/chromium-work\"";
-        binding = "<Super>B";
-      };
-    };
+    }
+    # Custom keybindings for the browser
+    //
+    (lib.attrsets.mapAttrs'
+      (name: value:
+        lib.attrsets.nameValuePair
+          "Browser ${pkgs.functions.capitaliseString name}"
+          {
+            command = "chromium --user-data-dir=\"${config.xdg.configHome}/${value.path}\"";
+            binding = "<Super>${value.key}";
+          }
+      )
+      osConfig.mine.browser.others
+    );
 
     # Convert custom list into proper dconf
     keybindingsList = let setNow = keybindings; in (map (key:
