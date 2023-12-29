@@ -21,10 +21,6 @@ lib.mkIf config.mine.graphics.enable
     defaultSearchProviderSuggestURL = "https://ac.duckduckgo.com" +
     "/ac/?q={searchTerms}&type=list";
 
-    # Extensions all browsers
-    # All should be open source and researched
-    extensions = config.mine.browser.common;
-
     # Extra options using policy
     extraOpts = pkgs.reference.more.chromium.policies.managed // config.mine.browser.policies;
 
