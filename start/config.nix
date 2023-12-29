@@ -96,11 +96,8 @@ let
   in
     filesList;
 
-  # Show some verbose
-  printId = let
-    verboseString = "building for ${systemName} @ ${systemArch} - ${systemVersion} - ${systemId}";
-  in
-    builtins.trace verboseString systemId;
+  # Create the verbose string
+  verboseString = "building for ${systemName} @ ${systemArch} - ${systemVersion} - ${systemId}";
 
 in {
 
@@ -128,14 +125,10 @@ in {
     (final: prev: {
 
       # The new attribute with all the new information
-      reference = {
+      reference = builtins.trace verboseString {
 
         # System Id
-        id = printId;
-
-        # System architecture and reference
-        arch = systemArch;
-        arches = archReference;
+        id = systemId;
 
         # Extra configurations that are easier to set with specific files
         more = extraConfigurations;
