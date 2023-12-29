@@ -21,6 +21,18 @@ let
         }) listFiles
       );
 
+    # Filters a list of file based on suffix
+    filterFilesExtension = listFiles: extension:
+      lib.attrsets.filterAttrs
+      (name: value: value == "regular" && lib.strings.hasSuffix ".${extension}" name)
+      listFiles;
+
+    listAllSuffixFiles = directoryPath: extension:
+      filterFilesExtension extension (builtins.readDir directoryPath);
+
+    listAllSuffixFilesReucsive = directoryPath: extension:
+      filterFilesExtension extension (lib.filesystem.listFilesRecursive directoryPath);
+
     # Capitalises first and anything after a space
     capitaliseString = inputString: let
         splitChar = " ";
