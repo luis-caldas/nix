@@ -110,6 +110,9 @@ in {
     # Functions
     ../lib/functions.nix
 
+    # Containers
+    ../config/containers/default.nix
+
     # Extra packages and options
     ../pkgs/default.nix
 
