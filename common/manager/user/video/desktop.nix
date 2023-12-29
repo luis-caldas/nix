@@ -1,45 +1,91 @@
-{ pkgs, lib, osConfig, config, ... }:
+{ pkgs, lib, osConfig, config, options, ... }:
 
 lib.mkIf osConfig.mine.graphics.enable
 
 (let
 
-  # Function to create the desktop name for the custom browsers
-  createCustomName = givenName: "browser-${givenName}";
+  # Get the main browser
+  mainBrowser = (builtins.head osConfig.mine.browser.others).name;
 
-  # Overwrite the mime list to add our main browser as it
-  fixedApplications = lib.attrsets.mapAttrs (name: value: {
-    entry = if name == "browser" then
-        "${createCustomName (builtins.head (builtins.attrNames osConfig.mine.browser.others))}.desktop"
-      else
-        value.entry;
-    inherit (value) mimes;
-  }) pkgs.reference.more.applications;
+  # Create an object with all the new browser info so it can be referenced
+  browsersNewInfo = map (eachBrowser:
+    {
+      name = "browser-${eachBrowser.name}";
+      path = if eachBrowser.name == mainBrowser then
+               "${osConfig.mine.browser.command}"
+             else
+               "${osConfig.mine.browser.command}-${eachBrowser.name}";
+    }
+  ) osConfig.mine.browser.others;
+
+  # List of default apps for the desktop
+  defaultApplications = {
+    terminal = "kitty.desktop";
+    browser = "${(builtins.head browsersNewInfo).name}.desktop";
+    email = "thunderbird.desktop";
+    text = "org.gnome.TextEditor.desktop";
+    audio = "io.bassi.Amberol.desktop";
+    video = "memento.desktop";
+    image = "org.gnome.Loupe.desktop";
+    files = "org.gnome.Nautilus.desktop";
+    archive = "org.gnome.FileRoller.desktop";
+    pdf = "org.gnome.Evince.desktop";
+    calendar = "org.gnome.Calendar.desktop";
+  };
 
   # Create the massive list of the default applications for everything
   defaultMIMEs = lib.attrsets.zipAttrs (builtins.concatLists (lib.attrsets.mapAttrsToList
     (name: value:
       map
-      (mime: { "${mime}" = value.entry; })
-      value.mimes
+      (mime: { "${mime}" = defaultApplications."${name}"; })
+      value
     )
-    fixedApplications));
+    pkgs.reference.more.mimes));
 
   # Create the desktop entries for all the new browsers
   newBrowsersDesktops = (
     # Automatically create the chromium applications from a list
-    builtins.listToAttrs (lib.attrsets.mapAttrsToList (eachBrowserName: eachBrowserValue: {
-      name = createCustomName eachBrowserName;
-      value = rec {
-        name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] eachBrowserName);
-        comment = "${name} web page running as an application";
-        exec = ''/usr/bin/env sh -c "${osConfig.mine.browser.command} --user-data-dir=\\$HOME/.config/${eachBrowserValue.path}"'';
+    builtins.listToAttrs (lib.lists.imap0 (index: eachBrowser: let
+      extraBrowserInfo = builtins.elemAt browsersNewInfo index;
+    in {
+      name = extraBrowserInfo.name;
+      value = {
+        name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] extraBrowserInfo.name);
+        comment = "Browser Customized ${pkgs.functions.capitaliseString eachBrowser.name}";
+        exec = ''/usr/bin/env sh -c "${osConfig.mine.browser.command} --user-data-dir=\\$HOME/.config/${extraBrowserInfo.path}"'';
         icon = "web-browser";
         terminal = false;
         categories = [ "Network" "WebBrowser" ];
       };
     }) osConfig.mine.browser.others)
   );
+
+  # Set all the custom extensions for the browsers
+  listBrowserExtensionFiles = let
+
+    # Function for creating extensions for chromium based browsers
+    extensionJson = ext: browserName: let
+      configDir = "${config.xdg.configHome}/${browserName}";
+      updateUrl = (options.programs.chromium.extensions.type.getSubOptions []).updateUrl.default;
+    in {
+      name = "${configDir}/External Extensions/${ext}.json";
+      value.text = builtins.toJSON {
+        external_update_url = updateUrl;
+      };
+    };
+
+  in lib.listToAttrs (builtins.concatLists (lib.lists.imap0
+    (index: eachExtendedBrowser: map (eachExtension:
+      extensionJson eachExtension (builtins.elemAt browsersNewInfo index).path
+      # Add the default extensions to the per each system ones
+    ) eachExtendedBrowser.extensions)
+    (
+      # Filter all the browsers with empty extension lists
+      builtins.filter
+      (eachBrowser: eachBrowser.extensions != [])
+      osConfig.mine.browser.others
+    )
+  ));
 
   # Create custom electron applications for all my used websites
   customElectron = let
@@ -112,10 +158,10 @@ in {
     "org/gnome/desktop/peripherals/keyboard" = {
       numlock-state = osConfig.mine.graphics.numlock;
     };
-    "org/gnome/shell".favorite-apps = with fixedApplications; [
-      terminal.entry
-      browser.entry
-      files.entry
+    "org/gnome/shell".favorite-apps = with defaultApplications; [
+      terminal
+      browser
+      files
     ];
     "org/gnome/mutter" = {
       edge-tiling = true;
@@ -272,29 +318,37 @@ in {
     keybindingsPath = "${startMedia}/${keybindingsKey}";
 
     # Custom list of keybindings
-    keybindings = with fixedApplications; {
+    keybindings = with defaultApplications; {
       "Terminal" = {
-        command = "gtk-launch ${terminal.entry}";
+        command = "gtk-launch ${terminal}";
         binding = "<Super>Return";
       };
       "File" = {
-        command = "gtk-launch ${files.entry}";
+        command = "gtk-launch ${files}";
         binding = "<Super>E";
       };
     }
     # Custom keybindings for the browser
     //
-    (lib.attrsets.mapAttrs'
-      (name: value:
+    (builtins.listToAttrs (let
+      # List with the keys for the browsers
+      browserKeys = [
+        "N"  # Main
+        "M"  # Persistent
+        "B"  # Normal
+        "G"  # Other
+      ];
+    in lib.lists.imap0
+      (index: eachBrowser:
         lib.attrsets.nameValuePair
-          "Browser ${pkgs.functions.capitaliseString name}"
+          "Browser ${pkgs.functions.capitaliseString eachBrowser.name}"
           {
-            command = "gtk-launch ${createCustomName name}.desktop";
-            binding = "<Super>${value.key}";
+            command = "gtk-launch ${(builtins.elemAt browsersNewInfo index).name}.desktop";
+            binding = "<Super>${builtins.elemAt browserKeys index}";
           }
       )
       osConfig.mine.browser.others
-    );
+    ));
 
     # Convert custom list into proper dconf
     keybindingsList = let setNow = keybindings; in (map (key:
@@ -400,5 +454,8 @@ in {
     enable = true;
     defaultApplications = defaultMIMEs;
   };
+
+  # All the browser extensions links
+  home.file = listBrowserExtensionFiles;
 
 })

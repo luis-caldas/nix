@@ -1,4 +1,4 @@
-{ pkgs, lib, osConfig, config, options, ... }:
+{ pkgs, lib, osConfig, config, ... }:
 
 lib.mkIf osConfig.mine.graphics.enable
 
@@ -71,32 +71,6 @@ lib.mkIf osConfig.mine.graphics.enable
     ".local/share/vst/lsp" = { source = "${pkgs.lsp-plugins}/lib/vst"; };
   };
 
-  # Install all the needed extensions
-  listBrowserExtensionFiles = let
-
-    # Function for creating extensions for chromium based browsers
-    extensionJson = ext: browserName: let
-      configDir = "${config.xdg.configHome}/${browserName}";
-      updateUrl = (options.programs.chromium.extensions.type.getSubOptions []).updateUrl.default;
-    in {
-      name = "${configDir}/External Extensions/${ext}.json";
-      value.text = builtins.toJSON {
-        external_update_url = updateUrl;
-      };
-    };
-
-  in lib.listToAttrs (builtins.concatLists (lib.attrsets.mapAttrsToList
-    (name: value: map (eachExt:
-      extensionJson eachExt value.path
-      # Add the default extensions to the per each system ones
-    ) value.extensions)
-    (
-      lib.attrsets.filterAttrs
-      (name: value: value.extensions != [])
-      osConfig.mine.browser.others
-    )
-  ));
-
 in
 {
 
@@ -151,7 +125,7 @@ in
     # Link to all the packaged files
     linkAllPackages ++
     # Extra linking for extra functionalities
-    [ linkPossibleVSTs listBrowserExtensionFiles ]
+    [ linkPossibleVSTs ]
 
   );
 

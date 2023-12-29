@@ -343,33 +343,25 @@
 
       others = mkOption {
         description = "Extensions for specific installations";
-        type = attrs;
-        default = {
+        type = listOf attrs;
+        default = [
 
           # The main installation
-          main = {
-            path = "chromium";
-            key = "N";
-            extensions = [
-              "bjilljlpencdcpihofiobpnfgcakfdbe" # clear browsing data
-            ];
-          };
+          { name = "main";
+            extensions = [ "bjilljlpencdcpihofiobpnfgcakfdbe" ];  # clear browsing data
+          }
 
           # The persistent installation
-          persistent = {
-            path = "chromium-persistent";
-            key = "M";
+          { name = "persistent";
             extensions = [];
-          };
+          }
 
           # The unchanged installation
-          normal = {
-            path = "chromium-normal";
-            key = "B";
+          { name = "normal";
             extensions = [];
-          };
+          }
 
-        };
+        ];
       };
 
     };
