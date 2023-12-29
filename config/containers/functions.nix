@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, lib, config, ... }:
 let
 
   # Create all the functions that will be available to use
@@ -16,7 +16,7 @@ let
     in
       # Whole activation script
       builtins.listToAttrs (
-        pkgs.lib.mapAttrsToList (networkName: { range, interface ? "" }: let
+        lib.attrsets.mapAttrsToList (networkName: { range, interface ? "" }: let
             # Name for the interface
             interfaceName = if interface != "" then interface else "${prefixInterface}-${networkName}";
           in {
@@ -55,7 +55,7 @@ let
     );
 
     # Converts all the environment items to strings
-    fixEnvironment = pkgs.lib.mapAttrs (name: value: builtins.toString value);
+    fixEnvironment = builtins.mapAttrs (name: value: builtins.toString value);
 
     # Create reverse proxy for https on the given container configuration
     createProxy = info: let
