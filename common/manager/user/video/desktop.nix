@@ -2,7 +2,49 @@
 
 lib.mkIf osConfig.mine.graphics.enable
 
-{
+(let
+
+  # Create the massive list of the default applications for everything
+  defaultMIMEs = lib.attrsets.zipAttrs (builtins.concatLists (lib.attrsets.mapAttrsToList
+    (name: value:
+      map
+      (mime: { "${mime}" = value.entry; })
+      value.mimes
+    )
+    pkgs.reference.more.applications));
+
+  # Create custom electron applications for all my used websites
+  customElectron = let
+
+    # List of applications to be created
+    browserApplications = [
+      { name = "deck"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
+      { name = "notes"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
+      { name = "jellyfin-web"; icon = "jellyfin"; url = "https://redirect.caldas.ie"; }
+      { name = "whatsapp-web"; icon = "whatsapp"; url = "https://web.whatsapp.com"; }
+      { name = "discord-web"; icon = "discord"; url = "https://discord.com/app"; }
+      { name = "github-web"; icon = "github"; url = "https://github.com"; }
+      { name = "chess-web"; icon = "chess"; url = "https://chess.com"; }
+      { name = "spotify-web"; icon = "spotify"; url = "https://open.spotify.com/"; }
+      { name = "defence-forces"; icon = "knavalbattle"; url = "https://irishdefenceforces.workvivo.com"; }
+    ];
+
+  in (
+    # Automatically create the chromium applications from a list
+    builtins.listToAttrs (map (eachEntry: {
+      name = eachEntry.name;
+      value = rec {
+        name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] eachEntry.name);
+        comment = "${name} web page running as an application";
+        exec = ''/usr/bin/env sh -c "chromium --user-data-dir=\\$HOME/.config/browser-apps/${eachEntry.name} --app=${eachEntry.url}"'';
+        icon = eachEntry.icon;
+        terminal = false;
+        categories = [ "Network" "WebBrowser" ];
+      };
+    }) browserApplications)
+  );
+
+in {
 
   # All gnome configuration
   dconf.settings = let
@@ -42,13 +84,10 @@ lib.mkIf osConfig.mine.graphics.enable
     "org/gnome/desktop/peripherals/keyboard" = {
       numlock-state = osConfig.mine.graphics.numlock;
     };
-    "org/gnome/shell".favorite-apps = [
-      "org.gnome.Terminal.desktop"
-      "org.gnome.Nautilus.desktop"
-      "chromium-browser.desktop"
-      "cloud.desktop"
-      "whatsapp-web.desktop"
-      "spotify.desktop"
+    "org/gnome/shell".favorite-apps = with pkgs.reference.more.applications; [
+      terminal.entry
+      browser.entry
+      files.entry
     ];
     "org/gnome/mutter" = {
       edge-tiling = true;
@@ -205,13 +244,13 @@ lib.mkIf osConfig.mine.graphics.enable
     keybindingsPath = "${startMedia}/${keybindingsKey}";
 
     # Custom list of keybindings
-    keybindings = {
+    keybindings = with pkgs.reference.more.applications; {
       "Terminal" = {
-        command = "gnome-terminal";
+        command = "gtk-launch ${terminal.entry}";
         binding = "<Super>Return";
       };
       "File" = {
-        command = "nautilus";
+        command = "gtk-launch ${files.entry}";
         binding = "<Super>E";
       };
     }
@@ -325,35 +364,13 @@ lib.mkIf osConfig.mine.graphics.enable
     style.name = lib.strings.toLower osConfig.mine.graphics.theme;
   };
 
-  # Add my own custom "applications"
-  xdg.desktopEntries = let
+  # Add my own custom desktop files
+  xdg.desktopEntries = customElectron;
 
-    # List of applications to be created
-    browserApplications = [
-      { name = "deck"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
-      { name = "notes"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
-      { name = "jellyfin-web"; icon = "jellyfin"; url = "https://redirect.caldas.ie"; }
-      { name = "whatsapp-web"; icon = "whatsapp"; url = "https://web.whatsapp.com"; }
-      { name = "discord-web"; icon = "discord"; url = "https://discord.com/app"; }
-      { name = "github-web"; icon = "github"; url = "https://github.com"; }
-      { name = "chess-web"; icon = "chess"; url = "https://chess.com"; }
-      { name = "spotify-web"; icon = "spotify"; url = "https://open.spotify.com/"; }
-      { name = "defence-forces"; icon = "knavalbattle"; url = "https://irishdefenceforces.workvivo.com"; }
-    ];
+  # Set my own default applications
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = defaultMIMEs;
+  };
 
-  in (
-    # Automatically create the chromium applications from a list
-    builtins.listToAttrs (map (eachEntry: {
-      name = eachEntry.name;
-      value = rec {
-        name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] eachEntry.name);
-        comment = "${name} web page running as an application";
-        exec = ''/usr/bin/env sh -c "chromium --user-data-dir=\\$HOME/.config/browser-apps/${eachEntry.name} --app=${eachEntry.url}"'';
-        icon = eachEntry.icon;
-        terminal = false;
-        categories = [ "Network" "WebBrowser" ];
-      };
-    }) browserApplications)
-  );
-
-}
+})
