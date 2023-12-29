@@ -146,6 +146,11 @@
     cbonsai
     tty-clock
 
+    # Terminal Recording
+    asciinema
+    asciinema-agg
+    asciinema-scenario
+
     # Chemistry
     element
 
@@ -153,7 +158,6 @@
     pfetch
     neofetch
     screenfetch
-
 
     #########################
     # Development & Hacking #
