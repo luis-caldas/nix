@@ -132,10 +132,12 @@ lib.mkIf osConfig.mine.graphics.enable
   in buildFull {
 
     clipboard-indicator = {
-      disable-down-arrow = false;
       display-mode = 0;
+      cache-size = 128;
+      history-size = 256;
+      move-item-first = true;
+      disable-down-arrow = false;
       enable-keybindings = false;
-      history-size = 1000000;
     };
 
     dash-to-dock = {
