@@ -4,37 +4,32 @@ lib.mkIf osConfig.mine.graphics.enable
 
 (let
 
-  # Function to create the name for the custom browsers
-  createBrowserName = commonName: "browser-${commonName}-custom";
+  # Function to create the desktop name for the custom browsers
+  createCustomName = givenName: "browser-${givenName}";
 
-  # Get the name of the main browser
-  mainBrowser = createBrowserName (builtins.head (builtins.attrNames osConfig.mine.browser.others));
-
-  # Custom replacement list for the mimes
-  replacementList = {
-    browser = mainBrowser;
-  };
+  # Overwrite the mime list to add our main browser as it
+  fixedApplications = lib.attrsets.mapAttrs (name: value: {
+    entry = if name == "browser" then
+        "${createCustomName (builtins.head (builtins.attrNames osConfig.mine.browser.others))}.desktop"
+      else
+        value.entry;
+    inherit (value) mimes;
+  }) pkgs.reference.more.applications;
 
   # Create the massive list of the default applications for everything
   defaultMIMEs = lib.attrsets.zipAttrs (builtins.concatLists (lib.attrsets.mapAttrsToList
-    (name: value: let
-      # Check for replacements and apply them
-      entryName = if builtins.elem name (builtins.attrNames replacementList) then
-        "${replacementList."${name}"}.desktop"
-      else
-        value.entry;
-    in
+    (name: value:
       map
-      (mime: { "${mime}" = entryName; })
+      (mime: { "${mime}" = value.entry; })
       value.mimes
     )
-    pkgs.reference.more.applications));
+    fixedApplications));
 
   # Create the desktop entries for all the new browsers
   newBrowsersDesktops = (
     # Automatically create the chromium applications from a list
     builtins.listToAttrs (lib.attrsets.mapAttrsToList (eachBrowserName: eachBrowserValue: {
-      name = createBrowserName eachBrowserName;
+      name = createCustomName eachBrowserName;
       value = rec {
         name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] eachBrowserName);
         comment = "${name} web page running as an application";
@@ -117,9 +112,9 @@ in {
     "org/gnome/desktop/peripherals/keyboard" = {
       numlock-state = osConfig.mine.graphics.numlock;
     };
-    "org/gnome/shell".favorite-apps = with pkgs.reference.more.applications; [
+    "org/gnome/shell".favorite-apps = with fixedApplications; [
       terminal.entry
-      "${mainBrowser}.desktop"
+      browser.entry
       files.entry
     ];
     "org/gnome/mutter" = {
@@ -277,7 +272,7 @@ in {
     keybindingsPath = "${startMedia}/${keybindingsKey}";
 
     # Custom list of keybindings
-    keybindings = with pkgs.reference.more.applications; {
+    keybindings = with fixedApplications; {
       "Terminal" = {
         command = "gtk-launch ${terminal.entry}";
         binding = "<Super>Return";
@@ -294,7 +289,7 @@ in {
         lib.attrsets.nameValuePair
           "Browser ${pkgs.functions.capitaliseString name}"
           {
-            command = "gtk-launch ${createBrowserName name}.desktop";
+            command = "gtk-launch ${createCustomName name}.desktop";
             binding = "<Super>${value.key}";
           }
       )
