@@ -34,7 +34,7 @@ in
 {
 
   # Enable adb debugging
-  programs.adb.enable = pkgs.reference.arch != pkgs.reference.arches.arm;
+  programs.adb.enable = !pkgs.stdenv.hostPlatform.isAarch;
 
   # Add wireshark
   programs.wireshark.enable = true;
@@ -83,7 +83,7 @@ in
     # Add ovmf path
     xdg.configFile =
     # Full omvf files only if not minimal
-    (if ((pkgs.reference.arch != pkgs.reference.arches.arm) && (!config.mine.minimal)) then {
+    (if ((!pkgs.stdenv.hostPlatform.isAarch) && (!config.mine.minimal)) then {
       "virt/ovmf".source = "${pkgs.OVMFFull.fd}";
     } else {}) //
 
@@ -133,7 +133,7 @@ in
 
     # Add arduino libraries
     home.file = if (
-      (pkgs.reference.arch != pkgs.reference.arches.arm) && (!config.mine.minimal)
+      (!pkgs.stdenv.hostPlatform.isAarch) && (!config.mine.minimal)
     ) then {
       ".local/share/arduino" = { source = "${pkgs.arduino}/share/arduino"; }; }
     else {};

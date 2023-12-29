@@ -67,7 +67,7 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
   ] ++
 
   # amd64 only games
-  (if (pkgs.reference.arch != pkgs.reference.arches.arm) then [
+  (if (!pkgs.stdenv.hostPlatform.isAarch) then [
 
     # Minecraft
     minecraft

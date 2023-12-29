@@ -281,7 +281,7 @@
   ] else []) ++
 
   # Packages for non arm systems
-  (if (pkgs.reference.arch != pkgs.reference.arches.arm) then [
+  (if (!pkgs.stdenv.hostPlatform.isAarch) then [
 
     # Flashing
     flashrom
@@ -289,7 +289,7 @@
   ] else []) ++
 
   # Minimal and non arm
-  (if ((pkgs.reference.arch != pkgs.reference.arches.arm) && (!osConfig.mine.minimal)) then [
+  (if ((!pkgs.stdenv.hostPlatform.isAarch) && (!osConfig.mine.minimal)) then [
 
     # Android Programs
     apktool

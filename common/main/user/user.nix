@@ -27,7 +27,7 @@
                   (if config.mine.services.docker         then [ "docker" ]       else []) ++
                   (if config.mine.services.virtual.enable then [ "libvirtd" ]     else []) ++
                   (if config.mine.services.printing       then [ "scanner" "lp" ] else []) ++
-                  (if (pkgs.reference.arch != pkgs.reference.arches.arm) then [ "adbusers" ] else []) ++
+                  (if (!pkgs.stdenv.hostPlatform.isAarch) then [ "adbusers" ] else []) ++
                   config.mine.user.groups;
 
     # Set out custom uid

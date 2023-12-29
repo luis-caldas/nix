@@ -285,7 +285,7 @@ lib.mkIf osConfig.mine.graphics.enable
   ] else []) ++
 
   # 64 bit only applications
-  (if (pkgs.reference.arch == pkgs.reference.arches.x64) then [
+  (if pkgs.stdenv.hostPlatform.isx86_64 then [
 
     # Password manager
     bitwarden
@@ -293,7 +293,7 @@ lib.mkIf osConfig.mine.graphics.enable
   ] else []) ++
 
   # Packages that do not work on arm
-  (if (pkgs.reference.arch != pkgs.reference.arches.arm) then [
+  (if (!pkgs.stdenv.hostPlatform.isAarch) then [
 
     # IDE
     arduino
@@ -357,7 +357,7 @@ lib.mkIf osConfig.mine.graphics.enable
   ] else []) ++
 
   # Electronics and non arm
-  (if ((pkgs.reference.arch != pkgs.reference.arches.arm) && osConfig.mine.production.electronics) then [
+  (if ((!pkgs.stdenv.hostPlatform.isAarch) && osConfig.mine.production.electronics) then [
 
     # Electronics
     logisim
@@ -365,7 +365,7 @@ lib.mkIf osConfig.mine.graphics.enable
   ] else []) ++
 
   # 3D modelling software
-  (if ((pkgs.reference.arch != pkgs.reference.arches.arm) && osConfig.mine.production.models) then [
+  (if ((!pkgs.stdenv.hostPlatform.isAarch) && osConfig.mine.production.models) then [
 
     # Modeling & CAD
     blender
@@ -399,7 +399,7 @@ lib.mkIf osConfig.mine.graphics.enable
   ] else []) ++
 
   # Audio for amd64
-  (if ((pkgs.reference.arch == pkgs.reference.arches.x64) && osConfig.mine.audio) then [
+  (if (pkgs.stdenv.hostPlatform.isx86_64 && osConfig.mine.audio) then [
 
     # Audio Players
     spotify

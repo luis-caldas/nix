@@ -12,22 +12,21 @@ let
   # The owner name
   ownerName = "luis-caldas";
 
-  # Create list for allowed architectures and equivalent strings
-  archReference = {
-    x64 = "x86_64";
-    x86 = "i686";
-    arm = "aarch64";
-  };
-
   # Get the system architecture and throw error if not supported
-  systemArch = let
-    linuxSuffix = "-linux";
-    arch = lib.strings.removeSuffix linuxSuffix pkgs.stdenv.system;
-  in
-    if builtins.elem arch (builtins.attrValues archReference) then
-      arch
-    else
-      throw "Unsupported architecture ${arch}";
+  systemArch = with pkgs.stdenv.hostPlatform; let
+    # Test the supported systems
+    supportedSystems = [
+      # Test if x86
+      isx86
+      # Test if arm
+      isAarch
+    ];
+    # Check if valid entry in the list
+    valid = builtins.elem true supportedSystems;
+  in if valid then
+    parsed.cpu.arch
+  else
+    throw "The CPU architecture ${parsed.cpu.arch} is not supported";
 
   # Import all the extra configurations present
   extraConfigurations = let

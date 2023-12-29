@@ -8,7 +8,7 @@ lib.mkIf osConfig.mine.games
   home.packages = with pkgs; [
   ] ++
   # amd64 only games
-  (if (pkgs.reference.arch != pkgs.reference.arches.arm) then [
+  (if (!pkgs.stdenv.hostPlatform.isAarch) then [
 
     # Dwarf Fortress
     (pkgs.dwarf-fortress-packages.dwarf-fortress-full.override {

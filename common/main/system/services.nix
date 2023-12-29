@@ -78,11 +78,11 @@
         gutenprint
       ] ++
       # GutenPrint for supported architecture
-      (if (pkgs.reference.arch == pkgs.reference.arches.x64) then [
+      (if pkgs.stdenv.hostPlatform.isx86_64 then [
         gutenprintBin
       ] else []) ++
       # Brother drivers for supported architectures
-      (if (pkgs.reference.arch != pkgs.reference.arches.arm) then [
+      (if (!pkgs.stdenv.hostPlatform.isAarch) then [
         brgenml1lpr
         brgenml1cupswrapper
       ] else []);

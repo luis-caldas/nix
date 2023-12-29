@@ -65,7 +65,7 @@ lib.mkIf config.mine.graphics.enable
     enable = true;
   } //
   # Check architectures and set proper packages
-  (if (pkgs.reference.arch != pkgs.reference.arches.arm) then rec {
+  (if (!pkgs.stdenv.hostPlatform.isAarch) then rec {
     driSupport32Bit = true;
     # Packages for video acceleration
     extraPackages32 = with pkgs; [
