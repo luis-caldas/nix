@@ -4,14 +4,47 @@ lib.mkIf osConfig.mine.graphics.enable
 
 (let
 
+  # Function to create the name for the custom browsers
+  createBrowserName = commonName: "browser-${commonName}-custom";
+
+  # Get the name of the main browser
+  mainBrowser = createBrowserName (builtins.head (builtins.attrNames osConfig.mine.browser.others));
+
+  # Custom replacement list for the mimes
+  replacementList = {
+    browser = mainBrowser;
+  };
+
   # Create the massive list of the default applications for everything
   defaultMIMEs = lib.attrsets.zipAttrs (builtins.concatLists (lib.attrsets.mapAttrsToList
-    (name: value:
+    (name: value: let
+      # Check for replacements and apply them
+      entryName = if builtins.elem name (builtins.attrNames replacementList) then
+        "${replacementList."${name}"}.desktop"
+      else
+        value.entry;
+    in
       map
-      (mime: { "${mime}" = value.entry; })
+      (mime: { "${mime}" = entryName; })
       value.mimes
     )
     pkgs.reference.more.applications));
+
+  # Create the desktop entries for all the new browsers
+  newBrowsersDesktops = (
+    # Automatically create the chromium applications from a list
+    builtins.listToAttrs (lib.attrsets.mapAttrsToList (eachBrowserName: eachBrowserValue: {
+      name = createBrowserName eachBrowserName;
+      value = rec {
+        name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] eachBrowserName);
+        comment = "${name} web page running as an application";
+        exec = ''/usr/bin/env sh -c "${osConfig.mine.browser.command} --user-data-dir=\\$HOME/.config/${eachBrowserValue.path}"'';
+        icon = "web-browser";
+        terminal = false;
+        categories = [ "Network" "WebBrowser" ];
+      };
+    }) osConfig.mine.browser.others)
+  );
 
   # Create custom electron applications for all my used websites
   customElectron = let
@@ -36,7 +69,7 @@ lib.mkIf osConfig.mine.graphics.enable
       value = rec {
         name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] eachEntry.name);
         comment = "${name} web page running as an application";
-        exec = ''/usr/bin/env sh -c "chromium --user-data-dir=\\$HOME/.config/browser-apps/${eachEntry.name} --app=${eachEntry.url}"'';
+        exec = ''/usr/bin/env sh -c "${osConfig.mine.browser.command} --user-data-dir=\\$HOME/.config/browser-apps/${eachEntry.name} --app=${eachEntry.url}"'';
         icon = eachEntry.icon;
         terminal = false;
         categories = [ "Network" "WebBrowser" ];
@@ -86,7 +119,7 @@ in {
     };
     "org/gnome/shell".favorite-apps = with pkgs.reference.more.applications; [
       terminal.entry
-      browser.entry
+      "${mainBrowser}.desktop"
       files.entry
     ];
     "org/gnome/mutter" = {
@@ -261,7 +294,7 @@ in {
         lib.attrsets.nameValuePair
           "Browser ${pkgs.functions.capitaliseString name}"
           {
-            command = "chromium --user-data-dir=\"${config.xdg.configHome}/${value.path}\"";
+            command = "gtk-launch ${createBrowserName name}.desktop";
             binding = "<Super>${value.key}";
           }
       )
@@ -365,7 +398,7 @@ in {
   };
 
   # Add my own custom desktop files
-  xdg.desktopEntries = customElectron;
+  xdg.desktopEntries = customElectron // newBrowsersDesktops;
 
   # Set my own default applications
   xdg.mimeApps = {

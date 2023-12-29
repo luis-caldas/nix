@@ -89,7 +89,7 @@ lib.mkIf osConfig.mine.graphics.enable
     (name: value: map (eachExt:
       extensionJson eachExt value.path
       # Add the default extensions to the per each system ones
-    ) (osConfig.mine.browser.common ++ value.extensions))
+    ) value.extensions)
     (
       lib.attrsets.filterAttrs
       (name: value: value.extensions != [])
@@ -115,7 +115,7 @@ in
     # Enable chromium
     chromium = {
       enable = true;
-      package = pkgs.ungoogled-chromium.override {
+      package = pkgs.chromium.override {
         commandLineArgs = "--force-dark-mode --enable-features=WebUIDarkMode";
       };
     };

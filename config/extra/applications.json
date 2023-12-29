@@ -16,7 +16,6 @@
       "x-scheme-handler/http",
       "x-scheme-handler/https",
       "x-scheme-handler/webcal",
-      "x-scheme-handler/mailto",
       "x-scheme-handler/about",
       "x-scheme-handler/unknown"
     ]
@@ -27,7 +26,6 @@
     "mimes": [
       "message/rfc822",
       "x-scheme-handler/mailto",
-      "text/calendar",
       "text/x-vcard"
     ]
   },
@@ -203,7 +201,6 @@
       "application/x-ms-dos-executable",
       "application/x-gtar",
       "application/x-gzip",
-      "application/x-gzpostscript",
       "application/x-java-archive",
       "application/x-lha",
       "application/x-lhz",
@@ -273,7 +270,6 @@
       "image/x-bzeps",
       "image/x-eps",
       "image/x-gzeps",
-      "image/tiff",
       "application/oxps",
       "application/vnd.ms-xpsdocument",
       "application/illustrator"

@@ -335,6 +335,12 @@
         ];
       };
 
+      command = mkOption {
+        description = "Command to execute the browser";
+        type = str;
+        default = "chromium";
+      };
+
       others = mkOption {
         description = "Extensions for specific installations";
         type = attrs;
