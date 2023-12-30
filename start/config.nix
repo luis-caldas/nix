@@ -127,9 +127,6 @@ in {
         # My projects
         projects = myProjects;
 
-        # Extra file paths
-        extras = extraSpecialisations;
-
       };
 
     })
