@@ -10,13 +10,22 @@ let
 
     # Packages needed for the image
     copyToRoot = with pkgs; [
+
+      # Init
       tini
+
+      # Shell
       bash bashInteractive
+
+      # Tools
       tree
-      busybox coreutils
       curl wget
+      busybox coreutils
       gnugrep findutils moreutils util-linux
+
+      # Programs
       cron openssl cacert
+
     ];
 
     # Script to run at the start as root
