@@ -83,18 +83,6 @@ let
   systemPath = ../systems + ("/" + systemName);
   # Save the name of the default file
   defaultSystemFile = "default.nix";
-  # Save all the extra files in the directory
-  extraSpecialisations = let
-    # All directory structures
-    dirStructures = builtins.readDir systemPath;
-    # All file structures
-    fileStructures = lib.attrsets.filterAttrs (name: value: value == "regular") dirStructures;
-    # All the file names
-    filesListAll = builtins.attrNames fileStructures;
-    # Files list
-    filesList = lib.lists.remove defaultSystemFile filesListAll;
-  in
-    filesList;
 
   # Create the verbose string
   verboseString = "building for ${systemName} @ ${systemArch} - ${systemVersion} - ${systemId}";
