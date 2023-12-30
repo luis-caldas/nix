@@ -52,7 +52,7 @@
 
     dns = rec {
       image = imageFile.imageName;
-      imageFile = pkgs.container.images.dns;
+      imageFile = pkgs.container.images.freedns;
     };
 
   };
