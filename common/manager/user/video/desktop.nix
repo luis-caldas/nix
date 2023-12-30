@@ -124,17 +124,20 @@ in {
   dconf.settings = let
 
     # My default background
-    backgroundPath = let
-      # Prefix of the main wallpaper file
-      prefix = "main";
-      # Default if the main is not found
-      default = "df.png";
+    backgroundPaths = let
+      # Naming of files
+      files = {
+        light = "main-light.png";
+        dark = "main-dark.png";
+      };
       # Directory to all wallpapers
       wallpapersDir = "${pkgs.reference.projects.images}/wallpapers";
-      # Find the main file otherwise use the default
-      firstImage = lib.findFirst (item: lib.hasPrefix prefix item) default (pkgs.functions.listFilesInFolder wallpapersDir);
+      # Function to generate the file url
+      genUrlPath = imagePath: "file://${wallpapersDir}/${imagePath}";
     in
-      "file://${wallpapersDir}/${firstImage}";
+      { light = genUrlPath files.light;
+        dark  = genUrlPath files.dark;
+      };
 
     # My workspaces
     workspaces = [
@@ -167,19 +170,33 @@ in {
       edge-tiling = true;
       workspaces-only-on-primary = true;
       experimental-features = [ "scale-monitor-framebuffer" ];
+      locate-pointer-key = "Super_L_F";
     };
     "org/gnome/desktop/interface" = {
+
+      # Cursor
       cursor-size = lib.mkForce 32;
+      locate-pointer = true;
+
+      # Theming
       cursor-theme = osConfig.mine.graphics.cursor;
       icon-theme = osConfig.mine.graphics.icon;
       gtk-theme = osConfig.mine.graphics.theme;
       color-scheme = "prefer-dark";
+
+      # Bar
       enable-hot-corners = false;
       clock-show-seconds = true;
       clock-show-weekday = true;
+      show-battery-percentage = true;
+
+      # Fonts
       font-antialiasing = "subpixel";
       font-hinting = "full";
-      show-battery-percentage = true;
+      font-name = "Sans 10";
+      document-font-name = "Sans 10";
+      monospace-font-name = "Mono 11";
+
     };
     "org/gnome/desktop/search-providers" = {
       disable-external = true;
@@ -194,16 +211,12 @@ in {
       button-layout = "menu,appmenu:minimize,maximize,close";
     };
     "org/gnome/desktop/background" = {
-      picture-uri = backgroundPath;
-      picture-uri-dark = backgroundPath;
-    };
-    "org/gnome/desktop/interface" = {
-      font-name = "Sans 10";
-      document-font-name = "Sans 10";
-      monospace-font-name = "Mono 11";
+      picture-uri = backgroundPaths.light;
+      picture-uri-dark = backgroundPaths.dark;
+      show-desktop-icons = true;
     };
     "org/gnome/desktop/screensaver" = {
-      picture-uri = backgroundPath;
+      picture-uri = backgroundPaths.dark;
     };
     "org/gnome/settings-daemon/plugins/power" = {
       power-button-action = "nothing";
