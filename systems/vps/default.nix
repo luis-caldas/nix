@@ -1,4 +1,4 @@
-{ my, lib, config, modulesPath, pkgs, mfunc, ... }: let
+{ pkgs, lib, config, modulesPath, ... }: let
 
   # Information for the wireguard and NAT networking
   networkInfo = {
@@ -61,6 +61,7 @@ in {
 
   # DNS servers
   networking.networkmanager.insertNameservers = [ "127.0.0.1" ];
+  networking.networkmanager.appendNameservers = [ "9.9.9.10" ];
 
   # Disable all ipv6
   networking.enableIPv6 = false;
@@ -73,7 +74,6 @@ in {
       22    # SSH port
     ];
     allowedUDPPorts = [
-      networkInfo.port
     ];
   };
   # Setup Fail 2 Ban
@@ -92,64 +92,22 @@ in {
   services.avahi.enable = lib.mkForce false;
 
   # User keys for ssh
-  users.users."${my.config.user.name}".openssh.authorizedKeys.keyFiles = [
+  users.users."${config.mine.user.name}".openssh.authorizedKeys.keyFiles = [
     /etc/nixos/ssh/keys
   ];
 
-  # Set up our NAT configuration
-  networking.nat = {
-    enable = true;
-    externalInterface = networkInfo.external;
-    internalInterfaces = [ networkInfo.docker.interface networkInfo.interface ];
-    forwardPorts = [
-      # SSH Port redirection to self
-      { destination = "${networkInfo.host}:22"; proto = "tcp"; sourcePort = 22; }
-      # Redirect the VPN ports to self
-      {
-        destination = "${networkInfo.host}:${builtins.toString networkInfo.port}";
-        proto = "udp";
-        sourcePort = networkInfo.port;
-      }
-      {
-        destination = "${networkInfo.docker.wire}:${builtins.toString networkInfo.original}";
-        proto = "udp";
-        sourcePort = networkInfo.docker.container;
-      }
-      # Redirect all the rest to tunnel
-      {
-        destination = "${networkInfo.remote}:1-${builtins.toString networkInfo.gap}";
-        proto = "tcp";
-        sourcePort = "1:${builtins.toString networkInfo.gap}";
-      }
-      {
-        destination = "${networkInfo.remote}:1-${builtins.toString networkInfo.gap}";
-        proto = "udp";
-        sourcePort = "1:${builtins.toString networkInfo.gap}";
-      }
-    ];
-  };
-
-  # Set up our wireguard configuration
-  networking.wireguard.interfaces."${networkInfo.interface}" = {
-    ips = [ "${networkInfo.host}/${builtins.toString networkInfo.prefix}" ];
-    listenPort = networkInfo.port;
-    privateKeyFile = "/data/wireguard/host.key";
-    peers = [{
-      publicKey = mfunc.safeReadFile /data/wireguard/remote.pub;
-      presharedKeyFile = "/data/wireguard/shared.key";
-      allowedIPs = [ "${networkInfo.remote}/32" ];
-    }];
-  };
-
   # Set up the networking creation service
-  systemd.services = my.containers.functions.addNetworks {
+  systemd.services = pkgs.container.functions.addNetworks {
     "${networkInfo.docker.name}" = { range = networkInfo.docker.range; interface = networkInfo.docker.interface; };
   };
 
   # All containers
   virtualisation.oci-containers.containers = {
 
-    # Main client wireguard configuration
+    #############
+    # WireGuard #
+    #############
+
     wireguard = let
       allUsers = [
         # Names will be changed for numbers starting on zero
@@ -176,9 +134,9 @@ in {
     in {
       image = "lscr.io/linuxserver/wireguard:latest";
       environment = {
-        TZ = my.config.system.timezone;
-        PUID = builtins.toString my.config.user.uid;
-        GUID = builtins.toString my.config.user.gid;
+        TZ = config.mine.system.timezone;
+        PUID = builtins.toString config.mine.user.uid;
+        GUID = builtins.toString config.mine.user.gid;
         INTERNAL_SUBNET = networkInfo.subnet;
         ALLOWEDIPS = "0.0.0.0/0,${networkInfo.docker.dns}/32,${networkInfo.remote}/${builtins.toString networkInfo.prefix}";
         PEERS = allPeers;
@@ -193,16 +151,19 @@ in {
       extraOptions = [ "--cap-add=NET_ADMIN" "--network=${networkInfo.docker.name}" "--ip=${networkInfo.docker.wire}" ];
     };
 
-    # DNS configuration
+    #######
+    # DNS #
+    #######
+
     dns-up = rec {
       image = imageFile.imageName;
-      imageFile = my.containers.images.dns;
+      imageFile = pkgs.containers.images.dns;
       extraOptions = [ "--network=${networkInfo.docker.name}" "--ip=${networkInfo.docker.dnsUp}" ];
     };
     dns = {
       image = "pihole/pihole:latest";
       environment = {
-        TZ = my.config.system.timezone;
+        TZ = config.mine.system.timezone;
         DNSMASQ_LISTENING = "all";
         PIHOLE_DNS_ = networkInfo.docker.dnsUp;
       };
@@ -218,6 +179,8 @@ in {
     };
 
   };
+
+  # Filesystems
 
   # Add swap
   swapDevices = [ {
