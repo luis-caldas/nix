@@ -48,15 +48,6 @@
     games = true;
   };
 
-  virtualisation.oci-containers.containers = {
-
-    dns = rec {
-      image = imageFile.imageName;
-      imageFile = pkgs.container.images.freedns;
-    };
-
-  };
-
   # File systems
 
   fileSystems."/" =
