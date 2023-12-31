@@ -157,7 +157,7 @@ in {
 
     dns-up = rec {
       image = imageFile.imageName;
-      imageFile = pkgs.containers.images.dns;
+      imageFile = pkgs.containerImages.dns;
       extraOptions = [ "--network=${networkInfo.docker.name}" "--ip=${networkInfo.docker.dnsUp}" ];
     };
     dns = {
