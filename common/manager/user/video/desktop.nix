@@ -170,13 +170,11 @@ in {
       edge-tiling = true;
       workspaces-only-on-primary = true;
       experimental-features = [ "scale-monitor-framebuffer" ];
-      locate-pointer-key = "Super_L_F";
     };
     "org/gnome/desktop/interface" = {
 
       # Cursor
       cursor-size = lib.mkForce 32;
-      locate-pointer = true;
 
       # Theming
       cursor-theme = osConfig.mine.graphics.cursor;
