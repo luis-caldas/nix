@@ -20,7 +20,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
   # List of default apps for the desktop
   defaultApplications = {
-    terminal = "kitty.desktop";
+    terminal = "Alacritty.desktop";
     browser = "${(builtins.head browsersNewInfo).name}.desktop";
     email = "thunderbird.desktop";
     text = "org.gnome.TextEditor.desktop";

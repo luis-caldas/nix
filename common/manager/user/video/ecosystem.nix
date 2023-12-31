@@ -115,6 +115,53 @@ in
       config = pkgs.reference.more.mpv.settings;
     };
 
+    # Configuratio for alacritty
+    alacritty = {
+      enable = true;
+
+      # Window decoration
+      settings.window = {
+        decorations = "None";
+        padding = {
+          x = 32;
+          y = 32;
+        };
+        opacity = 0.95;
+      };
+
+      # Colours theme
+      settings.colors = {
+        # Default colors
+        primary = {
+          background = "#000000";
+          foreground = "#ffffff";
+        };
+        # Normal colors
+        normal = {
+          black   = "#000000";
+          red     = "#cd0000";
+          green   = "#00cd00";
+          yellow  = "#cdcd00";
+          blue    = "#0000ee";
+          magenta = "#cd00cd";
+          cyan    = "#00cdcd";
+          white   = "#e5e5e5";
+        };
+        # Bright colors
+        bright = {
+          black   = "#7f7f7f";
+          red     = "#ff0000";
+          green   = "#00ff00";
+          yellow  = "#ffff00";
+          blue    = "#5c5cff";
+          magenta = "#ff00ff";
+          cyan    = "#00ffff";
+          white   = "#ffffff";
+        };
+      };
+
+    };
+
   };
 
   # All the needed links for the system to have its flair

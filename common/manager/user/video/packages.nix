@@ -172,7 +172,7 @@ lib.mkIf osConfig.mine.graphics.enable
     qdirstat
 
     # Terminal
-    kitty
+    alacritty
     cool-retro-term
 
     # Clipboard
