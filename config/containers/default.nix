@@ -67,7 +67,7 @@ in {
     (final: prev: {
 
       # All the images
-      container.images = builtins.listToAttrs (map (eachFile: {
+      containerImages = builtins.listToAttrs (map (eachFile: {
         name = lib.strings.removeSuffix ".nix" eachFile;
         value = import (imagesPath + ("/" + eachFile)) { inherit baseImage pkgs; };
       }) allImages);

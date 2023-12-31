@@ -97,7 +97,7 @@ in {
   ];
 
   # Set up the networking creation service
-  systemd.services = pkgs.container.functions.addNetworks {
+  systemd.services = pkgs.containerFunctions.addNetworks {
     "${networkInfo.docker.name}" = { range = networkInfo.docker.range; interface = networkInfo.docker.interface; };
   };
 

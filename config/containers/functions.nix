@@ -109,7 +109,7 @@ in {
     (final: prev: {
 
       # All the functions
-      container.functions = allFunctions;
+      containerFunctions = allFunctions;
 
     })
 

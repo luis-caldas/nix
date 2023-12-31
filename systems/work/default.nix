@@ -28,7 +28,6 @@
 
   # My specific configuration
   mine = {
-    boot.timeout = 1;
     system.hostname = "work";
     services = {
       avahi = true;
