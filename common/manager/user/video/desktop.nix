@@ -8,15 +8,10 @@ lib.mkIf osConfig.mine.graphics.enable
   mainBrowser = (builtins.head osConfig.mine.browser.others).name;
 
   # Create an object with all the new browser info so it can be referenced
-  browsersNewInfo = map (eachBrowser:
-    {
-      name = "browser-${eachBrowser.name}";
-      path = if eachBrowser.name == mainBrowser then
-               "${osConfig.mine.browser.command}"
-             else
-               "${osConfig.mine.browser.command}-${eachBrowser.name}";
-    }
-  ) osConfig.mine.browser.others;
+  browsersNewInfo = map (eachBrowser: {
+    name = "browser-${eachBrowser.name}";
+    path = "${osConfig.mine.browser.command}-${eachBrowser.name}";
+  }) osConfig.mine.browser.others;
 
   # List of default apps for the desktop
   defaultApplications = {
@@ -56,6 +51,7 @@ lib.mkIf osConfig.mine.graphics.enable
         icon = "web-browser";
         terminal = false;
         categories = [ "Network" "WebBrowser" ];
+        settings.StartupWMClass = "chromium-browser (${config.xdg.configHome}/${extraBrowserInfo.path})";
       };
     }) osConfig.mine.browser.others)
   );
@@ -99,7 +95,7 @@ lib.mkIf osConfig.mine.graphics.enable
       { name = "discord-web"; icon = "discord"; url = "https://discord.com/app"; }
       { name = "github-web"; icon = "github"; url = "https://github.com"; }
       { name = "chess-web"; icon = "chess"; url = "https://chess.com"; }
-      { name = "spotify-web"; icon = "spotify"; url = "https://open.spotify.com/"; }
+      { name = "spotify-web"; icon = "spotify"; url = "https://open.spotify.com"; }
       { name = "defence-forces"; icon = "knavalbattle"; url = "https://irishdefenceforces.workvivo.com"; }
     ];
 
@@ -114,6 +110,9 @@ lib.mkIf osConfig.mine.graphics.enable
         icon = eachEntry.icon;
         terminal = false;
         categories = [ "Network" "WebBrowser" ];
+        settings.StartupWMClass = let
+          fixedUrl = lib.lists.last (lib.strings.split "/" eachEntry.url);
+        in "chrome-${fixedUrl}__-Default";
       };
     }) browserApplications)
   );
