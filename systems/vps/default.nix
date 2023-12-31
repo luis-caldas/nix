@@ -149,6 +149,9 @@ in {
       volumes = [
         "/data/containers/wireguard/config:/config"
       ];
+      ports = [
+        "${builtins.toString networkInfo.original}:${builtins.toString networkInfo.docker.container}/udp"
+      ];
       extraOptions = [ "--cap-add=NET_ADMIN" "--network=${networkInfo.docker.name}" "--ip=${networkInfo.docker.wire}" ];
     };
 
