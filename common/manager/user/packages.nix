@@ -206,7 +206,8 @@
     # Nix
     nixpkgs-review
 
-    # Docker
+    # Containers
+    arion
     docker-compose
 
     # Markdown

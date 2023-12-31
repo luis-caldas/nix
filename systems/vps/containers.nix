@@ -1,133 +1,166 @@
 { pkgs, lib, config, ... }:
 let
 
-    # Docker configuration
-    containers = rec {
+  # All the wireguard info
+  wireguardInfo = {
 
-      # Name of the internal interface
-      name = "internal";
-      interface = "int0";
+    # Subnet for Wireguard
+    subnet = "10.255.254.0/24";
 
-      # Internal docker IPs
-      range = "172.16.50.0/24";
+    # Subnet for all internal communications
+    remote = "10.255.255.1/24";
 
-      # IPs for the containers
-      each = {
-        # DNS
-        dns = "172.16.50.11";
-        dnsUp = "172.16.50.10";
-        # WireGuard
-        wire = "172.16.50.20";
-      };
+    # Original Wireguard port
+    original = 51820;
 
-      # Wireguard
+    # Port (udp) most comonly used by VoIP providers (Zoom, Skype)
+    # Therefore high change of not being blocked
+    # Complete range is 3478 -> 3481
+    # Port needs also be opened on hosting side
+    container = 3478;
 
-      # Subnet for Wireguard
-      subnet = "10.255.254.0/24";
+  };
 
-      # Subnet for all internal communications
-      remote = "10.255.255.1/24";
+  # List of users for wireguard
+  listUsers = let
 
-      # Original Wireguard port
-      original = 51820;
+    # Simple list that can be easily understood
+    simpleList = [
+      # Names will be changed for numbers starting on zero
+      { home = [ "house" "router" "server" ]; }
+      { lu = [ "laptop" "phone" "tablet" ]; }
+      { m = [ "laptop" "phone" "extra" ]; }
+      { lak = [ "laptop" "phone" "desktop" ]; }
+      { extra = [ "first" "second" "third" "fourth" ]; }
+    ];
 
-      # Port (udp) most comonly used by VoIP providers (Zoom, Skype)
-      # Therefore high change of not being blocked
-      # Complete range is 3478 -> 3481
-      # Port needs also be opened on hosting side
-      container = 3478;
+    # Rename all users to
+    arrayUsersDevices = map
+      (eachEntry:
+        builtins.concatLists (lib.attrsets.mapAttrsToList
+        (eachUser: allDevices: lib.lists.imap0
+          (index: eachDevice: "${eachUser}${builtins.toString index}")
+          allDevices
+        )
+        eachEntry)
+      )
+      simpleList;
 
-    };
+    # Join all the created lists
+    interspersedUsers = lib.strings.concatStrings
+      (lib.strings.intersperse "," (builtins.concatLists arrayUsersDevices));
+
+  in interspersedUsers;
 
 in {
 
-  # Set up the networking creation service
-  systemd.services = pkgs.containerFunctions.addNetworks {
-    "${containers.name}" = { range = containers.range; interface = containers.interface; };
-  };
+  # Import arion
+  imports = [
+     "${builtins.fetchGit "https://github.com/hercules-ci/arion"}/nixos-module.nix"
+  ];
 
+  # Arion
+  virtualisation.arion = {
 
-  # All containers
-  virtualisation.oci-containers.containers = {
+    # Set docker as backend
+    backend = "docker";
 
-    #############
-    # WireGuard #
-    #############
+    # All the projects
+    projects = {
 
-    wireguard = let
-      allUsers = [
-        # Names will be changed for numbers starting on zero
-        { home = [ "house" "router" "server" ]; }
-        { lu = [ "laptop" "phone" "tablet" ]; }
-        { m = [ "laptop" "phone" "extra" ]; }
-        { lak = [ "laptop" "phone" "desktop" ]; }
-        { extra = [ "first" "second" "third" "fourth" ]; }
-      ];
-      allPeers = let
-        arrayUsersDevices = map
-          (eachEntry:
-            builtins.concatLists (lib.attrsets.mapAttrsToList
-            (eachUser: allDevices: lib.lists.imap0
-              (index: eachDevice: "${eachUser}${builtins.toString index}")
-              allDevices
-            )
-            eachEntry)
-          )
-          allUsers;
-        usersDevicesList = builtins.concatLists arrayUsersDevices;
-        interspersedList = lib.strings.intersperse "," usersDevicesList;
-      in lib.strings.concatStrings interspersedList;
-    in {
-      image = "lscr.io/linuxserver/wireguard:latest";
-      environment = {
-        TZ = config.mine.system.timezone;
-        PUID = builtins.toString config.mine.user.uid;
-        GUID = builtins.toString config.mine.user.gid;
-        INTERNAL_SUBNET = containers.subnet;
-        ALLOWEDIPS = "0.0.0.0/0,${containers.each.dns}/32,${containers.remote},${containers.subnet}";
-        PEERS = allPeers;
-        SERVERPORT = builtins.toString containers.container;
-        PEERDNS = containers.each.dns;
-        PERSISTENTKEEPALIVE_PEERS = "all";
+      # Main VPN containers
+      vpn.settings = let
+
+        # Set up IPs for the containers
+        ips = {
+          # DNS
+          dns = "172.16.50.11";
+          dnsUp = "172.16.50.10";
+          # WireGuard
+          wire = "172.16.50.20";
+        };
+
+        # Internal docker IPs
+        subnet = "172.16.50.0/24";
+        gateway = "172.16.50.1";
+
+      in {
+
+        # Set up the network
+        networks = {
+          wire.ipam.config = [{ inherit subnet gateway; }];
+        };
+
+        #######
+        # DNS #
+        #######
+
+        # DNS containers
+
+        # Upstream DNS server
+        services.dns-up = let currentImage = pkgs.containerImages.dns; in {
+          build.image = lib.mkForce currentImage;
+          service = {
+            name = "freedns";
+            networks.wire.ipv4_address = ips.dnsUp;
+          };
+        };
+
+        # PiHole
+        services.dns.service = {
+          image = "pihole/pihole:latest";
+          environment = {
+            TZ = config.mine.system.timezone;
+            DNSMASQ_LISTENING = "all";
+            PIHOLE_DNS_ = ips.dnsUp;
+          };
+          depends_on = [ "dns-up" ];
+          # Networking
+          dns = [ "127.0.0.1" ];
+          networks.wire.ipv4_address = ips.dns;
+        };
+
+        #############
+        # WireGuard #
+        #############
+
+        services.wire.service = {
+
+          # Image file
+          image = "lscr.io/linuxserver/wireguard:latest";
+
+          # Environments
+          environment = {
+            TZ = config.mine.system.timezone;
+            PUID = builtins.toString config.mine.user.uid;
+            GUID = builtins.toString config.mine.user.gid;
+            INTERNAL_SUBNET = wireguardInfo.subnet;
+            ALLOWEDIPS = "0.0.0.0/0,${ips.dns}/32,${wireguardInfo.subnet},${wireguardInfo.remote}";
+            PEERS = allPeers;
+            SERVERPORT = builtins.toString wireguardInfo.container;
+            PEERDNS = ips.dns;
+            PERSISTENTKEEPALIVE_PEERS = "all";
+          };
+          env_file = [ /data/containers/wireguard/env/wire.env ];
+
+          # Volumes
+          volumes = [
+            "/data/containers/wireguard/config:/config"
+          ];
+
+          # Setting up networking
+          ports = [
+            "${builtins.toString wireguardInfo.original}:${builtins.toString wireguardInfo.container}/udp"
+          ];
+          networks.wire.ipv4_address = ips.wire;
+          capabilities.NET_ADMIN = true;
+
+        };
+
       };
-      environmentFiles = [ /data/containers/wireguard/env/wire.env ];
-      volumes = [
-        "/data/containers/wireguard/config:/config"
-      ];
-      ports = [
-        "${builtins.toString containers.original}:${builtins.toString containers.container}/udp"
-      ];
-      extraOptions = [ "--cap-add=NET_ADMIN" "--network=${containers.name}" "--ip=${containers.each.wire}" ];
-    };
 
-    #######
-    # DNS #
-    #######
-
-    dns-up = rec {
-      image = imageFile.imageName;
-      imageFile = pkgs.containerImages.dns;
-      extraOptions = [ "--network=${containers.name}" "--ip=${containers.each.dnsUp}" ];
-    };
-    dns = {
-      image = "pihole/pihole:latest";
-      environment = {
-        TZ = config.mine.system.timezone;
-        DNSMASQ_LISTENING = "all";
-        PIHOLE_DNS_ = containers.each.dnsUp;
-      };
-      dependsOn = [ "dns-up" ];
-      environmentFiles = [ /data/containers/pihole/env/adblock.env ];
-      volumes = [
-        "/data/containers/pihole/config/etc:/etc/pihole"
-        "/data/containers/pihole/config/dnsmasq:/etc/dnsmasq.d"
-        # Own DNS list
-        "/data/containers/pihole/config/routes.list:/etc/pihole/custom.list"
-      ];
-      extraOptions = [ "--dns=127.0.0.1" "--network=${containers.name}" "--ip=${containers.each.dns}" ];
     };
 
   };
-
 
 }
