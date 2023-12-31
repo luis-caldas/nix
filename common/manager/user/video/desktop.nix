@@ -47,7 +47,7 @@ lib.mkIf osConfig.mine.graphics.enable
       value = {
         name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] extraBrowserInfo.name);
         comment = "Browser Customized ${pkgs.functions.capitaliseString eachBrowser.name}";
-        exec = ''/usr/bin/env sh -c "${osConfig.mine.browser.command} --user-data-dir=\\$HOME/.config/${extraBrowserInfo.path}"'';
+        exec = ''/usr/bin/env sh -c "${osConfig.mine.browser.command} --user-data-dir=${config.xdg.configHome}/${extraBrowserInfo.path}"'';
         icon = "web-browser";
         terminal = false;
         categories = [ "Network" "WebBrowser" ];
