@@ -43,6 +43,7 @@ in {
     zram = true;
     boot.override = true;
     system.hostname = "vps";
+    network.mac = "permanent";
     user.admin = false;
     services.ssh = true;
     services.docker = true;
