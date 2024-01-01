@@ -42,7 +42,7 @@
 
       # Configure networking
       networks = lib.attrsets.mapAttrs (
-        eachNetwork:
+        eachName: eachValue:
             { ipam.config = [{ inherit (eachNetwork) subnet gateway; }]; }
       ) netw;
 
@@ -138,7 +138,7 @@
 
       services.asterisk = {
         # Image
-        build.image = lib.mkDorce pkgs.containerImages.asterisk;
+        build.image = lib.mkForce pkgs.containerImages.asterisk;
         # Options
         service = {
           # Volumes
