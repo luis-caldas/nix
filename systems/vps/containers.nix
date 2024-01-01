@@ -4,6 +4,9 @@ let
   # All the wireguard info
   wireguardInfo = {
 
+    # Subnet for Wireguard
+    subnet = "10.255.254.0/24";
+
     # Subnet for all internal communications
     internal = "10.255.0.0/16";
 
@@ -136,7 +139,7 @@ in {
             PUID = builtins.toString config.mine.user.uid;
             GUID = builtins.toString config.mine.user.gid;
             INTERNAL_SUBNET = wireguardInfo.subnet;
-            ALLOWEDIPS = "0.0.0.0/0,${ips.dns}/32,${wireguardInfo.internal}";
+            ALLOWEDIPS = "0.0.0.0/0,${ips.dns}/32,${wireguardInfo.subnet},${wireguardInfo.internal}";
             PEERS = listUsers;
             SERVERPORT = builtins.toString wireguardInfo.container;
             PEERDNS = ips.dns;
