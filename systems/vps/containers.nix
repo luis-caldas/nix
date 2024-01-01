@@ -38,8 +38,8 @@ let
     arrayUsersDevices = map
       (eachEntry:
         builtins.concatLists (lib.attrsets.mapAttrsToList
-        (eachUser: allDevices: lib.lists.imap0
-          (index: eachDevice: "${eachUser}${builtins.toString index}")
+        (eachUser: allDevices: map
+          (eachDevice: "${eachUser}${pkgs.functions.capitaliseString index}")
           allDevices
         )
         eachEntry)
