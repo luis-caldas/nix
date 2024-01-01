@@ -32,6 +32,8 @@
 
             asteriskWeb = "172.16.73.30";
             asteriskSimple = "172.16.73.31";
+
+            dns = "172.16.73.100";
           };
 
         };
@@ -83,6 +85,7 @@
         ];
         dns = [ "127.0.0.1" ];
         networks.dns.ipv4_address = netw.dns.ips.dns;
+        networks.web.ipv4_address = netw.web.ips.dns;
 
       };
 
