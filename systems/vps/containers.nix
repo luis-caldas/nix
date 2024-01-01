@@ -114,8 +114,6 @@ in {
           volumes = [
             "/data/containers/pihole/config/etc:/etc/pihole"
             "/data/containers/pihole/config/dnsmasq:/etc/dnsmasq.d"
-            # Own DNS list
-            "/data/containers/pihole/config/routes.list:/etc/pihole/custom.list"
           ];
 
           # Networking
