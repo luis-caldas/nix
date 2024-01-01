@@ -54,16 +54,8 @@ let
 
 in {
 
-  # Import arion
-  imports = [
-     "${builtins.fetchGit "https://github.com/hercules-ci/arion"}/nixos-module.nix"
-  ];
-
   # Arion
   virtualisation.arion = {
-
-    # Set docker as backend
-    backend = "docker";
 
     # All the projects
     projects = {
@@ -101,7 +93,6 @@ in {
         services.dns-up = let currentImage = pkgs.containerImages.dns; in {
           build.image = lib.mkForce currentImage;
           service = {
-            name = "freedns";
             networks.wire.ipv4_address = ips.dnsUp;
           };
         };
@@ -109,15 +100,28 @@ in {
         # PiHole
         services.dns.service = {
           image = "pihole/pihole:latest";
+          depends_on = [ "dns-up" ];
+
+          # Environment
           environment = {
             TZ = config.mine.system.timezone;
             DNSMASQ_LISTENING = "all";
             PIHOLE_DNS_ = ips.dnsUp;
           };
-          depends_on = [ "dns-up" ];
+          env_file = [ /data/containers/pihole/env/adblock.env ];
+
+          # Volumes
+          volumes = [
+            "/data/containers/pihole/config/etc:/etc/pihole"
+            "/data/containers/pihole/config/dnsmasq:/etc/dnsmasq.d"
+            # Own DNS list
+            "/data/containers/pihole/config/routes.list:/etc/pihole/custom.list"
+          ];
+
           # Networking
           dns = [ "127.0.0.1" ];
           networks.wire.ipv4_address = ips.dns;
+
         };
 
         #############
@@ -136,7 +140,7 @@ in {
             GUID = builtins.toString config.mine.user.gid;
             INTERNAL_SUBNET = wireguardInfo.subnet;
             ALLOWEDIPS = "0.0.0.0/0,${ips.dns}/32,${wireguardInfo.subnet},${wireguardInfo.remote}";
-            PEERS = allPeers;
+            PEERS = listUsers;
             SERVERPORT = builtins.toString wireguardInfo.container;
             PEERDNS = ips.dns;
             PERSISTENTKEEPALIVE_PEERS = "all";

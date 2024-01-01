@@ -58,6 +58,9 @@ in {
     # Import all the relative functions
     ./functions.nix
 
+    # Import arion
+    ./arion.nix
+
   ];
 
   # The functions to the overlay
