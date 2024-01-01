@@ -108,7 +108,7 @@ in {
             DNSMASQ_LISTENING = "all";
             PIHOLE_DNS_ = ips.dnsUp;
           };
-          env_file = [ /data/containers/pihole/env/adblock.env ];
+          env_file = [ "/data/containers/pihole/env/adblock.env" ];
 
           # Volumes
           volumes = [
@@ -145,7 +145,7 @@ in {
             PEERDNS = ips.dns;
             PERSISTENTKEEPALIVE_PEERS = "all";
           };
-          env_file = [ /data/containers/wireguard/env/wire.env ];
+          env_file = [ "/data/containers/wireguard/env/wire.env" ];
 
           # Volumes
           volumes = [
