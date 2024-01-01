@@ -1,164 +1,232 @@
-{ pkgs, config, ... }:
-let
+{ pkgs, lib, config, ... }:
+{
 
-  # Create all the services needed for the containers networks
-  containerNetworksServices = pkgs.containerFunctions.addNetworks {
-    dns = { range = "172.16.72.0/24"; };
-    web = { range = "172.16.73.0/24"; };
-  };
+  virtualisation.arion = {
 
-in {
+    projects.all.settings = let
 
-  # Intialise all the container services
-  systemd.services = containerNetworksServices;
+      # Configure the networking
+      netw = {
 
-  # Set up docker containers
-  virtualisation.oci-containers.containers = {
+        # DNS Network
+        dns = {
+          subnet = "172.16.72.0/24";
+          gateway = "172.16.72.1";
+          # Configure IPs
+          ips = {
+            dns = "172.16.72.11";
+            dnsUp = "172.16.72.10";
+          };
+        };
 
-    ##############
-    # DNS Server #
-    ##############
+        # Web Network
+        web = {
 
-    dns-up = rec {
-      image = imageFile.imageName;
-      imageFile = pkgs.containerImages.dns;
-      extraOptions = [ "--network=dns" "--ip=172.16.72.200" ];
-    };
-    dns-block = {
-      image = "pihole/pihole:latest";
-      environment = {
-        TZ = config.mine.system.timezone;
-        DNSMASQ_LISTENING = "all";
-        PIHOLE_DNS_ = "172.16.72.200";
+          subnet = "172.16.73.0/24";
+          gateway = "172.16.73.1";
+
+          # Configure IPs
+          ips = {
+            dash = "172.16.73.10";
+            nut = "172.16.73.20";
+
+            asteriskWeb = "172.16.73.30";
+            asteriskSimple = "172.16.73.31";
+          };
+
+        };
+
       };
-      environmentFiles = [ /data/local/containers/pihole/env/adblock.env ];
-      volumes = [
-        "/data/local/containers/pihole/config/etc:/etc/pihole"
-        "/data/local/containers/pihole/config/dnsmasq:/etc/dnsmasq.d"
-      ];
-      ports = [
-        "53:53/tcp"
-        "53:53/udp"
-        "81:80/tcp"
-      ];
-      extraOptions = [ "--dns=127.0.0.1" "--network=dns" "--ip=172.16.72.100" ];
-    };
 
-    ##############
-    # NTP Server #
-    ##############
+    in {
 
-    time = rec {
-      image = "simonrupf/chronyd";
-      environment = {
-        TZ = config.mine.system.timezone;
-        NTP_SERVERS = "time.cloudflare.com";
-        ENABLE_NTS = "true";
+      # Configure networking
+      networks = lib.attrs.mapAttrs (
+        eachNetwork:
+            { ipam.config = [{ inherit (eachNetwork) subnet gateway; }]; }
+      ) netw;
+
+      ##############
+      # DNS Server #
+      ##############
+
+      # Upstream DNS server
+      services.dns-up = {
+        build.image = lib.mkForce pkgs.containerImages.dns;
+        service = {
+          networks.dns.ipv4_address = nett.dns.ips.dnsUp;
+        };
       };
-      ports = [
-        "123:123/udp"
-      ];
-    };
 
-    ###############
-    # NUT Monitor #
-    ###############
+      # PiHole
+      services.dns.service = {
+        image = "pihole/pihole:latest";
 
-    nut = {
-      image = "teknologist/webnut:latest";
-      environment = {
-        TZ = config.mine.system.timezone;
+        # Environment
+        environment = {
+          TZ = config.mine.system.timezone;
+          DNSMASQ_LISTENING = "all";
+          PIHOLE_DNS_ = nett.dns.ips.dnsUp;
+        };
+        env_file = [ "data/local/containers/pihole/env/adblock.env" ];
+
+        # Volumes
+        volumes = [
+          "/data/local/containers/pihole/config/etc:/etc/pihole"
+          "/data/local/containers/pihole/config/dnsmasq:/etc/dnsmasq.d"
+        ];
+
+        # Networking
+        ports = [
+          "53:53/tcp"
+          "53:53/udp"
+        ];
+        dns = [ "127.0.0.1" ];
+        networks.dns.ipv4_address = nett.dns.ips.dns;
+
       };
-      environmentFiles = [ /data/local/containers/nut/nut.env ];
-      ports = [
-        "82:6543/tcp"
-      ];
-      extraOptions = [ "--network=web" ];
-    };
 
-    #############
-    # Dashboard #
-    #############
+      ###########
+      # FreeDNS #
+      ###########
 
-    dash = rec {
-      image = imageFile.imageName;
-      imageFile = pkgs.containerImages.web { name = "dashboard"; url = "https://github.com/luis-caldas/personal"; };
-      volumes = [
-        "/data/local/containers/dash/config/other.json:/web/other.json:ro"
-      ];
-      extraOptions = [ "--network=web" "--ip=172.16.73.100" ];
-    };
+      services.freedns = {
+        # Image
+        build.image = lib.mkForce pkgs.containerImages.freedns;
+        # Environment
+        service.env_file = [ "/data/local/containers/noip/udns.env" ];
+      };
 
-    ###########
-    # FreeDNS #
-    ###########
+      ##############
+      # NTP Server #
+      ##############
 
-    freedns = rec {
-      image = imageFile.imageName;
-      imageFile = pkgs.containerImages.freedns;
-      environmentFiles = [ /data/local/containers/noip/udns.env ];
-      extraOptions = [ "--dns=172.16.72.100" "--network=dns" ];
-    };
+      services.time.service = {
+        # Image file
+        image = "simonrupf/chronyd:latest";
+        # Environment
+        environment = {
+          TZ = config.mine.system.timezone;
+          NTP_SERVERS = "time.cloudflare.com";
+          ENABLE_NTS = "true";
+        };
+        # Networking
+        ports = [
+          "123:123/udp"
+        ];
+      };
 
-    ############
-    # Asterisk #
-    ############
+      ###############
+      # NUT Monitor #
+      ###############
 
-    asterisk = rec {
-      image = imageFile.imageName;
-      imageFile = pkgs.containerImages.asterisk;
-      volumes = [
-        "/data/local/containers/asterisk/config/conf:/etc/asterisk/conf.mine"
-        "/data/local/containers/asterisk/config/voicemail:/var/spool/asterisk/voicemail"
-        "/data/local/containers/asterisk/config/record:/var/spool/asterisk/monitor"
-        "/data/local/containers/asterisk/config/sounds:/var/lib/asterisk/sounds/mine"
-        # Email files
-        "/data/local/mail:/data/local/mail:ro"
-        "/etc/msmtprc:/etc/msmtprc:ro"
-      ];
-      extraOptions = [ "--network=host" ];
-    };
-    # HTTP Server for files
-    http-asterisk-user = rec {
-      image = imageFile.imageName;
-      imageFile = pkgs.containerImages.web {};
-      volumes = [
-        "/data/local/containers/asterisk/config/voicemail:/web/voicemail:ro"
-        "/data/local/containers/asterisk/config/record:/web/monitor:ro"
-      ];
-      ports = [
-        "8080:8080/tcp"
-      ];
-      extraOptions = [ "--network=web" ];
-    };
-    # Simple HTTP Server
-    http-asterisk-kodi = rec {
-      image = "halverneus/static-file-server:latest";
-      volumes = [
-        "/data/local/containers/asterisk/config/voicemail:/web/voicemail:ro"
-        "/data/local/containers/asterisk/config/record:/web/monitor:ro"
-      ];
-      ports = [
-        "8081:8080/tcp"
-      ];
-      extraOptions = [ "--network=web" ];
-    };
+      services.nut.service = {
+        # Image
+        image = "teknologist/webnut:latest";
+        # Environment
+        environment = {
+          TZ = config.mine.system.timezone;
+        };
+        env_file = [ "/data/local/containers/nut/nut.env" ];
+        # Networking
+        networks.web.ipv4_address = nett.web.ips.nut;
+      };
 
-    #################
-    # Reverse Proxy #
-    #################
+      ############
+      # Asterisk #
+      ############
 
-    proxy = {
-      image = "jc21/nginx-proxy-manager:latest";
-      ports = [
-        "80:80/tcp"
-        "443:443/tcp"
-        "7080:81/tcp"
-      ];
-      volumes = [
-        "/data/local/containers/proxy:/data"
-      ];
-      extraOptions = [ "--network=web" ];
+      services.asterisk = {
+        # Image
+        build.image = lib.mkDorce pkgs.containerImages.asterisk;
+        # Options
+        service = {
+          # Volumes
+          volumes = [
+            "/data/local/containers/asterisk/config/conf:/etc/asterisk/conf.mine"
+            "/data/local/containers/asterisk/config/voicemail:/var/spool/asterisk/voicemail"
+            "/data/local/containers/asterisk/config/record:/var/spool/asterisk/monitor"
+            "/data/local/containers/asterisk/config/sounds:/var/lib/asterisk/sounds/mine"
+            # Email files
+            "/data/local/mail:/data/local/mail:ro"
+            "/etc/msmtprc:/etc/msmtprc:ro"
+          ];
+          # Networking
+          network_mode = "host";
+        };
+      };
+
+      #############
+      # Dashboard #
+      #############
+
+      services.dash = {
+        # Image
+        build.image = lib.mkForce (pkgs.containerImages.web { name = "dashboard"; url = "https://github.com/luis-caldas/personal"; });
+        # Options
+        service = {
+          # Volumes
+          volumes = [
+            "/data/local/containers/dash/config/other.json:/web/other.json:ro"
+          ];
+          # Networking
+          networks.web.ipv4_address = nett.web.ips.dash;
+        };
+      };
+
+      ################
+      # Asterisk Web #
+      ################
+
+      # Normal
+      services.http-asterisk-user = {
+        # Image
+        build.image = lib.mkForce (pkgs.containerImages.web {});
+        # Options
+        service = {
+          # Volumes
+          volumes = [
+            "/data/local/containers/asterisk/config/voicemail:/web/voicemail:ro"
+            "/data/local/containers/asterisk/config/record:/web/monitor:ro"
+          ];
+          # Networking
+          networks.web.ipv4_address = nett.web.ips.asteriskWeb;
+        };
+      };
+
+      # Simple
+      services.http-asterisk-simple.service = {
+        # Image
+        image = "halverneus/static-file-server:latest";
+        # Volumes
+        volumes = [
+          "/data/local/containers/asterisk/config/voicemail:/web/voicemail:ro"
+          "/data/local/containers/asterisk/config/record:/web/monitor:ro"
+        ];
+        # Networking
+        networks.web.ipv4_address = nett.web.ips.asteriskSimple;
+      };
+
+      #################
+      # Reverse Proxy #
+      #################
+
+      services.proxy.service = {
+        # Image
+        image = "jc21/nginx-proxy-manager:latest";
+        # Volumes
+        volumes = [
+          "/data/local/containers/proxy:/data"
+        ];
+        # Networking
+        ports = [
+          "80:80/tcp"
+          "443:443/tcp"
+          "7080:81/tcp"
+        ];
+        networks = [ "web" ];
+      };
+
     };
 
   };
