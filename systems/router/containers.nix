@@ -54,7 +54,7 @@
       services.dns-up = {
         build.image = lib.mkForce pkgs.containerImages.dns;
         service = {
-          networks.dns.ipv4_address = nett.dns.ips.dnsUp;
+          networks.dns.ipv4_address = netw.dns.ips.dnsUp;
         };
       };
 
@@ -66,7 +66,7 @@
         environment = {
           TZ = config.mine.system.timezone;
           DNSMASQ_LISTENING = "all";
-          PIHOLE_DNS_ = nett.dns.ips.dnsUp;
+          PIHOLE_DNS_ = netw.dns.ips.dnsUp;
         };
         env_file = [ "data/local/containers/pihole/env/adblock.env" ];
 
@@ -82,7 +82,7 @@
           "53:53/udp"
         ];
         dns = [ "127.0.0.1" ];
-        networks.dns.ipv4_address = nett.dns.ips.dns;
+        networks.dns.ipv4_address = netw.dns.ips.dns;
 
       };
 
@@ -129,7 +129,7 @@
         };
         env_file = [ "/data/local/containers/nut/nut.env" ];
         # Networking
-        networks.web.ipv4_address = nett.web.ips.nut;
+        networks.web.ipv4_address = netw.web.ips.nut;
       };
 
       ############
@@ -170,7 +170,7 @@
             "/data/local/containers/dash/config/other.json:/web/other.json:ro"
           ];
           # Networking
-          networks.web.ipv4_address = nett.web.ips.dash;
+          networks.web.ipv4_address = netw.web.ips.dash;
         };
       };
 
@@ -190,7 +190,7 @@
             "/data/local/containers/asterisk/config/record:/web/monitor:ro"
           ];
           # Networking
-          networks.web.ipv4_address = nett.web.ips.asteriskWeb;
+          networks.web.ipv4_address = netw.web.ips.asteriskWeb;
         };
       };
 
@@ -204,7 +204,7 @@
           "/data/local/containers/asterisk/config/record:/web/monitor:ro"
         ];
         # Networking
-        networks.web.ipv4_address = nett.web.ips.asteriskSimple;
+        networks.web.ipv4_address = netw.web.ips.asteriskSimple;
       };
 
       #################
