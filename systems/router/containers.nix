@@ -68,7 +68,7 @@
           DNSMASQ_LISTENING = "all";
           PIHOLE_DNS_ = netw.dns.ips.dnsUp;
         };
-        env_file = [ "data/local/containers/pihole/env/adblock.env" ];
+        env_file = [ "/data/local/containers/pihole/env/adblock.env" ];
 
         # Volumes
         volumes = [
