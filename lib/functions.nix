@@ -46,6 +46,14 @@ let
         properName = lib.strings.concatStringsSep splitChar capitalisedList;
       in properName;
 
+
+    # Function for safely reading a file
+    safeReadFile = filePath:
+      if (builtins.pathExists filePath) then
+        lib.removeSuffix "\n" (builtins.readFile filePath)
+      else
+        "";
+
   };
 
 in {
