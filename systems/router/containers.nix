@@ -43,7 +43,7 @@
       # Configure networking
       networks = lib.attrsets.mapAttrs (
         eachName: eachValue:
-            { ipam.config = [{ inherit (eachNetwork) subnet gateway; }]; }
+            { ipam.config = [{ inherit (eachValue) subnet gateway; }]; }
       ) netw;
 
       ##############
