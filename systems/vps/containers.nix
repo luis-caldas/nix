@@ -39,7 +39,7 @@ let
       (eachEntry:
         builtins.concatLists (lib.attrsets.mapAttrsToList
         (eachUser: allDevices: map
-          (eachDevice: "${eachUser}${pkgs.functions.capitaliseString index}")
+          (eachDevice: "${eachUser}${pkgs.functions.capitaliseString eachDevice}")
           allDevices
         )
         eachEntry)
