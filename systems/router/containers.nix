@@ -2,7 +2,7 @@
 let
 
   # Create all the services needed for the containers networks
-  conatinerNetworksServices = pkgs.containerFunctions.addNetworks {
+  containerNetworksServices = pkgs.containerFunctions.addNetworks {
     dns = { range = "172.16.72.0/24"; };
     web = { range = "172.16.73.0/24"; };
   };
@@ -10,7 +10,7 @@ let
 in {
 
   # Intialise all the container services
-  systemd.services = conatinerNetworksService;
+  systemd.services = containerNetworksServices;
 
   # Set up docker containers
   virtualisation.oci-containers.containers = {
