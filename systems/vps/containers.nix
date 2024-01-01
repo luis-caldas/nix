@@ -154,7 +154,7 @@ in {
 
           # Setting up networking
           ports = [
-            "${builtins.toString wireguardInfo.original}:${builtins.toString wireguardInfo.container}/udp"
+            "${builtins.toString wireguardInfo.container}:${builtins.toString wireguardInfo.original}/udp"
           ];
           networks.wire.ipv4_address = ips.wire;
           capabilities.NET_ADMIN = true;
