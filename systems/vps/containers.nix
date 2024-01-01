@@ -90,8 +90,8 @@ in {
         # DNS containers
 
         # Upstream DNS server
-        services.dns-up = let currentImage = pkgs.containerImages.dns; in {
-          build.image = lib.mkForce currentImage;
+        services.dns-up = {
+          build.image = lib.mkForce pkgs.containerImages.dns;
           service = {
             networks.wire.ipv4_address = ips.dnsUp;
           };
