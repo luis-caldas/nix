@@ -51,7 +51,7 @@
       enable = true;
       packages = [ pkgs.OVMFFull.fd ];
     };
-    qemu.swtpm.enable = config.services.virtual.swtpm;
+    qemu.swtpm.enable = config.mine.services.virtual.swtpm;
   };
 
   # Enable logiops service
