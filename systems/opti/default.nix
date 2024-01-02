@@ -2,7 +2,7 @@
 {
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "radeon" ] ;
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
@@ -20,25 +20,30 @@
     services.ssh = true;
   };
 
-  ########
-  # Kodi #
-  ########
+  #########
+  # Audio #
+  #########
 
   # Store audio cards states
   sound.enable = true;
 
-  # Enable pulseaudio and all the supported codecs
-  hardware.pulseaudio = {
+  # Disable pulseaudio
+  hardware.pulseaudio.enable = false;
+
+  # Pipewire config
+  services.pipewire = {
+    # Enable pipewire
     enable = true;
-    support32Bit = true;
-    package = pkgs.pulseaudioFull;
+    wireplumber.enable = true;
+    # Enable other audio systems support
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
   };
 
   # Allow packages to compile with pulseaudio support
   nixpkgs.config.pulseaudio = true;
-
-  # Set graphics drivers
-  services.xserver.videoDrivers = [ "radeon" ];
 
   # Add 32 bit support and other acceleration packages
   hardware.opengl = {
@@ -59,24 +64,49 @@
     ];
   };
 
-  # Needed xserver configs for kodi
-  services.xserver.enable = true;
+  ########
+  # Kodi #
+  ########
 
-  # Use sddm as autologin displaymanager because it supports relogin
-  services.xserver.displayManager = {
-    lightdm.enable = false;
-    sddm = {
-      enable = true;
-      autoLogin.relogin = true;
-    };
-    autoLogin.enable = true;
-    autoLogin.user = "kodi";
-    # Also disable screen timeout
-    setupCommands = ''
-      "${pkgs.xorg.xset}/bin/xset" -dpms
-      "${pkgs.xorg.xset}/bin/xset" s off
-    '';
+  # Create the kodi user and add it to the audio gruop
+  users.users.kodi = {
+    isNormalUser = true;
+    extraGroups = [ "audio" ];
   };
+
+  # Enable kodi
+  services.cage = let
+
+    # Create the kodi package
+    kodiPackage = pkgs.kodi-wayland.withPackages (givenPackages: with givenPackages; [
+
+      # Video processing
+      inputstream-rtmp inputstreamhelper inputstream-adaptive inputstream-ffmpegdirect
+
+      # Tools for addons
+      six kodi-six idna urllib3 chardet certifi requests myconnpy dateutil
+
+      # IPTV tools
+      pvr-iptvsimple pvr-hts pvr-hdhomerun
+
+      # Apps
+      youtube netflix jellyfin
+
+      # Helper apps
+      a4ksubtitles
+      pdfreader
+
+    ]);
+
+  in {
+    enable = true;
+    user = "kodi";
+    program = "${kodiPackage}/bin/kodi";
+  };
+
+  ############
+  # Plymouth #
+  ############
 
   # Use plymouth theme
   boot.plymouth = let
@@ -102,24 +132,9 @@
     themePackages = [ plymouth-theme ];
   };
 
-  # Create the kodi user and add it to the audio gruop
-  users.users.kodi = {
-    isNormalUser = true;
-    extraGroups = [ "audio" ];
-  };
-
-  # Enable kodi
-  services.xserver.desktopManager.kodi.enable = true;
-
-  # Kodi with packages
-  services.xserver.desktopManager.kodi.package = pkgs.kodi.withPackages (p: with p; [
-    inputstream-rtmp inputstreamhelper inputstream-adaptive inputstream-ffmpegdirect
-    six kodi-six idna urllib3 chardet certifi requests myconnpy dateutil
-    pvr-iptvsimple pvr-hts pvr-hdhomerun
-    youtube netflix jellyfin
-    a4ksubtitles
-    pdfreader
-  ]);
+  ##########
+  # System #
+  ##########
 
   fileSystems."/" =
     { device = "light/root";
