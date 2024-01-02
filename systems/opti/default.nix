@@ -14,7 +14,6 @@
     minimal = true;
     boot.grub = true;
     kernel.text = false;
-    kernel.params = [ "nomodeset" ];
     user.admin = false;
     system.hostname = "opti";
     services.ssh = true;
@@ -74,35 +73,47 @@
     extraGroups = [ "audio" ];
   };
 
-  # Enable kodi
-  services.cage = let
-
-    # Create the kodi package
-    kodiPackage = pkgs.kodi-wayland.withPackages (givenPackages: with givenPackages; [
-
-      # Video processing
-      inputstream-rtmp inputstreamhelper inputstream-adaptive inputstream-ffmpegdirect
-
-      # Tools for addons
-      six kodi-six idna urllib3 chardet certifi requests myconnpy dateutil
-
-      # IPTV tools
-      pvr-iptvsimple pvr-hts pvr-hdhomerun
-
-      # Apps
-      youtube netflix jellyfin
-
-      # Helper apps
-      a4ksubtitles
-      pdfreader
-
-    ]);
-
-  in {
-    enable = true;
-    user = "kodi";
-    program = "${kodiPackage}/bin/kodi";
+  # Use sddm as autologin displaymanager because it supports relogin
+  services.xserver.displayManager = {
+    lightdm.enable = false;
+    sddm = {
+      enable = true;
+      autoLogin.relogin = true;
+    };
+    autoLogin.enable = true;
+    autoLogin.user = "kodi";
+    # Also disable screen timeout
+    setupCommands = ''
+      "${pkgs.xorg.xset}/bin/xset" -dpms
+      "${pkgs.xorg.xset}/bin/xset" s off
+    '';
   };
+
+  # Enable xserver
+  services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "radeon" ];
+  services.xserver.desktopManager.kodi.enable = true;
+
+  # Enable kodi
+  services.xserver.desktopManager.kodi.package = pkgs.kodi.withPackages (givenPackages: with givenPackages; [
+
+    # Video processing
+    inputstream-rtmp inputstreamhelper inputstream-adaptive inputstream-ffmpegdirect
+
+    # Tools for addons
+    six kodi-six idna urllib3 chardet certifi requests myconnpy dateutil
+
+    # IPTV tools
+    pvr-iptvsimple pvr-hts pvr-hdhomerun
+
+    # Apps
+    youtube netflix jellyfin
+
+    # Helper apps
+    a4ksubtitles
+    pdfreader
+
+  ]);
 
   ############
   # Plymouth #
