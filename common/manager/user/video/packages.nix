@@ -75,7 +75,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Organising
     evolution
-    # citations  # TODO Failing
+    # citations  # Failing build
     dialect
     gaphor
     plots
@@ -118,7 +118,7 @@ lib.mkIf osConfig.mine.graphics.enable
     # Encoding
     eartag
     identity
-    # textpieces  # TODO Broken
+    # textpieces  # Broken package
     gnome-decoder
     metadata-cleaner
 
