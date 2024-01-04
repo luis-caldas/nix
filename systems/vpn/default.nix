@@ -6,7 +6,7 @@
     minimal = true;
     zram = true;
     boot.override = true;
-    system.hostname = "vps";
+    system.hostname = "vpn";
     network.mac = "permanent";
     user.admin = false;
     services.ssh = true;
