@@ -132,14 +132,14 @@ in {
           image = "lscr.io/linuxserver/wireguard:latest";
 
           # Environments
-          environment = {
+          environment = pkgs.containerFunctions.fixEnvironment {
             TZ = config.mine.system.timezone;
-            PUID = builtins.toString config.mine.user.uid;
-            GUID = builtins.toString config.mine.user.gid;
+            PUID = config.mine.user.uid;
+            GUID = config.mine.user.gid;
             INTERNAL_SUBNET = wireguardInfo.subnet;
             ALLOWEDIPS = "0.0.0.0/0,${ips.dns}/32,${wireguardInfo.subnet},${wireguardInfo.internal}";
             PEERS = listUsers;
-            SERVERPORT = builtins.toString wireguardInfo.container;
+            SERVERPORT = wireguardInfo.container;
             PEERDNS = ips.dns;
             PERSISTENTKEEPALIVE_PEERS = "all";
           };
