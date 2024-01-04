@@ -21,9 +21,6 @@ let
 
   };
 
-  # Port for the Socks connection
-  socksPort = 443;
-
   # Overall networking for docker
   networks = {
 
@@ -39,11 +36,6 @@ let
         # WireGuard
         wire = "172.16.50.20";
       };
-    };
-
-    socks = {
-      name = "socks";
-      subnet = "172.16.100.0/24"; gateway = "172.16.100.1";
     };
 
   };
@@ -175,45 +167,6 @@ in {
       };
 
     };
-
-    ##########
-    # Socks5 #
-    ##########
-
-    # Socks project
-
-    projects.socks.settings = {
-
-      # Networking
-      networks."${networks.socks.name}" = {
-        name = networks.socks.name;
-        ipam.config = [{ inherit (networks.socks) subnet gateway; }];
-      };
-
-      ### # Socks5 # ###
-
-      services.socks.service = let
-
-        # Set the port for the service
-        servicePort = 443;
-
-      in {
-        # Image
-        image = "serjs/go-socks5-proxy:latest";
-        # Environment
-        environment = pkgs.containerFunctions.fixEnvironment {
-          PROXY_PORT = servicePort;
-        };
-        env_file = [ "/data/containers/socks/socks.env" ];
-        # Networking
-        ports = [
-          "${builtins.toString socksPort}:${builtins.toString servicePort}/tcp"
-        ];
-        networks = [ networks.socks.name ];
-      };
-
-    };
-
 
   };
 
