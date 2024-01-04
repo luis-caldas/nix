@@ -61,8 +61,8 @@
       tls_starttls = "off";
     };
     accounts = let
-      mailDomain = mfunc.safeReadFile /data/local/mail/domain;
-      accountMail = mfunc.safeReadFile /data/local/mail/account;
+      mailDomain = pkgs.functions.safeReadFile /data/local/mail/domain;
+      accountMail = pkgs.functions.safeReadFile /data/local/mail/account;
     in {
       default = {
         host = mailDomain;
@@ -83,7 +83,7 @@
       wall.enable = false;
       mail = {
         enable = true;
-        sender = builtins.replaceStrings [ "\n" "\t" ] [ "" "" ] (mfunc.safeReadFile /data/local/mail/account);
+        sender = builtins.replaceStrings [ "\n" "\t" ] [ "" "" ] (pkgs.functions.safeReadFile /data/local/mail/account);
         recipient = "root";
         mailer = "${pkgs.msmtp}/bin/msmtp";
       };
