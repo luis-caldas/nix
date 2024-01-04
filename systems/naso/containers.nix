@@ -72,7 +72,10 @@
     projects.front.settings = {
 
       # Networking
-      networks."${networks.front.name}".ipam.config = [{ inherit (networks.front) name subnet gateway; }];
+      networks."${networks.front.name}" = {
+        name = networks.front.name;
+        ipam.config = [{ inherit (networks.front) subnet gateway; }];
+      };
 
       ### # Proxy # ###
 
@@ -341,7 +344,10 @@
 
       # Networking
       networks."${networks.front.name}".external = true;
-      networks."${networks.search.name}".ipam.config = [{ inherit (networks.search) name subnet gateway; }];
+      networks."${networks.search.name}" = {
+        name = networks.search.name;
+        ipam.config = [{ inherit (networks.search) subnet gateway; }];
+      };
 
       ### # SearXNG # ###
 
@@ -408,7 +414,10 @@
 
       # Networking
       networks."${networks.front.name}".external = true;
-      networks."${networks.cloud.name}".ipam.config = [{ inherit (networks.cloud) name subnet gateway; }];
+      networks."${networks.cloud.name}" = {
+        name = networks.cloud.name;
+        ipam.config = [{ inherit (networks.cloud) subnet gateway; }];
+      };
 
       ### # Application # ###
 

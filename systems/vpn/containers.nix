@@ -96,7 +96,10 @@ in {
     in {
 
       # Set up the network
-      networks."${networks.wire.name}".ipam.config = [{ inherit (networks.wire) name subnet gateway; }];
+      networks."${networks.wire.name}" = {
+        name = networks.wire.name;
+        ipam.config = [{ inherit (networks.wire) subnet gateway; }];
+      };
 
       ### # DNS # ###
 
@@ -182,7 +185,10 @@ in {
     projects.socks.settings = {
 
       # Networking
-      networks."${networks.socks.name}".ipam.config = [{ inherit (networks.socks) name subnet gateway; }];
+      networks."${networks.socks.name}" = {
+        name = networks.socks.name;
+        ipam.config = [{ inherit (networks.socks) subnet gateway; }];
+      };
 
       ### # Socks5 # ###
 
