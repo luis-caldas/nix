@@ -209,6 +209,7 @@
     # Containers
     arion
     docker-compose
+    hadolint
 
     # Markdown
     pandoc
