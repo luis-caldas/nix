@@ -198,7 +198,7 @@ in {
         environment = pkgs.containerFunctions.fixEnvironment {
           PROXY_PORT = servicePort;
         };
-        env_file = "/data/containers/socks/socks.env";
+        env_file = [ "/data/containers/socks/socks.env" ];
         # Networking
         ports = [
           "${builtins.toString socksPort}:${builtins.toString servicePort}/tcp"
