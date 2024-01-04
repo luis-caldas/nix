@@ -236,5 +236,9 @@
   ],
   "calendar": [
     "text/calendar"
+  ],
+  "iso": [
+    "vnd.efi.iso",
+    "vnd.efi.img"
   ]
 }

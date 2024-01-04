@@ -26,6 +26,7 @@ lib.mkIf osConfig.mine.graphics.enable
     archive = "org.gnome.FileRoller.desktop";
     pdf = "org.gnome.Evince.desktop";
     calendar = "org.gnome.Calendar.desktop";
+    iso = "gnome-disk-image-mounter.desktop";
   };
 
   # Create the massive list of the default applications for everything
