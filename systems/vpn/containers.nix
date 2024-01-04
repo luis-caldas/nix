@@ -21,6 +21,33 @@ let
 
   };
 
+  # Port for the Socks connection
+  socksPort = 443;
+
+  # Overall networking for docker
+  networks = {
+
+    wire = {
+      # Base
+      name = "wire";
+      subnet = "172.16.50.0/24"; gateway = "172.16.50.1";
+      # IPs
+      ips = {
+        # DNS
+        dns = "172.16.50.11";
+        dnsUp = "172.16.50.10";
+        # WireGuard
+        wire = "172.16.50.20";
+      };
+    };
+
+    socks = {
+      name = "socks";
+      subnet = "172.16.100.0/24"; gateway = "172.16.100.1";
+    };
+
+  };
+
   # List of users for wireguard
   listUsers = let
 
@@ -57,111 +84,130 @@ in {
   # Arion
   virtualisation.arion = {
 
-    # All the projects
-    projects = {
+    #######
+    # VPN #
+    #######
 
-      # Main VPN containers
-      vpn.settings = let
+    # Main VPN containers
 
-        # Set up IPs for the containers
-        ips = {
-          # DNS
-          dns = "172.16.50.11";
-          dnsUp = "172.16.50.10";
-          # WireGuard
-          wire = "172.16.50.20";
-        };
+    projects.vpn.settings = let
 
-        # Internal docker IPs
-        subnet = "172.16.50.0/24";
-        gateway = "172.16.50.1";
 
-      in {
+    in {
 
-        # Set up the network
-        networks = {
-          wire.ipam.config = [{ inherit subnet gateway; }];
-        };
+      # Set up the network
+      networks."${networks.wire.name}".ipam.config = [{ inherit (networks.wire) name subnet gateway; }];
 
-        #######
-        # DNS #
-        #######
+      ### # DNS # ###
 
-        # DNS containers
-
-        # Upstream DNS server
-        services.dns-up = {
-          build.image = lib.mkForce pkgs.containerImages.dns;
-          service = {
-            networks.wire.ipv4_address = ips.dnsUp;
-          };
-        };
-
-        # PiHole
-        services.dns.service = {
-          image = "pihole/pihole:latest";
-          depends_on = [ "dns-up" ];
-
-          # Environment
-          environment = {
-            TZ = config.mine.system.timezone;
-            DNSMASQ_LISTENING = "all";
-            PIHOLE_DNS_ = ips.dnsUp;
-          };
-          env_file = [ "/data/containers/pihole/env/adblock.env" ];
-
-          # Volumes
-          volumes = [
-            "/data/containers/pihole/config/etc:/etc/pihole"
-            "/data/containers/pihole/config/dnsmasq:/etc/dnsmasq.d"
-          ];
-
+      # Upstream DNS server
+      services.dns-up = {
+        build.image = lib.mkForce pkgs.containerImages.dns;
+        service = {
           # Networking
-          dns = [ "127.0.0.1" ];
-          networks.wire.ipv4_address = ips.dns;
-
+          networks."${networks.wire.name}".ipv4_address = networks.wire.ips.dnsUp;
         };
+      };
 
-        #############
-        # WireGuard #
-        #############
+      ### # PiHole # ###
 
-        services.wire.service = {
+      # Main DNS
+      services.dns.service = {
+        image = "pihole/pihole:latest";
+        depends_on = [ "dns-up" ];
 
-          # Image file
-          image = "lscr.io/linuxserver/wireguard:latest";
-
-          # Environments
-          environment = pkgs.containerFunctions.fixEnvironment {
-            TZ = config.mine.system.timezone;
-            PUID = config.mine.user.uid;
-            GUID = config.mine.user.gid;
-            INTERNAL_SUBNET = wireguardInfo.subnet;
-            ALLOWEDIPS = "0.0.0.0/0,${ips.dns}/32,${wireguardInfo.subnet},${wireguardInfo.internal}";
-            PEERS = listUsers;
-            SERVERPORT = wireguardInfo.container;
-            PEERDNS = ips.dns;
-            PERSISTENTKEEPALIVE_PEERS = "all";
-          };
-          env_file = [ "/data/containers/wireguard/env/wire.env" ];
-
-          # Volumes
-          volumes = [
-            "/data/containers/wireguard/config:/config"
-          ];
-
-          # Setting up networking
-          ports = [
-            "${builtins.toString wireguardInfo.container}:${builtins.toString wireguardInfo.original}/udp"
-          ];
-          networks.wire.ipv4_address = ips.wire;
-          capabilities.NET_ADMIN = true;
-
+        # Environment
+        environment = {
+          TZ = config.mine.system.timezone;
+          DNSMASQ_LISTENING = "all";
+          PIHOLE_DNS_ = networks.wire.ips.dnsUp;
         };
+        env_file = [ "/data/containers/pihole/env/adblock.env" ];
+
+        # Volumes
+        volumes = [
+          "/data/containers/pihole/config/etc:/etc/pihole"
+          "/data/containers/pihole/config/dnsmasq:/etc/dnsmasq.d"
+        ];
+
+        # Networking
+        dns = [ "127.0.0.1" ];
+        networks.wire.ipv4_address = networks.wire.ips.dns;
+
+      };
+
+      ### # WireGuard # ###
+
+      services.wire.service = {
+
+        # Image file
+        image = "lscr.io/linuxserver/wireguard:latest";
+
+        # Environments
+        environment = pkgs.containerFunctions.fixEnvironment {
+          TZ = config.mine.system.timezone;
+          PUID = config.mine.user.uid;
+          GUID = config.mine.user.gid;
+          INTERNAL_SUBNET = wireguardInfo.subnet;
+          ALLOWEDIPS = "0.0.0.0/0,${networks.wire.ips.dns}/32,${wireguardInfo.subnet},${wireguardInfo.internal}";
+          PEERS = listUsers;
+          SERVERPORT = wireguardInfo.container;
+          PEERDNS = networks.wire.ips.dns;
+          PERSISTENTKEEPALIVE_PEERS = "all";
+        };
+        env_file = [ "/data/containers/wireguard/env/wire.env" ];
+
+        # Volumes
+        volumes = [
+          "/data/containers/wireguard/config:/config"
+        ];
+
+        # Networking
+        ports = [
+          "${builtins.toString wireguardInfo.container}:${builtins.toString wireguardInfo.original}/udp"
+        ];
+        networks."${networks.wire.name}".ipv4_address = networks.wire.ips.wire;
+        capabilities.NET_ADMIN = true;
 
       };
 
     };
+
+    ##########
+    # Socks5 #
+    ##########
+
+    # Socks project
+
+    projects.socks.settings = {
+
+      # Networking
+      networks."${networks.socks.name}".ipam.config = [{ inherit (networks.socks) name subnet gateway; }];
+
+      ### # Socks5 # ###
+
+      services.socks.service = let
+
+        # Set the port for the service
+        servicePort = 443;
+
+      in {
+        # Image
+        image = "serjs/go-socks5-proxy:latest";
+        # Environment
+        environment = pkgs.containerFunctions.fixEnvironment {
+          PROXY_PORT = servicePort;
+        };
+        env_file = "/data/containers/socks/socks.env";
+        # Networking
+        ports = [
+          "${builtins.toString socksPort}:${builtins.toString servicePort}/tcp"
+        ];
+        networks = [ networks.socks.name ];
+      };
+
+    };
+
 
   };
 
