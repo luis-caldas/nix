@@ -55,6 +55,8 @@
         };
       };
 
+      ### # Share # ###
+      share = { name = "share"; subnet = "172.16.50.0/24"; gateway = "172.16.50.1"; };
 
     };
 
@@ -149,6 +151,9 @@
           "-W" # Wide link support
         ]);
 
+        # Networking
+        networks = [ networks.share.name ];
+
       };
 
       ### # Shout # ###
@@ -164,7 +169,6 @@
         # Networking
         network_mode = "host";  # Multicast support
       };
-
 
     };
 
