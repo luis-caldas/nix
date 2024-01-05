@@ -1,74 +1,145 @@
 { pkgs, lib, config, ... }:
 {
 
-  virtualisation.arion = {
+  virtualisation.arion = let
 
-    projects.all.settings = let
+         ########
+    ### # Config # ###
+         ########
 
-      # Configure the networking
-      netw = {
-
-        # DNS Network
-        dns = {
-          subnet = "172.16.72.0/24";
-          gateway = "172.16.72.1";
-          # Configure IPs
-          ips = {
-            dns = "172.16.72.11";
-            dnsUp = "172.16.72.10";
-          };
+    # Configure all the needed networks
+    networks = {
+      ### # Front # ###
+      front  = { name = "front";  subnet = "172.16.10.0/24"; gateway = "172.16.10.1"; };
+      ### # Time # ###
+      time   = { name = "time";   subnet = "172.16.50.0/24"; gateway = "172.16.50.1"; };
+      ### # FreeDNS # ###
+      update = { name = "update"; subnet = "172.16.60.0/24"; gateway = "172.16.60.1"; };
+      ### # DNS # ###
+      dns = {
+        name = "dns";
+        subnet = "172.16.20.0/24"; gateway = "172.16.20.1";
+        # IPs
+        ips = {
+          dns = "172.16.20.11";
+          dnsUp = "172.16.20.10";
         };
+      };
+    };
 
-        # Web Network
-        web = {
+    # Configure the needed names
+    names = {
+      # Front
+      front = "front";
+      # Base
+      dns = "dns";
+      dnsUp = "dns-up";
+      time = "time";
+      # Update
+      update = "freedns";
+      # Asterisk
+      asterisk = {
+        app = "asterisk";
+        web = { simple = "asterisk-web-simple"; normal = "asterisk-web-normal"; };
+      };
+      # Monitor
+      nut = "nut";
+      # Web
+      dash = "dash";
+    };
 
-          subnet = "172.16.73.0/24";
-          gateway = "172.16.73.1";
+  in {
 
-          # Configure IPs
-          ips = {
-            dash = "172.16.73.10";
-            nut = "172.16.73.20";
+    #########
+    # Front #
+    #########
 
-            asteriskWeb = "172.16.73.30";
-            asteriskSimple = "172.16.73.31";
+    # All services that will serve the front
 
-            dns = "172.16.73.100";
-          };
+    projects.front.settings = {
 
-        };
-
+      # Networking
+      networks."${networks.front.name}" = {
+        name = networks.front.name;
+        ipam.config = [{ inherit (networks.front) subnet gateway; }];
       };
 
-    in {
+           #######
+      ### # Proxy # ###
+           #######
 
-      # Configure networking
-      networks = lib.attrsets.mapAttrs (
-        eachName: eachValue:
-            { ipam.config = [{ inherit (eachValue) subnet gateway; }]; }
-      ) netw;
+      services."${names.front}".service = {
+        # Image
+        image = "jc21/nginx-proxy-manager:latest";
+        # Name
+        container_name = names.front;
+        # Volumes
+        volumes = [
+          "/data/local/containers/proxy:/data"
+        ];
+        # Networking
+        ports = [
+          "80:80/tcp"
+          "443:443/tcp"
+          "81:81/tcp"
+        ];
+        # Networking
+        networks = [ networks.front.name ];
+      };
 
-      ##############
-      # DNS Server #
-      ##############
+    };
+
+    ########
+    # Base #
+    ########
+
+    # Projects needed for a basic router functionality
+    projects.base.settings = {
+
+      # Networking
+      networks."${networks.dns.name}" = {
+        name = networks.dns.name;
+        ipam.config = [{ inherit (networks.dns) subnet gateway; }];
+      };
+      networks."${networks.time.name}" = {
+        name = networks.time.name;
+        ipam.config = [{ inherit (networks.time) subnet gateway; }];
+      };
+      networks."${networks.front.name}".external = true;
+
+           #####
+      ### # DNS # ###
+           #####
 
       # Upstream DNS server
-      services.dns-up = {
+      services."${names.dnsUp}" = {
         build.image = lib.mkForce pkgs.containerImages.dns;
         service = {
-          networks.dns.ipv4_address = netw.dns.ips.dnsUp;
+          # Name
+          container_name = names.dnsUp;
+          # Networking
+          networks."${networks.dns.name}".ipv4_address = networks.dns.ips.dnsUp;
         };
       };
 
+           ########
+      ### # PiHole # ###
+           ########
+
       # PiHole
-      services.dns.service = {
+      services."${names.dns}".service = {
+
+        # Image
         image = "pihole/pihole:latest";
+
+        # Name
+        container_name = names.dns;
 
         # Environment
         environment = {
           TZ = config.mine.system.timezone;
           DNSMASQ_LISTENING = "all";
-          PIHOLE_DNS_ = netw.dns.ips.dnsUp;
+          PIHOLE_DNS_ = networks.dns.ips.dnsUp;
         };
         env_file = [ "/data/local/containers/pihole/env/adblock.env" ];
 
@@ -84,29 +155,19 @@
           "53:53/udp"
         ];
         dns = [ "127.0.0.1" ];
-        networks.dns.ipv4_address = netw.dns.ips.dns;
-        networks.web.ipv4_address = netw.web.ips.dns;
+        networks = [ networks.dns.name networks.front.name ];
 
       };
 
-      ###########
-      # FreeDNS #
-      ###########
+           ######
+      ### # Time # ###
+           ######
 
-      services.freedns = {
-        # Image
-        build.image = lib.mkForce pkgs.containerImages.freedns;
-        # Environment
-        service.env_file = [ "/data/local/containers/noip/udns.env" ];
-      };
-
-      ##############
-      # NTP Server #
-      ##############
-
-      services.time.service = {
+      services."${names.time}".service = {
         # Image file
         image = "simonrupf/chronyd:latest";
+        # Name
+        container_name = names.time;
         # Environment
         environment = {
           TZ = config.mine.system.timezone;
@@ -117,33 +178,66 @@
         ports = [
           "123:123/udp"
         ];
+        networks = [ networks.time.name ];
       };
 
-      ###############
-      # NUT Monitor #
-      ###############
 
-      services.nut.service = {
+    };
+
+    ##########
+    # Update #
+    ##########
+
+    # Dynamic DNS
+
+    projects.update.settings = {
+
+      # Networking
+      networks."${networks.update.name}" = {
+        name = networks.update.name;
+        ipam.config = [{ inherit (networks.update) subnet gateway; }];
+      };
+
+           #########
+      ### # FreeDNS # ###
+           #########
+
+      services."${names.update}" = {
         # Image
-        image = "teknologist/webnut:latest";
-        # Environment
-        environment = {
-          TZ = config.mine.system.timezone;
+        build.image = lib.mkForce pkgs.containerImages.freedns;
+        # Configuration
+        service = {
+          # Name
+          container_name = names.update;
+          # Environment
+          env_file = [ "/data/local/containers/noip/udns.env" ];
+          # Networking
+          networks = [ networks.update.name ];
         };
-        env_file = [ "/data/local/containers/nut/nut.env" ];
-        # Networking
-        networks.web.ipv4_address = netw.web.ips.nut;
       };
 
-      ############
-      # Asterisk #
-      ############
+    };
 
-      services.asterisk = {
+    ############
+    # Asterisk #
+    ############
+
+    projects.asterisk.settings = {
+
+      # Networking
+      networks."${networks.front.name}".external = true;
+
+           ##########
+      ### # Asterisk # ###
+           ##########
+
+      services."${names.asterisk.app}" = {
         # Image
         build.image = lib.mkForce pkgs.containerImages.asterisk;
-        # Options
+        # Configuration
         service = {
+          # Name
+          container_name = names.asterisk.app;
           # Volumes
           volumes = [
             "/data/local/containers/asterisk/config/conf:/etc/asterisk/conf.mine"
@@ -159,75 +253,105 @@
         };
       };
 
-      #############
-      # Dashboard #
-      #############
+           ##############
+      ### # Asterisk Web # ###
+           ##############
 
-      services.dash = {
-        # Image
-        build.image = lib.mkForce (pkgs.containerImages.web { name = "dashboard"; url = "https://github.com/luis-caldas/personal"; });
-        # Options
-        service = {
-          # Volumes
-          volumes = [
-            "/data/local/containers/dash/config/other.json:/web/other.json:ro"
-          ];
-          # Networking
-          networks.web.ipv4_address = netw.web.ips.dash;
-        };
-      };
-
-      ################
-      # Asterisk Web #
-      ################
-
-      # Normal
-      services.http-asterisk-user = {
+      services."${names.asterisk.web.normal}" = {
         # Image
         build.image = lib.mkForce (pkgs.containerImages.web {});
         # Options
         service = {
+          # Name
+          container_name = names.asterisk.web.normal;
           # Volumes
           volumes = [
             "/data/local/containers/asterisk/config/voicemail:/web/voicemail:ro"
             "/data/local/containers/asterisk/config/record:/web/monitor:ro"
           ];
           # Networking
-          networks.web.ipv4_address = netw.web.ips.asteriskWeb;
+          networks = [ networks.front.name ];
         };
       };
 
-      # Simple
-      services.http-asterisk-simple.service = {
+           #####################
+      ### # Asterisk Web Simple # ###
+           #####################
+
+      services."${names.asterisk.web.simple}".service = {
         # Image
         image = "halverneus/static-file-server:latest";
+        # Name
+        container_name = names.asterisk.web.simple;
         # Volumes
         volumes = [
           "/data/local/containers/asterisk/config/voicemail:/web/voicemail:ro"
           "/data/local/containers/asterisk/config/record:/web/monitor:ro"
         ];
         # Networking
-        networks.web.ipv4_address = netw.web.ips.asteriskSimple;
+        networks = [ networks.front.name ];
       };
 
-      #################
-      # Reverse Proxy #
-      #################
+    };
 
-      services.proxy.service = {
+    #######
+    # NUT #
+    #######
+
+    # NUT Monitor process
+
+    projects.nut.settings = {
+
+      # Networking
+      networks."${networks.front.name}".external = true;
+
+           #####
+      ### # NUT # ###
+           #####
+
+      services."${names.nut}".service = {
         # Image
-        image = "jc21/nginx-proxy-manager:latest";
-        # Volumes
-        volumes = [
-          "/data/local/containers/proxy:/data"
-        ];
+        image = "teknologist/webnut:latest";
+        # Name
+        container_name = names.nut;
+        # Environment
+        environment = {
+          TZ = config.mine.system.timezone;
+        };
+        env_file = [ "/data/local/containers/nut/nut.env" ];
         # Networking
-        ports = [
-          "80:80/tcp"
-          "443:443/tcp"
-          "81:81/tcp"
-        ];
-        networks = [ "web" ];
+        networks = [ networks.front.name ];
+      };
+
+    };
+
+    #######
+    # Web #
+    #######
+
+    projects.web.settings = {
+
+      # Networking
+      networks."${networks.front.name}".external = true;
+
+           ######
+      ### # Dash # ###
+           ######
+
+      services."${names.dash}" = {
+        # Image
+        build.image = lib.mkForce (pkgs.containerImages.web { name = "dashboard"; url = "https://github.com/luis-caldas/personal"; });
+        # Options
+        service = {
+          # Name
+          container_name = names.dash;
+          # Volumes
+          volumes = [
+            "/data/local/containers/dash/config/other.json:/web/other.json:ro"
+          ];
+          # Networking
+          networks = [ networks.front.name ];
+        };
       };
 
     };
