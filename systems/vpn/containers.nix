@@ -143,10 +143,13 @@ in {
 
       ### # WireGuard # ###
 
-      services.wire.service = {
+      services."${names.wire}".service = {
 
         # Image file
         image = "lscr.io/linuxserver/wireguard:latest";
+
+        # Name
+        container_name = names.wire;
 
         # Environments
         environment = pkgs.containerFunctions.fixEnvironment {
