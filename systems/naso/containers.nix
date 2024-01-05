@@ -11,52 +11,56 @@
     networks = {
 
       ### # Front # ###
-
-      front = {
-        # Main
-        name = "front";
-        subnet = "172.16.100.0/24"; gateway = "172.16.100.1";
-        # IPs
-        ips = {
-          jellyfin = "172.16.100.10";
-          komga = "172.16.100.20";
-          torrent = "172.16.100.50";
-          aria = "172.16.100.60";
-          matrix = "172.16.100.100";
-          search = "172.16.100.150";
-          cloud = "172.16.100.200";
-          vault = "172.16.100.250";
-        };
-      };
+      front = { name = "front"; subnet = "172.16.10.0/24"; gateway = "172.16.100.1"; };
 
       ### # SearX # ###
-
-      search = {
-        # Main
-        name = "search";
-        subnet = "172.16.250.0/24"; gateway = "172.16.250.1";
-        # IPs
-        ips = {
-          redis = "172.16.250.10";
-        };
-      };
+      search = { name = "search"; subnet = "172.16.20.0/24"; gateway = "172.16.250.1"; };
 
       ### # Cloud # ###
-
-      cloud = {
-        # Main
-        name = "cloud";
-        subnet = "172.16.200.0/24"; gateway = "172.16.200.1";
-        # IPs
-        ips = {
-          database = "172.16.200.10";
-          redis = "172.16.200.20";
-          cloud = "172.16.200.5";
-        };
-      };
+      cloud = { name = "cloud"; subnet = "172.16.50.0/24"; gateway = "172.16.200.1"; };
 
       ### # Share # ###
-      share = { name = "share"; subnet = "172.16.50.0/24"; gateway = "172.16.50.1"; };
+      share = { name = "share"; subnet = "172.16.30.0/24"; gateway = "172.16.50.1"; };
+
+    };
+
+    # Keep track of all the names
+    names = {
+
+      # Front
+      front = "proxy";
+
+      # Share
+      share = "samba";
+      shout = "shout";
+
+      # Download
+      torrent = "torrent";
+      aria = "aria";
+
+      # Media
+      jellyfin = "jellyfin";
+      komga = "komga";
+
+      # Social
+      matrix = "matrix";
+
+      # Search
+      search = {
+        app = "searx";
+        redis = "search-redis";
+      };
+
+      # Cloud
+      cloud = {
+        app = "cloud";
+        database = "cloud-maria";
+        redis = "cloud-redis";
+        proxy = "cloud-proxy";
+      };
+
+      # Vault
+      vault = "vault";
 
     };
 
@@ -81,9 +85,11 @@
 
       ### # Proxy # ###
 
-      services.proxy.service = {
+      services."${names.front}".service = {
         # Image
         image = "jc21/nginx-proxy-manager:latest";
+        # Name
+        container_name = names.front;
         # Volumes
         volumes = [
           "/data/local/containers/proxy:/data"
@@ -109,10 +115,13 @@
 
       ### # SAMBA # ###
 
-      services.samba.service = {
+      services."${names.share}".service = {
 
         # Image
         image = "dperson/samba:latest";
+
+        # Name
+        container_name = names.share;
 
         # Environment
         environment = pkgs.containerFunctions.fixEnvironment {
@@ -158,9 +167,11 @@
 
       ### # Shout # ###
 
-      services.shout.service = {
+      services."${names.shout}".service = {
         # Image
         image = "aovestdipaperino/wsdd2";
+        # Name
+        container_name = names.shout;
         # Environment
         environment = {
           TZ = config.mine.system.timezone;
@@ -178,16 +189,18 @@
 
     # Services used to download things
 
-    projects.share.settings = {
+    projects.download.settings = {
 
       # Networking
       networks."${networks.front.name}".external = true;
 
       ### # Torrent # ###
 
-      services.torrent.service = {
+      services."${names.torrent}".service = {
         # Image
         image = "lscr.io/linuxserver/qbittorrent:latest";
+        # Name
+        container_name = names.torrent;
         # Environment
         environment = pkgs.containerFunctions.fixEnvironment {
           TZ = config.mine.system.timezone;
@@ -201,14 +214,16 @@
           "/data/storr/media/downloads:/downloads"
         ];
         # Networking
-        networks."${networks.front.name}".ipv4_address = networks.front.ips.torrent;
+        networks = [ networks.front.name ];
       };
 
       ### # Aria # ###
 
-      services.aria.service = {
+      services."${names.aria}".service = {
         # Image
         image = "hurlenko/aria2-ariang:latest";
+        # Name
+        container_name = names.aria;
         # Environment
         environment = pkgs.containerFunctions.fixEnvironment {
           PUID = config.mine.user.uid;
@@ -221,7 +236,7 @@
           "/data/storr/media/downloads:/aria2/data"
         ];
         # Networking
-        networks."${networks.front.name}".ipv4_address = networks.front.ips.aria;
+        networks = [ networks.front.name ];
         # Service doesn't gracefully shut down, it may need tini
       };
 
@@ -240,7 +255,7 @@
 
       ### # Jellyfin # ###
 
-      services.jellyfin.service = let
+      services."${names.jellyfin}".service = let
 
         # Names of the folders that will be synced
         syncFolders = [ "anime" "cartoons" "films" "series" ];
@@ -249,6 +264,9 @@
 
         # Image
         image = "lscr.io/linuxserver/jellyfin:latest";
+
+        # Name
+        container_name = names.jellyfin;
 
         # Environment
         environment = pkgs.containerFunctions.fixEnvironment {
@@ -264,22 +282,18 @@
         # Extra folders mapping
         (map (eachFolder: "/data/storr/media/${eachFolder}:/data/${eachFolder}:ro") syncFolders);
 
-        # Needed ports
-        ports = [
-          "7359:7359/udp"
-          "1900:1900/udp"
-        ];
-
         # Networking
-        networks."${networks.front.name}".ipv4_address = networks.front.ips.jellyfin;
+        networks = [ networks.front.name ];
 
       };
 
       ### # Komga # ###
 
-      services.komga.service = {
+      services."${names.komga}".service = {
         # Image
         image = "gotson/komga:latest";
+        # Name
+        container_name = names.komga;
         # Environment
         environment = {
           TZ = config.mine.system.timezone;
@@ -292,7 +306,7 @@
           "/data/storr/media/manga:/data:ro"
         ];
         # Networking
-        networks."${networks.front.name}".ipv4_address = networks.front.ips.komga;
+        networks = [ networks.front.name ];
       };
 
     };
@@ -312,9 +326,11 @@
 
       ### # Matrix # ###
 
-      services.matrix.service = {
+      services."${names.matrix}".service = {
         # Image
         image = "matrixdotorg/synapse:latest";
+        # Name
+        container_name = names.matrix;
         # Environment
         environment = pkgs.containerFunctions.fixEnvironment {
           TZ = config.mine.system.timezone;
@@ -326,7 +342,7 @@
           "/data/bunker/data/containers/matrix:/data"
         ];
         # Networking
-        networks."${networks.front.name}".ipv4_address = networks.front.ips.matrix;
+        networks = [ networks.front.name ];
       };
 
     };
@@ -339,12 +355,7 @@
 
     # Search engine
 
-    projects.search.settings = let
-
-      # Commonly used names
-      names.redis = "searx-redis";
-
-    in {
+    projects.search.settings = {
 
       # Networking
       networks."${networks.front.name}".external = true;
@@ -355,11 +366,13 @@
 
       ### # SearXNG # ###
 
-      services.searx.service = {
+      services."${names.search.app}".service = {
         # Image
         image = "searxng/searxng:latest";
+        # Name
+        container_name = names.search.app;
         # Depends
-        depends_on = [ names.redis ];
+        depends_on = [ names.search.redis ];
         # Environment
         environment = [];
         env_file = [ "/data/local/containers/search/searx.env" ];
@@ -368,15 +381,16 @@
           "/data/bunker/data/containers/search/application:/etc/searxng:rw"
         ];
         # Networking
-        networks."${networks.search.name}" = {};
-        networks."${networks.front.name}".ipv4_address = networks.front.ips.search;
+        networks = [ networks.search.name networks.front.name ];
       };
 
       ### # Redis # ###
 
-      services."${redisSearch}".service = {
+      services."${names.search.redis}".service = {
         # Image
         image = "redis:latest";
+        # Name
+        container_name = names.search.redis;
         # Environment
         environment = {
           TZ = config.mine.system.timezone;
@@ -388,7 +402,7 @@
         # Command
         command = "--save 60 1";
         # Networking
-        networks."${networks.search.name}".ipv4_address = networks.search.ips.redis;
+        networks = [ networks.search.name ];
       };
 
     };
@@ -399,14 +413,7 @@
 
     # All the cloud applications
 
-    project.cloud.settings = let
-
-      # Commonly used names
-      names = {
-        database = "cloud-maria";
-        redis = "cloud-redis";
-        proxy = "cloud-proxy";
-      };
+    projects.cloud.settings = let
 
       # Database configuration
       db = rec {
@@ -425,20 +432,22 @@
 
       ### # Application # ###
 
-      services.cloud.service = {
+      services."${names.cloud.app}".service = {
         # Image
         image = "nextcloud:latest";
+        # Name
+        container_name = names.cloud.app;
         # Dependend
-        depends_on = [ names.database names.redis ];
+        depends_on = [ names.cloud.database names.cloud.redis ];
         # Environment
         environment = {
           TZ = config.mine.system.timezone;
           # Mariadb
-          MYSQL_HOST = networks.cloud.ip.database;
+          MYSQL_HOST = names.cloud.database;
           MYSQL_DATABASE = db.name;
           MYSQL_USER = db.user;
           # Redis
-          REDIS_HOST = networks.cloud.ip.redis;
+          REDIS_HOST = names.cloud.redis;
           # Data
           NEXTCLOUD_DATA_DIR = "/data";
         };
@@ -449,15 +458,16 @@
           "/data/bunker/cloud/cloud:/data"
         ];
         # Networking
-        networks."${networks.front.name}".ipv4_address = networks.front.ips.cloud;
-        networks."${networks.cloud.name}".ipv4_address = networks.cloud.ips.cloud;
+        network = [ networks.cloud.name networks.front.name ];
       };
 
       ### # Database # ###
 
-      services."${names.database}".service = {
+      services."${names.cloud.database}".service = {
         # Image
         image = "mariadb:latest";
+        # Name
+        container_name = names.cloud.database;
         # Environment
         environment = {
           TZ = config.mine.system.timezone;
@@ -470,14 +480,16 @@
           "/data/bunker/data/containers/cloud/mariadb:/var/lib/mysql"
         ];
         # Networking
-        networks."${networks.cloud.name}".ipv4_address = networks.cloud.ips.database;
+        networks = [ networks.cloud.name ];
       };
 
       ### # Redis # ###
 
-      services."${names.redis}".service = {
+      services."${names.cloud.redis}".service = {
         # Image
         image = "redis:latest";
+        # Name
+        container_name = names.cloud.redis;
         # Environment
         environment = {
           TZ = config.mine.system.timezone;
@@ -489,15 +501,15 @@
         # Command
         command = "--save 60 1";
         # Networking
-        networks."${networks.cloud.name}".ipv4_address = networks.cloud.ips.redis;
+        networks = [ networks.cloud.name ];
       };
 
       ### # Proxy # ###
 
-      services."${names.proxy}".service = let
+      services."${names.cloud.proxy}".service = let
 
         # Create the proxy configuration attr set for this container
-        proxyConfiguration = my.containers.functions.createProxy {
+        proxyConfiguration = pkgs.containerFunctions.createProxy {
           net = {
             ip = networks.cloud.ips.cloud;
             port = "80";
@@ -521,6 +533,8 @@
         };
 
       in {
+        # Name
+        container_name = names.cloud.proxy;
         # Networking
         networks = [ networks.cloud.name ];
       } //
@@ -536,16 +550,18 @@
 
     # My vault application
 
-    project.vault.settings = {
+    projects.vault.settings = {
 
       # Networking
       networks."${networks.front.name}".external = true;
 
       ### # Vault # ###
 
-      services.cloud.service = {
+      services."${names.vault}".service = {
         # Image
         image = "vaultwarden/server:latest";
+        # Name
+        container_name = names.vault;
         # Environment
         environment = {
           TZ = config.mine.system.timezone;
@@ -557,7 +573,7 @@
           "/data/bunker/data/containers/warden:/data"
         ];
         # Networking
-        networks."${networks.front.name}".ipv4_address = networks."${networks.front.name}".ips.vault;
+        networks = [ networks.front.name ];
       };
 
     };
