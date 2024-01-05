@@ -9,48 +9,36 @@
 
     # Configure all the needed networks
     networks = {
-
       ### # Front # ###
-      front = { name = "front"; subnet = "172.16.10.0/24"; gateway = "172.16.100.1"; };
-
+      front  = { name = "front";  subnet = "172.16.10.0/24"; gateway = "172.16.100.1"; };
       ### # SearX # ###
       search = { name = "search"; subnet = "172.16.20.0/24"; gateway = "172.16.250.1"; };
-
       ### # Cloud # ###
-      cloud = { name = "cloud"; subnet = "172.16.50.0/24"; gateway = "172.16.200.1"; };
-
+      cloud  = { name = "cloud";  subnet = "172.16.50.0/24"; gateway = "172.16.200.1"; };
       ### # Share # ###
-      share = { name = "share"; subnet = "172.16.30.0/24"; gateway = "172.16.50.1"; };
-
+      share  = { name = "share";  subnet = "172.16.30.0/24"; gateway = "172.16.50.1"; };
     };
 
     # Keep track of all the names
     names = {
-
       # Front
       front = "proxy";
-
       # Share
       share = "samba";
       shout = "shout";
-
       # Download
       torrent = "torrent";
       aria = "aria";
-
       # Media
       jellyfin = "jellyfin";
       komga = "komga";
-
       # Social
       matrix = "matrix";
-
       # Search
       search = {
         app = "searx";
         redis = "search-redis";
       };
-
       # Cloud
       cloud = {
         app = "cloud";
@@ -58,10 +46,8 @@
         redis = "cloud-redis";
         proxy = "cloud-proxy";
       };
-
       # Vault
       vault = "vault";
-
     };
 
     # Predefined ports
@@ -83,7 +69,9 @@
         ipam.config = [{ inherit (networks.front) subnet gateway; }];
       };
 
+           #######
       ### # Proxy # ###
+           #######
 
       services."${names.front}".service = {
         # Image
@@ -113,7 +101,9 @@
     # Sharing services and needed components
     projects.share.settings = {
 
+           #######
       ### # SAMBA # ###
+           #######
 
       services."${names.share}".service = {
 
@@ -165,7 +155,9 @@
 
       };
 
+           #######
       ### # Shout # ###
+           #######
 
       services."${names.shout}".service = {
         # Image
@@ -194,7 +186,9 @@
       # Networking
       networks."${networks.front.name}".external = true;
 
+           #########
       ### # Torrent # ###
+           #########
 
       services."${names.torrent}".service = {
         # Image
@@ -217,7 +211,9 @@
         networks = [ networks.front.name ];
       };
 
+           ######
       ### # Aria # ###
+           ######
 
       services."${names.aria}".service = {
         # Image
@@ -253,7 +249,9 @@
       # Networking
       networks."${networks.front.name}".external = true;
 
+           ##########
       ### # Jellyfin # ###
+           ##########
 
       services."${names.jellyfin}".service = let
 
@@ -287,7 +285,9 @@
 
       };
 
+           #######
       ### # Komga # ###
+           #######
 
       services."${names.komga}".service = {
         # Image
@@ -324,7 +324,9 @@
       # Networking
       networks."${networks.front.name}".external = true;
 
+           ########
       ### # Matrix # ###
+           ########
 
       services."${names.matrix}".service = {
         # Image
@@ -364,7 +366,9 @@
         ipam.config = [{ inherit (networks.search) subnet gateway; }];
       };
 
+           #########
       ### # SearXNG # ###
+           #########
 
       services."${names.search.app}".service = {
         # Image
@@ -384,7 +388,9 @@
         networks = [ networks.search.name networks.front.name ];
       };
 
+           #######
       ### # Redis # ###
+           #######
 
       services."${names.search.redis}".service = {
         # Image
@@ -430,7 +436,9 @@
         ipam.config = [{ inherit (networks.cloud) subnet gateway; }];
       };
 
+           #############
       ### # Application # ###
+           #############
 
       services."${names.cloud.app}".service = {
         # Image
@@ -461,7 +469,9 @@
         network = [ networks.cloud.name networks.front.name ];
       };
 
+           ##########
       ### # Database # ###
+           ##########
 
       services."${names.cloud.database}".service = {
         # Image
@@ -483,7 +493,9 @@
         networks = [ networks.cloud.name ];
       };
 
+           #######
       ### # Redis # ###
+           #######
 
       services."${names.cloud.redis}".service = {
         # Image
@@ -504,7 +516,9 @@
         networks = [ networks.cloud.name ];
       };
 
+           #######
       ### # Proxy # ###
+           #######
 
       services."${names.cloud.proxy}".service = let
 
@@ -555,7 +569,9 @@
       # Networking
       networks."${networks.front.name}".external = true;
 
+           #######
       ### # Vault # ###
+           #######
 
       services."${names.vault}".service = {
         # Image
