@@ -388,6 +388,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Audio Control
     paprefs
+    pipecontrol
     pavucontrol
 
     # Patchers
