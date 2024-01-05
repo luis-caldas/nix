@@ -40,6 +40,13 @@ let
 
   };
 
+  # Set up container names
+  names = {
+    dns = "dns";
+    dnsUp = "dns-up";
+    wire = "wire";
+  };
+
   # List of users for wireguard
   listUsers = let
 
@@ -82,10 +89,7 @@ in {
 
     # Main VPN containers
 
-    projects.vpn.settings = let
-
-
-    in {
+    projects.vpn.settings = {
 
       # Set up the network
       networks."${networks.wire.name}" = {
@@ -96,9 +100,11 @@ in {
       ### # DNS # ###
 
       # Upstream DNS server
-      services.dns-up = {
+      services."${names.dnsUp}" = {
         build.image = lib.mkForce pkgs.containerImages.dns;
         service = {
+          # Name
+          container_name = names.dnsUp;
           # Networking
           networks."${networks.wire.name}".ipv4_address = networks.wire.ips.dnsUp;
         };
@@ -107,9 +113,15 @@ in {
       ### # PiHole # ###
 
       # Main DNS
-      services.dns.service = {
+      services."${names.dns}".service = {
+        # Image
         image = "pihole/pihole:latest";
-        depends_on = [ "dns-up" ];
+
+        # Name
+        container_name = names.dns;
+
+        # Depends
+        depends_on = [ names.dnsUp ];
 
         # Environment
         environment = {
@@ -161,7 +173,7 @@ in {
         ports = [
           "${builtins.toString wireguardInfo.container}:${builtins.toString wireguardInfo.original}/udp"
         ];
-        networks."${networks.wire.name}".ipv4_address = networks.wire.ips.wire;
+        networks = [ networks.wire.name ];
         capabilities.NET_ADMIN = true;
 
       };
