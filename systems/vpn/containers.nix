@@ -95,7 +95,9 @@ in {
         ipam.config = [{ inherit (networks.wire) subnet gateway; }];
       };
 
+           #####
       ### # DNS # ###
+           #####
 
       # Upstream DNS server
       services."${names.dnsUp}" = {
@@ -108,7 +110,9 @@ in {
         };
       };
 
+           ########
       ### # PiHole # ###
+           ########
 
       # Main DNS
       services."${names.dns}".service = {
@@ -141,7 +145,9 @@ in {
 
       };
 
+           ###########
       ### # WireGuard # ###
+           ###########
 
       services."${names.wire}".service = {
 
