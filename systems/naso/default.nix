@@ -19,6 +19,9 @@
     };
   };
 
+  # Import the containers
+  imports = [ ./containers.nix ];
+
   # Set the permissions for the disk drive
   services.udev.extraRules = ''
     KERNEL="sr0", SYMLINK="cdrom", GROUP="disk"

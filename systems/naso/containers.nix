@@ -43,6 +43,7 @@ let
       database = "cloud-maria";
       redis = "cloud-redis";
       proxy = "cloud-proxy";
+      aio = "aio";
     };
     # Vault
     vault = "vault";
@@ -252,7 +253,7 @@ in {
           environment = pkgs.containerFunctions.fixEnvironment {
             PUID = config.mine.user.uid;
             PGID = config.mine.user.gid;
-            ARIA2RPCPORT = networks.ports.https;
+            ARIA2RPCPORT = ports.https;
           };
           # Volumes
           volumes = [
@@ -274,7 +275,7 @@ in {
     # All the media content
 
     projects.media = {
-      serviceName = project.media;
+      serviceName = projects.media;
       settings = {
 
         # Networking
@@ -415,7 +416,7 @@ in {
           # Depends
           depends_on = [ names.search.redis ];
           # Environment
-          environment = [];
+          environment = {};
           env_file = [ "/data/local/containers/search/searx.env" ];
           # Volumes
           volumes = [
@@ -506,7 +507,7 @@ in {
             "/data/bunker/cloud/cloud:/data"
           ];
           # Networking
-          network = [ networks.cloud.name networks.front.name ];
+          networks = [ networks.cloud.name networks.front.name ];
         };
 
              ##########
@@ -565,7 +566,7 @@ in {
           # Create the proxy configuration attr set for this container
           proxyConfiguration = pkgs.containerFunctions.createProxy {
             net = {
-              ip = networks.cloud.ips.cloud;
+              ip = names.cloud.app;
               port = "80";
             };
             port = "9443";
@@ -595,8 +596,35 @@ in {
         # It contains the image ports and volumes needed
         proxyConfiguration;
 
-      };
+             ###############
+        ### # NextCloud AIO # ###
+             ################
 
+        # TODO Configure it
+
+        services."${names.cloud.aio}".service = let
+          dataDir = "/mnt/data";
+        in {
+          # Image
+          image = "nextcloud/all-in-one:latest";
+          # Name
+          container_name = names.cloud.aio;
+          # Environment
+          environment = pkgs.containerFunctions.fixEnvironment {
+            NEXTCLOUD_DATADIR = dataDir;
+            AIO_DISABLE_BACKUP_SECTION = true;
+            NEXTCLOUD_STARTUP_APPS = "deck tasks calendar contacts notes";
+          };
+          # Volumes
+          volumes = [
+            "/data/bunker/data/containers/cloud/aio:/mnt/docker-aio-config"
+            "/data/bunker/cloud/aio:${dataDir}"
+          ];
+          # Networking
+          networks = [ networks.cloud.name networks.front.name ];
+        };
+
+      };
     };
 
     #########
