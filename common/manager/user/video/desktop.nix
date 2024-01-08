@@ -164,6 +164,7 @@ in {
     "org/gnome/shell".favorite-apps = with defaultApplications; [
       terminal
       browser
+      email
       files
     ];
     "org/gnome/mutter" = {
