@@ -55,8 +55,18 @@ let
     web = "web";
   };
 
+  # Service extension
+  serviceExtension = "service";
+
 in {
 
+  # All the services dependencies
+  systemd.services."${projects.base}".requires = [ "${projects.front}.${serviceExtension}" ];
+  systemd.services."${projects.asterisk}".requires = [ "${projects.front}.${serviceExtension}" ];
+  systemd.services."${projects.nut}".requires = [ "${projects.front}.${serviceExtension}" ];
+  systemd.services."${projects.web}".requires = [ "${projects.front}.${serviceExtension}" ];
+
+  # Virtualisation itself
   virtualisation.arion = {
 
     #########
@@ -65,38 +75,40 @@ in {
 
     # All services that will serve the front
 
-    projects.front.serviceName = projects.front;
-    projects.front.settings = {
+    projects.front = {
+      serviceName = projects.front;
+      settings = {
 
-      # Networking
-      networks."${networks.front.name}" = {
-        name = networks.front.name;
-        ipam.config = [{ inherit (networks.front) subnet gateway; }];
-      };
-
-           #######
-      ### # Proxy # ###
-           #######
-
-      services."${names.front}".service = {
-        # Image
-        image = "jc21/nginx-proxy-manager:latest";
-        # Name
-        container_name = names.front;
-        # Volumes
-        volumes = [
-          "/data/local/containers/proxy:/data"
-        ];
         # Networking
-        ports = [
-          "80:80/tcp"
-          "443:443/tcp"
-          "81:81/tcp"
-        ];
-        # Networking
-        networks = [ networks.front.name ];
-      };
+        networks."${networks.front.name}" = {
+          name = networks.front.name;
+          ipam.config = [{ inherit (networks.front) subnet gateway; }];
+        };
 
+             #######
+        ### # Proxy # ###
+             #######
+
+        services."${names.front}".service = {
+          # Image
+          image = "jc21/nginx-proxy-manager:latest";
+          # Name
+          container_name = names.front;
+          # Volumes
+          volumes = [
+            "/data/local/containers/proxy:/data"
+          ];
+          # Networking
+          ports = [
+            "80:80/tcp"
+            "443:443/tcp"
+            "81:81/tcp"
+          ];
+          # Networking
+          networks = [ networks.front.name ];
+        };
+
+      };
     };
 
     ########
@@ -380,11 +392,5 @@ in {
     };
 
   };
-
-  # All the services dependencies
-  systemd.services."${projects.base}".requires = [ "${projects.front}.service" ];
-  systemd.services."${projects.asterisk}".requires = [ "${projects.front}.service" ];
-  systemd.services."${projects.nut}".requires = [ "${projects.front}.service" ];
-  systemd.services."${projects.web}".requires = [ "${projects.front}.service" ];
 
 }
