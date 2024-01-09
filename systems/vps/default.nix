@@ -77,7 +77,7 @@ in
     listenPort = networkInfo.port;
     privateKeyFile = "/data/wireguard/host.key";
     peers = [{
-      publicKey = mfunc.safeReadFile /data/wireguard/remote.pub;
+      publicKey = pkgs.functions.safeReadFile /data/wireguard/remote.pub;
       presharedKeyFile = "/data/wireguard/shared.key";
       allowedIPs = [ "${networkInfo.remote}/32" ];
     }];
