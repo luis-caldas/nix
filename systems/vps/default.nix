@@ -7,6 +7,8 @@ let
     host = "10.255.255.254";
     remote = "10.255.255.1";
     prefix = 24;
+    # Default interface
+    interface = "wire";
     # Default Wireguard port
     port = 123;
   };
