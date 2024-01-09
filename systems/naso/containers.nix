@@ -7,14 +7,10 @@ let
 
   # Configure all the needed networks
   networks = {
-    ### # Front # ###
-    front  = { name = "front";  subnet = "172.16.10.0/24"; gateway = "172.16.10.1"; };
-    ### # SearX # ###
-    search = { name = "search"; subnet = "172.16.20.0/24"; gateway = "172.16.20.1"; };
-    ### # Cloud # ###
-    cloud  = { name = "cloud";  subnet = "172.16.50.0/24"; gateway = "172.16.50.1"; };
-    ### # Share # ###
-    share  = { name = "share";  subnet = "172.16.30.0/24"; gateway = "172.16.30.1"; };
+    front.name = "front";
+    search.name = "search";
+    cloud.name = "cloud";
+    share.name = "share";
   };
 
   # Keep track of all the names

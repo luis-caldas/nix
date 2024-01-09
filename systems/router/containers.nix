@@ -8,11 +8,11 @@ let
   # Configure all the needed networks
   networks = {
     ### # Front # ###
-    front  = { name = "front";  subnet = "172.16.10.0/24"; gateway = "172.16.10.1"; };
+    front.name = "front";
     ### # Time # ###
-    time   = { name = "time";   subnet = "172.16.50.0/24"; gateway = "172.16.50.1"; };
+    time.name = "time";
     ### # FreeDNS # ###
-    update = { name = "update"; subnet = "172.16.60.0/24"; gateway = "172.16.60.1"; };
+    update.name = "update";
     ### # DNS # ###
     dns = {
       name = "dns";
