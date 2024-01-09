@@ -65,7 +65,7 @@
       "spotify" "spotify-unwrapped"
 
       # Social
-      "zoom" "discord"
+      "discord"
 
       # Android
       "android-sdk-tools"
@@ -73,6 +73,10 @@
       # Software Development
       "pycharm-professional" "webstorm" "clion" "datagrip" "idea-ultimate"
       "ciscoPacketTracer8"
+
+      # Work
+      "zoom"
+      "vmware-horizon-client"
 
     ]);
 

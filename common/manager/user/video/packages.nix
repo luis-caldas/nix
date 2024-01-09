@@ -346,6 +346,9 @@ lib.mkIf osConfig.mine.graphics.enable
     # Video
     zoom-us
 
+    # Connection
+    vmware-horizon-client
+
   ] else []) ++
 
   # Electronics production software
