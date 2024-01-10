@@ -30,8 +30,10 @@
   ];
 
   # DNS servers
-  networking.networkmanager.insertNameservers = [ "127.0.0.1" ];
-  networking.networkmanager.appendNameservers = [ "9.9.9.10" ];
+  networking.networkmanager.insertNameservers = [
+    "172.16.20.11"
+    "9.9.9.10"
+  ];
 
   # Disable all ipv6
   networking.enableIPv6 = false;
