@@ -53,6 +53,7 @@ in
     enable = lib.mkForce true;
     allowedTCPPorts = [
       22    # SSH port
+      443   # HTTPS port for anything else
     ];
     allowedUDPPorts = [
       123   # Wireguard
