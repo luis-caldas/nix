@@ -30,6 +30,9 @@ in
     # Disable kernel messages at boot
     consoleLogLevel = 0;
 
+    # Set the kernel package to hardened
+    kernelPackages = pkgs.linuxKernel.packages.linux_hardened;
+
     # Add params
     kernelParams = [] ++
     # Add the default ones
