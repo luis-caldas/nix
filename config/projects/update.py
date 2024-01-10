@@ -34,37 +34,56 @@ def main():
     # Import the list of my projects
     myProjects = json.load(open(os.path.join(LOCATION, NEEDED_PROJECTS_FILE), 'r'))
 
+    # For verbose
+    infoString = "[ ! ] - %s"
+    errorString = "[ * ] - %s"
+
+    # Verbose
+    print(infoString % "Getting information")
+
     # Start pagination index
     pagIndex = 1
 
-    # Paginate github response
-    while True:
+    # Catch for keyboard interrupt
+    try:
 
-        # Create URL
-        reposURL = "https://api.github.com/users/%s/repos?per_page=%d&page=%d" % (USER_NAME, PER_PAGE, pagIndex)
+        # Paginate GitHubs response
+        while True:
 
-        # Get all repos
-        repos = json.load(urllib.request.urlopen(reposURL))
+            # Verbose
+            print(infoString % ("Page %d" % pagIndex), end='\r')
 
-        # Check if list is empty
-        if repos:
+            # Create URL
+            reposURL = "https://api.github.com/users/%s/repos?per_page=%d&page=%d" % (USER_NAME, PER_PAGE, pagIndex)
 
-            # Extract repo names
-            cleanNames.extend([each["name"] for each in repos if each["name"] in myProjects["projects"]])
+            # Get all repos
+            repos = json.load(urllib.request.urlopen(reposURL))
 
-            # Increment pagination index
-            pagIndex += 1
+            # Check if list is empty
+            if repos:
 
-        # Break from loop if no more entries are returned
-        else:
-            break
+                # Extract repo names
+                cleanNames.extend([each["name"] for each in repos if each["name"] in myProjects["projects"]])
+
+                # Increment pagination index
+                pagIndex += 1
+
+            # Break from loop if no more entries are returned
+            else:
+                print()
+                break
+
+    # If it was interrupted
+    except KeyboardInterrupt:
+        print()
+        print(infoString % "Stopped paginating")
 
     # Exit if no projects were returned
     if not cleanNames:
-        print("Could not find any project")
+        print(errorString % "Could not find any project")
         return
 
-    # Cross check repo names
+    # Cross-check repo names
     if reposChosen:
         crossedNames = [eachIn for eachIn in reposChosen if eachIn in cleanNames]
 
@@ -107,36 +126,43 @@ def main():
     # Import old project
     oldProjects = json.load(open(os.path.join(LOCATION, PROJECTS_FILE_NAME), 'r'))
 
-    # Create object that it going to house all new projects
+    # Create object that is going to house all new projects
     newProjects = dict()
 
-    # Iterate and get commits
-    for eachProject in sorted(cleanNames):
+    # Try to add all the objects
+    try:
 
-        # Get commit info
-        projURL = "https://api.github.com/repos/%s/%s/branches" % (USER_NAME, eachProject)
+        # Iterate and get commits
+        for eachProject in sorted(cleanNames):
 
-        # Extract chosen branch and last commit hash
-        chosenBranch = [each for each in json.load(urllib.request.urlopen(projURL)) if each["name"] == REPOS_BRANCH].pop()
-        lastCommitHash = chosenBranch["commit"]["sha"]
+            # Get commit info
+            projURL = "https://api.github.com/repos/%s/%s/branches" % (USER_NAME, eachProject)
 
-        # Generate hash command
-        hashCommand = "nix-prefetch-url --unpack https://github.com/%s/%s/archive/%s.tar.gz" % (USER_NAME, eachProject, lastCommitHash)
+            # Extract chosen branch and last commit hash
+            chosenBranch = [each for each in json.load(urllib.request.urlopen(projURL)) if each["name"] == REPOS_BRANCH].pop()
+            lastCommitHash = chosenBranch["commit"]["sha"]
 
-        # Run command and get output
-        shaHash = subprocess.run(hashCommand.split(" "), stdout=subprocess.PIPE, stderr=subprocess.DEVNULL).stdout.decode("utf-8").strip("\n")
+            # Generate hash command
+            hashCommand = "nix-prefetch-url --unpack https://github.com/%s/%s/archive/%s.tar.gz" % (USER_NAME, eachProject, lastCommitHash)
 
-        # Print
-        counterProjs += 1
-        printI(counterProjs, namesNumber)
+            # Run command and get output
+            shaHash = subprocess.run(hashCommand.split(" "), stdout=subprocess.PIPE, stderr=subprocess.DEVNULL).stdout.decode("utf-8").strip("\n")
 
-        # Add item to object
-        newProjects.update({
-            eachProject: {
-                "commit": lastCommitHash,
-                "sha256": shaHash
-            }
-        })
+            # Print
+            counterProjs += 1
+            printI(counterProjs, namesNumber)
+
+            # Add item to object
+            newProjects.update({
+                eachProject: {
+                    "commit": lastCommitHash,
+                    "sha256": shaHash
+                }
+            })
+
+    # If it was interrupted
+    except KeyboardInterrupt:
+        print(errorString % "Stopped adding projects")
 
     print()
     print( infoString % "All projects loaded" )
