@@ -43,6 +43,7 @@ let
     dns = "dns";
     dnsUp = "dns-up";
     wire = "wire";
+    openvpn = "openvpn";
   };
 
   # List of users for wireguard
@@ -179,6 +180,32 @@ in {
         # Networking
         ports = [
           "${builtins.toString wireguardInfo.container}:${builtins.toString wireguardInfo.original}/udp"
+        ];
+        networks = [ networks.wire.name ];
+        capabilities.NET_ADMIN = true;
+
+      };
+
+           #########
+      ### # OpenVPN # ###
+           #########
+
+      services."${names.openvpn}".service = {
+
+        # Image
+        image = "kylemanna/openvpn:latest";
+
+        # Name
+        container_name = names.openvpn;
+
+        # Volumes
+        volumes = [
+          "/data/containers/openvpn/config:/etc/openvpn"
+        ];
+
+        # Networking
+        ports = [
+          "443:1194/tcp"
         ];
         networks = [ networks.wire.name ];
         capabilities.NET_ADMIN = true;
