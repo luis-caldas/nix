@@ -240,6 +240,9 @@ lib.mkIf osConfig.mine.graphics.enable
     hunspellDicts.it-it
     hunspellDicts.es-es
 
+    # Grammar
+    languagetool
+
     # Learning
     anki
 
