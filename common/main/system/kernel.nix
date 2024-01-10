@@ -31,7 +31,7 @@ in
     consoleLogLevel = 0;
 
     # Set the kernel package to hardened
-    kernelPackages = pkgs.linuxKernel.packages.linux_hardened;
+    # kernelPackages = pkgs.linuxKernel.packages.linux_hardened;
 
     # Add params
     kernelParams = [] ++
