@@ -17,12 +17,6 @@
     "${builtins.fetchGit "https://github.com/NixOS/nixos-hardware"}/framework/13-inch/7040-amd"
   ];
 
-  # eGPU
-  services.udev.extraRules = ''
-    # eGPU for Gnome
-    ENV{DEVNAME}=="/dev/dri/card1", TAG+="mutter-device-preferred-primary"
-  '';
-
   # Disable fingerprint
   services.fprintd.enable = false;
 
