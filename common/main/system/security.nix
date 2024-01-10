@@ -41,8 +41,9 @@
     agentTimeout = "0";
   };
 
-  # Add my custom certificate authority
-  security.pki.certificateFiles = [ "${pkgs.reference.projects.pub}/ssl/ca.pem" ];
+  # Add my custom certificate authorities
+  security.pki.certificateFiles = pkgs.functions.listAllSuffixFiles "${pkgs.reference.projects.pub}/ssl" "pem";
+
   # Also set the paths for all the certificates so they stick
   environment.sessionVariables = {
     NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt";

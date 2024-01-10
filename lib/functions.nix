@@ -6,7 +6,7 @@ let
   allFunctions = rec {
 
     # Returns a list of the items inside a folder
-    listFilesInFolder = directorySource: lib.mapAttrsToList (name: value: name) (builtins.readDir directorySource);
+    listFilesInFolder = directorySource: builtins.attrNames (builtins.readDir directorySource);
 
     # Lists the contents of a folder and creates
     # a valid link for home manager
@@ -21,17 +21,25 @@ let
         }) listFiles
       );
 
+    # List the regular files
+    listRegularFiles = directory: (builtins.attrNames (
+      lib.attrsets.filterAttrs
+      (name: value: value == "regular")
+      (builtins.readDir directory)
+    ));
+
     # Filters a list of file based on suffix
     filterFilesExtension = listFiles: extension:
-      lib.attrsets.filterAttrs
-      (name: value: value == "regular" && lib.strings.hasSuffix ".${extension}" name)
-      listFiles;
+      builtins.attrNames
+        (lib.attrsets.filterAttrs
+        (name: value: value == "regular" && lib.strings.hasSuffix ".${extension}" name)
+        listFiles);
 
     listAllSuffixFiles = directoryPath: extension:
-      filterFilesExtension extension (builtins.readDir directoryPath);
+      map (each: "${directoryPath}/${each}") (filterFilesExtension (builtins.readDir directoryPath) extension);
 
-    listAllSuffixFilesReucsive = directoryPath: extension:
-      filterFilesExtension extension (lib.filesystem.listFilesRecursive directoryPath);
+    listAllSuffixFilesRecursive = directoryPath: extension:
+      filterFilesExtension (lib.filesystem.listFilesRecursive directoryPath) extension;
 
     # Capitalises first and anything after a space
     capitaliseString = inputString: let
