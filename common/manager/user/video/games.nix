@@ -30,6 +30,7 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     zeroad
     openttd
     xonotic
+    clonehero
     hedgewars
     teeworlds
     assaultcube
