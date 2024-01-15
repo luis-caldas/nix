@@ -10,7 +10,7 @@
   boot.zfs.requestEncryptionCredentials = true;
 
   # Use latest kernel
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_6;
+  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
 
   # Hardware from NixOS
   imports = [
