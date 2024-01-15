@@ -56,6 +56,7 @@
       "steam" "steam-original" "steam-runtime" "steam-run"
       "minecraft-launcher"
       "dwarf-fortress"
+      "clonehero"
 
       # Production
       "davinci-resolve"
