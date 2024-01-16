@@ -78,6 +78,7 @@
       # Work
       "zoom"
       "vmware-horizon-client"
+      "vmware-workstation"
 
     ]);
 
