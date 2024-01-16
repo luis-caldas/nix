@@ -17,6 +17,9 @@
     "${builtins.fetchGit "https://github.com/NixOS/nixos-hardware"}/framework/13-inch/7040-amd"
   ];
 
+  # AMD Fix
+  boot.kernelParams = [ "amdgpu.sg_display=0" "amdgpu.mcbp=0" ];
+
   # Disable fingerprint
   services.fprintd.enable = false;
 

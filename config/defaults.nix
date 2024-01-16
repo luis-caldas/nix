@@ -332,6 +332,7 @@
           "gbmdgpbipfallnflgajpaliibnhdgobh" # json viewer
           "nngceckbapebfimnlniiiahkandclblb" # bitwarden client
           "hkgfoiooedgoejojocmhlaklaeopbecg" # picture in picture
+          "dneaehbmnbhcippjikoajpoabadpodje" # old reddit
         ];
       };
 

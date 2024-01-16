@@ -8,7 +8,14 @@ lib.mkIf config.mine.graphics.enable
   services.xserver = {
     enable = true;
     displayManager.gdm.enable = true;
+    displayManager.defaultSession = "gnome";
     desktopManager.gnome.enable = true;
+    desktopManager.gnome.debug = true;
+  };
+
+  # Fix mutter
+  environment.sessionVariables = {
+    MUTTER_DEBUG_KMS_THREAD_TYPE = "user";
   };
 
   # Enable plymouth
