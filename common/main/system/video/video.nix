@@ -17,6 +17,8 @@ lib.mkIf config.mine.graphics.enable
   environment.sessionVariables = {
     MUTTER_DEBUG_KMS_THREAD_TYPE = "user";
   };
+  systemd.services."getty@tty1".enable = false;
+  systemd.services."autovt@tty1".enable = false;
 
   # Enable plymouth
   boot.plymouth = {
