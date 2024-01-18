@@ -91,6 +91,7 @@ lib.mkIf osConfig.mine.graphics.enable
     browserApplications = [
       { name = "deck"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
       { name = "notes"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
+      { name = "files"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
       { name = "jellyfin-web"; icon = "jellyfin"; url = "https://redirect.caldas.ie"; }
       { name = "whatsapp-web"; icon = "whatsapp"; url = "https://web.whatsapp.com"; }
       { name = "discord-web"; icon = "discord"; url = "https://discord.com/app"; }
@@ -107,13 +108,13 @@ lib.mkIf osConfig.mine.graphics.enable
       value = rec {
         name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] eachEntry.name);
         comment = "${name} web page running as an application";
-        exec = ''/usr/bin/env sh -c "${osConfig.mine.browser.command} --user-data-dir=\\$HOME/.config/browser-apps/${eachEntry.name} --app=${eachEntry.url}"'';
+        exec = ''/usr/bin/env sh -c "${osConfig.mine.browser.command} --user-data-dir=\\$HOME/.config/browser-apps/${eachEntry.name} --profile-directory=${eachEntry.name} --app=${eachEntry.url}"'';
         icon = eachEntry.icon;
         terminal = false;
         categories = [ "Network" "WebBrowser" ];
         settings.StartupWMClass = let
           fixedUrl = lib.lists.last (lib.strings.split "/" eachEntry.url);
-        in "chrome-${fixedUrl}__-Default";
+        in "chrome-${fixedUrl}__-${eachEntry.name}";
       };
     }) browserApplications)
   );
