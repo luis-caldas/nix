@@ -55,9 +55,6 @@ in {
 
   imports = [
 
-    # Import all the relative functions
-    ./functions.nix
-
     # Import arion
     ./arion.nix
 
@@ -70,7 +67,7 @@ in {
     (final: prev: {
 
       # All the images
-      containerImages = builtins.listToAttrs (map (eachFile: {
+      containers = builtins.listToAttrs (map (eachFile: {
         name = lib.strings.removeSuffix ".nix" eachFile;
         value = import (imagesPath + ("/" + eachFile)) { inherit baseImage pkgs; };
       }) allImages);

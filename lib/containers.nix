@@ -48,19 +48,4 @@ let
 
   };
 
-in {
-
-  # The functions to the overlay
-  nixpkgs.overlays = [
-
-    # The overlay
-    (final: prev: {
-
-      # All the functions
-      containerFunctions = allFunctions;
-
-    })
-
-  ];
-
-}
+in allFunctions

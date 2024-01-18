@@ -138,7 +138,7 @@ in {
 
         # Upstream DNS server
         services."${names.dnsUp}" = {
-          build.image = lib.mkForce pkgs.containerImages.dns;
+          build.image = lib.mkForce pkgs.containers.dns;
           service = {
             # Name
             container_name = names.dnsUp;
@@ -230,7 +230,7 @@ in {
 
       services."${names.update}" = {
         # Image
-        build.image = lib.mkForce pkgs.containerImages.freedns;
+        build.image = lib.mkForce pkgs.containers.freedns;
         # Configuration
         service = {
           # Name
@@ -261,7 +261,7 @@ in {
 
         services."${names.asterisk.app}" = {
           # Image
-          build.image = lib.mkForce pkgs.containerImages.asterisk;
+          build.image = lib.mkForce pkgs.containers.asterisk;
           # Configuration
           service = {
             # Name
@@ -287,7 +287,7 @@ in {
 
         services."${names.asterisk.web.normal}" = {
           # Image
-          build.image = lib.mkForce (pkgs.containerImages.web {});
+          build.image = lib.mkForce (pkgs.containers.web {});
           # Options
           service = {
             # Name
@@ -374,7 +374,7 @@ in {
 
         services."${names.dash}" = {
           # Image
-          build.image = lib.mkForce (pkgs.containerImages.web { name = "dashboard"; url = "https://github.com/luis-caldas/personal"; });
+          build.image = lib.mkForce (pkgs.containers.web { name = "dashboard"; url = "https://github.com/luis-caldas/personal"; });
           # Options
           service = {
             # Name

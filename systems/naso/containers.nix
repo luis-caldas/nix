@@ -137,7 +137,7 @@ in {
         container_name = names.share;
 
         # Environment
-        environment = pkgs.containerFunctions.fixEnvironment {
+        environment = pkgs.functions.container.fixEnvironment {
           TZ = config.mine.system.timezone;
           USERID = config.mine.user.uid;
           GROUPID = config.mine.user.gid;
@@ -221,7 +221,7 @@ in {
           # Name
           container_name = names.torrent;
           # Environment
-          environment = pkgs.containerFunctions.fixEnvironment {
+          environment = pkgs.functions.container.fixEnvironment {
             TZ = config.mine.system.timezone;
             PUID = config.mine.user.uid;
             PGID = config.mine.user.gid;
@@ -246,7 +246,7 @@ in {
           # Name
           container_name = names.aria;
           # Environment
-          environment = pkgs.containerFunctions.fixEnvironment {
+          environment = pkgs.functions.container.fixEnvironment {
             PUID = config.mine.user.uid;
             PGID = config.mine.user.gid;
             ARIA2RPCPORT = ports.https;
@@ -295,7 +295,7 @@ in {
           container_name = names.jellyfin;
 
           # Environment
-          environment = pkgs.containerFunctions.fixEnvironment {
+          environment = pkgs.functions.container.fixEnvironment {
             TZ = config.mine.system.timezone;
             PUID = config.mine.user.uid;
             PGID = config.mine.user.gid;
@@ -365,7 +365,7 @@ in {
           # Name
           container_name = names.matrix;
           # Environment
-          environment = pkgs.containerFunctions.fixEnvironment {
+          environment = pkgs.functions.container.fixEnvironment {
             TZ = config.mine.system.timezone;
             UID = config.mine.user.uid;
             GID = config.mine.user.gid;
@@ -560,7 +560,7 @@ in {
         services."${names.cloud.proxy}".service = let
 
           # Create the proxy configuration attr set for this container
-          proxyConfiguration = pkgs.containerFunctions.createProxy {
+          proxyConfiguration = pkgs.functions.container.createProxy {
             net = {
               ip = names.cloud.app;
               port = "80";
@@ -606,7 +606,7 @@ in {
           # Name
           container_name = names.cloud.aio;
           # Environment
-          environment = pkgs.containerFunctions.fixEnvironment {
+          environment = pkgs.functions.container.fixEnvironment {
             NEXTCLOUD_DATADIR = dataDir;
             AIO_DISABLE_BACKUP_SECTION = true;
             NEXTCLOUD_STARTUP_APPS = "deck tasks calendar contacts notes";

@@ -96,13 +96,13 @@ in {
     ../config/defaults.nix
 
     # Functions
-    ../lib/functions.nix
+    ../lib
 
     # Containers
-    ../config/containers/default.nix
+    ../config/containers
 
     # Extra packages and options
-    ../pkgs/default.nix
+    ../pkgs
 
     # Import the default system file
     (systemPath + ("/" + defaultSystemFile))
