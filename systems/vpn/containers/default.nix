@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }@args:
+{ pkgs, lib, config, ... }:
 let
 
   # Shared information
@@ -84,33 +84,6 @@ let
 in {
 
   # Arion
-  virtualisation.arion.projects = let
-
-    # All the possible imports
-    extension = "nix";
-    possible = pkgs.functions.listFileNamesExtensionExcluded ./. [ "default" ] extension;
-
-  in builtins.listToAttrs (
-
-    # Map all the files to new format
-    map (each: {
-
-      # Name of
-      name = each;
-
-      # The set
-      value = {
-
-        # Set the service name also
-        serviceName = each;
-
-        # Import the settings from specific file
-        settings = import ("${each}.${extension}") (args // { inherit shared; });
-
-      };
-
-    }) possible
-
-  );
+  virtualisation.arion.projects = pkgs.functions.container.projects ./. shared;
 
 }
