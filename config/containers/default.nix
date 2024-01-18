@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, ... }@args:
 let
 
   # A base image for all the custom images that will be built on top of it
@@ -69,7 +69,7 @@ in {
       # All the images
       containers = builtins.listToAttrs (map (eachFile: {
         name = lib.strings.removeSuffix ".nix" eachFile;
-        value = import (imagesPath + ("/" + eachFile)) { inherit baseImage pkgs; };
+        value = import (imagesPath + ("/" + eachFile)) (args // { inherit baseImage; });
       }) allImages);
 
     })
