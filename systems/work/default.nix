@@ -72,9 +72,9 @@
       fsType = "zfs";
     };
 
-  swapDevices =
-    [ { device = "/dev/zvol/dark/swap"; }
-    ];
+#  swapDevices =
+#    [ { device = "/dev/zvol/dark/swap"; }
+#    ];
 
   # Governor and arch
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
