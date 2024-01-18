@@ -72,10 +72,6 @@
       fsType = "zfs";
     };
 
-#  swapDevices =
-#    [ { device = "/dev/zvol/dark/swap"; }
-#    ];
-
   # Governor and arch
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
