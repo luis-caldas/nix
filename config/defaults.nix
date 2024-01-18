@@ -258,6 +258,8 @@
 
         swtpm = mkEnableOption "TPM Emulation";
 
+        vmware = mkEnableOption "VMWare Server";
+
       };
 
     };

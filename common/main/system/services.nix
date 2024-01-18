@@ -55,8 +55,8 @@
   };
 
   # Enable vmware if wanted
-  virtualisation.vmware.host.enable = config.mine.production.software && config.mine.services.virtual.enable;
-  virtualisation.vmware.guest.enable = config.mine.production.software && config.mine.services.virtual.enable;
+  virtualisation.vmware.host.enable = config.mine.services.virtual.vmware;
+  virtualisation.vmware.guest.enable = config.mine.services.virtual.vmware;
   virtualisation.vmware.guest.headless = !config.mine.graphics.enable;
 
   # Enable logiops service
