@@ -341,8 +341,9 @@ lib.mkIf osConfig.mine.graphics.enable
     # Maths
     octaveFull
 
-    # Connection
-    vmware-horizon-client
+    # Virtual
+    # vmware-horizon-client
+    vmware-workstation
 
   ] else []) ++
 
