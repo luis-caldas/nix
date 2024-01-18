@@ -40,6 +40,8 @@ To enable auto-trim on SSDs:
 
 ## Swap on ZFS
 
+SWAP should not be used with ZFS
+
 To create a `zvol` for swap:
 
 ```
