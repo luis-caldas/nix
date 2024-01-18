@@ -25,8 +25,8 @@
   imports = [
     # AWS files
     (modulesPath + "/virtualisation/amazon-image.nix")
-    # Containers file
-    ./containers.nix
+    # Containers
+    ./containers
   ];
 
   # DNS servers

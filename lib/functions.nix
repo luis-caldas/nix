@@ -37,6 +37,20 @@ rec {
   listAllSuffixFilesRecursive = directoryPath: extension:
     filterFilesExtension (lib.filesystem.listFilesRecursive directoryPath) extension;
 
+  listFileNamesExtensionExcluded = path: excluded: extension: let
+
+    # Get all the files to load
+    allImportable = listAllSuffixFiles path ".${extension}";
+
+    # Remove all extensions and path
+    allFileNames = map (file: lib.strings.removeSuffix ".${extension}" (builtins.baseNameOf file)) allImportable;
+
+    # Remove unwanted files
+    allCleanFileNames = map (file: builtins.elem file excluded) allFileNames;
+
+  in
+    allCleanFileNames;
+
   # Capitalises first and anything after a space
   capitaliseString = inputString: let
       splitChar = " ";
