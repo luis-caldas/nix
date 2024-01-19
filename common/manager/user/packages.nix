@@ -166,6 +166,9 @@
     # Shell
     shellcheck
 
+    # Windows
+    powershell
+
     # Srcipting
     ghostscript
 
