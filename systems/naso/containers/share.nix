@@ -47,12 +47,12 @@ with shared;
 
     # Command
     command = lib.strings.concatStringsSep " " ([
-      "-g" "log level = 2" # Global config
+      "-g" "\"log level = 2\"" # Global config
       "-n" # NMBF
       "-r" # Remove recycle bin
       "-S" # Disable minimum SMB2
-      "-s" "media;/media;yes;no;no;all;;;Share for media files" # Share config
-      "-s" "ps2;/ps2;yes;no;yes;all;;;PS2 Games"
+      "-s" "\"media;/media;yes;no;no;all;;;Share for media files\"" # Share config
+      "-s" "\"ps2;/ps2;yes;no;yes;all;;;PS2 Games\""
       "-w" "WORKGROUP" # Default workgroup
       "-W" # Wide link support
     ]);

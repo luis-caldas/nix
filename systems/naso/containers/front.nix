@@ -19,8 +19,10 @@ with shared;
     container_name = names.front;
     # Volumes
     volumes = [
-      "/data/local/containers/proxy:/data"
+      "/data/local/containers/proxy/application:/data"
+      "/data/local/containers/proxy/letsencrypt:/etc/letsencrypt"
     ];
+
     # Networking
     ports = [
       "80:80/tcp"
