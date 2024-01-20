@@ -57,8 +57,8 @@ in
 
   # Firewall setup
   # The firewall will only work after the NAT
-  mine.firewall.enable = true;
-  mine.ping.enable = true;
+  mine.network.firewall.enable = true;
+  mine.network.ping.enable = true;
   networking.firewall = {
     allowedTCPPorts = [
       22    # SSH port
