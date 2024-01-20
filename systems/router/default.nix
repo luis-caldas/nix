@@ -70,7 +70,7 @@
   virtualisation.libvirtd.onShutdown = "shutdown";
 
   # Import all conatiners
-  imports = [ ./containers.nix ];
+  imports = [ ./containers ];
 
   # UPS configuration
   power.ups = {

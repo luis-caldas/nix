@@ -26,6 +26,21 @@ let
       }) possible
     );
 
+    # Create list of dependencies for systemd services
+    createDependencies = dependencies: let
+      # Service extension
+      serviceExtension = "service";
+      # List of list of services
+      nestedServices = lib.attrsets.mapAttrsToList
+        (name: value:
+          (map
+            (each: { "${each}".requires = [ "${name}.${serviceExtension}" ]; } )
+          value)
+        )
+        dependencies;
+      # Bring all services to the top
+      allServices = lib.attrsets.mergeAttrsList (builtins.concatLists nestedServices);
+    in allServices;
 
     # Create reverse proxy for https on the given container configuration
     createProxy = info: let
