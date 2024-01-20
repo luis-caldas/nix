@@ -20,7 +20,7 @@
   };
 
   # Import the containers
-  imports = [ ./containers.nix ];
+  imports = [ ./containers ];
 
   # Set the permissions for the disk drive
   services.udev.extraRules = ''
