@@ -2,7 +2,7 @@
 let
 
   # Network info for
-  networkInfo = {
+  networks = {
     # IPs and ranges
     host = "10.255.255.254";
     remote = "10.255.255.1";
@@ -11,6 +11,11 @@ let
     interface = "wire";
     # Default Wireguard port
     port = 123;
+
+    # NAT listening interface
+    external = "ens5";
+    # Gap for internal communication
+    gap = 49152;
   };
 
 in
@@ -47,6 +52,9 @@ in
   # Disable all ipv6
   networking.enableIPv6 = false;
 
+  # Disable avahi
+  services.avahi.enable = lib.mkForce false;
+
   # Firewall setup
   # The firewall will only work after the NAT
   networking.firewall = {
@@ -71,18 +79,43 @@ in
     ];
   };
 
-  # Disable avahi
-  services.avahi.enable = lib.mkForce false;
+  # Set up our NAT configuration
+  networking.nat = {
+    enable = true;
+    externalInterface = networks.external;
+    internalInterfaces = [ networks.interface ];
+    forwardPorts = [
+      # SSH Port redirection to self
+      { destination = "${networks.host}:22"; proto = "tcp"; sourcePort = 22; }
+      # Redirect the VPN ports to self
+      {
+        destination = "${networks.host}:${builtins.toString networks.port}";
+        proto = "udp";
+        sourcePort = networks.port;
+      }
+      # Redirect all the rest to tunnel
+      {
+        destination = "${networks.remote}:1-${builtins.toString networks.gap}";
+        proto = "tcp";
+        sourcePort = "1:${builtins.toString networks.gap}";
+      }
+      {
+        destination = "${networks.remote}:1-${builtins.toString networks.gap}";
+        proto = "udp";
+        sourcePort = "1:${builtins.toString networks.gap}";
+      }
+    ];
+  };
 
   # Set up our wireguard configuration
-  networking.wireguard.interfaces."${networkInfo.interface}" = {
-    ips = [ "${networkInfo.host}/${builtins.toString networkInfo.prefix}" ];
-    listenPort = networkInfo.port;
+  networking.wireguard.interfaces."${networks.interface}" = {
+    ips = [ "${networks.host}/${builtins.toString networks.prefix}" ];
+    listenPort = networks.port;
     privateKeyFile = "/data/wireguard/host.key";
     peers = [{
       publicKey = pkgs.functions.safeReadFile /data/wireguard/remote.pub;
       presharedKeyFile = "/data/wireguard/shared.key";
-      allowedIPs = [ "${networkInfo.remote}/32" ];
+      allowedIPs = [ "${networks.remote}/32" ];
     }];
   };
 
