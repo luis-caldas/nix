@@ -157,6 +157,7 @@ in {
     volumes = [
       "/data/bunker/data/containers/cloud/aio:/mnt/docker-aio-config"
       "/data/bunker/cloud/aio:${dataDir}"
+      "/var/run/docker.sock:/var/run/docker.sock:ro"
     ];
     # Networking
     networks = [ networks.cloud.name networks.front.name ];
