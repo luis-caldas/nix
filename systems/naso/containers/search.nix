@@ -26,6 +26,13 @@ with shared;
     volumes = [
       "/data/bunker/data/containers/search/application:/etc/searxng:rw"
     ];
+    # Capabilities
+    capabilities = {
+      ALL = false;
+      CHOWN = true;
+      SETUID = true;
+      SETGID = true;
+    };
     # Networking
     networks = [ networks.search.name networks.front.name ];
   };
@@ -48,7 +55,7 @@ with shared;
       "/data/bunker/data/containers/search/redis:/data"
     ];
     # Command
-    command = "--save 60 1";
+    command = "--save 30 1";
     # Networking
     networks = [ networks.search.name ];
   };
