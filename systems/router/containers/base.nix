@@ -1,7 +1,7 @@
 { shared, lib, pkgs, config, ... }:
 
 # Inherit the shared values
-with (builtins.trace shared.networks.dns shared);
+with shared;
 
 {
 
