@@ -5,6 +5,9 @@ with shared;
 
 {
 
+  # Networking
+  networks."${networks.share.name}".name = networks.share.name;
+
        #######
   ### # SAMBA # ###
        #######
