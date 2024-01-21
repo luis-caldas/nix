@@ -55,7 +55,7 @@ with shared;
     # Image
     image = "postgres:latest";
     # Environment
-    env_file = "/data/local/containers/bridge/database/env/db.env";
+    env_file = [ "/data/local/containers/bridge/database/env/db.env" ];
     # Volumes
     volumes = [
       "/data/local/containers/bridge/database/data:/var/lib/postgresql/data"
