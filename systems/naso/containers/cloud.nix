@@ -97,45 +97,6 @@ in {
     networks = [ networks.cloud.name ];
   };
 
-       #######
-  ### # Proxy # ###
-       #######
-
-  services."${names.cloud.proxy}".service = let
-
-    # Create the proxy configuration attr set for this container
-    proxyConfiguration = pkgs.functions.container.createProxy {
-      net = {
-        ip = names.cloud.app;
-        port = "80";
-      };
-      port = "9443";
-      ssl = {
-        key = "/data/local/containers/cloud/ssl/main.key";
-        cert = "/data/local/containers/cloud/ssl/main.pem";
-      };
-      extraConfig = ''
-          client_max_body_size 512M;
-          client_body_timeout 300s;
-          fastcgi_buffers 64 4K;
-          location /.well-known/carddav {
-              return 301 $scheme://$host:$server_port/remote.php/dav;
-          }
-          location /.well-known/caldav {
-              return 301 $scheme://$host:$server_port/remote.php/dav;
-          }
-      '';
-    };
-  in {
-    # Name
-    container_name = names.cloud.proxy;
-    # Networking
-    networks = [ networks.cloud.name ];
-  } //
-  # Add the proxy configuration
-  # It contains the image ports and volumes needed
-  proxyConfiguration;
-
        ###############
   ### # NextCloud AIO # ###
        ################
@@ -155,7 +116,7 @@ in {
     };
     # Volumes
     volumes = [
-      "/data/bunker/data/containers/cloud/aio:/mnt/docker-aio-config"
+      "nextcloud_aio_mastercontainer:/mnt/docker-aio-config"
       "/data/bunker/cloud/aio:${dataDir}"
       "/var/run/docker.sock:/var/run/docker.sock:ro"
     ];
