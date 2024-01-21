@@ -7,6 +7,7 @@ with shared;
 
   # Networking
   networks."${networks.front.name}".external = true;
+  networks."${networks.social.name}".name = networks.social.name;
 
        ########
   ### # Matrix # ###
@@ -28,7 +29,39 @@ with shared;
       "/data/bunker/data/containers/matrix:/data"
     ];
     # Networking
-    networks = [ networks.front.name ];
+    networks = [ networks.front.name networks.social.name ];
+  };
+
+       ##############
+  ### # Bridge Whats # ###
+       ##############
+
+  services."${names.bridge.whats}".service = {
+    # Image
+    image = "dock.mau.dev/mautrix/whatsapp:latest";
+    # Name
+    container_name = names.bridge.whats;
+    # Depends
+    depends_on = [ names.bridge.db ];
+    # Volumes
+    volumes = [
+      "/data/local/containers/bridge/whats:/data"
+    ];
+    # Networking
+    networks = [ networks.social.name ];
+  };
+
+  services."${names.bridge.db}".service = {
+    # Image
+    image = "postgres:latest";
+    # Environment
+    env_file = "/data/local/containers/bridge/database/env/db.env";
+    # Volumes
+    volumes = [
+      "/data/local/containers/bridge/database/data:/var/lib/postgresql/data"
+    ];
+    # Networking
+    networks = [ networks.social.name ];
   };
 
 }

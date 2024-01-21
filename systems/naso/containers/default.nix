@@ -9,6 +9,7 @@ let
       front.name = "front";
       cloud.name = "cloud";
       share.name = "share";
+      social.name = "social";
     };
 
     # Keep track of all the names
@@ -26,6 +27,10 @@ let
       komga = "komga";
       # Social
       matrix = "matrix";
+      bridge = {
+        whats = "bridge-whats";
+        db = "bridge-database";
+      };
       # Cloud
       cloud = {
         app = "cloud";
