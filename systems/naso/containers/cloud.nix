@@ -11,6 +11,22 @@ let
     user = name;
   };
 
+  # Main image
+  imagePath = "nextcloud:latest";
+
+  # Shared environment
+  commonEnv = {
+    TZ = config.mine.system.timezone;
+    # Mariadb
+    MYSQL_HOST = names.cloud.database;
+    MYSQL_DATABASE = db.name;
+    MYSQL_USER = db.user;
+    # Redis
+    REDIS_HOST = names.cloud.redis;
+    # Data
+    NEXTCLOUD_DATA_DIR = "/data";
+  };
+
 in {
 
   # Networking
@@ -23,23 +39,13 @@ in {
 
   services."${names.cloud.app}".service = {
     # Image
-    image = "nextcloud:latest";
+    image = imagePath;
     # Name
     container_name = names.cloud.app;
     # Dependend
     depends_on = [ names.cloud.database names.cloud.redis ];
     # Environment
-    environment = {
-      TZ = config.mine.system.timezone;
-      # Mariadb
-      MYSQL_HOST = names.cloud.database;
-      MYSQL_DATABASE = db.name;
-      MYSQL_USER = db.user;
-      # Redis
-      REDIS_HOST = names.cloud.redis;
-      # Data
-      NEXTCLOUD_DATA_DIR = "/data";
-    };
+    environment = commonEnv;
     env_file = [ "/data/local/containers/cloud/cloud.env" ];
     # Volumes
     volumes = [
@@ -48,6 +54,31 @@ in {
     ];
     # Networking
     networks = [ networks.cloud.name networks.front.name ];
+  };
+
+       ######
+  ### # Cron # ###
+       ######
+
+  services."${names.cloud.cron}".service = {
+    # Image
+    image = imagePath;
+    # Name
+    container_name = names.cloud.cron;
+    # Dependend
+    depends_on = [ names.cloud.app ];
+    # Entrypoint
+    entrypoint = "/cron.sh";
+    # Environment
+    environment = commonEnv;
+    env_file = [ "/data/local/containers/cloud/cloud.env" ];
+    # Volumes
+    volumes = [
+      "/data/bunker/data/containers/cloud/application:/var/www/html"
+      "/data/bunker/cloud/cloud:/data"
+    ];
+    # Networking
+    networks = [ networks.cloud.name ];
   };
 
        ##########
@@ -95,33 +126,6 @@ in {
     command = "--save 60 1";
     # Networking
     networks = [ networks.cloud.name ];
-  };
-
-       ###############
-  ### # NextCloud AIO # ###
-       ################
-
-  services."${names.cloud.aio}".service = let
-    dataDir = "/mnt/data";
-  in {
-    # Image
-    image = "nextcloud/all-in-one:latest";
-    # Name
-    container_name = names.cloud.aio;
-    # Environment
-    environment = pkgs.functions.container.fixEnvironment {
-      NEXTCLOUD_DATADIR = dataDir;
-      AIO_DISABLE_BACKUP_SECTION = true;
-      NEXTCLOUD_STARTUP_APPS = "deck tasks calendar contacts notes";
-    };
-    # Volumes
-    volumes = [
-      "nextcloud_aio_mastercontainer:/mnt/docker-aio-config"
-      "/data/bunker/cloud/aio:${dataDir}"
-      "/var/run/docker.sock:/var/run/docker.sock:ro"
-    ];
-    # Networking
-    networks = [ networks.cloud.name networks.front.name ];
   };
 
 }

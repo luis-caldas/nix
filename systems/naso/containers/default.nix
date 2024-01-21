@@ -32,7 +32,7 @@ let
         database = "cloud-maria";
         redis = "cloud-redis";
         proxy = "cloud-proxy";
-        aio = "nextcloud-aio-mastercontainer";
+        cron = "cloud-cron";
       };
       # Vault
       vault = "vault";
