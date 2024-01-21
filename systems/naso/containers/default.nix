@@ -7,7 +7,6 @@ let
     # Configure all the needed networks
     networks = {
       front.name = "front";
-      search.name = "search";
       cloud.name = "cloud";
       share.name = "share";
     };
@@ -27,18 +26,13 @@ let
       komga = "komga";
       # Social
       matrix = "matrix";
-      # Search
-      search = {
-        app = "searx";
-        redis = "search-redis";
-      };
       # Cloud
       cloud = {
         app = "cloud";
         database = "cloud-maria";
         redis = "cloud-redis";
         proxy = "cloud-proxy";
-        aio = "aio";
+        aio = "nextcloud-aio-mastercontainer";
       };
       # Vault
       vault = "vault";
@@ -54,7 +48,7 @@ let
 
     # Services which depend on the front service
     # The names are equivalent to the file names
-    front = [ "download" "media" "social" "search" "cloud" "vault" ];
+    front = [ "download" "media" "social" "cloud" "vault" ];
 
   };
 
