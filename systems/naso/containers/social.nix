@@ -51,9 +51,15 @@ with shared;
     networks = [ networks.social.name ];
   };
 
+       #################
+  ### # Bridge Database # ###
+       #################
+
   services."${names.bridge.db}".service = {
     # Image
     image = "postgres:latest";
+    # Name
+    container_name = names.bridge.db;
     # Environment
     env_file = [ "/data/local/containers/bridge/database/env/db.env" ];
     # Volumes
