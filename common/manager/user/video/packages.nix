@@ -110,6 +110,7 @@ lib.mkIf osConfig.mine.graphics.enable
     wike
 
     # Chat
+    fractal
     gnome.polari
 
     # Web

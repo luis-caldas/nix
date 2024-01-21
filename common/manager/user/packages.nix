@@ -118,6 +118,7 @@
 
     # Messaging
     irssi
+    gomuks
 
     # AI
     chatgpt-cli
