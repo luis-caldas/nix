@@ -42,7 +42,7 @@ with shared;
     # Name
     container_name = names.bridge.whats;
     # Depends
-    depends_on = [ names.bridge.db ];
+    depends_on = [ names.matrix names.bridge.db ];
     # Volumes
     volumes = [
       "/data/local/containers/bridge/whats:/data"
