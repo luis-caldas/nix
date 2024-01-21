@@ -225,7 +225,8 @@ lib.mkIf osConfig.mine.graphics.enable
     # Chat
     discord
     signal-desktop
-    # schildichat-desktop  # Insecure
+    element-desktop-wayland
+    # schildichat-desktop-wayland  # Insecure
     # whatsapp-for-linux  # Browser version is better
 
     # Voice
