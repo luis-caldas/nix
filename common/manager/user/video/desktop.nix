@@ -18,6 +18,7 @@ lib.mkIf osConfig.mine.graphics.enable
     terminal = "Alacritty.desktop";
     browser = "${(builtins.head browsersNewInfo).name}.desktop";
     email = "thunderbird.desktop";
+    chat = "org.gnome.Fractal.desktop";
     text = "org.gnome.TextEditor.desktop";
     audio = "io.bassi.Amberol.desktop";
     video = "memento.desktop";
@@ -167,6 +168,7 @@ in {
       terminal
       browser
       email
+      chat
       files
     ];
     "org/gnome/mutter" = {

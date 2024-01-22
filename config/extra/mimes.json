@@ -16,6 +16,10 @@
     "x-scheme-handler/mailto",
     "text/x-vcard"
   ],
+  "chat": [
+    "x-scheme-handler/matrix",
+    "x-scheme-handler/element"
+  ],
   "text": [
     "text/plain",
     "text/html",
