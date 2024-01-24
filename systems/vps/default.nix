@@ -3,10 +3,21 @@ let
 
   # Network info for
   networks = {
+
     # IPs and ranges
-    host = "10.255.255.254";
-    remote = "10.255.255.1";
+    ips = {
+      # Main instance
+      host = "10.255.255.254";
+      # Remote connection
+      remote = "10.255.255.1";
+      # VPN
+      vpn = "10.255.255.10";
+      # Other places
+      macaco = "10.255.255.100";
+    };
+    # Network prefix
     prefix = 24;
+
     # Default interface
     interface = "wire";
     # Default Wireguard port
@@ -87,21 +98,21 @@ in
     internalInterfaces = [ networks.interface ];
     forwardPorts = [
       # SSH Port redirection to self
-      { destination = "${networks.host}:22"; proto = "tcp"; sourcePort = 22; }
+      { destination = "${networks.ips.host}:22"; proto = "tcp"; sourcePort = 22; }
       # Redirect the VPN ports to self
       {
-        destination = "${networks.host}:${builtins.toString networks.port}";
+        destination = "${networks.ips.host}:${builtins.toString networks.port}";
         proto = "udp";
         sourcePort = networks.port;
       }
       # Redirect all the rest to tunnel
       {
-        destination = "${networks.remote}:1-${builtins.toString networks.gap}";
+        destination = "${networks.ips.remote}:1-${builtins.toString networks.gap}";
         proto = "tcp";
         sourcePort = "1:${builtins.toString networks.gap}";
       }
       {
-        destination = "${networks.remote}:1-${builtins.toString networks.gap}";
+        destination = "${networks.ips.remote}:1-${builtins.toString networks.gap}";
         proto = "udp";
         sourcePort = "1:${builtins.toString networks.gap}";
       }
@@ -110,13 +121,21 @@ in
 
   # Set up our wireguard configuration
   networking.wireguard.interfaces."${networks.interface}" = {
-    ips = [ "${networks.host}/${builtins.toString networks.prefix}" ];
+    ips = [ "${networks.ips.host}/${builtins.toString networks.prefix}" ];
     listenPort = networks.port;
     privateKeyFile = "/data/wireguard/host.key";
     peers = [{
       publicKey = pkgs.functions.safeReadFile /data/wireguard/remote.pub;
-      presharedKeyFile = "/data/wireguard/shared.key";
-      allowedIPs = [ "${networks.remote}/32" ];
+      presharedKeyFile = "/data/wireguard/remote.shared.key";
+      allowedIPs = [ "${networks.ips.remote}/32" ];
+    }{
+      publicKey = pkgs.functions.safeReadFile /data/wireguard/vpn.pub;
+      presharedKeyFile = "/data/wireguard/vpn.shared.key";
+      allowedIPs = [ "${networks.ips.vpn}/32" ];
+    }{
+      publicKey = pkgs.functions.safeReadFile /data/wireguard/macaco.pub;
+      presharedKeyFile = "/data/wireguard/macaco.shared.key";
+      allowedIPs = [ "${networks.ips.macaco}/32" ];
     }];
   };
 
