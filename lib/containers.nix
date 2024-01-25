@@ -38,7 +38,7 @@ let
               ) imported.services;
             # Create the new object with the new services
             realImported = imported // { services = sortedServices; };
-          in (builtins.trace realImported.services.dns.service (builtins.trace imported.services.dns.service realImported));
+          in realImported;
         };
       }) possible
     );
