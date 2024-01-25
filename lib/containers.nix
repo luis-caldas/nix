@@ -11,6 +11,10 @@ let
       # All the possible imports
       extension = "nix";
       possible = pkgs.functions.listFileNamesExtensionExcluded path [ "default" ] extension;
+      # The permanent configurations to all services
+      permanent = {
+        restart = "unless-stopped";
+      };
     in builtins.listToAttrs (
       # Map all the files to new format
       map (each: {
@@ -21,7 +25,20 @@ let
           # Set the service name also
           serviceName = each;
           # Import the settings from specific file
-          settings = import (path + "/${each}.${extension}") (args // { inherit shared; });
+          settings = let
+            # The imported document
+            imported = import (path + "/${each}.${extension}") (args // { inherit shared; });
+            # Add the permanent options to each service
+            sortedServices = builtins.mapAttrs
+              (name: value: let
+                # Join the service with the permanent info
+                newServiceInfo = { service = value.service // permanent; };
+              in
+                value // newServiceInfo
+              ) imported.services;
+            # Create the new object with the new services
+            realImported = imported // { services = sortedServices; };
+          in (builtins.trace realImported.services.dns.service (builtins.trace imported.services.dns.service realImported));
         };
       }) possible
     );
