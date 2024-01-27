@@ -25,6 +25,8 @@ let
       # Media
       jellyfin = "jellyfin";
       komga = "komga";
+      browser = "browser";
+      shower = "shower";
       # Social
       matrix = "matrix";
       bridge = {

@@ -68,4 +68,47 @@ with shared;
     networks = [ networks.front.name ];
   };
 
+       ##############
+  ### # File Browser # ###
+       ##############
+
+  services."${names.browser}".service = {
+    # Image
+    image = "filebrowser/filebrowser:s6";
+    # Name
+    container_name = names.browser;
+    # Environment
+    environment = {
+      TZ = config.mine.system.timezone;
+      PUID = config.mine.user.uid;
+      PGID = config.mine.user.gid;
+    };
+    # Volumes
+    volumes = [
+      "/data/storr/media:/srv"
+      "/data/local/containers/browser/filebrowser.db:/database/filebrowser.db"
+      "/data/local/containers/browser/settings.json:/config/settings.json"
+    ];
+    # Networking
+    networks = [ networks.front.name ];
+  };
+
+       ##############
+  ### # Simple Serve # ###
+       ##############
+
+  services."${names.shower}".service = {
+    # Image
+    image = "halverneus/static-file-server:latest";
+    # Name
+    container_name = names.shower;
+    # Volumes
+    volumes = [
+      "/data/storr/media:/web:ro"
+    ];
+    # Networking
+    networks = [ networks.front.name ];
+  };
+
+
 }
