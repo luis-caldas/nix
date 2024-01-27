@@ -74,14 +74,16 @@ with shared;
     container_name = names.wire;
 
     # Environments
-    environment = pkgs.functions.container.fixEnvironment {
+    environment = let
+      subnet = "${pkgs.networks.vpn.network}/${builtins.toString pkgs.networks.vpn.prefix}";
+    in pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;
       PUID = config.mine.user.uid;
       GUID = config.mine.user.gid;
-      INTERNAL_SUBNET = wireguard.subnet;
-      ALLOWEDIPS = "0.0.0.0/0,${networks.wire.ips.dns}/32,${wireguard.subnet},${wireguard.internal}";
+      INTERNAL_SUBNET = subnet;
+      ALLOWEDIPS = "0.0.0.0/0,${networks.wire.ips.dns}/32,${subnet},${pkgs.networks.internal}";
       PEERS = listUsers;
-      SERVERPORT = wireguard.container;
+      SERVERPORT = pkgs.networks.ports.open;
       PEERDNS = networks.wire.ips.dns;
       PERSISTENTKEEPALIVE_PEERS = "all";
     };
@@ -94,7 +96,7 @@ with shared;
 
     # Networking
     ports = [
-      "${builtins.toString wireguard.container}:${builtins.toString wireguard.original}/udp"
+      "${builtins.toString pkgs.networks.ports.open}:${builtins.toString pkgs.networks.ports.wireguard}/udp"
     ];
     networks = [ networks.wire.name ];
     capabilities.NET_ADMIN = true;
