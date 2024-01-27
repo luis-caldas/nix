@@ -102,6 +102,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Download
     fragments
+    # parabolic  # TODO 24.05
 
     # Media
     shortwave
