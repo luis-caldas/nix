@@ -82,6 +82,7 @@
     bc
 
     # Nix
+    nix-du
     nix-top
     nix-tree
     nix-diff
