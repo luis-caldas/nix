@@ -125,15 +125,15 @@ in
     listenPort = networks.port;
     privateKeyFile = "/data/wireguard/host.key";
     peers = [{
-      publicKey = pkgs.functions.safeReadFile /data/wireguard/remote.pub;
+      publicKey = lib.strings.fileContents /data/wireguard/remote.pub;
       presharedKeyFile = "/data/wireguard/remote.shared.key";
       allowedIPs = [ "${networks.ips.remote}/32" ];
     }{
-      publicKey = pkgs.functions.safeReadFile /data/wireguard/vpn.pub;
+      publicKey = lib.strings.fileContents /data/wireguard/vpn.pub;
       presharedKeyFile = "/data/wireguard/vpn.shared.key";
       allowedIPs = [ "${networks.ips.vpn}/32" ];
     }{
-      publicKey = pkgs.functions.safeReadFile /data/wireguard/macaco.pub;
+      publicKey = lib.strings.fileContents /data/wireguard/macaco.pub;
       presharedKeyFile = "/data/wireguard/macaco.shared.key";
       allowedIPs = [ "${networks.ips.macaco}/32" ];
     }];

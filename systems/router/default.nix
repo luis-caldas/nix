@@ -114,8 +114,8 @@
       tls_starttls = "off";
     };
     accounts = let
-      mailDomain = pkgs.functions.safeReadFile /data/local/mail/domain;
-      accountMail = pkgs.functions.safeReadFile /data/local/mail/account;
+      mailDomain = lib.strings.fileContents /data/local/mail/domain;
+      accountMail = lib.strings.fileContents /data/local/mail/account;
     in {
       default = {
         host = mailDomain;

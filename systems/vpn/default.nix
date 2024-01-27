@@ -55,10 +55,10 @@
     listenPort = pkgs.networks.ports.wireguard;
     privateKeyFile = "/data/wireguard/vpn.key";
     peers = [{
-      publicKey = pkgs.functions.safeReadFile /data/wireguard/host.pub;
+      publicKey = lib.strings.fileContents /data/wireguard/host.pub;
       presharedKeyFile = "/data/wireguard/vpn.shared.key";
       allowedIPs = [ "${pkgs.networks.tunnel.network}/${builtins.toString pkgs.networks.tunnel.prefix}" ];
-      endpoint = "${pkgs.functions.safeReadFile /data/wireguard/endpoint}:${builtins.toString pkgs.networks.ports.simple}";
+      endpoint = "${lib.strings.fileContents /data/wireguard/endpoint}:${builtins.toString pkgs.networks.ports.simple}";
     }];
   };
 
