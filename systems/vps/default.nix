@@ -1,36 +1,16 @@
 { pkgs, lib, config, modulesPath, ... }:
 let
 
-  # Network info for
-  networks = {
-
-    # IPs and ranges
-    ips = {
-      # Main instance
-      host = "10.255.255.254";
-      # Remote connection
-      remote = "10.255.255.1";
-      # VPN
-      vpn = "10.255.255.10";
-      # Other places
-      macaco = "10.255.255.100";
-    };
-    # Network prefix
-    prefix = 24;
-
-    # Default interface
-    interface = "wire";
-    # Default Wireguard port
-    port = 123;
-
-    # NAT listening interface
-    external = "ens5";
-    # Gap for internal communication
-    gap = 49152;
+  # The system interfaces
+  interfaces = {
+    wireguard = "wire";
+    local = "ens5";
   };
 
-in
-{
+  # Agreed on ports
+  wireguardPort = pkgs.networks.ports.simple;
+
+in {
 
   # My own part of configuring
   mine = {
@@ -58,7 +38,7 @@ in
   ];
 
   # DNS servers
-  networking.networkmanager.insertNameservers = [ "9.9.9.10" ];
+  networking.networkmanager.insertNameservers = pkgs.networks.dns;
 
   # Disable all ipv6
   networking.enableIPv6 = false;
@@ -76,66 +56,61 @@ in
       443   # HTTPS port for anything else
     ];
     allowedUDPPorts = [
-      123   # Wireguard
+      wireguardPort
     ];
   };
   # Setup Fail 2 Ban
   services.fail2ban = {
     enable = true;
     maxretry = 5;
-    ignoreIP = [
-      "127.0.0.0/8"         # Loopback subnet
-      "10.0.0.0/8"          # Local subnet
-      "192.168.0.0/16"      # Local subnet
-      "172.17.0.0/16"       # Docker subnet
-    ];
+    ignoreIP = pkgs.networks.allowed;
   };
 
   # Set up our NAT configuration
   networking.nat = {
     enable = true;
-    externalInterface = networks.external;
-    internalInterfaces = [ networks.interface ];
+    externalInterface = interfaces.local;
+    internalInterfaces = [ interfaces.wireguard ];
     forwardPorts = [
       # SSH Port redirection to self
-      { destination = "${networks.ips.host}:22"; proto = "tcp"; sourcePort = 22; }
+      { destination = "${pkgs.networks.tunnel.ips.host}:22"; proto = "tcp"; sourcePort = 22; }
       # Redirect the VPN ports to self
       {
-        destination = "${networks.ips.host}:${builtins.toString networks.port}";
+        destination = "${pkgs.networks.tunnel.ips.host}:${builtins.toString wireguardPort}";
         proto = "udp";
-        sourcePort = networks.port;
+        sourcePort = wireguardPort;
       }
       # Redirect all the rest to tunnel
       {
-        destination = "${networks.ips.remote}:1-${builtins.toString networks.gap}";
+        destination = "${pkgs.networks.tunnel.ips.remote}:1-${builtins.toString pkgs.networks.ports.end}";
         proto = "tcp";
-        sourcePort = "1:${builtins.toString networks.gap}";
+        sourcePort = "1:${builtins.toString pkgs.networks.ports.end}";
       }
       {
-        destination = "${networks.ips.remote}:1-${builtins.toString networks.gap}";
+        destination = "${pkgs.networks.tunnel.ips.remote}:1-${builtins.toString pkgs.networks.ports.end}";
         proto = "udp";
-        sourcePort = "1:${builtins.toString networks.gap}";
+        sourcePort = "1:${builtins.toString pkgs.networks.ports.end}";
       }
     ];
   };
 
   # Set up our wireguard configuration
-  networking.wireguard.interfaces."${networks.interface}" = {
-    ips = [ "${networks.ips.host}/${builtins.toString networks.prefix}" ];
-    listenPort = networks.port;
+  networking.wireguard.interfaces."${interfaces.wireguard}" = {
+    ips = [ "${pkgs.networks.tunnel.ips.host}/${builtins.toString pkgs.networks.tunnel.prefix}" ];
+    listenPort = wireguardPort;
     privateKeyFile = "/data/wireguard/host.key";
     peers = [{
       publicKey = lib.strings.fileContents /data/wireguard/remote.pub;
       presharedKeyFile = "/data/wireguard/remote.shared.key";
-      allowedIPs = [ "${networks.ips.remote}/32" ];
+      allowedIPs = [ "${pkgs.networks.tunnel.ips.remote}/32" ];
     }{
       publicKey = lib.strings.fileContents /data/wireguard/vpn.pub;
       presharedKeyFile = "/data/wireguard/vpn.shared.key";
-      allowedIPs = [ "${networks.ips.vpn}/32" ];
+      allowedIPs = [ "${pkgs.networks.tunnel.ips.vpn}/32" ];
     }{
       publicKey = lib.strings.fileContents /data/wireguard/macaco.pub;
       presharedKeyFile = "/data/wireguard/macaco.shared.key";
-      allowedIPs = [ "${networks.ips.macaco}/32" ];
+      allowedIPs = [ "${pkgs.networks.tunnel.ips.macaco}/32" ];
     }];
   };
 

@@ -101,6 +101,9 @@ let
       # Simple UDP port
       simple = 123;
 
+      # Start and end of registered ports
+      start = 1024; end = 49151;
+
     };
 
 
