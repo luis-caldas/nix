@@ -86,8 +86,8 @@ with shared;
     # Volumes
     volumes = [
       "/data/storr/media:/srv"
-      "/data/local/containers/browser/filebrowser.db:/database/filebrowser.db"
-      "/data/local/containers/browser/settings.json:/config/settings.json"
+      "/data/local/containers/browser/database:/database"
+      "/data/local/containers/browser/config:/config"
     ];
     # Networking
     networks = [ networks.front.name ];
