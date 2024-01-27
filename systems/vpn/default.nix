@@ -29,12 +29,6 @@
     ./containers
   ];
 
-  # DNS servers
-  networking.networkmanager.insertNameservers = [
-    "172.16.20.11"
-    "9.9.9.10"
-  ];
-
   # Disable all ipv6
   networking.enableIPv6 = false;
 
@@ -52,12 +46,20 @@
   services.fail2ban = {
     enable = true;
     maxretry = 5;
-    ignoreIP = [
-      "127.0.0.0/8"         # Loopback subnet
-      "10.0.0.0/8"          # Local subnet
-      "192.168.0.0/16"      # Local subnet
-      "172.17.0.0/16"       # Docker subnet
-    ];
+    ignoreIP = pkgs.networks.allowed;
+  };
+
+  # Set up our wireguard configuration
+  networking.wireguard.interfaces.wire = {
+    ips = [ "${pkgs.networks.tunnel.ips.vpn}/${builtins.toString pkgs.networks.tunnel.prefix}" ];
+    listenPort = pkgs.networks.ports.wireguard;
+    privateKeyFile = "/data/wireguard/vpn.key";
+    peers = [{
+      publicKey = pkgs.functions.safeReadFile /data/wireguard/host.pub;
+      presharedKeyFile = "/data/wireguard/vpn.shared.key";
+      allowedIPs = [ "${pkgs.networks.tunnel.network}/${builtins.toString pkgs.networks.tunnel.prefix}" ];
+      endpoint = "${pkgs.functions.safeReadFile /data/wireguard/endpoint}:${builtins.toString pkgs.networks.ports.simple}";
+    }];
   };
 
   # Disable avahi

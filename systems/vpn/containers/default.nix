@@ -4,38 +4,18 @@ let
   # Shared information
   shared = {
 
-    # All the wireguard info
-    wireguard = {
-
-      # Subnet for Wireguard
-      subnet = "10.255.254.0/24";
-
-      # Subnet for all internal communications
-      internal = "10.255.0.0/16";
-
-      # Original Wireguard port
-      original = 51820;
-
-      # Port (udp) most comonly used by VoIP providers (Zoom, Skype)
-      # Therefore high change of not being blocked
-      # Complete range is 3478 -> 3481
-      # Port needs also be opened on hosting side
-      container = 3478;
-
-    };
-
     # Overall networking for docker
     networks = {
 
-      wire = {
+      wire = with pkgs.networks.docker.dns.vpn; {
         # Base
         name = "wire";
-        subnet = "172.16.50.0/24"; gateway = "172.16.50.1";
+        inherit subnet gateway;
         # IPs
         ips = {
           # DNS
-          dns = "172.16.50.11";
-          dnsUp = "172.16.50.10";
+          dns = ips.main;
+          dnsUp = ips.upstream;
         };
       };
 
@@ -85,5 +65,10 @@ in {
 
   # Arion
   virtualisation.arion.projects = pkgs.functions.container.projects ./. shared;
+
+  # Set the DNS
+  networking.networkmanager.insertNameservers = [
+    shared.networks.wire.ips.dns
+  ] ++ pkgs.networks.dns;
 
 }

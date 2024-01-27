@@ -101,6 +101,9 @@ in {
     # Containers
     ../config/containers
 
+    # Networking Information
+    ../config/networks.nix
+
     # Extra packages and options
     ../pkgs
 
