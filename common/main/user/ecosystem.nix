@@ -37,7 +37,7 @@ in
   programs.adb.enable = !pkgs.stdenv.hostPlatform.isAarch;
 
   # Add wireshark
-  programs.wireshark.enable = true;
+  programs.wireshark.enable = config.mine.graphics.enable;
 
   # Enable bash auto completion
   programs.bash.enableCompletion = true;
@@ -90,14 +90,10 @@ in
     # QEmu only linked if not minial
     (if (!config.mine.minimal) then {
       "virt/qemu".source = "${pkgs.qemu}/share/qemu";
-    } else {}) //
-
-    # Normally linked
-    {
       "virt/win/qemu".source = "${pkgs.virtio-win}";
       "virt/win/spice".source = "${pkgs.win-spice}";
       "virt/win/virtio".source = "${pkgs.win-virtio}";
-    };
+    } else {});
 
     # Default program configurations
     programs = programsSet //

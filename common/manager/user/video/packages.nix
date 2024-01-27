@@ -167,6 +167,9 @@ lib.mkIf osConfig.mine.graphics.enable
     awf
     dconf
 
+    # Networking
+    wireshark
+
     # Files
     nextcloud-client
 
@@ -190,6 +193,9 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # VNC
     wayvnc
+
+    # Virtualisation
+    virt-manager
 
     # Image editing
     gimp

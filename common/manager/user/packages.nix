@@ -61,9 +61,6 @@
     # Time
     libfaketime
 
-    # Virtualisation
-    virt-manager
-
     # Versioning
     subversion
 
@@ -202,11 +199,6 @@
     # Java
     adoptopenjdk-jre-openj9-bin-16
 
-    # Rust
-    cargo
-    rustc
-    rustfmt
-
     # Nix
     nixpkgs-review
 
@@ -240,9 +232,6 @@
 
     # Networking
     inetutils
-
-    # Sniffer
-    wireshark
 
     # Logger
     logkeys
@@ -283,6 +272,16 @@
 
     # Video
     ffmpeg-full
+
+    ##### Development
+
+    # Rust
+    cargo
+    rustc
+    rustfmt
+
+    #####
+
 
   ] else []) ++
 
