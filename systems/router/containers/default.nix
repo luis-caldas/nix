@@ -11,13 +11,13 @@ let
       ### # Time # ###
       time.name = "time";
       ### # DNS # ###
-      dns = {
+      dns = with pkgs.networks.docker.dns.main; {
         name = "dns";
-        subnet = "172.16.20.0/24"; gateway = "172.16.20.1";
+        inherit subnet gateway;
         # IPs
         ips = {
-          dns = "172.16.20.11";
-          dnsUp = "172.16.20.10";
+          dns = ips.main;
+          dnsUp = ips.upstream;
         };
       };
     };

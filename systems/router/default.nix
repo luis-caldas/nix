@@ -61,8 +61,8 @@
     # Set failover DNS servers
     nameservers = [
       "127.0.0.1"  # Our own selves
-      "9.9.9.10"   # Failover (for when the DNS server is not up, or setting up)
-    ];
+      # Failover server
+    ] ++ pkgs.networks.dns;
 
   };
 
