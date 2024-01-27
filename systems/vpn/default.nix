@@ -59,6 +59,7 @@
       presharedKeyFile = "/data/wireguard/vpn.shared.key";
       allowedIPs = [ "${pkgs.networks.tunnel.network}/${builtins.toString pkgs.networks.tunnel.prefix}" ];
       endpoint = "${lib.strings.fileContents /data/wireguard/endpoint}:${builtins.toString pkgs.networks.ports.simple}";
+      persistentKeepalive = pkgs.networks.alive;
     }];
   };
 

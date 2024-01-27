@@ -104,6 +104,7 @@ in {
       presharedKeyFile = "/data/wireguard/macaco.shared.key";
       allowedIPs = [ "${pkgs.networks.tunnel.ips.remote}/32" ];
       endpoint = "${lib.strings.fileContents /data/wireguard/endpoint}:${builtins.toString pkgs.networks.ports.simple}";
+      persistentKeepalive = pkgs.networks.alive;
     }];
   };
 

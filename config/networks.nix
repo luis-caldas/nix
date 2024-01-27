@@ -14,6 +14,9 @@ let
     # All internal communication network
     internal = "10.255.0.0/16";
 
+    # Alive the interval in seconds to keep alive
+    alive = 5;
+
     # Main tunnel connections
     tunnel = {
 
