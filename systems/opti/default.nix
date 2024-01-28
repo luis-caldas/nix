@@ -89,6 +89,13 @@
     '';
   };
 
+  # Fixing the certifi certificate
+  home-manager.users.kodi = { config, ... }: {
+    home.files = {
+      ".kodi/addons/script.module.certifi/lib/certifi/cacert.pem".source = config.lib.file.mkOutOfStoreSymlink "/etc/ssl/certs/ca-bundle.crt";
+    };
+  };
+
   # Enable xserver
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "radeon" ];
