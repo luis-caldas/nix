@@ -91,9 +91,11 @@
 
   # Fixing the certifi certificate
   home-manager.users.kodi = { config, ... }: {
-    home.files = {
-      ".kodi/addons/script.module.certifi/lib/certifi/cacert.pem".source = config.lib.file.mkOutOfStoreSymlink "/etc/ssl/certs/ca-bundle.crt";
+    home.file = {
+      ".kodi/addons/script.module.certifi/lib/certifi/cacert.pem".source =
+        config.lib.file.mkOutOfStoreSymlink "/etc/ssl/certs/ca-bundle.crt";
     };
+    home.stateVersion = "23.11";
   };
 
   # Enable xserver
