@@ -34,8 +34,9 @@
 
   # Firewall setup
   # The firewall will only work after the NAT
+  mine.network.firewall.enable = true;
+  mine.network.firewall.ping = true;
   networking.firewall = {
-    enable = lib.mkForce true;
     allowedTCPPorts = [
       22    # SSH port
     ];
