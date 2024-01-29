@@ -31,7 +31,6 @@
       docker = true;
       printing = true;
       virtual.enable = true;
-      virtual.vmware = true;
     };
     graphics.enable = true;
     production = {
