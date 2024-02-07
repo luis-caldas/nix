@@ -28,7 +28,7 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
 
     # Decompiled
     shipwright
-    sm64ex
+    # sm64ex
     sm64ex-coop
 
     # Proper
