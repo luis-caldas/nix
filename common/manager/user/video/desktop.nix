@@ -95,7 +95,6 @@ lib.mkIf osConfig.mine.graphics.enable
       { name = "files"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
       { name = "jellyfin-web"; icon = "jellyfin"; url = "https://redirect.caldas.ie"; }
       { name = "whatsapp-web"; icon = "whatsapp"; url = "https://web.whatsapp.com"; }
-      { name = "schildi-web"; icon = "element"; url = "https://app.schildi.chat"; }
       { name = "discord-web"; icon = "discord"; url = "https://discord.com/app"; }
       { name = "github-web"; icon = "github"; url = "https://github.com"; }
       { name = "chess-web"; icon = "chess"; url = "https://chess.com"; }
