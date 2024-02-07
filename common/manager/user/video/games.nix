@@ -26,6 +26,11 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
       mupen64plus
     ]; })
 
+    # Decompiled
+    shipwright
+    sm64ex
+    sm64ex-coop
+
     # Proper
     zeroad
     openttd
