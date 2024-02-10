@@ -78,6 +78,7 @@
     libnfc
     pcsctools
     pcsclite
+    (proxmark.override { withGeneric = true; })
 
     # Devices
     ltunify  # Logitech

@@ -201,6 +201,9 @@ lib.mkIf osConfig.mine.graphics.enable
     gimp
     inkscape
 
+    # 3D
+    cura
+
     # QR Code
     zbar
 
@@ -257,8 +260,9 @@ lib.mkIf osConfig.mine.graphics.enable
     # Graph plotting
     gnuplot
 
-    # Money
+    # Finance
     gnucash
+    monero-gui
 
     # Info
     gource
