@@ -450,7 +450,8 @@ in {
 
   # Add some extra env vars
   home.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
+    NIXOS_OZONE_WL = "1";  # Wayland support
+    SPICE_NOGRAB = "1";  # No super key grab for spice
     # APPLICATION_UNICODE = "true";  # Enable my own unicode support for the terminal emulators
   };
 
