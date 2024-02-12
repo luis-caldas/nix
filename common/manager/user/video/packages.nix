@@ -73,8 +73,10 @@ lib.mkIf osConfig.mine.graphics.enable
     curtail
     collision
 
-    # Organising
+    # Email
     evolution
+
+    # Organising
     # citations  # Failing build
     dialect
     gaphor
@@ -229,9 +231,6 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Web
     electron
-
-    # Email
-    thunderbird
 
     # Chat
     discord

@@ -17,7 +17,7 @@ lib.mkIf osConfig.mine.graphics.enable
   defaultApplications = {
     terminal = "Alacritty.desktop";
     browser = "${(builtins.head browsersNewInfo).name}.desktop";
-    email = "thunderbird.desktop";
+    email = "org.gnome.Evolution.desktop";
     chat = "org.gnome.Fractal.desktop";
     text = "org.gnome.TextEditor.desktop";
     audio = "io.bassi.Amberol.desktop";
