@@ -114,8 +114,14 @@ lib.mkIf osConfig.mine.graphics.enable
         terminal = false;
         categories = [ "Network" "WebBrowser" ];
         settings.StartupWMClass = let
-          fixedUrl = lib.lists.last (lib.strings.split "/" eachEntry.url);
-        in "chrome-${fixedUrl}__-${eachEntry.name}";
+          splitString = lib.lists.drop 1 (
+            builtins.filter
+            (each: !(builtins.elem each [ [] "" ]))
+            (lib.strings.split "/" eachEntry.url)
+          );
+          fixedUrl = builtins.head splitString;
+          after = lib.strings.concatStringsSep "_" (lib.lists.drop 1 splitString);
+        in "chrome-${fixedUrl}__${after}-${eachEntry.name}";
       };
     }) browserApplications)
   );
