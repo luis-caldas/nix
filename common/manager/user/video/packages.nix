@@ -45,6 +45,7 @@ lib.mkIf osConfig.mine.graphics.enable
     evince
     gnome.gnome-clocks
     gnome.gnome-calendar
+    gnome.gnome-contacts
     gnome.gnome-calculator
     epiphany
 
@@ -53,6 +54,9 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Web
     gnome-connections
+
+    # Admin
+    gnome.gnome-weather
 
     # Passwords
     gnome.seahorse
@@ -89,6 +93,9 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Audio
     blanket
+
+    # Music
+    # fretboard  # TODO 24.05
 
     # Look & Feel
     gradience
@@ -160,6 +167,7 @@ lib.mkIf osConfig.mine.graphics.enable
     gnomeExtensions.tray-icons-reloaded
     gnomeExtensions.wintile-windows-10-window-tiling-for-gnome
     gnomeExtensions.panel-date-format
+    gnomeExtensions.weather-oclock
 
     ################
     # Applications #
