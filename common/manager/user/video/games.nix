@@ -14,6 +14,7 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     desmume
     mednafen
     dolphinEmu
+    yuzu-mainline
 
     # Emulator GUI
     mednaffe
