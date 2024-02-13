@@ -99,6 +99,7 @@ lib.mkIf osConfig.mine.graphics.enable
       { name = "github-web"; icon = "github"; url = "https://github.com"; }
       { name = "chess-web"; icon = "chess"; url = "https://chess.com"; }
       { name = "spotify-web"; icon = "spotify"; url = "https://open.spotify.com"; }
+      { name = "youtube-web"; icon = "youtube"; url = "https://www.youtube.com"; }
       { name = "defence-forces"; icon = "knavalbattle"; url = "https://irishdefenceforces.workvivo.com"; }
     ];
 
