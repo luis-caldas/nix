@@ -247,7 +247,7 @@
 
     # Servers
     nodePackages.http-server
-    python3Packages.pyftpdlib
+    (writeScriptBin "pyftp" "${python3.withPackages (ps: [ps.pyftpdlib])}/bin/python -m pyftpdlib \"$@\"")
 
     #########################
 
