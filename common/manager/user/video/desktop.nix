@@ -477,6 +477,8 @@ in {
     enable = true;
     defaultApplications = defaultMIMEs;
   };
+  # Allow the file to be forced into place
+  xdg.configFile."mimeapps.list".force = true;
 
   # All the browser extensions links
   home.file = listBrowserExtensionFiles;
