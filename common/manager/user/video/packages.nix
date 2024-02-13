@@ -223,7 +223,6 @@ lib.mkIf osConfig.mine.graphics.enable
     # Video player
     vlc
     mpv
-    memento
     celluloid
 
     # Casting

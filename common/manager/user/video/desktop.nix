@@ -21,7 +21,7 @@ lib.mkIf osConfig.mine.graphics.enable
     chat = "org.gnome.Fractal.desktop";
     text = "org.gnome.TextEditor.desktop";
     audio = "io.bassi.Amberol.desktop";
-    video = "memento.desktop";
+    video = "io.github.celluloid_player.Celluloid.desktop";
     image = "org.gnome.Loupe.desktop";
     files = "org.gnome.Nautilus.desktop";
     archive = "org.gnome.FileRoller.desktop";
