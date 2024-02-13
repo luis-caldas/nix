@@ -195,7 +195,6 @@
     # Javascript
     nodejs
     yarn
-    nodePackages.http-server
 
     # Java
     adoptopenjdk-jre-openj9-bin-16
@@ -245,6 +244,10 @@
     micronucleus
     dfu-util
     dfu-programmer
+
+    # Servers
+    nodePackages.http-server
+    python3Packages.pyftpdlib
 
     #########################
 
