@@ -11,9 +11,10 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     pcsxr
     pcsx2
     citra
-    desmume
     mednafen
+    desmume
     dolphinEmu
+    cemu
     yuzu-mainline
 
     # Emulator GUI
