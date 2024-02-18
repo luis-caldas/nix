@@ -251,6 +251,11 @@ in {
       ];
     };
 
+    # Other programs
+    "nautilus/icon-view" = {
+      captions = [ "size" "none" "none" ];
+    };
+
   }
 
   # Configure the extensions
