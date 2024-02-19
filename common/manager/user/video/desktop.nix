@@ -286,8 +286,8 @@ in {
       disable-overview-on-startup = true;
       hot-keys = false;
       isolate-monitors = false;
-      multi-monitor = true;
-      show-mounts-network=true;
+      multi-monitor = false;
+      show-mounts-network = true;
     };
 
     date-menu-formatter = {
@@ -302,7 +302,7 @@ in {
       icons-limit = 1;
     };
 
-    vitals= {
+    vitals = {
       alphabetize = true;
       fixed-widths = true;
       hide-icons = false;
