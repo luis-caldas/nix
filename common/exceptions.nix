@@ -57,7 +57,8 @@
       "minecraft-launcher"
       "dwarf-fortress"
       "clonehero"
-      "shipwright" "sm64ex" "sm64ex-coop"
+      "shipwright" (pkgs.unstable.shipwright.name)
+      "sm64ex" "sm64ex-coop"
 
       # Production
       "davinci-resolve"

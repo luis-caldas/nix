@@ -29,7 +29,7 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     ]; })
 
     # Decompiled
-    shipwright
+    pkgs.unstable.shipwright  # TODO 24.05
     # sm64ex
     sm64ex-coop
 
