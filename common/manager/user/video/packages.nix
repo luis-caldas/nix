@@ -95,7 +95,7 @@ lib.mkIf osConfig.mine.graphics.enable
     blanket
 
     # Music
-    # fretboard  # TODO 24.05
+    pkgs.unstable.fretboard  # TODO 24.05
 
     # Look & Feel
     gradience
@@ -111,7 +111,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Download
     fragments
-    # parabolic  # TODO 24.05
+    pkgs.unstable.parabolic  # TODO 24.05
 
     # Media
     shortwave
