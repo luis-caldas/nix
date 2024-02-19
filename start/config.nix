@@ -12,6 +12,11 @@ let
   # The owner name
   ownerName = "luis-caldas";
 
+  # Get the unstable nixpkgs
+  unstable = import
+    (builtins.fetchGit { url = "https://github.com/NixOS/nixpkgs"; ref = "nixos-unstable"; })
+    { config = config.nixpkgs.config; };
+
   # Get the system architecture and throw error if not supported
   systemArch = with pkgs.stdenv.hostPlatform; let
     # Test the supported systems
@@ -131,6 +136,9 @@ in {
         projects = myProjects;
 
       };
+
+      # Unstable packages
+      unstable = unstable.pkgs;
 
     })
 
