@@ -31,9 +31,13 @@ let
     options = ./options;
   };
 
+  # Concoction of packages
+  packagesStable = (pkgs // stablePackages);
+  packagesUnstable = (pkgs.unstable // unstablePackages);
+
   # Create set of package names and calls
-  stablePackages = packageFiles folders.stable pkgs;
-  unstablePackages = packageFiles folders.unstable pkgs.unstable;
+  stablePackages = packageFiles folders.stable packagesStable;
+  unstablePackages = packageFiles folders.unstable packagesUnstable;
 
   # Get all the possible options
   options = optionFiles folders.options;
