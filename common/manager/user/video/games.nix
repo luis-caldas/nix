@@ -47,8 +47,8 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     space-cadet-pinball
 
     # Sonic
-    pkgs.custom.srb2
-    pkgs.custom.srb2kart
+    pkgs.unstable.srb2      # TODO 24.05
+    pkgs.unstable.srb2kart  # TODO 24.05
 
     # Steam
     # steam
