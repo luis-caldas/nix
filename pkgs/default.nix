@@ -2,37 +2,52 @@
 
 let
 
-  # Folders
-  packagesFolder = ./all;
-  optionsFolder = ./options;
-
   # Get list of directories in folder
   listDirs = folderPath:
-    builtins.attrNames (lib.attrsets.filterAttrs (name: value: value == "directory") (builtins.readDir folderPath));
+    builtins.attrNames (
+      lib.attrsets.filterAttrs
+      (name: value: value == "directory")
+      (builtins.readDir folderPath)
+    );
 
-  # Create set of package names and calls
-  packageSet = (
-    lib.genAttrs (listDirs packagesFolder) (
-      folderName: lib.callPackageWith pkgs (packagesFolder + ("/" + folderName)) { }
-    )
-  );
+  # Gets all the packages in the folder
+  # Using a giving set of packages
+  packageFiles = folderPath: packages:
+    lib.genAttrs (listDirs folderPath) (
+      folderName: lib.callPackageWith packages (folderPath + ("/" + folderName)) { }
+    );
 
-  # Manally reassign some of the names
-  manualNames = {
-    srb2 = packageSet.srb2.srb2;
-    srb2kart = packageSet.srb2kart.srb2kart;
+  # Gets all the option files in a directory
+  optionFiles = givenFolder:
+    map
+    (folderName: givenFolder + ("/" + folderName))
+    (listDirs givenFolder);
+
+
+  # Folders
+  folders = {
+    stable = ./stable;
+    unstable = ./unstable;
+    options = ./options;
   };
 
-  # Create the all emcompassing object of packages
-  entirePackages = packageSet // manualNames;
+  # Create set of package names and calls
+  stablePackages = packageFiles folders.stable pkgs;
+  unstablePackages = packageFiles folders.unstable pkgs.unstable;
 
   # Get all the possible options
-  optionFiles = map (folderName: optionsFolder + ("/" + folderName)) (listDirs optionsFolder);
+  options = optionFiles folders.options;
+
+  # Join all the packages into single attr set
+  # Stable goes on top level and unstable on its own sub attr
+  packages = stablePackages //
+  # Unstable has its own sub attr
+  { unstable = unstablePackages; };
 
 in {
 
   # Import all the possible options
-  imports = optionFiles;
+  imports = options;
 
   # Create an overlay with all our packages
   nixpkgs.overlays = [
@@ -41,7 +56,7 @@ in {
     (final: prev: {
 
       # The new attribute with all the new packages
-      custom = entirePackages;
+      custom = packages;
 
     })
 

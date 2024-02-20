@@ -11,4 +11,4 @@ let
     srb2kart = callPackage ./wrapper.nix { };
   };
 
-in self
+in self.srb2kart
