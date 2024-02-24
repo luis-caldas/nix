@@ -1,5 +1,6 @@
 {
   "browser": [
+    "text/html",
     "application/rdf+xml",
     "application/rss+xml",
     "application/xhtml+xml",
@@ -23,7 +24,6 @@
   "text": [
     "text/css",
     "text/csv",
-    "text/html",
     "text/xml",
     "text/javascript",
     "text/markdown",
