@@ -66,7 +66,8 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     gnuchess
     stockfish
 
-    # Games
+    # Managers
+    # lutris
     cartridges
 
     # Streaming
