@@ -31,6 +31,9 @@ lib.mkIf osConfig.mine.graphics.enable
     # Movies
     gnome.totem
 
+    # Phone
+    calls
+
     # Scan
     gnome.simple-scan
 
