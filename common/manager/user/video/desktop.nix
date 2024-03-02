@@ -234,6 +234,9 @@ in {
     "org/gnome/shell/app-switcher" = {
       current-workspace-only = true;
     };
+    "org/gnome/desktop/remote-desktop/rdp" = {
+      screen-share-mode = "extend";
+    };
 
     # Extensions
     "org/gnome/shell" = {
