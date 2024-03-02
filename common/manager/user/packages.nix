@@ -146,6 +146,8 @@
     tty-clock
 
     # Terminal Recording
+    vhs
+    doitlive
     asciinema
     asciinema-agg
     asciinema-scenario
