@@ -5,7 +5,7 @@
   boot.extraModulePackages = with config.boot.kernelPackages; [
 
       # Wifi
-      rtl8821cu
+      rtw88
 
       # Video loopback
       v4l2loopback
