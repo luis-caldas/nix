@@ -199,7 +199,7 @@
     yarn
 
     # Java
-    adoptopenjdk-jre-openj9-bin-16
+    (jdk.override { enableJavaFX = true; })
 
     # Nix
     nixpkgs-review
