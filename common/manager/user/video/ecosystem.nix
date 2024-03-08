@@ -21,6 +21,14 @@ lib.mkIf osConfig.mine.graphics.enable
     { ".local/share/backgrounds/mine".source = "${pkgs.reference.projects.images}/wallpapers"; }
   ];
 
+  # Create the link for the default cursor theme
+  defaultCursorLink = {
+    ".local/share/icons/default/index.theme".source = pkgs.writeTextFile {
+      name = "default";
+      text = lib.generators.toINI {} {"Icon Theme" = { Inherits = osConfig.mine.graphics.cursor; }; };
+    };
+  };
+
   # Link all the packages manuall
   linkAllPackages = let
 
@@ -131,6 +139,8 @@ in
     linkAllPersonalPackage ++
     # Link to all the packaged files
     linkAllPackages ++
+    # Link to custom files
+    [ defaultCursorLink ] ++
     # Extra linking for extra functionalities
     [ linkPossibleVSTs ]
 
