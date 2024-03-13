@@ -90,6 +90,7 @@ lib.mkIf osConfig.mine.graphics.enable
     plots
     iotas
     denaro
+    pkgs.unstable.lorem  # TODO 24.05
 
     # Disk
     impression
@@ -126,13 +127,14 @@ lib.mkIf osConfig.mine.graphics.enable
     fractal
     gnome.polari
 
-    # Web
-    tangram
+    # CW
+    pkgs.unstable.telegraph  # TODO 24.05
 
     # Encoding
     eartag
     identity
     # textpieces  # Broken package
+    pkgs.unstable.paper-clip  # TODO 24.05
     gnome-decoder
     metadata-cleaner
 
