@@ -51,7 +51,7 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     pkgs.unstable.srb2kart  # TODO 24.05
 
     # Steam
-    # steam
+    steam
 
     # Simulator
     flightgear
