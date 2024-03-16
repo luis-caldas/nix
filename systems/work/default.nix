@@ -20,6 +20,12 @@
   # AMD Fix
   boot.kernelParams = [ "amdgpu.sg_display=0" "amdgpu.mcbp=0" ];
 
+  # eGPU
+  services.udev.extraRules = ''
+    # eGPU for Gnome
+    ENV{DEVNAME}=="/dev/dri/card1", TAG+="mutter-device-preferred-primary"
+  '';
+
   # Disable fingerprint
   services.fprintd.enable = false;
 
