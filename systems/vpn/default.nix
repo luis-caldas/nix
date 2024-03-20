@@ -47,6 +47,7 @@ in {
   networking.interfaces = {
     "${interfaces.shared}" = {
       macAddress = pkgs.networks.mac.vpn;
+      virtual = true;
       ipv4.addresses = [
         {
           address = pkgs.networks.virtual.address;
