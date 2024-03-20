@@ -367,7 +367,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Virtual
     # vmware-horizon-client
-    vmware-workstation
+    # vmware-workstation
 
   ] else []) ++
 
