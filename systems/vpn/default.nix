@@ -103,7 +103,7 @@ in {
   };
 
   # Set up our wireguard configuration
-  networking.wireguard.interfaces."${interfaces.wire}" = {
+  networking.wireguard.interfaces."${interfaces.wireguard}" = {
     ips = [ "${pkgs.networks.tunnel.ips.vpn}/${builtins.toString pkgs.networks.tunnel.prefix}" ];
     listenPort = pkgs.networks.ports.wireguard;
     privateKeyFile = "/data/wireguard/vpn.key";
