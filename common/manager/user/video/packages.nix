@@ -90,6 +90,7 @@ lib.mkIf osConfig.mine.graphics.enable
     plots
     iotas
     denaro
+    pkgs.unstable.gnome-graphs  # TODO 24.05
     pkgs.unstable.lorem  # TODO 24.05
 
     # Disk
