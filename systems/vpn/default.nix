@@ -1,5 +1,16 @@
 { pkgs, lib, config, modulesPath, ... }:
-{
+let
+
+  # Bridge interface
+  interfaces = {
+    shared = "shared";
+    wireguard = "wire";
+  };
+
+  # Agreed on ports
+  wireguardPort = pkgs.networks.ports.simple;
+
+in {
 
   # My own part of configuring
   mine = {
@@ -32,6 +43,47 @@
   # Disable all ipv6
   networking.enableIPv6 = false;
 
+  # Networking virtual interface
+  networking.interfaces = {
+    "${interfaces.shared}" = {
+      macAddress = pkgs.networks.mac.vpn;
+      ipv4.addresses = [
+        {
+          address = pkgs.networks.virtual.address;
+          prefixLength = pkgs.networks.virtual.prefix;
+        }
+      ];
+    };
+  };
+
+  # Set up our NAT configuration
+  networking.nat = {
+    enable = true;
+    externalInterface = interfaces.shared;
+    internalInterfaces = [ interfaces.wireguard ];
+    forwardPorts = [
+      # SSH Port redirection to self
+      { destination = "${pkgs.networks.tunnel.ips.host}:22"; proto = "tcp"; sourcePort = 22; }
+      # Redirect the VPN ports to self
+      {
+        destination = "${pkgs.networks.tunnel.ips.host}:${builtins.toString pkgs.networks.ports.open}";
+        proto = "udp";
+        sourcePort = pkgs.networks.ports.open;
+      }
+      # Redirect all the rest to tunnel
+      {
+        destination = "${pkgs.networks.tunnel.ips.remote}:1-${builtins.toString pkgs.networks.ports.end}";
+        proto = "tcp";
+        sourcePort = "1:${builtins.toString pkgs.networks.ports.end}";
+      }
+      {
+        destination = "${pkgs.networks.tunnel.ips.remote}:1-${builtins.toString pkgs.networks.ports.end}";
+        proto = "udp";
+        sourcePort = "1:${builtins.toString pkgs.networks.ports.end}";
+      }
+    ];
+  };
+
   # Firewall setup
   # The firewall will only work after the NAT
   mine.network.firewall.enable = true;
@@ -51,7 +103,7 @@
   };
 
   # Set up our wireguard configuration
-  networking.wireguard.interfaces.wire = {
+  networking.wireguard.interfaces."${interfaces.wire}" = {
     ips = [ "${pkgs.networks.tunnel.ips.vpn}/${builtins.toString pkgs.networks.tunnel.prefix}" ];
     listenPort = pkgs.networks.ports.wireguard;
     privateKeyFile = "/data/wireguard/vpn.key";
