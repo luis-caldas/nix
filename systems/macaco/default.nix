@@ -102,7 +102,7 @@ in {
     peers = [{
       publicKey = lib.strings.fileContents /data/wireguard/host.pub;
       presharedKeyFile = "/data/wireguard/macaco.shared.key";
-      allowedIPs = [ "${pkgs.networks.tunnel.ips.remote}/24" ];
+      allowedIPs = [ "${pkgs.networks.tunnel.network}/${builtins.toString pkgs.networks.tunnel.prefix}" ];
       endpoint = "${lib.strings.fileContents /data/wireguard/endpoint}:${builtins.toString pkgs.networks.ports.simple}";
       persistentKeepalive = pkgs.networks.alive;
     }];
