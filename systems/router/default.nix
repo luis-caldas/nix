@@ -51,7 +51,7 @@
       enp4s0.useDHCP = true;
       firewall-bridge = {
         useDHCP = true;
-        macAddress = "ff:54:ff:00:00:01";
+        macAddress = pkgs.networks.mac.router;
       };
     };
 

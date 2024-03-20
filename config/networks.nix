@@ -89,6 +89,13 @@ let
 
     };
 
+    # Internal use
+    virtual = {
+      # Address and prefix
+      address = "172.25.0.1";
+      prefix = 24;
+    };
+
     # Ports
     ports = {
 
@@ -109,6 +116,16 @@ let
 
     };
 
+    # Mac addresses for devices
+    mac = {
+
+      # Routers virtual bridge
+      router = "ff:54:ff:00:00:01";
+
+      # VPNs mac for its virtual bridge
+      vpn = "ff:54:ff:33:00:01";
+
+    };
 
     # Main DNS servers
     dns = [
