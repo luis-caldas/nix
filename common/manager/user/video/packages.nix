@@ -248,8 +248,7 @@ lib.mkIf osConfig.mine.graphics.enable
     # Chat
     discord
     signal-desktop
-    element-desktop-wayland
-    # whatsapp-for-linux  # Browser version is better
+    element-desktop
 
     # Voice
     mumble
