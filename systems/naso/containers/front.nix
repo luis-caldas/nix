@@ -52,7 +52,7 @@ with shared;
       KEEP_LAST = 30;
       PROCESSING_THREADS = 1;
     };
-    env_file = [ "/data/local/containers/proxy/application/access.env" ];
+    env_file = [ "/data/local/containers/proxy/access.env" ];
     # Volumes
     volumes = [
       "/data/local/containers/proxy/application/logs:/opt/log"
