@@ -16,6 +16,7 @@ let
     names = {
       # Front
       front = "proxy";
+      access = "proxy-access";
       # Share
       share = "samba";
       shout = "shout";
