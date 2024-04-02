@@ -278,6 +278,9 @@ lib.mkIf osConfig.mine.graphics.enable
     # Info
     gource
 
+    # Binary Visualiser
+    binocle
+
     # Joysticks
     jstest-gtk
     python3Packages.ds4drv
