@@ -48,6 +48,7 @@ with shared;
     environment = pkgs.functions.container.fixEnvironment {
       POSTGRES_USER = names.matrix.app;
       POSTGRES_DB = names.matrix.app;
+      POSTGRES_INITDB_ARGS = "--encoding=UTF-8 --lc-collate=C --lc-ctype=C";
     };
     env_file = [
       "/data/local/containers/matrix/database/database.env"
