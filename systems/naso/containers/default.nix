@@ -29,26 +29,28 @@ let
       browser = "browser";
       shower = "shower";
       # Social
-      matrix = "matrix";
-      matrix-db = "matrix-database";
-      admin = "matrix-admin";
-      turn = "matrix-turn";
-      bridge = {
-        whats = "bridge-whats";
-        disc = "bridge-discord";
-        gram = "bridge-telegram";
-        slac = "bridge-slack";
-        sig = "bridge-signal";
-        meta = "bridge-meta";
-        sms = "bridge-sms";
-        db = {
-          whats = "bridge-db-whats";
-          disc = "bridge-db-discord";
-          gram = "bridge-db-telegram";
-          slac = "bridge-db-slack";
-          sig = "bridge-db-signal";
-          meta = "bridge-db-meta";
-          sms = "bridge-db-sms";
+      matrix = {
+        app = "matrix";
+        database = "matrix-database";
+        admin = "matrix-admin";
+        turn = "matrix-turn";
+        bridge = {
+          whats = "bridge-whats";
+          disc = "bridge-discord";
+          gram = "bridge-telegram";
+          slac = "bridge-slack";
+          sig = "bridge-signal";
+          meta = "bridge-meta";
+          sms = "bridge-sms";
+          db = {
+            whats = "bridge-db-whats";
+            disc = "bridge-db-discord";
+            gram = "bridge-db-telegram";
+            slac = "bridge-db-slack";
+            sig = "bridge-db-signal";
+            meta = "bridge-db-meta";
+            sms = "bridge-db-sms";
+          };
         };
       };
       # Cloud
