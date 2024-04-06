@@ -39,11 +39,11 @@ with shared;
   ### # Database # ###
        ##########
 
-  services."${names.bridge.matrix-db}".service = {
+  services."${names.matrix-db}".service = {
     # Image
     image = "postgres:latest";
     # Name
-    container_name = names.bridge.matrix-db;
+    container_name = names.matrix-db;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       POSTGRES_USER = names.matrix;
