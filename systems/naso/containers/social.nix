@@ -78,9 +78,9 @@ with shared;
     depends_on = [ names.matrix.app ];
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
-      TZ = mine.system.timezone;
-      UID = mine.user.uid;
-      GID = mine.user.gid;
+      TZ = config.mine.system.timezone;
+      UID = config.mine.user.uid;
+      GID = config.mine.user.gid;
       ETURNAL_RELAY_MIN_PORT = turnPorts.min;
       ETURNAL_RELAY_MAX_PORT = turnPorts.max;
     };
@@ -113,11 +113,6 @@ with shared;
     # Networking
     networks = [ networks.front.name ];
   };
-
-  #############################################################################
-  #                                  Bridges                                  #
-  #############################################################################
-
        ##############
   ### # Bridge Whats # ###
        ##############
@@ -129,9 +124,9 @@ with shared;
     container_name = names.matrix.bridge.whats;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
-      TZ = mine.system.timezone;
-      UID = mine.user.uid;
-      GID = mine.user.gid;
+      TZ = config.mine.system.timezone;
+      UID = config.mine.user.uid;
+      GID = config.mine.user.gid;
     };
     # Depends
     depends_on = [ names.matrix.app names.matrix.bridge.db.whats ];
@@ -154,9 +149,9 @@ with shared;
     container_name = names.matrix.bridge.disc;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
-      TZ = mine.system.timezone;
-      UID = mine.user.uid;
-      GID = mine.user.gid;
+      TZ = config.mine.system.timezone;
+      UID = config.mine.user.uid;
+      GID = config.mine.user.gid;
     };
     # Depends
     depends_on = [ names.matrix.app names.matrix.bridge.db.disc ];
@@ -179,9 +174,9 @@ with shared;
     container_name = names.matrix.bridge.gram;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
-      TZ = mine.system.timezone;
-      UID = mine.user.uid;
-      GID = mine.user.gid;
+      TZ = config.mine.system.timezone;
+      UID = config.mine.user.uid;
+      GID = config.mine.user.gid;
     };
     # Depends
     depends_on = [ names.matrix.app names.matrix.bridge.db.gram ];
@@ -204,9 +199,9 @@ with shared;
     container_name = names.matrix.bridge.slac;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
-      TZ = mine.system.timezone;
-      UID = mine.user.uid;
-      GID = mine.user.gid;
+      TZ = config.mine.system.timezone;
+      UID = config.mine.user.uid;
+      GID = config.mine.user.gid;
     };
     # Depends
     depends_on = [ names.matrix.app names.matrix.bridge.db.slac ];
@@ -229,9 +224,9 @@ with shared;
     container_name = names.matrix.bridge.sig;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
-      TZ = mine.system.timezone;
-      UID = mine.user.uid;
-      GID = mine.user.gid;
+      TZ = config.mine.system.timezone;
+      UID = config.mine.user.uid;
+      GID = config.mine.user.gid;
     };
     # Depends
     depends_on = [ names.matrix.app names.matrix.bridge.db.sig ];
@@ -254,9 +249,9 @@ with shared;
     container_name = names.matrix.bridge.meta;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
-      TZ = mine.system.timezone;
-      UID = mine.user.uid;
-      GID = mine.user.gid;
+      TZ = config.mine.system.timezone;
+      UID = config.mine.user.uid;
+      GID = config.mine.user.gid;
     };
     # Depends
     depends_on = [ names.matrix.app names.matrix.bridge.db.meta ];
