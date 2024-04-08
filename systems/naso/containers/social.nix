@@ -61,45 +61,6 @@ with shared;
     networks = [ networks.social.name ];
   };
 
-       ######
-  ### # Turn # ###
-       ######
-
-  services."${names.matrix.turn}".service = let
-
-    # The ports for TURN
-    turnPorts = { min = 30000; max = 30500; };
-
-  in {
-    # Image
-    image = "ghcr.io/processone/eturnal:latest";
-    # Name
-    container_name = names.matrix.turn;
-    # Depends
-    depends_on = [ names.matrix.app ];
-    # Environment
-    environment = pkgs.functions.container.fixEnvironment {
-      TZ = config.mine.system.timezone;
-      UID = config.mine.user.uid;
-      GID = config.mine.user.gid;
-      ETURNAL_RELAY_MIN_PORT = turnPorts.min;
-      ETURNAL_RELAY_MAX_PORT = turnPorts.max;
-    };
-    # Volumes
-    volumes = [
-      "/data/local/containers/matrix/turn/eturnal.yml:/etc/eturnal.yml:ro"
-    ];
-    # Networking
-    ports = let
-      stringPortRange = "${builtins.toString turnPorts.min}-${builtins.toString turnPorts.max}";
-    in [
-      "3478:3478/tcp"
-      "3478:3478/udp"
-      "${stringPortRange}:${stringPortRange}/udp"
-    ];
-    networks = [ networks.front.name ];
-  };
-
        #################
   ### # Admin Interface # ###
        #################

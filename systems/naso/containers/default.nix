@@ -33,7 +33,6 @@ let
         app = "matrix";
         database = "matrix-database";
         admin = "matrix-admin";
-        turn = "matrix-turn";
         bridge = {
           whats = "bridge-whats";
           disc = "bridge-discord";
