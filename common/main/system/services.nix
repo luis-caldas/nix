@@ -111,6 +111,7 @@
   # Enable SSH only if wanted
   (lib.mkIf (!config.mine.services.ssh) {
     sshd = {
+      after = lib.mkForce [];
       wantedBy = lib.mkForce [];
       restartTriggers = lib.mkForce [];
     };
