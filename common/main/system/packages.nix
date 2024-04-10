@@ -46,6 +46,9 @@
     # Data
     pv
 
+    # Pring
+    ccze
+
     # Text
     less
     most
