@@ -219,6 +219,7 @@
     litecli
     usql
     mongosh
+    sqlitebrowser
 
     # Networking
     subnetcalc
