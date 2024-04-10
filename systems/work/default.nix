@@ -38,6 +38,7 @@
       printing = true;
       virtual.enable = true;
     };
+    network.firewall.enable = true;
     graphics.enable = true;
     production = {
       audio = true;
