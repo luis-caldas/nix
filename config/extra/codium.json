@@ -6,7 +6,7 @@
     "oneDarkPro.vivid": true,
     "oneDarkPro.bold": true,
     "telemetry.telemetryLevel": "off",
-    "editor.fontLigatures": true,
+    "editor.fontLigatures": false,
     "files.trimTrailingWhitespace": true,
     "files.autoSave": "onFocusChange",
     "keyboard.dispatch": "keyCode",
