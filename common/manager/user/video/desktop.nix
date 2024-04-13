@@ -251,6 +251,7 @@ in {
         "panel-date-format@keiii.github.com"
         "Vitals@CoreCoding.com"
         "dash-to-dock@micxgx.gmail.com"
+        "trayIconsReloaded@selfmade.pl"
       ];
     };
 
