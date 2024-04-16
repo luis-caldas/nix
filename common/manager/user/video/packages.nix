@@ -223,9 +223,6 @@ lib.mkIf osConfig.mine.graphics.enable
     # QR Code
     zbar
 
-    # Comics
-    mcomix
-
     # Video player
     vlc
     mpv
