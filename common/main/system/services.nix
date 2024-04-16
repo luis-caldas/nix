@@ -106,7 +106,7 @@
     config.mine.graphics.enable && config.mine.services.printing;
 
   # Override service
-  systemd.services.sshd = {
+  systemd.services.sshd = lib.mkIf (!config.mine.services.ssh) {
     after = lib.mkForce [];
     wantedBy = lib.mkForce [];
     restartTriggers = lib.mkForce [];
