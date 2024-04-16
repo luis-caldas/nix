@@ -105,41 +105,32 @@
   programs.system-config-printer.enable =
     config.mine.graphics.enable && config.mine.services.printing;
 
-  # My own systemd services
-  systemd.services = {} //
+  # Override service
+  systemd.services.sshd = {
+    after = lib.mkForce [];
+    wantedBy = lib.mkForce [];
+    restartTriggers = lib.mkForce [];
+  };
 
-  # Enable SSH only if wanted
-  (lib.mkIf (!config.mine.services.ssh) {
-    sshd = {
-      after = lib.mkForce [];
-      wantedBy = lib.mkForce [];
-      restartTriggers = lib.mkForce [];
+  # Add gotop if wanted
+  systemd.services.gotopper = lib.mkIf config.mine.boot.top {
+    after = [ "getty.target" ];
+    serviceConfig = {
+      ExecStart = [ "${pkgs.gotop}/bin/gotop" ];
+      Type = "idle";
+      Restart = "always";
+      RestartSec = "0";
+      StandardInput = "tty";
+      StandardOutput = "tty";
+      TTYPath = "/dev/tty7";
+      TTYReset = "yes";
+      TTYVHangup = "yes";
+      TTYVTDisallocate = "yes";
+      IgnoreSIGPIPE = "no";
+      SendSIGHUP = "yes";
+      ExecStartPost = "${pkgs.kbd}/bin/chvt 7";
     };
-  }) //
-
-  # Whole screen tty mode for a nice top window
-  (lib.mkIf config.mine.boot.top
-  # Add gotop on TTY8 if wanted
-  {
-    gotopper = {
-      after = [ "getty.target" ];
-      serviceConfig = {
-        ExecStart = [ "${pkgs.gotop}/bin/gotop" ];
-        Type = "idle";
-        Restart = "always";
-        RestartSec = "0";
-        StandardInput = "tty";
-        StandardOutput = "tty";
-        TTYPath = "/dev/tty7";
-        TTYReset = "yes";
-        TTYVHangup = "yes";
-        TTYVTDisallocate = "yes";
-        IgnoreSIGPIPE = "no";
-        SendSIGHUP = "yes";
-        ExecStartPost = "${pkgs.kbd}/bin/chvt 7";
-      };
-      wantedBy = [ "multi-user.target" ];
-    };
-  });
+    wantedBy = [ "multi-user.target" ];
+  };
 
 }
