@@ -182,6 +182,9 @@
     # LLVM
     llvm
 
+    # Debug
+    valgrind
+
     # JSON
     jq
 
