@@ -54,7 +54,7 @@ with shared;
       MARIADB_DATABASE = names.track.app;
       MARIADB_USER = names.track.app;
     };
-    env_file = [ "./mariadb.env" ];
+    env_file = [ "/data/local/containers/track/database.env" ];
     # Volumes
     volumes = [
       "/data/bunker/data/containers/track/database:/var/lib/mysql"
