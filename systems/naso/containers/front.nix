@@ -48,7 +48,7 @@ with shared;
       DEBUG = "False";
       BASIC_AUTH = "True";
       LOG_TYPE = "NPM+R";
-      HTML_REFRESH = 5;
+      HTML_REFRESH = 1 * 60 * 60;  # Every hour
       KEEP_LAST = 30;
       PROCESSING_THREADS = 1;
     };
