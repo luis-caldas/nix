@@ -6,7 +6,8 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front.name}".name = networks.front.name;
+  networks."${networks.front.name}".external = true;
+  networks."${networks.cloud.name}".name = networks.cloud.name;
 
        #########
   ### # Traccar # ###
@@ -37,6 +38,9 @@ with shared;
       "/data/local/containers/track/app/traccar.xml:/opt/traccar/conf/traccar.xml:ro"
     ];
 
+    # Networking
+    networks = [ networks.track.name networks.front.name ];
+
   };
 
        ##########
@@ -59,6 +63,8 @@ with shared;
     volumes = [
       "/data/bunker/data/containers/track/database:/var/lib/mysql"
     ];
+    # Networking
+    networks = [ networks.track.name ];
   };
 
 }

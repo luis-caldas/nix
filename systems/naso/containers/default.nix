@@ -7,6 +7,7 @@ let
     # Configure all the needed networks
     networks = {
       front.name = "front";
+      track.name = "track";
       cloud.name = "cloud";
       share.name = "share";
       social.name = "social";
