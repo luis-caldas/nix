@@ -185,6 +185,9 @@
     # Debug
     valgrind
 
+    # Fuzz
+    fuff
+
     # JSON
     jq
 
@@ -251,7 +254,15 @@
     dfu-util
     dfu-programmer
 
+    # Memory
+    ubi_reader
+
+    # Live
+    can-utils
+    python-can
+
     # Servers
+    fileshare
     nodePackages.http-server
     (writeScriptBin "pyftp" "${python3.withPackages (ps: [ps.pyftpdlib])}/bin/python -m pyftpdlib \"$@\"")
 
