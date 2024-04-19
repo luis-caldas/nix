@@ -186,7 +186,7 @@
     valgrind
 
     # Fuzz
-    fuff
+    ffuf
 
     # JSON
     jq
