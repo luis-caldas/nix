@@ -20,6 +20,11 @@ let
       # Share
       share = "samba";
       shout = "shout";
+      # Track
+      track = {
+        app = "track";
+        database = "track-database";
+      };
       # Download
       torrent = "torrent";
       aria = "aria";
@@ -74,7 +79,7 @@ let
 
     # Services which depend on the front service
     # The names are equivalent to the file names
-    front = [ "download" "media" "social" "cloud" "vault" ];
+    front = [ "download" "media" "social" "cloud" "vault" "track" ];
 
   };
 
