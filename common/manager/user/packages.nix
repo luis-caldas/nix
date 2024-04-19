@@ -259,7 +259,6 @@
 
     # Live
     can-utils
-    python-can
 
     # Servers
     fileshare
