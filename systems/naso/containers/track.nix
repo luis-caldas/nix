@@ -7,7 +7,7 @@ with shared;
 
   # Networking
   networks."${networks.front.name}".external = true;
-  networks."${networks.cloud.name}".name = networks.cloud.name;
+  networks."${networks.track.name}".name = networks.track.name;
 
        #########
   ### # Traccar # ###
