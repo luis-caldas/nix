@@ -9,6 +9,7 @@ let
       front.name = "front";
       track.name = "track";
       workout.name = "workout";
+      recipe.name = "recipe";
       cloud.name = "cloud";
       share.name = "share";
       social.name = "social";
@@ -36,6 +37,11 @@ let
         worker = "wger-celery-worker";
         beat = "wger-celery-beat";
         flower = "wger-celery-flower";
+      };
+      # Recipe
+      tandoor = {
+        app = "tandoor";
+        database = "tandoor-database";
       };
       # Download
       torrent = "torrent";
@@ -91,7 +97,7 @@ let
 
     # Services which depend on the front service
     # The names are equivalent to the file names
-    front = [ "download" "media" "social" "cloud" "vault" "track" "workout" ];
+    front = [ "download" "media" "social" "cloud" "vault" "track" "workout" "recipe" ];
 
   };
 
