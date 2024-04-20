@@ -6,7 +6,7 @@ with shared;
 let
 
   # Common variables for the containers
-  commonEnvironment = fixEnvironment {
+  commonEnvironment = pkgs.functions.container.fixEnvironment {
 
     # Time
     TIME_ZONE = config.mine.system.timezone;
