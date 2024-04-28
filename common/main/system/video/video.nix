@@ -43,6 +43,8 @@ lib.mkIf config.mine.graphics.enable
         mkdir -p $out/share/plymouth/themes/
         # Copy everything
         cp -r dist/plymouth $out/share/plymouth/themes/${defaultTheme}
+        # Fix the paths
+        sed -i "s!/usr/!$out/!g" $out/share/plymouth/themes/${defaultTheme}/${defaultTheme}.plymouth
       '';
     };
 
