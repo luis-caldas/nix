@@ -38,12 +38,12 @@ in pkgs.dockerTools.buildImage {
              "/usr/share/asterisk"
 
     # Copy all the needed files
-    cp -r "${originalFiles}/conf" "/etc/asterisk"
-    cp -r "${originalFiles}/songs" "/usr/share/asterisk/songs"
+    cp -a "${originalFiles}/conf" "/etc/asterisk"
+    cp -a "${originalFiles}/songs" "/usr/share/asterisk/songs"
 
     # Copy asterisk files to the proper folders
-    cp -r "${asteriskPackage}/lib/asterisk/modules" "/usr/lib/asterisk/modules"
-    cp -r "${asteriskPackage}/bin/." "/usr/sbin"
+    cp -a "${asteriskPackage}/lib/asterisk/modules" "/usr/lib/asterisk/modules"
+    cp -a "${asteriskPackage}/bin/." "/usr/sbin"
 
   '';
 
