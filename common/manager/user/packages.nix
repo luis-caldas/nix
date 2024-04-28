@@ -10,7 +10,9 @@
     # Binary
     flips
     xdelta
+    ubi_reader
     geteltorito
+    payload-dumper-go
 
     # Usage
     duf
@@ -253,9 +255,6 @@
     micronucleus
     dfu-util
     dfu-programmer
-
-    # Memory
-    ubi_reader
 
     # Live
     can-utils
