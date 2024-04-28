@@ -1,4 +1,8 @@
 {
+    "boot-animation": {
+        "commit": "f5aeb909efee890b16941c69a6de9a243b54f047",
+        "sha256": "0vnmscfm1gvmapb63778hgzq19s7cp0q10zawff3xcvnjg7j0ffm"
+    },
     "mycontainers": {
         "commit": "67510a6a3abead51f0c7175348b115ef4f07498a",
         "sha256": "12k96h39gfc27kbixyyrybmdk0briivxqrqf77bsd0i117xs007r"

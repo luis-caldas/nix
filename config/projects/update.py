@@ -8,7 +8,6 @@ import subprocess
 import urllib.request
 
 USER_NAME    = "luis-caldas"
-REPOS_PREFIX = "my"
 REPOS_BRANCH = "master"
 
 PER_PAGE = 10
