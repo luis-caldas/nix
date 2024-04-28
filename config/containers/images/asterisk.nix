@@ -37,6 +37,9 @@ in pkgs.dockerTools.buildImage {
     mkdir -p "/usr/lib/asterisk" \
              "/usr/share/asterisk"
 
+    # Delete the original config files
+    rm -rf "/etc/asterisk"
+
     # Copy all the needed files
     cp -a "${originalFiles}/conf" "/etc/asterisk"
     cp -a "${originalFiles}/songs" "/usr/share/asterisk/songs"
@@ -63,7 +66,7 @@ in pkgs.dockerTools.buildImage {
 
   # Command line for startup
   config.Cmd = [
-    "${asteriskPackage}/bin/asterisk"
+    "asterisk"
     "-C" "/etc/asterisk/asterisk.conf"
     "-T" "-p" "-vvvvv" "-ddddd" "-f"
   ];
