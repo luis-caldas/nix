@@ -21,7 +21,7 @@ with shared;
       container_name = names.dash;
       # Volumes
       volumes = [
-        "/data/local/containers/dash/config/other.json:/web/other.json:ro"
+        "/data/local/containers/dash/config:/web/more:ro"
       ];
       # Networking
       networks = [ networks.front.name ];
