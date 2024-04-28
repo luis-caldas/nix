@@ -21,10 +21,35 @@ lib.mkIf config.mine.graphics.enable
   systemd.services."autovt@tty1".enable = false;
 
   # Enable plymouth
-  boot.plymouth = {
+  boot.plymouth = let
+
+    # The default theme
+    defaultTheme = "main_custom";
+
+    # Create custom plymouth theme
+    customPlymouth = pkgs.stdenv.mkDerivation rec {
+      pname = defaultTheme;
+      version = "0.0.1";
+      src = pkgs.reference.projects.boot-animation;
+      nativeBuildInputs = [
+        (pkgs.python3.withPackages (packages: with packages; [ wand ]))
+      ];
+      buildPhase = ''
+        # Compile the theme
+        python scaler.py plymouth
+      '';
+      installPhase = ''
+        # Create the output folder
+        mkdir -p $out/share/plymouth/themes/
+        # Copy everything
+        cp -r dist/plymouth $out/share/plymouth/themes/${defaultTheme}
+      '';
+    };
+
+  in {
     enable = true;
-    themePackages = [ pkgs.adi1090x-plymouth-themes ];
-    theme = "spinner_alt";
+    themePackages = [ customPlymouth ];
+    theme = "main_custom";
     font = "${pkgs.courier-prime}/share/fonts/truetype/CourierPrime-Regular.ttf";
   };
 
