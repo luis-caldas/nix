@@ -19,6 +19,8 @@ let
         };
       };
 
+      stun.name = "stun";
+
     };
 
     # Set up container names
@@ -26,6 +28,7 @@ let
       dns = "dns";
       dnsUp = "dns-up";
       wire = "wire";
+      stun = "stun";
     };
 
     # List of users for wireguard
