@@ -23,6 +23,8 @@ with shared;
     # Create the turn configuration
     turnConfiguration = pkgs.writeText "turn-config" (builtins.toJSON {
       eturnal = {
+        # Secret
+        secret = lib.strings.fileContents /data/containers/turn/pass;
         # Bind configuration
         listen = [
           { ip = "::"; port = turnPorts.defaultTCP; transport = "tcp"; }
