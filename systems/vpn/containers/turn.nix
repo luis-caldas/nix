@@ -6,13 +6,13 @@ with shared;
 {
 
   # Set up the network
-  networks."${networks.stun.name}".name = networks.stun.name;
+  networks."${networks.turn.name}".name = networks.turn.name;
 
        ######
-  ### # STUN # ###
+  ### # TURN # ###
        #####
 
-  services."${names.stun}".service = let
+  services."${names.turn}".service = let
 
     # The ports for TURN
     turnPorts = rec {
@@ -51,7 +51,7 @@ with shared;
     # Image
     image = "ghcr.io/processone/eturnal:latest";
     # Name
-    container_name = names.stun;
+    container_name = names.turn;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;
@@ -73,7 +73,7 @@ with shared;
       "${builtins.toString turnPorts.defaultUDP}:${builtins.toString turnPorts.defaultUDP}/udp"
       "${stringPortRange}:${stringPortRange}/udp"
     ];
-    networks = [ networks.stun.name ];
+    networks = [ networks.turn.name ];
   };
 
 }

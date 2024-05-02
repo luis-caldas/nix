@@ -19,7 +19,7 @@ let
         };
       };
 
-      stun.name = "stun";
+      turn.name = "turn";
 
     };
 
@@ -28,7 +28,7 @@ let
       dns = "dns";
       dnsUp = "dns-up";
       wire = "wire";
-      stun = "stun";
+      turn = "turn";
     };
 
     # List of users for wireguard
