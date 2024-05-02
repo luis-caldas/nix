@@ -69,8 +69,8 @@ with shared;
     ports = let
       stringPortRange = "${builtins.toString turnPorts.min}-${builtins.toString turnPorts.max}";
     in [
-      "${turnPorts.defaultTCP}:${turnPorts.defaultTCP}/tcp"
-      "${turnPorts.defaultUDP}:${turnPorts.defaultUDP}/udp"
+      "${builtins.toString turnPorts.defaultTCP}:${builtins.toString turnPorts.defaultTCP}/tcp"
+      "${builtins.toString turnPorts.defaultUDP}:${builtins.toString turnPorts.defaultUDP}/udp"
       "${stringPortRange}:${stringPortRange}/udp"
     ];
     networks = [ networks.stun.name ];
