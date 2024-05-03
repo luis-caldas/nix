@@ -39,6 +39,8 @@ let
       nut = "nut";
       # Web
       dash = "dash";
+      # Monitor
+      monitor = "monitor";
     };
 
   };
@@ -48,7 +50,7 @@ let
 
     # Services which depend on the front service
     # The names are equivalent to the file names
-    front = [ "base" "asterisk" "nut" "web" ];
+    front = [ "base" "asterisk" "nut" "web" "monitor" ];
 
   };
 

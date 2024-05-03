@@ -251,6 +251,8 @@
 
       printing = mkEnableOption "CUPS";
 
+      prometheus = mkEnableOption "Prometheus";
+
       # Virtualisation configuration
       virtual = {
 

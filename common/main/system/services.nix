@@ -17,6 +17,9 @@
     nssmdns = true;
   };
 
+  # Prometheus
+  services.prometheus.enable = config.mine.services.prometheus;
+
   # Setup ProxyChains
   programs.proxychains = {
     enable = true;

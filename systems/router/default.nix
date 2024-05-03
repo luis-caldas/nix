@@ -25,6 +25,7 @@
     services = {
       ssh = true;
       docker = true;
+      prometheus = true;
       virtual.enable = true;
     };
   };
