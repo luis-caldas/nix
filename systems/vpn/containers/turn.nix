@@ -59,8 +59,6 @@ with shared;
       TZ = config.mine.system.timezone;
       UID = config.mine.user.uid;
       GID = config.mine.user.gid;
-      ETURNAL_RELAY_MIN_PORT = turnPorts.min;
-      ETURNAL_RELAY_MAX_PORT = turnPorts.max;
     };
     # Volumes
     volumes = [
