@@ -74,6 +74,7 @@ with shared;
       "${builtins.toString turnPorts.defaultUDP}:${builtins.toString turnPorts.defaultUDP}/udp"
       "${stringPortRange}:${stringPortRange}/udp"
     ];
+    dns = pkgs.networks.dns;
     networks = [ networks.turn.name ];
   };
 
