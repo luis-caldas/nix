@@ -27,8 +27,8 @@ with shared;
         secret = lib.strings.fileContents /data/containers/turn/pass;
         # Bind configuration
         listen = [
-          { ip = "::"; port = turnPorts.defaultTCP; transport = "tcp"; }
-          { ip = "::"; port = turnPorts.defaultUDP; transport = "udp"; }
+          { ip = "::"; port = turnPorts.defaultTCP; transport = "tcp"; enable_turn = true; }
+          { ip = "::"; port = turnPorts.defaultUDP; transport = "udp"; enable_turn = true; }
         ];
         # Port range
         relay_min_port = turnPorts.min;
@@ -61,7 +61,6 @@ with shared;
       GID = config.mine.user.gid;
       ETURNAL_RELAY_MIN_PORT = turnPorts.min;
       ETURNAL_RELAY_MAX_PORT = turnPorts.max;
-      STUN_SERVICE = false;
     };
     # Volumes
     volumes = [
