@@ -18,7 +18,7 @@ with shared;
   services."${names.monitor}".service = {
 
     # Image
-    image = "pihole/pihole:latest";
+    image = "grafana/grafana-oss:latest";
 
     # Name
     container_name = names.monitor;
