@@ -280,7 +280,7 @@
       cursor = mkOption {
         description = "Name of the default cursor used";
         type = str;
-        default = "hacked-grey-hd";
+        default = "Breeze_Hacked";
       };
 
       icon = mkOption {

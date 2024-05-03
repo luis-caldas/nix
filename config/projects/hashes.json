@@ -1,4 +1,8 @@
 {
+    "breeze-hacked": {
+        "commit": "4396b0fa5115dd3488549d776180cc0d725d3587",
+        "sha256": "1fzgpcm3ca9mvw196fk6a3i3q5gq0yniw1lqgwqki1wm9f9nv8wb"
+    },
     "mybootanim": {
         "commit": "a654cbf1cb7ca43d1f19b3df1b9987d6453f8571",
         "sha256": "1xr65knabg4a3x96vmlw8znw1g3shbjzafw97av5013ja2pz0z29"
@@ -8,8 +12,8 @@
         "sha256": "1h3w70pfmaqjicym521nmysys3k68lwfxxzdi8jbbl9m8qczqbg3"
     },
     "mycursors": {
-        "commit": "42b16a3d8b2af5b45ca57df3e4e0c07bd5cd19e9",
-        "sha256": "10nzdpdvp4pwz3w2z980v137yzdj8qwhkr2fwz46vram9400xfv7"
+        "commit": "0ad226382175f0b956a328f3c951f791e487efaf",
+        "sha256": "1c1i8xpm3p1pcrdqvqvdrg94jh6k0dqlkx97qxlccj7qk69s5p5g"
     },
     "mydesktop": {
         "commit": "81e2030e4fc5deb812d21f68068d8cf0ffe7d997",

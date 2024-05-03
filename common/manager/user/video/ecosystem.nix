@@ -49,6 +49,11 @@ lib.mkIf osConfig.mine.graphics.enable
       papirus-icon-theme
     ];
 
+    # Cursors
+    cursorList = with pkgs; [
+      custom.breeze
+    ];
+
     # Themes
     themesList = with pkgs; [
       gnome.gnome-themes-extra
@@ -69,6 +74,8 @@ lib.mkIf osConfig.mine.graphics.enable
     (packIt fontsList "share/fonts" ".local/share/fonts/system" true)
     # Icons
     (packIt iconsList "share/icons" ".local/share/icons" false)
+    # Cursors
+    (packIt cursorList "share/icons" ".local/share/icons" false)
     # Themes
     (packIt themesList "share/themes" ".local/share/themes" false)
   ];
