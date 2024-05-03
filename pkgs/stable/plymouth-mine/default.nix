@@ -8,7 +8,7 @@ defaultTheme:
 stdenv.mkDerivation rec {
   pname = defaultTheme;
   version = "0.0.1";
-  src = reference.projects.boot-animation;
+  src = reference.projects.bootanim;
   nativeBuildInputs = [
     (python3.withPackages (packages: with packages; [ wand ]))
   ];

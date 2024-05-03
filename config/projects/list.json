@@ -1,16 +1,16 @@
 {
     "projects": [
+        "mybootanim",
+        "mycontainers",
         "mycursors",
         "mydesktop",
+        "myextensions",
         "myfonts",
         "myicons",
+        "myimages",
         "mypub",
         "myshell",
         "mythemes",
-        "myvim",
-        "myimages",
-        "mycontainers",
-        "myextensions",
-        "boot-animation"
+        "myvim"
     ]
 }
