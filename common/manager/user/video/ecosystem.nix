@@ -113,9 +113,25 @@ in
     vscode = {
       enable = true;
       package = pkgs.vscodium;
+      # Normal
       extensions = with pkgs.vscode-extensions; [
+        # Code
         jnoortheen.nix-ide
+        ms-python.python
+        ms-vscode.powershell
+        # Visual
         zhuangtongfa.material-theme
+        # Formatting
+        esbenp.prettier-vscode
+        foxundermoon.shell-format
+      # Custom
+      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+        {
+          name = "cisco";
+          publisher = "jamiewoodio";
+          version = "1.9.1";
+          sha256 = "sha256-CHvB6UspXnyui0uwykB+UrMp+IDZsaym7hX6rq68FUM=";
+        }
       ];
       haskell = {
         enable = true;
