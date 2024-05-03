@@ -168,6 +168,7 @@
 
     # Shell
     shellcheck
+    shellharden
 
     # Windows
     powershell
