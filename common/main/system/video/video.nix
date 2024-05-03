@@ -27,26 +27,7 @@ lib.mkIf config.mine.graphics.enable
     defaultTheme = "main_custom";
 
     # Create custom plymouth theme
-    customPlymouth = pkgs.stdenv.mkDerivation rec {
-      pname = defaultTheme;
-      version = "0.0.1";
-      src = pkgs.reference.projects.boot-animation;
-      nativeBuildInputs = [
-        (pkgs.python3.withPackages (packages: with packages; [ wand ]))
-      ];
-      buildPhase = ''
-        # Compile the theme
-        python scaler.py plymouth
-      '';
-      installPhase = ''
-        # Create the output folder
-        mkdir -p $out/share/plymouth/themes/
-        # Copy everything
-        cp -r dist/plymouth $out/share/plymouth/themes/${defaultTheme}
-        # Fix the paths
-        sed -i "s!/usr/!$out/!g" $out/share/plymouth/themes/${defaultTheme}/${defaultTheme}.plymouth
-      '';
-    };
+    customPlymouth = pkgs.custom.plymouth-mine defaultTheme;
 
   in {
     enable = true;
