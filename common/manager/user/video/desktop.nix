@@ -175,8 +175,11 @@ in {
       terminal
       browser
       email
-      chat
+      "codium.desktop"
       files
+      chat
+      "deck.desktop"
+      "spotify-web.desktop"
     ];
     "org/gnome/mutter" = {
       edge-tiling = true;
