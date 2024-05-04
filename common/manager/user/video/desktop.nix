@@ -175,7 +175,7 @@ in {
       terminal
       browser
       email
-      "codium.desktop"
+      "codium-url-handler.desktop"
       files
       chat
       "deck.desktop"
