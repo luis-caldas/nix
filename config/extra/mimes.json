@@ -236,7 +236,6 @@
     "application/x-bzip1-compressed-tar",
     "application/x-bzip1",
     "application/x-cabinet",
-    "application/x-cd-image",
     "application/x-chrome-extension",
     "application/x-compress",
     "application/x-compressed-tar",
@@ -319,7 +318,12 @@
     "text/calendar"
   ],
   "iso": [
-    "vnd.efi.img",
-    "vnd.efi.iso"
+    "application/octet-stream",
+    "application/vnd.efi.img",
+    "application/vnd.efi.iso",
+    "application/x-cd-image",
+    "application/x-ima",
+    "application/x-iso9660-image",
+    "application/x-raw-disk-image"
   ]
 }
