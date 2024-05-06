@@ -260,6 +260,9 @@
     # Live
     can-utils
 
+    # AI
+    ollama
+
     # Servers
     fileshare
     nodePackages.http-server

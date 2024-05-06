@@ -119,11 +119,16 @@ in
         jnoortheen.nix-ide
         ms-python.python
         ms-vscode.powershell
-        # Visual
+        yzhang.markdown-all-in-one
+        # IDE
+        gruntfuggly.todo-tree
         zhuangtongfa.material-theme
         # Formatting
         esbenp.prettier-vscode
         foxundermoon.shell-format
+        streetsidesoftware.code-spell-checker
+        # AI
+        pkgs.unstable.vscode-extensions.continue.continue  # TODO 24.05
       # Custom
       ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         {
