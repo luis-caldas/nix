@@ -121,7 +121,9 @@ in
         ms-vscode.powershell
         yzhang.markdown-all-in-one
         # IDE
+        eamodio.gitlens
         gruntfuggly.todo-tree
+        pkief.material-icon-theme
         zhuangtongfa.material-theme
         # Formatting
         esbenp.prettier-vscode
