@@ -233,6 +233,10 @@
     # Networking
     subnetcalc
 
+    # Certificates
+    certbot
+    acme-sh
+
     # Password
     john
     hashcat
