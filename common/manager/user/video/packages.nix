@@ -124,6 +124,9 @@ lib.mkIf osConfig.mine.graphics.enable
     newsflash
     wike
 
+    # Cast
+    gnome-network-displays
+
     # Chat
     fractal
     gnome.polari
