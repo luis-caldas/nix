@@ -47,6 +47,9 @@
       "chromium" "chromium-unwrapped" "chrome-widevine-cdm"
       "ungoogled-chromium" "ungoogled-chromium-unwrapped"
 
+      # Widevine
+      "widevine-cdm"
+
       ################
       # Home Manager #
       ################
