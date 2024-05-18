@@ -44,6 +44,9 @@
       noipv4ll
     '';
 
+    # Hangup on startup
+    dhcpcd.wait = "background";
+
     # Force disable Network Manager
     networkmanager.enable = lib.mkForce false;
 
