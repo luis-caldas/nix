@@ -102,6 +102,7 @@
     hping
     socat
     tcpdump
+    tcping-go
 
     # Interfaces
     bridge-utils
