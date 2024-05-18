@@ -43,10 +43,7 @@ in
   programs.bash.enableCompletion = true;
 
   # Enable gnupg
-  programs.gnupg.agent = {
-    enable = true;
-    pinentryFlavor = "curses";
-  };
+  programs.gnupg.agent.enable = true;
 
   # Add packages that dont work with home manager
   users.users."${config.mine.user.name}".packages = if config.mine.graphics.enable then (with pkgs; [
