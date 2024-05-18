@@ -11,6 +11,7 @@ let
       workout.name = "workout";
       recipe.name = "recipe";
       cloud.name = "cloud";
+      git.name = "git";
       share.name = "share";
       social.name = "social";
     };
@@ -51,6 +52,10 @@ let
       komga = "komga";
       browser = "browser";
       shower = "shower";
+      gitea = {
+        app = "gitea";
+        db = "gitea-database";
+      };
       # Social
       matrix = {
         app = "matrix";
@@ -97,7 +102,7 @@ let
 
     # Services which depend on the front service
     # The names are equivalent to the file names
-    front = [ "download" "media" "social" "cloud" "vault" "track" "workout" "recipe" ];
+    front = [ "download" "media" "social" "cloud" "vault" "track" "workout" "git" "recipe" ];
 
   };
 
