@@ -40,7 +40,7 @@ with shared;
       GITEA__database__USER = names.gitea.app;
       GITEA__service__DISABLE_REGISTRATION = true;
       GITEA__openid__ENABLE_OPENID_SIGNIN = false;
-      GITEA__service.explore__REQUIRE_SIGNIN_VIEW = true;
+      "GITEA__service.explore__REQUIRE_SIGNIN_VIEW" = true;
       GITEA__server__SSH_PORT = sshPort;
       GITEA__server__LANDING_PAGE = "login";
     };
