@@ -42,6 +42,7 @@ with shared;
       GITEA__openid__ENABLE_OPENID_SIGNIN = false;
       GITEA__service_0X2E_explore__REQUIRE_SIGNIN_VIEW = true;
       GITEA__server__SSH_PORT = sshPort;
+      GITEA__server__SSH_LISTEN_PORT = 22;
       GITEA__server__LANDING_PAGE = "login";
     };
     env_file = [ "/data/local/containers/git/database.env" ];
