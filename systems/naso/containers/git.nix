@@ -44,7 +44,7 @@ with shared;
       GITEA__database__HOST = "${names.gitea.db}:3306";
       GITEA__database__NAME = names.gitea.app;
       GITEA__database__USER = names.gitea.app;
-      GITEA__default__APP_NAME = pkgs.functions.capitaliseString names.gitea.app;
+      GITEA____APP_NAME = pkgs.functions.capitaliseString names.gitea.app;
       GITEA__openid__ENABLE_OPENID_SIGNIN = "false";
       GITEA__service__DISABLE_REGISTRATION = "true";
       GITEA__service_0X2E_explore__REQUIRE_SIGNIN_VIEW = "true";
