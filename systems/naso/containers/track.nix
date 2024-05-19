@@ -29,7 +29,7 @@ with shared;
 
     # Ports
     ports = [
-      "5000-5150:5000-5150/tcp"
+      "5000-5150:5000-5150/tcp"  # TODO Limit this
       "5000-5150:5000-5150/udp"
     ];
 
