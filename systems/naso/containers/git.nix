@@ -40,10 +40,13 @@ with shared;
 
     # Volumes
     volumes = [
-      "/data/bunker/data/containers/gitea:/data"
+      "/data/bunker/data/containers/git/gitea:/data"
     ];
 
     # Networking
+    ports = [
+      "222:22"
+    ];
     networks = [ networks.front.name networks.git.name ];
 
   };
@@ -66,7 +69,7 @@ with shared;
     env_file = [ "/data/local/containers/git/database.env" ];
     # Volumes
     volumes = [
-      "/data/bunker/data/containers/database:/var/lib/mysql"
+      "/data/bunker/data/containers/git/database:/var/lib/mysql"
     ];
     # Networking
     networks = [ networks.git.name ];
