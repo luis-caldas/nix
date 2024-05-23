@@ -163,7 +163,7 @@
   fileSystems."/data/bunker/main" =
     { device = "bunker/main";
       fsType = "zfs";
-      options = [ "nofail" ];
+      options = [ "nofail" "ro" ];
     };
 
   fileSystems."/data/bunker/everything" =
