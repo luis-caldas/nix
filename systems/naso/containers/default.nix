@@ -118,7 +118,7 @@ in {
   # Which is needed to advertise the network share
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
     publish = {
       enable = true;
       addresses = true;
