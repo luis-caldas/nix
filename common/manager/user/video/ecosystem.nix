@@ -35,9 +35,9 @@ lib.mkIf osConfig.mine.graphics.enable
     # Fonts
     fontsList = with pkgs; [
       iosevka-bin
-      (iosevka-bin.override { variant = "aile"; })
-      (iosevka-bin.override { variant = "slab"; })
-      (iosevka-bin.override { variant = "etoile"; })
+      (iosevka-bin.override { variant = "Aile"; })
+      (iosevka-bin.override { variant = "Slab"; })
+      (iosevka-bin.override { variant = "Etoile"; })
       courier-prime
       apl386 bqn386
       sarasa-gothic
