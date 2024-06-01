@@ -84,14 +84,14 @@ lib.mkIf osConfig.mine.graphics.enable
     evolution
 
     # Organising
-    # citations  # Failing build
+    citations
     dialect
-    gaphor
+    # gaphor  # TODO Failing
     plots
     iotas
     denaro
-    pkgs.unstable.gnome-graphs  # TODO 24.05
-    pkgs.unstable.lorem  # TODO 24.05
+    gnome-graphs
+    lorem
 
     # Disk
     impression
@@ -100,7 +100,7 @@ lib.mkIf osConfig.mine.graphics.enable
     blanket
 
     # Music
-    pkgs.unstable.fretboard  # TODO 24.05
+    fretboard
 
     # Look & Feel
     gradience
@@ -116,7 +116,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Download
     fragments
-    pkgs.unstable.parabolic  # TODO 24.05
+    parabolic
 
     # Media
     shortwave
@@ -132,13 +132,13 @@ lib.mkIf osConfig.mine.graphics.enable
     gnome.polari
 
     # CW
-    pkgs.unstable.telegraph  # TODO 24.05
+    telegraph
 
     # Encoding
     eartag
     identity
-    # textpieces  # Broken package
-    pkgs.unstable.paper-clip  # TODO 24.05
+    textpieces
+    paper-clip
     gnome-decoder
     metadata-cleaner
 

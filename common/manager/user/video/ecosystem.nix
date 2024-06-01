@@ -130,7 +130,7 @@ in
         foxundermoon.shell-format
         streetsidesoftware.code-spell-checker
         # AI
-        pkgs.unstable.vscode-extensions.continue.continue  # TODO 24.05
+        continue.continue
       # Custom
       ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         {
