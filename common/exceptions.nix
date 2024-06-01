@@ -62,6 +62,7 @@
       "clonehero"
       "shipwright" (pkgs.unstable.shipwright.name)
       "sm64ex" "sm64ex-coop"
+      "libretro-snes9x"
 
       # Production
       "davinci-resolve"

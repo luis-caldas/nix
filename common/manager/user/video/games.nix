@@ -10,12 +10,10 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     # Emulators
     pcsxr
     pcsx2
-    citra
     mednafen
     desmume
     dolphinEmu
     cemu
-    yuzu-mainline
 
     # Emulator GUI
     mednaffe
@@ -23,15 +21,19 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     # Retroarch
     (retroarch.override { cores = with libretro; [
       mgba
+      citra
       snes9x
       fceumm
       mupen64plus
     ]; })
 
     # Decompiled
-    pkgs.unstable.shipwright  # TODO 24.05
-    # sm64ex
-    sm64ex-coop
+    shipwright
+    sm64ex
+    (pkgs.writeShellScriptBin
+      "sm64ex-coop"
+      "exec -a $0 ${sm64ex-coop}/bin/sm64ex $@"
+    )  # Coop with different name
 
     # Proper
     zeroad
@@ -47,8 +49,8 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     space-cadet-pinball
 
     # Sonic
-    pkgs.unstable.srb2      # TODO 24.05
-    pkgs.unstable.srb2kart  # TODO 24.05
+    srb2
+    srb2kart
 
     # Steam
     steam
@@ -79,7 +81,7 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
   (if (!pkgs.stdenv.hostPlatform.isAarch) then [
 
     # Minecraft
-    minecraft
+    # minecraft  # TODO Broken
     prismlauncher
 
     # FPS
