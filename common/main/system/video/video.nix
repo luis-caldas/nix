@@ -4,11 +4,20 @@ lib.mkIf config.mine.graphics.enable
 
 {
 
-  # Set the Display Manager and Window Manager
+  # Display Manager
+  services.displayManager = {
+    defaultSession = "gnome";
+    # Autologin
+    autoLogin = {
+      enable = true;
+      user = config.mine.user.name;
+    };
+  };
+
+  # Desktop Manager
   services.xserver = {
     enable = true;
     displayManager.gdm.enable = true;
-    displayManager.defaultSession = "gnome";
     desktopManager.gnome.enable = true;
     desktopManager.gnome.debug = true;
   };
@@ -70,12 +79,6 @@ lib.mkIf config.mine.graphics.enable
 
   # Automatically unlock gnome keyring
   security.pam.services.gdm.enableGnomeKeyring = true;
-
-  # Auto login for the desktop environment
-  services.xserver.displayManager.autoLogin = {
-    enable = true;
-    user = config.mine.user.name;
-  };
 
   # Add 32 bit support and other acceleration packages
   hardware.opengl = {

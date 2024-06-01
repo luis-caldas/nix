@@ -478,7 +478,7 @@ in {
   # Add theming for qt
   qt = {
     enable = true;
-    platformTheme = "gnome";
+    platformTheme.name = "adwaita";
     style.name = lib.strings.toLower osConfig.mine.graphics.theme;
   };
 
