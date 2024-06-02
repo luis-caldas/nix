@@ -37,6 +37,9 @@
     hddtemp
     nvme-cli
 
+    # iOS
+    ifuse
+
     # Versioning
     git
 
