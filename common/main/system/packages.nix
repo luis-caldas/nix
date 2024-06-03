@@ -39,6 +39,7 @@
 
     # iOS
     ifuse
+    libheif
 
     # Versioning
     git
