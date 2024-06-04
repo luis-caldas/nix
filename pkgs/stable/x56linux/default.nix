@@ -18,6 +18,8 @@ stdenv.mkDerivation rec {
     sha256 = "0sxl2yhzz8y9bm8xmxxn7cqmpv45dn8kf6fnh389s35rsl580mw3";
   };
 
+  patches = [ ./stdint-missing.patch ];
+
   buildInputs = [
     pkg-config
     libusb1
@@ -31,6 +33,7 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     description = "Saitek HOTAS X56 Configuration Utillity";
     homepage = "https://github.com/Chryseus/x56linux";
+    license = with licenses; [ gpl3 ];
     platforms = platforms.linux;
   };
 

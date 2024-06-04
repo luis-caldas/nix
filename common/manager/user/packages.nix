@@ -49,6 +49,7 @@
     # Optical Disk Tools
     bchunk
     ccd2iso
+    pkgs.custom.ccd2cue
 
     # Optical Writing
     cdrkit
@@ -88,7 +89,7 @@
 
     # Input
     xboxdrv
-    # pkgs.custom.x56linux  # TODO Failing
+    pkgs.custom.x56linux
     linuxConsoleTools
 
     # Bluetooth
