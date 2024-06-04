@@ -40,6 +40,7 @@
     # iOS
     ifuse
     libheif
+    libheif.out
 
     # Versioning
     git
