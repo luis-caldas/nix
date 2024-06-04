@@ -29,8 +29,12 @@ with shared;
 
     # Ports
     ports = [
-      "5000-5150:5000-5150/tcp"  # TODO Limit this
-      "5000-5150:5000-5150/udp"
+      # Sinotrack
+      "5013:5013/tcp"
+      "5013:5013/udp"
+      # Smartphones
+      "5055:5055/tcp"
+      "5055:5055/udp"
     ];
 
     # Volumes
