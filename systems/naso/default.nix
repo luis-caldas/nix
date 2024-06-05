@@ -29,26 +29,44 @@
 
   # UPS client
   power.ups = {
+
     enable = true;
     mode = "netclient";
-    schedulerRules = "/data/local/nut/upssched.conf";
-  };
-  users = {
-    users.nut = {
-      isSystemUser = true;
-      group = "nut";
-      home = "/var/lib/nut";
-      createHome = true;
+    schedulerRules = "${pkgs.ups.clientSched}";
+
+    # UPS Monitor
+    upsmon = {
+
+      # Connection
+      monitor.main = {
+        system = "apc@router";
+        powerValue = 1;
+        user = "admin";
+        passwordFile = "/data/local/nut/pass";
+        type = "secondary";
+      };
+
+      # Settings
+      settings = {
+        # Uset to run
+        RUN_AS_USER = "root";
+        # Binaries
+        NOTIFYCMD = "${pkgs.nut}/bin/upssched";
+        SHUTDOWNCMD = "${pkgs.systemd}/bin/shutdown now";
+        # Number of power supplies before shutting down
+        MINSUPPLIES = 1;
+        # Query intervals
+        POLLFREQ = 1;
+        POLLFREQALERT = 1;
+        # Flags to be notified
+        NOTIFYFLAG = [
+          [ "ONLINE" "SYSLOG+EXEC" ]
+          [ "ONBATT" "SYSLOG+EXEC" ]
+        ];
+      };
+
     };
-    groups.nut = { };
-  };
-  environment.etc = {
-    "nut/upsmon.conf".source = "/data/local/nut/upsmon.conf";
-  };
-  systemd.services = {
-    # To make ups shutdown work
-    upsd = lib.mkForce {};
-    upsdrv = lib.mkForce {};
+
   };
 
   # Allow msmtp to work with my configs
