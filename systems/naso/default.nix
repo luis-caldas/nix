@@ -32,7 +32,7 @@
 
     enable = true;
     mode = "netclient";
-    schedulerRules = "${pkgs.ups.clientSched}";
+    schedulerRules = "${pkgs.uninterruptible.clientSched}";
 
     # UPS Monitor
     upsmon = {
@@ -47,22 +47,13 @@
       };
 
       # Settings
-      settings = {
-        # Uset to run
-        RUN_AS_USER = "root";
-        # Binaries
+      settings = pkgs.uninterruptible.sharedConf // {
+        # Binary Scheduler
         NOTIFYCMD = "${pkgs.nut}/bin/upssched";
-        SHUTDOWNCMD = "${pkgs.systemd}/bin/shutdown now";
-        # Number of power supplies before shutting down
-        MINSUPPLIES = 1;
-        # Query intervals
-        POLLFREQ = 1;
-        POLLFREQALERT = 1;
         # Flags to be notified
-        NOTIFYFLAG = [
-          [ "ONLINE" "SYSLOG+EXEC" ]
-          [ "ONBATT" "SYSLOG+EXEC" ]
-        ];
+        NOTIFYFLAG = pkgs.uninterruptible.mapNotifyFlags [
+          "ONLINE" "ONBATT"
+        ] pkgs.uninterruptible.defaultNotify;
       };
 
     };
