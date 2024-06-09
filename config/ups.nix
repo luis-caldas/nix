@@ -1,4 +1,4 @@
-{ config, ... }:
+{ pkgs, lib, config, ... }:
 let
 
   allUps = rec {
@@ -7,19 +7,19 @@ let
     path = "/var/lib/nut";
 
     # UPS Scheduler Script
-    clientScript = pkgs.writeShellScript ''
+    clientScript = pkgs.writeShellScript "client-script" ''
       case $1 in
         on-batt)
-          ${util-linux}/bin/logger -t upssched-cmd "UPS On Battery state exceeded timer value."
+          ${pkgs.util-linux}/bin/logger -t upssched-cmd "UPS On Battery state exceeded timer value."
           ;;
         *)
-          ${util-linux}/bin/logger -t upssched-cmd "UPS Unrecognized event: $1"
+          ${pkgs.util-linux}/bin/logger -t upssched-cmd "UPS Unrecognized event: $1"
           ;;
       esac
     '';
 
     # UPS Scheduler Configuration
-    clientSched = pkgs.writeText ''
+    clientSched = pkgs.writeText "client-schedule" ''
       CMDSCRIPT ${clientScript}
 
       PIPEFN ${path}/upssched.pipe
@@ -30,7 +30,7 @@ let
     '';
 
     # Server Script
-    serverScript = pkgs.writeShellScript ''
+    serverScript = pkgs.writeShellScript "server-script" ''
       time_now="$(date +"%Y/%m/%d @ %H:%M:%S")"
       {
         echo -e "Subject: [UPS]: ''${NOTIFYTYPE} at ''${time_now}\r\n\r\nUPS: ''${UPSNAME}\r\nAlert type: ''${NOTIFYTYPE}\r\n\r\n";
@@ -66,7 +66,7 @@ let
 in {
 
   # Overlay
-  nixpkgs.overlays = lib.mkIf config.mine.ups [
+  nixpkgs.overlays = [
 
     # The overlay
     (final: prev: {
