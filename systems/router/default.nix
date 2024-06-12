@@ -78,8 +78,12 @@
 
   # UPS configuration
   power.ups = {
+
+    # Enable
     enable = true;
     mode = "netserver";
+
+    # Device
     ups.apc = {
       port = "auto";
       driver = "usbhid-ups";
@@ -89,20 +93,51 @@
         productid = "0002";
       };
     };
-  };
-  users = {
-    users.nut = {
-      isSystemUser = true;
-      group = "nut";
-      home = "/var/lib/nut";
-      createHome = true;
+
+    # Service
+    upsd = {
+      enable = true;
+      # Bind address
+      listen = [ { address = "0.0.0.0"; } ];
     };
-    groups.nut = {};
-  };
-  environment.etc = {
-    "nut/upsd.conf".source = "/data/local/nut/upsd.conf";
-    "nut/upsd.users".source = "/data/local/nut/upsd.users";
-    "nut/upsmon.conf".source = "/data/local/nut/upsmon.conf";
+
+    # Users
+    users.admin = {
+      # UPS Monitor
+      upsmon = "primary";
+      # Password
+      passwordFile = "/data/local/nut/pass";
+    };
+
+    # Monitor
+    upsmon = {
+
+      # Connection
+      monitor.main = {
+        system = "apc@localhost";
+        powerValue = 1;
+        user = "admin";
+        passwordFile = "/data/local/nut/pass";
+        type = "primary";
+      };
+
+      # Settings
+      settings = pkgs.uninterruptible.sharedConf // {
+
+        # Scheduling Script
+        NOTIFYCMD = "${pkgs.uninterruptible.serverScript}";
+
+        # Notify
+        NOTIFYFLAG = pkgs.uninterruptible.mapNotifyFlags [
+          "ONLINE"   "ONBATT"  "LOWBATT"  "FSD"
+          "COMMOK"   "COMMBAD" "SHUTDOWN"
+          "REPLBATT" "NOCOMM"  "NOPARENT"
+        ] pkgs.uninterruptible.defaultNotify;
+
+      };
+
+    };
+
   };
 
   # Configure email sender

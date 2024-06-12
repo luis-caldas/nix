@@ -29,26 +29,35 @@
 
   # UPS client
   power.ups = {
+
     enable = true;
     mode = "netclient";
-    schedulerRules = "/data/local/nut/upssched.conf";
-  };
-  users = {
-    users.nut = {
-      isSystemUser = true;
-      group = "nut";
-      home = "/var/lib/nut";
-      createHome = true;
+    schedulerRules = "${pkgs.uninterruptible.clientSched}";
+
+    # UPS Monitor
+    upsmon = {
+
+      # Connection
+      monitor.main = {
+        system = "apc@router";
+        powerValue = 1;
+        user = "admin";
+        passwordFile = "/data/local/nut/pass";
+        type = "secondary";
+      };
+
+      # Settings
+      settings = pkgs.uninterruptible.sharedConf // {
+        # Binary Scheduler
+        NOTIFYCMD = "${pkgs.nut}/bin/upssched";
+        # Flags to be notified
+        NOTIFYFLAG = pkgs.uninterruptible.mapNotifyFlags [
+          "ONLINE" "ONBATT"
+        ] pkgs.uninterruptible.defaultNotify;
+      };
+
     };
-    groups.nut = { };
-  };
-  environment.etc = {
-    "nut/upsmon.conf".source = "/data/local/nut/upsmon.conf";
-  };
-  systemd.services = {
-    # To make ups shutdown work
-    upsd = lib.mkForce {};
-    upsdrv = lib.mkForce {};
+
   };
 
   # Allow msmtp to work with my configs
