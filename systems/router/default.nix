@@ -1,8 +1,5 @@
-{ pkgs, lib, config, ... }: let
-
-  defaultBridge = "firewall-bridge";
-
-in {
+{ pkgs, lib, config, ... }:
+{
 
   # Modules for startup
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "vfio-pci" ];
@@ -55,15 +52,15 @@ in {
 
     # Per interface configuration
     interfaces = {
-      enp4s0.useDHCP = true;
-      "${defaultBridge}" = {
+      enp5s0.useDHCP = true;
+      firewall-bridge = {
         useDHCP = true;
         macAddress = pkgs.networks.mac.router;
       };
     };
 
     # Create the firewall bridge
-    bridges."${defaultBridge}".interfaces = [];
+    bridges.firewall-bridge.interfaces = [];
 
     # Set failover DNS servers
     nameservers = [
@@ -75,7 +72,6 @@ in {
 
   # Virtualisation options
   virtualisation.libvirtd.onShutdown = "shutdown";
-  virtualisation.libvirtd.allowedBridges = [ defaultBridge ];
 
   # Import all conatiners
   imports = [ ./containers ];
