@@ -6,6 +6,17 @@ let
     # Converts all the environment items to strings
     fixEnvironment = builtins.mapAttrs (name: value: builtins.toString value);
 
+    # Add a custom init to the configuration
+    addCustomInit = originalObject: let
+      extra = { init = true; };
+    in originalObject // {
+      out.service =
+        if builtins.hasAttr "out" then
+          originalObject.out.service // extra
+        else
+          extra;
+    };
+
     # Import container files from a directory
     projects = path: shared: let
       # All the possible imports
@@ -15,6 +26,12 @@ let
       permanent = {
         restart = "unless-stopped";
       };
+      # Configuration to be done if container is locally built
+      # or not
+      rawConfig = {
+        local = { init = true; };
+        remote = { pull_policy = "always"; };
+      }
     in builtins.listToAttrs (
       # Map all the files to new format
       map (each: {
@@ -33,8 +50,15 @@ let
               (name: value: let
                 # Join the service with the permanent info
                 newServiceInfo = { service = value.service // permanent; };
+                # Check if there is a need to add the pull policy
+                newRaw =
+                  if builtins.hasAttr "build" value then {
+                    out.service = rawConfig.local;
+                  } else {
+                    out.service = rawConfig.remote;
+                  };
               in
-                value // newServiceInfo
+                value // newServiceInfo // newRaw
               ) imported.services;
             # Create the new object with the new services
             realImported = imported // { services = sortedServices; };
