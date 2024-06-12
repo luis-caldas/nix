@@ -62,12 +62,6 @@
     # Create the firewall bridge
     bridges.firewall-bridge.interfaces = [];
 
-    # Set failover DNS servers
-    nameservers = [
-      "127.0.0.1"  # Our own selves
-      # Failover server
-    ] ++ pkgs.networks.dns;
-
   };
 
   # Virtualisation options

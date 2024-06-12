@@ -31,7 +31,7 @@ let
       rawConfig = {
         local = { init = true; };
         remote = { pull_policy = "always"; };
-      }
+      };
     in builtins.listToAttrs (
       # Map all the files to new format
       map (each: {
