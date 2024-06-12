@@ -109,9 +109,6 @@ in {
     # Networking Information
     ../config/networks.nix
 
-    # UPS Information
-    ../config/ups.nix
-
     # Extra packages and options
     ../pkgs
 

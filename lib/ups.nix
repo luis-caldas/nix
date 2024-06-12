@@ -65,14 +65,22 @@ let
 
 in {
 
-  # Overlay
+  # Overlay for all the functions
   nixpkgs.overlays = [
 
     # The overlay
-    (final: prev: {
+    (final: prev: let
 
-      # Add the networks
-      uninterruptible = allUps;
+      # Name of the attribute we are getting into
+      attrName = "functions";
+
+      # Our current functions
+      current.ups = allUps;
+
+    in {
+
+      # The functions
+      "${attrName}" = if builtins.hasAttr attrName prev then (prev."${attrName}" // current) else current;
 
     })
 

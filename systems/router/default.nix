@@ -122,17 +122,17 @@
       };
 
       # Settings
-      settings = pkgs.uninterruptible.sharedConf // {
+      settings = pkgs.functions.ups.sharedConf // {
 
         # Scheduling Script
-        NOTIFYCMD = "${pkgs.uninterruptible.serverScript}";
+        NOTIFYCMD = "${pkgs.functions.ups.serverScript}";
 
         # Notify
-        NOTIFYFLAG = pkgs.uninterruptible.mapNotifyFlags [
+        NOTIFYFLAG = pkgs.functions.ups.mapNotifyFlags [
           "ONLINE"   "ONBATT"  "LOWBATT"  "FSD"
           "COMMOK"   "COMMBAD" "SHUTDOWN"
           "REPLBATT" "NOCOMM"  "NOPARENT"
-        ] pkgs.uninterruptible.defaultNotify;
+        ] pkgs.functions.ups.defaultNotify;
 
       };
 

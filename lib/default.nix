@@ -6,6 +6,7 @@
 
     ./functions.nix
     ./containers.nix
+    ./ups.nix
 
   ];
 

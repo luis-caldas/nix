@@ -32,7 +32,7 @@
 
     enable = true;
     mode = "netclient";
-    schedulerRules = "${pkgs.uninterruptible.clientSched}";
+    schedulerRules = "${pkgs.functions.ups.clientSched}";
 
     # UPS Monitor
     upsmon = {
@@ -47,13 +47,13 @@
       };
 
       # Settings
-      settings = pkgs.uninterruptible.sharedConf // {
+      settings = pkgs.functions.ups.sharedConf // {
         # Binary Scheduler
         NOTIFYCMD = "${pkgs.nut}/bin/upssched";
         # Flags to be notified
-        NOTIFYFLAG = pkgs.uninterruptible.mapNotifyFlags [
+        NOTIFYFLAG = pkgs.functions.ups.mapNotifyFlags [
           "ONLINE" "ONBATT"
-        ] pkgs.uninterruptible.defaultNotify;
+        ] pkgs.functions.ups.defaultNotify;
       };
 
     };
