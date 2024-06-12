@@ -52,7 +52,7 @@
 
     # Per interface configuration
     interfaces = {
-      enp4s0.useDHCP = true;
+      enp5s0.useDHCP = true;
       firewall-bridge = {
         useDHCP = true;
         macAddress = pkgs.networks.mac.router;
