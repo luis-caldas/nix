@@ -109,14 +109,11 @@
       ZED_DEBUG_LOG = "/tmp/zed.debug.log";
 
       ZED_EMAIL_ADDR = [ "root" ];
-      ZED_EMAIL_PROG = let
-        textFile = pkgs.writeTextFile {
-          name = "mail"; executable = true;
-          text = ''
-            #!${pkgs.bash}/bin/bash
-            "${pkgs.coreutils}/bin/cat" <("${pkgs.coreutils}/bin/echo" -e "Subject: ''${1}\r\n") - | "${pkgs.msmtp}/bin/msmtp" "''${2}"
-          '';
-        }; in "${textFile}";
+
+      # Cat needed to get stdin
+      ZED_EMAIL_PROG = "${pkgs.writeShellScript "zed-email" ''
+        cat <(echo -e "Subject: ''${1}\r\n") - | "${pkgs.msmtp}/bin/msmtp" "''${2}"
+      ''}";
       ZED_EMAIL_OPTS = "'@SUBJECT@' '@ADDRESS@'";
 
       ZED_NOTIFY_INTERVAL_SECS = 3600;
