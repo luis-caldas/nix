@@ -30,6 +30,7 @@ let
       dns = "dns";
       dnsUp = "dns-up";
       time = "time";
+      kuma = "kuma";
       # Asterisk
       asterisk = {
         app = "asterisk";
