@@ -30,6 +30,8 @@ let
       dns = "dns";
       dnsUp = "dns-up";
       time = "time";
+      # Home Assistant
+      assistant = "assistant";
       kuma = "kuma";
       # Asterisk
       asterisk = {
