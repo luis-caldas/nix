@@ -251,7 +251,38 @@
 
       printing = mkEnableOption "CUPS";
 
-      prometheus = mkEnableOption "Prometheus";
+      prometheus = {
+
+        enable = mkEnableOption "Prometheus";
+
+        collectors = mkOption {
+          description = "Extra collectors for the Prometheus node exporter";
+          type = listOf str;
+          default = [];
+        };
+
+        password = mkOption {
+          description = "Location of the Prometheus password file";
+          type = str;
+          default = "";
+        };
+
+        ssl = {
+
+          cert = mkOption {
+            description = "Location of the Prometheus SSL Cert file";
+            type = str;
+            default = "";
+          };
+          key = mkOption {
+            description = "Location of the Prometheus SSL Key file";
+            type = str;
+            default = "";
+          };
+
+        };
+
+      };
 
       # Virtualisation configuration
       virtual = {

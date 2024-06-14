@@ -99,7 +99,7 @@ let
     # Ports
     ports = {
 
-      # Original port of wireguard
+      # Original port of Wireguard
       wireguard = 51820;
 
       # Port (udp) most comonly used by VoIP providers (Zoom, Skype)

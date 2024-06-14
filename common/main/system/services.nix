@@ -18,7 +18,35 @@
   };
 
   # Prometheus
-  services.prometheus.enable = config.mine.services.prometheus;
+  services.prometheus = let
+    localConnection = "127.0.0.1";
+    # Create the web file
+    # Adding authentication and SSL
+    webFile = pkgs.writeText "web-config.yml" (builtins.toJSON {
+      basic_auth_users = {
+        user = lib.strings.fileContents config.mine.services.prometheus.password;
+      };
+      tls_server_config = {
+        cert_file = config.mine.services.prometheus.ssl.cert;
+        key_file = config.mine.services.prometheus.ssl.key;
+      };
+    });
+  in {
+    enable = config.mine.services.prometheus.enable;
+    exporters.node = {
+      enable = config.mine.services.prometheus.enable;
+      enabledCollectors = [ "systemd" ] ++
+        config.mine.services.prometheus.collectors;
+      listenAddress = localConnection;
+    };
+    scrapeConfigs = [{
+      job_name = "node";
+      static_configs = [{
+        targets = [ "${localConnection}:${toString config.services.prometheus.exporters.node.port}" ];
+      }];
+    }];
+    webConfigFile = "${webFile}";
+  };
 
   # Setup ProxyChains
   programs.proxychains = {
