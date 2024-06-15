@@ -11,6 +11,7 @@ let
       case $1 in
         on-batt)
           ${pkgs.util-linux}/bin/logger -t upssched-cmd "UPS On Battery state exceeded timer value."
+          ${pkgs.systemd}/bin/shutdown now
           ;;
         *)
           ${pkgs.util-linux}/bin/logger -t upssched-cmd "UPS Unrecognized event: $1"
@@ -51,7 +52,7 @@ let
       POLLFREQ = 1;
       POLLFREQALERT = 1;
       # Debug
-      DEBUG_MIN = 9;
+      # DEBUG_MIN = 9;
     };
 
     # Default Notify
