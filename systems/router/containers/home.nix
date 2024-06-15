@@ -33,6 +33,9 @@ with shared;
       "/data/local/containers/assistant/config:/config"
     ];
 
+    # Networking
+    networks = [ networks.front.name ];
+
   };
 
 }

@@ -53,7 +53,7 @@ let
 
     # Services which depend on the front service
     # The names are equivalent to the file names
-    front = [ "base" "asterisk" "nut" "web" "monitor" ];
+    front = [ "base" "asterisk" "nut" "web" "monitor" "home" ];
 
   };
 
