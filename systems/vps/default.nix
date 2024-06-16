@@ -73,7 +73,11 @@ in {
     internalInterfaces = [ interfaces.wireguard ];
     forwardPorts = [
       # SSH Port redirection to self
-      { destination = "${pkgs.networks.tunnel.ips.host}:22"; proto = "tcp"; sourcePort = 22; }
+      {
+        destination = "${pkgs.networks.tunnel.ips.host}:22";
+        proto = "tcp";
+        sourcePort = 22;
+      }
       # Redirect the VPN ports to self
       {
         destination = "${pkgs.networks.tunnel.ips.host}:${builtins.toString wireguardPort}";
