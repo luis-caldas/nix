@@ -27,7 +27,7 @@
         user = lib.strings.fileContents config.mine.services.prometheus.password;
       };
       tls_server_config = let
-          sslFiles = pkgs.functions.generateUnsafeSSL;
+        sslFiles = pkgs.functions.generateUnsafeSSL;
       in {
         key_file = "${sslFiles}/key";
         cert_file = "${sslFiles}/cert";
