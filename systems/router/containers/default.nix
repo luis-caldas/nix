@@ -48,21 +48,17 @@ let
 
   };
 
-  # All the service dependencies
-  dependencies = {
-
-    # Services which depend on the front service
-    # The names are equivalent to the file names
-    front = [ "base" "asterisk" "nut" "web" "monitor" "home" ];
-
-  };
+  # Build the projects
+  builtProjects = pkgs.functions.container.projects ./. shared;
 
 in {
 
   # Arion
-  virtualisation.arion.projects = pkgs.functions.container.projects ./. shared;
+  virtualisation.arion.projects = builtProjects;
 
   # Create all the needed dependencies
-  systemd.services = pkgs.functions.container.createDependencies dependencies;
+  systemd.services = pkgs.functions.container.createDependencies (
+    pkgs.functions.container.extractDependencies builtProjects
+  );
 
 }

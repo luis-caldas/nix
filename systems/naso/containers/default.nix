@@ -97,22 +97,16 @@ let
 
   };
 
-  # All the service dependencies
-  dependencies = {
-
-    # Services which depend on the front service
-    # The names are equivalent to the file names
-    front = [ "download" "media" "social" "cloud" "vault" "track" "workout" "git" "recipe" ];
-
-  };
+  # Build the whole project
+  builtProjects = pkgs.functions.container.projects ./. shared;
 
 in {
 
   # Arion
-  virtualisation.arion.projects = pkgs.functions.container.projects ./. shared;
+  virtualisation.arion.projects = builtProjects;
 
   # Create all the needed dependencies
-  systemd.services = pkgs.functions.container.createDependencies dependencies;
+  systemd.services = pkgs.functions.container.createDependencies (pkgs.functions.container.extractDependencies builtProjects);
 
   # Publish Avahi
   # Which is needed to advertise the network share

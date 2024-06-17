@@ -67,6 +67,28 @@ let
       }) possible
     );
 
+    # Extract net network dependencies so that we can build the systemd
+    # dependencies after
+    extractDependencies = arionProjects:
+      # Join all the data to the wanted format
+      lib.attrsets.zipAttrs (builtins.concatLists
+        # Iterate the data and filter the false entries
+        (builtins.filter (each: each != false) (lib.attrsets.mapAttrsToList (name: value:
+          # Check if the entry has networks
+          if builtins.hasAttr "networks" value.settings then
+            # If so we can iterate over it, and filter the wanted results
+            builtins.filter (each: each != false) (lib.attrsets.mapAttrsToList (network: content:
+              # If we found an external network we can add it to the data
+              if (builtins.hasAttr "external" content) && (content.external == true) then
+                { "${network}" = name; }
+              else
+                false
+            ) value.settings.networks)
+          else
+            false
+        ) arionProjects))
+      );
+
     # Create list of dependencies for systemd services
     createDependencies = dependencies: let
       # Service extension
