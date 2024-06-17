@@ -26,9 +26,11 @@
       basic_auth_users = {
         user = lib.strings.fileContents config.mine.services.prometheus.password;
       };
-      tls_server_config = {
-        cert_file = config.mine.services.prometheus.ssl.cert;
-        key_file = config.mine.services.prometheus.ssl.key;
+      tls_server_config = let
+          sslFiles = pkgs.functions.generateUnsafeSSL;
+      in {
+        key_file = "${sslFiles}/key";
+        cert_file = "${sslFiles}/cert";
       };
     });
   in {

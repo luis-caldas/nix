@@ -262,7 +262,7 @@
         };
 
         password = mkOption {
-          description = "Location of the Prometheus password file";
+          description = "Location of the Prometheus password file in bcrypt format";
           type = str;
           default = "";
         };

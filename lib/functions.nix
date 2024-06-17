@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ pkgs, lib, ... }:
 let
 
   allFunctions = rec {
@@ -68,6 +68,22 @@ let
           in newWord) listStrings;
         properName = lib.strings.concatStringsSep splitChar capitalisedList;
       in properName;
+
+    # Generates SSL Key and Certificate
+    generateUnsafeSSL = let
+      duration = 365 * 10;
+      names = {
+        key = "key";
+        cert = "cert";
+      };
+    in
+      pkgs.runCommand "ssl-generated"
+        { buildInputs = [ pkgs.openssl ]; } ''
+          mkdir -p $out
+          openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:secp384r1 -days ${builtins.toString duration} -nodes \
+            -keyout $out/${names.key} -out $out/${names.cert} \
+            -subj "/CN=localhost" -addext "subjectAltName=DNS:localhost"
+        '';
 
   };
 
