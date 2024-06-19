@@ -27,7 +27,7 @@ with shared;
     # Volumes
     volumes = [
       "/data/local/containers/torrent:/config"
-      "/data/storr/media/downloads:/downloads"
+      "/data/chunk/media/downloads:/downloads"
     ];
     # Networking
     networks = [ networks.front.name ];
@@ -51,7 +51,7 @@ with shared;
     # Volumes
     volumes = [
       "/data/local/containers/aria:/aria2/conf"
-      "/data/storr/media/downloads:/aria2/data"
+      "/data/chunk/media/downloads:/aria2/data"
     ];
     # Networking
     networks = [ networks.front.name ];

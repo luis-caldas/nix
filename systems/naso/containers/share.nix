@@ -30,11 +30,11 @@ with shared;
 
     # Volumes
     volumes = [
-      "/data/storr/media:/media"
+      "/data/chunk/media:/media"
       "/data/local/containers/media/ps2:/ps2"
-      "/data/storr/media/games/roms/ps2/dvd:/ps2/DVD:ro"
-      "/data/storr/media/games/roms/ps2/cd:/ps2/CD:ro"
-      "/data/storr/media/games/roms/ps2/art:/ps2/ART:ro"
+      "/data/chunk/media/games/roms/ps2/dvd:/ps2/DVD:ro"
+      "/data/chunk/media/games/roms/ps2/cd:/ps2/CD:ro"
+      "/data/chunk/media/games/roms/ps2/art:/ps2/ART:ro"
     ];
 
     # Networking

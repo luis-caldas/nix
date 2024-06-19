@@ -178,10 +178,9 @@
       options = [ "nofail" "ro" ];
     };
 
-  fileSystems."/data/storr" =
-    { device = "storr/main";
+  fileSystems."/data/chunk" =
+    { device = "chunk/bundle";
       fsType = "zfs";
-      options = [ "nofail" ];
     };
 
   swapDevices =

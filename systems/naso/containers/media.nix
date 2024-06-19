@@ -37,7 +37,7 @@ with shared;
       "/data/local/containers/jellyfin:/config"
     ] ++
     # Extra folders mapping
-    (map (eachFolder: "/data/storr/media/${eachFolder}:/data/${eachFolder}:ro") syncFolders);
+    (map (eachFolder: "/data/chunk/media/${eachFolder}:/data/${eachFolder}:ro") syncFolders);
 
     # Networking
     networks = [ networks.front.name ];
@@ -62,7 +62,7 @@ with shared;
     # Volumes
     volumes = [
       "/data/local/containers/komga:/config"
-      "/data/storr/media/manga:/data:ro"
+      "/data/chunk/media/manga:/data:ro"
     ];
     # Networking
     networks = [ networks.front.name ];
@@ -85,7 +85,7 @@ with shared;
     };
     # Volumes
     volumes = [
-      "/data/storr/media:/srv"
+      "/data/chunk/media:/srv"
       "/data/local/containers/browser/database:/database"
       "/data/local/containers/browser/config:/config"
     ];
@@ -104,7 +104,7 @@ with shared;
     container_name = names.shower;
     # Volumes
     volumes = [
-      "/data/storr/media:/web:ro"
+      "/data/chunk/media:/web:ro"
     ];
     # Networking
     networks = [ networks.front.name ];
