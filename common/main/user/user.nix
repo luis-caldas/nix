@@ -20,7 +20,7 @@
     group = config.mine.user.name;
 
     # Give extra groups to the user
-    extraGroups = [ "networkmanager" "plugdev" "kvm" "dialout" "disk" ] ++
+    extraGroups = [ "networkmanager" "plugdev" "kvm" "dialout" ] ++
                   (if config.mine.user.admin              then [ "wheel" ]              else []) ++
                   (if config.mine.audio                   then [ "audio" ]              else []) ++
                   (if config.mine.graphics.enable         then [ "video" "wireshark" ]  else []) ++
