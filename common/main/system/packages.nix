@@ -37,6 +37,9 @@
     hddtemp
     nvme-cli
 
+    # Paritioning
+    parted
+
     # iOS
     ifuse
     libheif

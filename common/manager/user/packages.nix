@@ -34,9 +34,6 @@
     f3
     testdisk
 
-    # Paritioning
-    parted
-
     # Rescue
     ddrescue
 
