@@ -11,7 +11,7 @@
   mine = {
     minimal = true;
     user.admin = false;
-    user.groups = [ "cd" ];
+    user.groups = [ "cdrom" ];
     system.hostname = "naso";
     services = {
       ssh = true;
@@ -21,11 +21,6 @@
 
   # Import the containers
   imports = [ ./containers ];
-
-  # Set the permissions for the disk drive
-  services.udev.extraRules = ''
-    KERNEL="sr0", SYMLINK="cdrom", GROUP="cd"
-  '';
 
   # UPS client
   power.ups = {
