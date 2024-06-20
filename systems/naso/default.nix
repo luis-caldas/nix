@@ -11,7 +11,7 @@
   mine = {
     minimal = true;
     user.admin = false;
-    user.groups = [ "disk" ];
+    user.groups = [ "cd" ];
     system.hostname = "naso";
     services = {
       ssh = true;
@@ -24,7 +24,7 @@
 
   # Set the permissions for the disk drive
   services.udev.extraRules = ''
-    KERNEL="sr0", SYMLINK="cdrom", GROUP="disk"
+    KERNEL="sr0", SYMLINK="cdrom", GROUP="cd"
   '';
 
   # UPS client
