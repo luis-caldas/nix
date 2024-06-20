@@ -175,11 +175,6 @@
       fsType = "zfs";
     };
 
-  fileSystems."/data/vms" =
-    { device = "vimmer/vms";
-      fsType = "zfs";
-    };
-
   fileSystems."/data/local" =
     { device = "vimmer/data";
       fsType = "zfs";
@@ -194,10 +189,6 @@
     { device = "vimmer/tmp";
       fsType = "zfs";
     };
-
-  swapDevices =
-    [ { device = "/dev/zvol/vimmer/swap"; }
-    ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
