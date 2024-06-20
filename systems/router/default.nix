@@ -190,6 +190,10 @@
       fsType = "zfs";
     };
 
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/8306532e-4a62-4f99-b3df-7a7aa362958d"; }
+    ];
+
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
