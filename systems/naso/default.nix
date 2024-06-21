@@ -19,7 +19,7 @@
       prometheus = {
         enable = true;
         password = "/data/local/prometheus/pass";
-      }
+      };
     };
   };
 
