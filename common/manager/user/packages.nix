@@ -76,8 +76,6 @@
     mfoc
     mfcuk
     libnfc
-    pcsctools
-    pcsclite
     (proxmark3.override { withGeneric = true; })
 
     # Devices
