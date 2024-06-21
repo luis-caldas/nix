@@ -45,7 +45,6 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     assaultcube
 
     # Retro
-    crispy-doom
     space-cadet-pinball
 
     # Sonic
