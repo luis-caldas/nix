@@ -334,7 +334,6 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Video Apps
     obs-studio
-    looking-glass-client
 
     # Reverse engineering
     ghidra-bin
