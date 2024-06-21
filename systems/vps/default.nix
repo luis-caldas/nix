@@ -21,6 +21,8 @@ in {
     network.mac = "permanent";
     user.admin = false;
     services.ssh = true;
+    services.prometheus.enable = true;
+    services.prometheus.password = "/data/prometheus/pass";
   };
 
   # Clear boot configuration
@@ -52,9 +54,14 @@ in {
   mine.network.firewall.ping = true;
   networking.firewall = {
     allowedTCPPorts = [
-      22    # SSH port
-      443   # HTTPS port for anything else
+      # Escape port
+      443
+      # SSH
+      (builtins.head config.services.openssh.ports)
+      # Prometheus
+      config.services.prometheus.port
     ];
+    # Allowed UDP
     allowedUDPPorts = [
       wireguardPort
     ];
