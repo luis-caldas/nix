@@ -26,6 +26,10 @@
       ssh = true;
       docker = true;
       virtual.enable = true;
+      prometheus = {
+        enable = true;
+        password = "/data/local/prometheus/pass";
+      };
     };
   };
 
