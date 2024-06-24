@@ -105,6 +105,65 @@ let
       allServices = lib.attrsets.mergeAttrsList (builtins.concatLists nestedServices);
     in allServices;
 
+    # Fix attr names
+    createNames = { dataIn, previousPath ? [] }: let
+      # Separator of the naming scheme
+      separator = "-";
+      # Keyword for the item that will get the parent value
+      simplifier = "app";
+      # Helper to cut simplifier
+      cutSimplifier = previousNames: finalName: let
+        # Fix the list
+        fixedPrevious =
+          if (lib.lists.last previousNames) == simplifier then
+            lib.lists.sublist 0 ((builtins.length previousNames) - 1) previousNames
+          else
+            previousNames;
+        # Check if the name is to be fixed
+        extraName =
+          if finalName == simplifier then [] else [ finalName ];
+      in
+        lib.strings.concatStringsSep separator (fixedPrevious ++ extraName);
+    in
+      # Iterate the attrset input
+      lib.attrsets.concatMapAttrs (name: value: let
+        # Fix the previous path
+        oldPath = previousPath ++ [ name ];
+      in
+        # If is an attrset
+        if (builtins.typeOf value) == "set" then
+          # Send it to the start again
+          # But keep the reference
+          {
+            "${name}" = createNames {
+              dataIn = value;
+              previousPath = oldPath;
+            };
+          }
+        # If we receive a list
+        else if (builtins.typeOf value) == "list" then
+          # Check to see if we need to expand the simplifier
+          if name == simplifier then
+            # Iterate the items and make them individual
+            builtins.listToAttrs (map (each: {
+              name = each;
+              value = cutSimplifier oldPath each;
+            }) value)
+          else
+            # Iterate the items and create the proper data
+            {
+              "${name}" =
+                builtins.listToAttrs (map (each: {
+                  name = each;
+                  value = cutSimplifier oldPath each;
+                }) value);
+            }
+        # If we dont know what we received
+        else
+          # Throw error because we should not be here
+          builtins.trace "" "Data type inputted is invalid"
+      ) dataIn;
+
     # Create reverse proxy for https on the given container configuration
     createProxy = info: let
       # Container internal paths for keys and certificates
