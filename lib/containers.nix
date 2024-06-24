@@ -164,6 +164,12 @@ let
           builtins.trace "" "Data type inputted is invalid"
       ) dataIn;
 
+    # Create the names for the networks
+    createNetworkNames = builtins.listToAttrs (map (each: {
+      name = each;
+      value = each;
+    }) value);
+
     # Create reverse proxy for https on the given container configuration
     createProxy = info: let
       # Container internal paths for keys and certificates
