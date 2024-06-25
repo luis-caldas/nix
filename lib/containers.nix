@@ -1,7 +1,7 @@
 { pkgs, lib, config, ... }@args:
 let
 
-  allFunctions = {
+  allFunctions = rec {
 
     # Converts all the environment items to strings
     fixEnvironment = builtins.mapAttrs (name: value: builtins.toString value);
@@ -165,10 +165,11 @@ let
       ) dataIn;
 
     # Create the names for the networks
-    createNetworkNames = builtins.listToAttrs (map (each: {
-      name = each;
-      value = each;
-    }) value);
+    createNetworkNames = inputList:
+      builtins.listToAttrs (map (each: {
+        name = each;
+        value = each;
+      }) inputList);
 
     # Create reverse proxy for https on the given container configuration
     createProxy = info: let
