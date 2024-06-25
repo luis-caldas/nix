@@ -302,7 +302,7 @@ in {
     };
 
     panel-date-format = {
-      format = "%Y/%m/%d %H:%M:%S %a %z";
+      format = "%Y/%m/%d %H:%M:%S %W %a %z";
     };
 
     trayIconsReloaded = {
