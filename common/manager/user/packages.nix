@@ -278,6 +278,8 @@
     # Pentest
     metasploit
     steghide
+    stegseek
+    pwncat
 
     # Binary
     python3Packages.binwalk-full
