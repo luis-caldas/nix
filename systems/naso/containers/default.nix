@@ -92,9 +92,6 @@ let
       vault = "vault";
     };
 
-    # Predefined ports
-    ports.https = "443";
-
   };
 
   # Build the whole project

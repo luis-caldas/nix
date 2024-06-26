@@ -114,6 +114,9 @@ let
       # Start and end of registered ports
       start = 1024; end = 49151;
 
+      # Normal
+      https = 443;
+
     };
 
     # Mac addresses for devices

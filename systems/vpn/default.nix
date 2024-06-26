@@ -40,6 +40,8 @@
   mine.network.firewall.ping = true;
   networking.firewall = {
     allowedTCPPorts = [
+      # Escape Port
+      pkgs.networks.ports.https
       # SSH
       (builtins.head config.services.openssh.ports)
       # Prometheus
