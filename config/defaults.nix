@@ -293,6 +293,8 @@
 
         vmware = mkEnableOption "VMWare Server";
 
+        android = mkEnableOption "Android Virtualisation";
+
       };
 
     };

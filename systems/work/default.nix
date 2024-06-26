@@ -38,6 +38,7 @@
       docker = true;
       printing = true;
       virtual.enable = true;
+      virtual.android = true;
     };
     graphics.enable = true;
     production = {
