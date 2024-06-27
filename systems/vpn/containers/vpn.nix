@@ -20,7 +20,7 @@ with shared;
     build.image = lib.mkForce pkgs.containers.dns;
     service = {
       # Name
-      container_name = names.dns.ip;
+      container_name = names.dns.up;
       # Networking
       networks."${networks.wire}".ipv4_address = pkgs.networks.docker.dns.vpn.ips.upstream;
     };
