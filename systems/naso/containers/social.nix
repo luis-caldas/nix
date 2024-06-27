@@ -113,7 +113,7 @@ in {
     depends_on = [ names.matrix.app names.matrix.bridge.database.whats ];
     # Volumes
     volumes = [
-      "${paths.local.bridge}/${pkgs.functions.getLastDash names.matrix.bridge.whats}/app:/data"
+      "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.whats}/app:/data"
     ];
     # Networking
     networks = [ networks.social ];
@@ -138,7 +138,7 @@ in {
   #   depends_on = [ names.matrix.app names.matrix.bridge.database.discord ];
   #   # Volumes
   #   volumes = [
-  #     "${paths.local.bridge}/${pkgs.functions.getLastDash names.matrix.bridge.discord}/app:/data"
+  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.discord}/app:/data"
   #   ];
   #   # Networking
   #   networks = [ networks.social ];
@@ -163,7 +163,7 @@ in {
   #   depends_on = [ names.matrix.app names.matrix.bridge.database.telegram ];
   #   # Volumes
   #   volumes = [
-  #     "${paths.local.bridge}/${pkgs.functions.getLastDash names.matrix.bridge.telegram}/app:/data"
+  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.telegram}/app:/data"
   #   ];
   #   # Networking
   #   networks = [ networks.social ];
@@ -188,7 +188,7 @@ in {
   #   depends_on = [ names.matrix.app names.matrix.bridge.database.slack ];
   #   # Volumes
   #   volumes = [
-  #     "${paths.local.bridge}/${pkgs.functions.getLastDash names.matrix.bridge.slack}/app:/data"
+  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.slack}/app:/data"
   #   ];
   #   # Networking
   #   networks = [ networks.social ];
@@ -213,7 +213,7 @@ in {
   #   depends_on = [ names.matrix.app names.matrix.bridge.database.signal ];
   #   # Volumes
   #   volumes = [
-  #     "${paths.local.bridge}/${pkgs.functions.getLastDash names.matrix.bridge.signal}/app:/data"
+  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.signal}/app:/data"
   #   ];
   #   # Networking
   #   networks = [ networks.social ];
@@ -238,7 +238,7 @@ in {
   #   depends_on = [ names.matrix.app names.matrix.bridge.database.meta ];
   #   # Volumes
   #   volumes = [
-  #     "${paths.local.bridge}/${pkgs.functions.getLastDash names.matrix.bridge.meta}/app:/data"
+  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.meta}/app:/data"
   #   ];
   #   # Networking
   #   networks = [ networks.social ];
@@ -263,11 +263,11 @@ in {
       POSTGRES_DB = names.matrix.bridge.whats;
     };
     env_file = [
-      "${paths.local.bridge}/${pkgs.functions.getLastDash names.matrix.bridge.whats}/env/database.env"
+      "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.whats}/env/database.env"
     ];
     # Volumes
     volumes = [
-      "${paths.safe.bridge}/${pkgs.functions.getLastDash names.matrix.bridge.whats}/database:/var/lib/postgresql/data"
+      "${paths.safe.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.whats}/database:/var/lib/postgresql/data"
     ];
     # Networking
     networks = [ networks.social ];
@@ -288,11 +288,11 @@ in {
   #     POSTGRES_DB = names.matrix.bridge.discord;
   #   };
   #   env_file = [
-  #     "${paths.local.bridge}/${pkgs.functions.getLastDash names.matrix.bridge.discord}/env/database.env"
+  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.discord}/env/database.env"
   #   ];
   #   # Volumes
   #   volumes = [
-  #     "${paths.safe.bridge}/${pkgs.functions.getLastDash names.matrix.bridge.discord}/database:/var/lib/postgresql/data"
+  #     "${paths.safe.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.discord}/database:/var/lib/postgresql/data"
   #   ];
   #   # Networking
   #   networks = [ networks.social ];
@@ -313,11 +313,11 @@ in {
   #     POSTGRES_DB = names.matrix.bridge.telegram;
   #   };
   #   env_file = [
-  #     "${paths.local.bridge}/${pkgs.functions.getLastDash names.matrix.bridge.telegram}/env/database.env"
+  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.telegram}/env/database.env"
   #   ];
   #   # Volumes
   #   volumes = [
-  #     "${paths.safe.bridge}/${pkgs.functions.getLastDash names.matrix.bridge.telegram}/database:/var/lib/postgresql/data"
+  #     "${paths.safe.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.telegram}/database:/var/lib/postgresql/data"
   #   ];
   #   # Networking
   #   networks = [ networks.social ];
@@ -338,11 +338,11 @@ in {
   #     POSTGRES_DB = names.matrix.bridge.slack;
   #   };
   #   env_file = [
-  #     "${paths.local.bridge}/${pkgs.functions.getLastDash names.matrix.bridge.slack}/env/database.env"
+  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.slack}/env/database.env"
   #   ];
   #   # Volumes
   #   volumes = [
-  #     "${paths.safe.bridge}/${pkgs.functions.getLastDash names.matrix.bridge.slack}/database:/var/lib/postgresql/data"
+  #     "${paths.safe.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.slack}/database:/var/lib/postgresql/data"
   #   ];
   #   # Networking
   #   networks = [ networks.social ];
@@ -363,11 +363,11 @@ in {
   #     POSTGRES_DB = names.matrix.bridge.signal;
   #   };
   #   env_file = [
-  #     "${paths.local.bridge}/${pkgs.functions.getLastDash names.matrix.bridge.signal}/env/database.env"
+  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.signal}/env/database.env"
   #   ];
   #   # Volumes
   #   volumes = [
-  #     "${paths.safe.bridge}/${pkgs.functions.getLastDash names.matrix.bridge.signal}/database:/var/lib/postgresql/data"
+  #     "${paths.safe.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.signal}/database:/var/lib/postgresql/data"
   #   ];
   #   # Networking
   #   networks = [ networks.social ];
@@ -388,11 +388,11 @@ in {
   #     POSTGRES_DB = names.matrix.bridge.meta;
   #   };
   #   env_file = [
-  #     "${paths.local.bridge}/${pkgs.functions.getLastDash names.matrix.bridge.meta}/env/database.env"
+  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.meta}/env/database.env"
   #   ];
   #   # Volumes
   #   volumes = [
-  #     "${paths.safe.bridge}/${pkgs.functions.getLastDash names.matrix.bridge.meta}/database:/var/lib/postgresql/data"
+  #     "${paths.safe.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.meta}/database:/var/lib/postgresql/data"
   #   ];
   #   # Networking
   #   networks = [ networks.social ];

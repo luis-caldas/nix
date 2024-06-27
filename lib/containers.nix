@@ -3,8 +3,19 @@ let
 
   allFunctions = rec {
 
+    # Keyword that will be simplified for the parents namin
+    # When used with dynamic naming
+    simplifier = "app";
+
+    # Default separator for the container naming
+    containerNameSeparator = "-";
+
     # Converts all the environment items to strings
     fixEnvironment = builtins.mapAttrs (name: value: builtins.toString value);
+
+    # Get last with separator
+    getLastDash = inputString:
+      lib.lists.last (lib.strings.splitString containerNameSeparator inputString);
 
     # Add a custom init to the configuration
     addCustomInit = originalObject: let
@@ -107,10 +118,6 @@ let
 
     # Fix attr names
     createNames = { dataIn, previousPath ? [] }: let
-      # Separator of the naming scheme
-      separator = "-";
-      # Keyword for the item that will get the parent value
-      simplifier = "app";
       # Helper to cut simplifier
       cutSimplifier = previousNames: finalName: let
         # Fix the list
@@ -123,7 +130,7 @@ let
         extraName =
           if finalName == simplifier then [] else [ finalName ];
       in
-        lib.strings.concatStringsSep separator (fixedPrevious ++ extraName);
+        lib.strings.concatStringsSep containerNameSeparator (fixedPrevious ++ extraName);
     in
       # Iterate the attrset input
       lib.attrsets.concatMapAttrs (name: value: let
