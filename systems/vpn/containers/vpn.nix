@@ -16,11 +16,11 @@ with shared;
        #####
 
   # Upstream DNS server
-  services."${names.dnsUp}" = {
+  services."${names.dns.up}" = {
     build.image = lib.mkForce pkgs.containers.dns;
     service = {
       # Name
-      container_name = names.dnsUp;
+      container_name = names.dns.ip;
       # Networking
       networks."${networks.wire}".ipv4_address = pkgs.networks.docker.dns.vpn.ips.upstream;
     };
@@ -31,15 +31,15 @@ with shared;
        ########
 
   # Main DNS
-  services."${names.dns}".service = {
+  services."${names.dns.app}".service = {
     # Image
     image = "pihole/pihole:latest";
 
     # Name
-    container_name = names.dns;
+    container_name = names.dns.app;
 
     # Depends
-    depends_on = [ names.dnsUp ];
+    depends_on = [ names.dns.up ];
 
     # Environment
     environment = {
