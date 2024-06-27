@@ -25,7 +25,7 @@ with shared;
     # Networking
     ports = [
       "80:80/tcp"
-      "${pkgs.networks.ports.https}:443/tcp"
+      "${builtins.toString pkgs.networks.ports.https}:443/tcp"
       "81:81/tcp"
     ];
     # Networking

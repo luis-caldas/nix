@@ -46,7 +46,7 @@ with shared;
     environment = pkgs.functions.container.fixEnvironment {
       PUID = config.mine.user.uid;
       PGID = config.mine.user.gid;
-      ARIA2RPCPORT = ports.https;
+      ARIA2RPCPORT = pkgs.networks.ports.https;
     };
     # Volumes
     volumes = [
