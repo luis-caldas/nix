@@ -1,5 +1,65 @@
 { pkgs, lib, config, modulesPath, ... }:
-{
+let
+
+  # Shared information
+  shared = {
+
+    # Overall networking for docker
+    networks = pkgs.functions.container.createNetworkNames [
+      # Networks
+      "wire" "turn"
+    ];
+
+    # Set up container names
+    names = pkgs.functions.container.createNames { dataIn = {
+      app = [
+        # VPN
+        "wire"
+        # TURN
+        "turn"
+      ];
+      # DNS
+      dns = [ "app" "up" ];
+    };};
+
+    # List of users for wireguard
+    listUsers = let
+
+      # Simple list that can be easily understood
+      simpleList = [
+        # Names will be changed for numbers starting on zero
+        { home = [ "house" "router" "server" ]; }
+        { lu = [ "laptop" "phone" "tablet" ]; }
+        { m = [ "laptop" "phone" "extra" ]; }
+        { lak = [ "laptop" "phone" "desktop" ]; }
+        { extra = [ "first" "second" "third" "fourth" ]; }
+      ];
+
+      # Rename all users to
+      arrayUsersDevices = map
+        (eachEntry:
+          builtins.concatLists (lib.attrsets.mapAttrsToList
+          (eachUser: allDevices: map
+            (eachDevice: "${eachUser}${pkgs.functions.capitaliseString eachDevice}")
+            allDevices
+          )
+          eachEntry)
+        )
+        simpleList;
+
+      # Join all the created lists
+      interspersedUsers = lib.strings.concatStrings
+        (lib.strings.intersperse "," (builtins.concatLists arrayUsersDevices));
+
+    in interspersedUsers;
+
+  };
+
+in {
+
+  #######
+  # Own #
+  #######
 
   # My own part of configuring
   mine = {
@@ -15,6 +75,10 @@
     services.prometheus.password = "/data/prometheus/pass";
   };
 
+  ########
+  # Boot #
+  ########
+
   # Clear boot configuration
   boot.loader = lib.mkForce {};
 
@@ -27,9 +91,11 @@
   imports = [
     # AWS files
     (modulesPath + "/virtualisation/amazon-image.nix")
-    # Containers
-    ./containers
   ];
+
+  ##############
+  # Networking #
+  ##############
 
   # Disable all ipv6
   networking.enableIPv6 = false;
@@ -57,6 +123,30 @@
     ignoreIP = pkgs.networks.allowed;
   };
 
+  # Set the DNS
+  networking.networkmanager.insertNameservers = [
+    shared.networks.wire.ips.dns
+  ] ++ pkgs.networks.dns;
+
+  # User keys for ssh
+  users.users."${config.mine.user.name}".openssh.authorizedKeys.keyFiles = [
+    /etc/nixos/ssh/keys
+  ];
+
+  # Disable avahi
+  services.avahi.enable = lib.mkForce false;
+
+  ##############
+  # Containers #
+  ##############
+
+  # Arion
+  virtualisation.arion.projects = pkgs.functions.container.projects ./containers shared;
+
+  #############
+  # Wireguard #
+  #############
+
   # Set up our wireguard configuration
   networking.wireguard.interfaces.wire = {
     ips = [ "${pkgs.networks.tunnel.ips.vpn}/${builtins.toString pkgs.networks.tunnel.prefix}" ];
@@ -71,15 +161,9 @@
     }];
   };
 
-  # Disable avahi
-  services.avahi.enable = lib.mkForce false;
-
-  # User keys for ssh
-  users.users."${config.mine.user.name}".openssh.authorizedKeys.keyFiles = [
-    /etc/nixos/ssh/keys
-  ];
-
-  # Filesystems
+  ###############
+  # Filesystems #
+  ###############
 
   # Add swap
   swapDevices = [ {

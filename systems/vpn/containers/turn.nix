@@ -6,7 +6,7 @@ with shared;
 {
 
   # Set up the network
-  networks."${networks.turn.name}".name = networks.turn.name;
+  networks."${networks.turn}".name = networks.turn;
 
        ######
   ### # TURN # ###
@@ -73,7 +73,7 @@ with shared;
       "${stringPortRange}:${stringPortRange}/udp"
     ];
     dns = pkgs.networks.dns;
-    networks = [ networks.turn.name ];
+    networks = [ networks.turn ];
   };
 
 }

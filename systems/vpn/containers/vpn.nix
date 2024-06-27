@@ -6,9 +6,9 @@ with shared;
 {
 
   # Set up the network
-  networks."${networks.wire.name}" = {
-    name = networks.wire.name;
-    ipam.config = [{ inherit (networks.wire) subnet gateway; }];
+  networks."${networks.wire}" = {
+    name = networks.wire;
+    ipam.config = [{ inherit (pkgs.networks.docker.dns.vpn) subnet gateway; }];
   };
 
        #####
@@ -22,7 +22,7 @@ with shared;
       # Name
       container_name = names.dnsUp;
       # Networking
-      networks."${networks.wire.name}".ipv4_address = networks.wire.ips.dnsUp;
+      networks."${networks.wire}".ipv4_address = pkgs.networks.docker.dns.vpn.ips.upstream;
     };
   };
 
@@ -45,7 +45,7 @@ with shared;
     environment = {
       TZ = config.mine.system.timezone;
       DNSMASQ_LISTENING = "all";
-      PIHOLE_DNS_ = networks.wire.ips.dnsUp;
+      PIHOLE_DNS_ = pkgs.networks.docker.dns.vpn.ips.upstream;
     };
     env_file = [ "/data/containers/pihole/env/adblock.env" ];
 
@@ -57,7 +57,7 @@ with shared;
 
     # Networking
     dns = [ "127.0.0.1" ];
-    networks.wire.ipv4_address = networks.wire.ips.dns;
+    networks."${networks.wire}".ipv4_address = pkgs.networks.docker.dns.vpn.ips.main;
 
   };
 
@@ -81,10 +81,10 @@ with shared;
       PUID = config.mine.user.uid;
       GUID = config.mine.user.gid;
       INTERNAL_SUBNET = subnet;
-      ALLOWEDIPS = "0.0.0.0/0,${networks.wire.ips.dns}/32,${subnet},${pkgs.networks.internal}";
+      ALLOWEDIPS = "0.0.0.0/0,${pkgs.networks.docker.dns.vpn.ips.main}/32,${subnet},${pkgs.networks.internal}";
       PEERS = listUsers;
       SERVERPORT = pkgs.networks.ports.open;
-      PEERDNS = networks.wire.ips.dns;
+      PEERDNS = pkgs.networks.docker.dns.vpn.ips.main;
       PERSISTENTKEEPALIVE_PEERS = "all";
     };
     env_file = [ "/data/containers/wireguard/env/wire.env" ];
@@ -98,7 +98,7 @@ with shared;
     ports = [
       "${builtins.toString pkgs.networks.ports.open}:${builtins.toString pkgs.networks.ports.wireguard}/udp"
     ];
-    networks = [ networks.wire.name ];
+    networks = [ networks.wire ];
     capabilities.NET_ADMIN = true;
 
   };
