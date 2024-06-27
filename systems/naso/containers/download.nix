@@ -6,7 +6,7 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front.name}".external = true;
+  networks."${networks.front}".external = true;
 
        #########
   ### # Torrent # ###
@@ -30,7 +30,7 @@ with shared;
       "/data/chunk/media/downloads:/downloads"
     ];
     # Networking
-    networks = [ networks.front.name ];
+    networks = [ networks.front ];
   };
 
        ######
@@ -54,7 +54,7 @@ with shared;
       "/data/chunk/media/downloads:/aria2/data"
     ];
     # Networking
-    networks = [ networks.front.name ];
+    networks = [ networks.front ];
     # Service doesn't gracefully shut down, it may need tini
   };
 

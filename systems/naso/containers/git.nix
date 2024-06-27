@@ -6,8 +6,8 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front.name}".external = true;
-  networks."${networks.git.name}".name = networks.git.name;
+  networks."${networks.front}".external = true;
+  networks."${networks.git}".name = networks.git;
 
        #######
   ### # Gitea # ###
@@ -33,7 +33,7 @@ with shared;
     container_name = names.gitea.app;
 
     # Depends
-    depends_on = [ names.gitea.db ];
+    depends_on = [ names.gitea.database ];
 
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
@@ -41,7 +41,7 @@ with shared;
       USER_UID = config.mine.user.uid;
       USER_GID = config.mine.user.gid;
       GITEA__database__DB_TYPE = "mysql";
-      GITEA__database__HOST = "${names.gitea.db}:3306";
+      GITEA__database__HOST = "${names.gitea.database}:3306";
       GITEA__database__NAME = names.gitea.app;
       GITEA__database__USER = names.gitea.app;
       GITEA____APP_NAME = pkgs.functions.capitaliseString names.gitea.app;
@@ -66,7 +66,7 @@ with shared;
     ports = [
       "${builtins.toString sshPort}:22"
     ];
-    networks = [ networks.front.name networks.git.name ];
+    networks = [ networks.front networks.git ];
 
   };
 
@@ -74,11 +74,11 @@ with shared;
   ### # Database # ###
        ##########
 
-  services."${names.gitea.db}".service = {
+  services."${names.gitea.database}".service = {
     # Image
     image = "mariadb:latest";
     # Name
-    container_name = names.gitea.db;
+    container_name = names.gitea.database;
     # Environment
     environment = {
       TZ = config.mine.system.timezone;
@@ -91,7 +91,7 @@ with shared;
       "/data/bunker/data/containers/git/database:/var/lib/mysql"
     ];
     # Networking
-    networks = [ networks.git.name ];
+    networks = [ networks.git ];
   };
 
 }

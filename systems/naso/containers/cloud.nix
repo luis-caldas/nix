@@ -18,7 +18,7 @@ let
   commonEnv = {
     TZ = config.mine.system.timezone;
     # Mariadb
-    MYSQL_HOST = names.cloud.database;
+    MYSQL_HOST = names.cloud.maria;
     MYSQL_DATABASE = db.name;
     MYSQL_USER = db.user;
     # Redis
@@ -30,8 +30,8 @@ let
 in {
 
   # Networking
-  networks."${networks.front.name}".external = true;
-  networks."${networks.cloud.name}".name = networks.cloud.name;
+  networks."${networks.front}".external = true;
+  networks."${networks.cloud}".name = networks.cloud;
 
        #############
   ### # Application # ###
@@ -43,7 +43,7 @@ in {
     # Name
     container_name = names.cloud.app;
     # Dependend
-    depends_on = [ names.cloud.database names.cloud.redis ];
+    depends_on = [ names.cloud.maria names.cloud.redis ];
     # Environment
     environment = commonEnv;
     env_file = [ "/data/local/containers/cloud/cloud.env" ];
@@ -53,7 +53,7 @@ in {
       "/data/bunker/cloud/cloud:/data"
     ];
     # Networking
-    networks = [ networks.cloud.name networks.front.name ];
+    networks = [ networks.cloud networks.front ];
   };
 
        ######
@@ -78,18 +78,18 @@ in {
       "/data/bunker/cloud/cloud:/data"
     ];
     # Networking
-    networks = [ networks.cloud.name ];
+    networks = [ networks.cloud ];
   };
 
        ##########
   ### # Database # ###
        ##########
 
-  services."${names.cloud.database}".service = {
+  services."${names.cloud.maria}".service = {
     # Image
     image = "mariadb:latest";
     # Name
-    container_name = names.cloud.database;
+    container_name = names.cloud.maria;
     # Environment
     environment = {
       TZ = config.mine.system.timezone;
@@ -102,7 +102,7 @@ in {
       "/data/bunker/data/containers/cloud/mariadb:/var/lib/mysql"
     ];
     # Networking
-    networks = [ networks.cloud.name ];
+    networks = [ networks.cloud ];
   };
 
        #######
@@ -125,7 +125,7 @@ in {
     # Command
     command = "--save 60 1";
     # Networking
-    networks = [ networks.cloud.name ];
+    networks = [ networks.cloud ];
   };
 
 }

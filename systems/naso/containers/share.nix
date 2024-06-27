@@ -6,19 +6,19 @@ with shared;
 {
 
   # Networking
-  networks."${networks.share.name}".name = networks.share.name;
+  networks."${networks.share}".name = networks.share;
 
        #######
   ### # SAMBA # ###
        #######
 
-  services."${names.share}".service = {
+  services."${names.samba}".service = {
 
     # Image
     image = "dperson/samba:latest";
 
     # Name
-    container_name = names.share;
+    container_name = names.samba;
 
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
@@ -58,7 +58,7 @@ with shared;
     ]);
 
     # Networking
-    networks = [ networks.share.name ];
+    networks = [ networks.share ];
 
   };
 

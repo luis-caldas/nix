@@ -6,7 +6,7 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front.name}".external = true;
+  networks."${networks.front}".external = true;
 
        #######
   ### # Vault # ###
@@ -28,7 +28,7 @@ with shared;
       "/data/bunker/data/containers/warden:/data"
     ];
     # Networking
-    networks = [ networks.front.name ];
+    networks = [ networks.front ];
   };
 
 }

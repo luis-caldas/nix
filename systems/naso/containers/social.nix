@@ -6,8 +6,8 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front.name}".external = true;
-  networks."${networks.social.name}".name = networks.social.name;
+  networks."${networks.front}".external = true;
+  networks."${networks.social}".name = networks.social;
 
        ########
   ### # Matrix # ###
@@ -32,7 +32,7 @@ with shared;
       "/data/local/containers/matrix/bridge:/bridge"
     ];
     # Networking
-    networks = [ networks.front.name networks.social.name ];
+    networks = [ networks.front networks.social ];
   };
 
        ##########
@@ -58,7 +58,7 @@ with shared;
       "/data/bunker/data/containers/matrix/database/data:/var/lib/postgresql/data"
     ];
     # Networking
-    networks = [ networks.social.name ];
+    networks = [ networks.social ];
   };
 
        #################
@@ -73,7 +73,7 @@ with shared;
     # Depends
     depends_on = [ names.matrix.app ];
     # Networking
-    networks = [ networks.front.name ];
+    networks = [ networks.front ];
   };
        ##############
   ### # Bridge Whats # ###
@@ -91,24 +91,24 @@ with shared;
       GID = config.mine.user.gid;
     };
     # Depends
-    depends_on = [ names.matrix.app names.matrix.bridge.db.whats ];
+    depends_on = [ names.matrix.app names.matrix.bridge.database.whats ];
     # Volumes
     volumes = [
       "/data/local/containers/matrix/bridge/whats/app:/data"
     ];
     # Networking
-    networks = [ networks.social.name ];
+    networks = [ networks.social ];
   };
 
        ################
   ### # Bridge Discord # ###
        ################
 
-  services."${names.matrix.bridge.disc}".service = {
+  services."${names.matrix.bridge.discord}".service = {
     # Image
     image = "dock.mau.dev/mautrix/discord:latest";
     # Name
-    container_name = names.matrix.bridge.disc;
+    container_name = names.matrix.bridge.discord;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;
@@ -116,24 +116,24 @@ with shared;
       GID = config.mine.user.gid;
     };
     # Depends
-    depends_on = [ names.matrix.app names.matrix.bridge.db.disc ];
+    depends_on = [ names.matrix.app names.matrix.bridge.database.discord ];
     # Volumes
     volumes = [
       "/data/local/containers/matrix/bridge/disc/app:/data"
     ];
     # Networking
-    networks = [ networks.social.name ];
+    networks = [ networks.social ];
   };
 
        #################
   ### # Bridge Telegram # ###
        #################
 
-  services."${names.matrix.bridge.gram}".service = {
+  services."${names.matrix.bridge.telegram}".service = {
     # Image
     image = "dock.mau.dev/mautrix/telegram:latest";
     # Name
-    container_name = names.matrix.bridge.gram;
+    container_name = names.matrix.bridge.telegram;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;
@@ -141,24 +141,24 @@ with shared;
       GID = config.mine.user.gid;
     };
     # Depends
-    depends_on = [ names.matrix.app names.matrix.bridge.db.gram ];
+    depends_on = [ names.matrix.app names.matrix.bridge.database.telegram ];
     # Volumes
     volumes = [
       "/data/local/containers/matrix/bridge/gram/app:/data"
     ];
     # Networking
-    networks = [ networks.social.name ];
+    networks = [ networks.social ];
   };
 
        ##############
   ### # Bridge Slack # ###
        ##############
 
-  services."${names.matrix.bridge.slac}".service = {
+  services."${names.matrix.bridge.slack}".service = {
     # Image
     image = "dock.mau.dev/mautrix/slack:latest";
     # Name
-    container_name = names.matrix.bridge.slac;
+    container_name = names.matrix.bridge.slack;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;
@@ -166,24 +166,24 @@ with shared;
       GID = config.mine.user.gid;
     };
     # Depends
-    depends_on = [ names.matrix.app names.matrix.bridge.db.slac ];
+    depends_on = [ names.matrix.app names.matrix.bridge.database.slack ];
     # Volumes
     volumes = [
       "/data/local/containers/matrix/bridge/slac/app:/data"
     ];
     # Networking
-    networks = [ networks.social.name ];
+    networks = [ networks.social ];
   };
 
        ###############
   ### # Bridge Signal # ###
        ###############
 
-  services."${names.matrix.bridge.sig}".service = {
+  services."${names.matrix.bridge.signal}".service = {
     # Image
     image = "dock.mau.dev/mautrix/signal:latest";
     # Name
-    container_name = names.matrix.bridge.sig;
+    container_name = names.matrix.bridge.signal;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;
@@ -191,13 +191,13 @@ with shared;
       GID = config.mine.user.gid;
     };
     # Depends
-    depends_on = [ names.matrix.app names.matrix.bridge.db.sig ];
+    depends_on = [ names.matrix.app names.matrix.bridge.database.signal ];
     # Volumes
     volumes = [
       "/data/local/containers/matrix/bridge/sig/app:/data"
     ];
     # Networking
-    networks = [ networks.social.name ];
+    networks = [ networks.social ];
   };
 
        #############
@@ -216,13 +216,13 @@ with shared;
       GID = config.mine.user.gid;
     };
     # Depends
-    depends_on = [ names.matrix.app names.matrix.bridge.db.meta ];
+    depends_on = [ names.matrix.app names.matrix.bridge.database.meta ];
     # Volumes
     volumes = [
       "/data/local/containers/matrix/bridge/meta/app:/data"
     ];
     # Networking
-    networks = [ networks.social.name ];
+    networks = [ networks.social ];
   };
 
   #############################################################################
@@ -233,11 +233,11 @@ with shared;
   ### # Whats Database # ###
        ################
 
-  services."${names.matrix.bridge.db.whats}".service = {
+  services."${names.matrix.bridge.database.whats}".service = {
     # Image
     image = "postgres:latest";
     # Name
-    container_name = names.matrix.bridge.db.whats;
+    container_name = names.matrix.bridge.database.whats;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       POSTGRES_USER = names.matrix.bridge.whats;
@@ -251,22 +251,22 @@ with shared;
       "/data/bunker/data/containers/matrix/bridge/whats/database:/var/lib/postgresql/data"
     ];
     # Networking
-    networks = [ networks.social.name ];
+    networks = [ networks.social ];
   };
 
        ##################
   ### # Discord Database # ###
        ##################
 
-  services."${names.matrix.bridge.db.disc}".service = {
+  services."${names.matrix.bridge.database.discord}".service = {
     # Image
     image = "postgres:latest";
     # Name
-    container_name = names.matrix.bridge.db.disc;
+    container_name = names.matrix.bridge.database.discord;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
-      POSTGRES_USER = names.matrix.bridge.disc;
-      POSTGRES_DB = names.matrix.bridge.disc;
+      POSTGRES_USER = names.matrix.bridge.discord;
+      POSTGRES_DB = names.matrix.bridge.discord;
     };
     env_file = [
       "/data/local/containers/matrix/bridge/disc/env/database.env"
@@ -276,22 +276,22 @@ with shared;
       "/data/bunker/data/containers/matrix/bridge/disc/database:/var/lib/postgresql/data"
     ];
     # Networking
-    networks = [ networks.social.name ];
+    networks = [ networks.social ];
   };
 
        ###################
   ### # Telegram Database # ###
        ###################
 
-  services."${names.matrix.bridge.db.gram}".service = {
+  services."${names.matrix.bridge.database.telegram}".service = {
     # Image
     image = "postgres:latest";
     # Name
-    container_name = names.matrix.bridge.db.gram;
+    container_name = names.matrix.bridge.database.telegram;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
-      POSTGRES_USER = names.matrix.bridge.gram;
-      POSTGRES_DB = names.matrix.bridge.gram;
+      POSTGRES_USER = names.matrix.bridge.telegram;
+      POSTGRES_DB = names.matrix.bridge.telegram;
     };
     env_file = [
       "/data/local/containers/matrix/bridge/gram/env/database.env"
@@ -301,22 +301,22 @@ with shared;
       "/data/bunker/data/containers/matrix/bridge/gram/database:/var/lib/postgresql/data"
     ];
     # Networking
-    networks = [ networks.social.name ];
+    networks = [ networks.social ];
   };
 
        ################
   ### # Slack Database # ###
        ################
 
-  services."${names.matrix.bridge.db.slac}".service = {
+  services."${names.matrix.bridge.database.slack}".service = {
     # Image
     image = "postgres:latest";
     # Name
-    container_name = names.matrix.bridge.db.slac;
+    container_name = names.matrix.bridge.database.slack;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
-      POSTGRES_USER = names.matrix.bridge.slac;
-      POSTGRES_DB = names.matrix.bridge.slac;
+      POSTGRES_USER = names.matrix.bridge.slack;
+      POSTGRES_DB = names.matrix.bridge.slack;
     };
     env_file = [
       "/data/local/containers/matrix/bridge/slac/env/database.env"
@@ -326,22 +326,22 @@ with shared;
       "/data/bunker/data/containers/matrix/bridge/slac/database:/var/lib/postgresql/data"
     ];
     # Networking
-    networks = [ networks.social.name ];
+    networks = [ networks.social ];
   };
 
        #################
   ### # Signal Database # ###
        #################
 
-  services."${names.matrix.bridge.db.sig}".service = {
+  services."${names.matrix.bridge.database.signal}".service = {
     # Image
     image = "postgres:latest";
     # Name
-    container_name = names.matrix.bridge.db.sig;
+    container_name = names.matrix.bridge.database.signal;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
-      POSTGRES_USER = names.matrix.bridge.sig;
-      POSTGRES_DB = names.matrix.bridge.sig;
+      POSTGRES_USER = names.matrix.bridge.signal;
+      POSTGRES_DB = names.matrix.bridge.signal;
     };
     env_file = [
       "/data/local/containers/matrix/bridge/sig/env/database.env"
@@ -351,18 +351,18 @@ with shared;
       "/data/bunker/data/containers/matrix/bridge/sig/database:/var/lib/postgresql/data"
     ];
     # Networking
-    networks = [ networks.social.name ];
+    networks = [ networks.social ];
   };
 
        ###############
   ### # Meta Database # ###
        ###############
 
-  services."${names.matrix.bridge.db.meta}".service = {
+  services."${names.matrix.bridge.database.meta}".service = {
     # Image
     image = "postgres:latest";
     # Name
-    container_name = names.matrix.bridge.db.meta;
+    container_name = names.matrix.bridge.database.meta;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       POSTGRES_USER = names.matrix.bridge.meta;
@@ -376,7 +376,7 @@ with shared;
       "/data/bunker/data/containers/matrix/bridge/meta/database:/var/lib/postgresql/data"
     ];
     # Networking
-    networks = [ networks.social.name ];
+    networks = [ networks.social ];
   };
 
 }

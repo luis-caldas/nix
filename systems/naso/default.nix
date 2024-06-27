@@ -1,11 +1,92 @@
-{ pkgs, lib, config, ... }:
-{
+{ pkgs, lib, config, ... }: let
+
+  ##############
+  # Containers #
+  ##############
+
+  # Shared information
+  shared = {
+
+    # Configure all the needed networks
+    networks = pkgs.functions.container.createNetworkNames [
+      # Front Reverse Proxy
+      "front"
+      # Cloud
+      "cloud"
+      # Matrix
+      "social"
+      # Git
+      "git"
+      # Downloading
+      "download"
+      # Tracking
+      "track"
+      # Workout
+      "workout"
+      # Recipes
+      "recipe"
+      # Samba
+      "share"
+    ];
+
+    # Keep track of all the names
+    names = pkgs.functions.container.createNames { dataIn = {
+      # Non split containers
+      app = [
+        # Share
+        "samba" "shout"
+        # Download
+        "torrent" "aria"
+        # Media
+        "jellyfin" "komga" "browser" "shower"
+        # Vault
+        "vault"
+      ];
+      # Front
+      front = [ "app" "access" ];
+      # Track
+      track = [ "app" "database" ];
+      # Workout
+      wger = {
+        app = [ "app" "cache" "database" "web" ];
+        celery = [ "worker" "beat" "flower" ];
+      };
+      # Recipe
+      tandoor = [ "app" "database" ];
+      # Git
+      gitea = [ "app" "database" ];
+      # Social
+      matrix = {
+        app = [ "app" "database" "admin" ];
+        bridge = rec {
+          app = [ "whats" "discord" "telegram" "slack" "signal" "meta" "line" "sms" ];
+          database = app;
+        };
+      };
+      # Cloud
+      cloud = [ "app" "maria" "redis" "proxy" "cron" ];
+    };};
+
+  };
+
+  # Build the whole project
+  builtProjects = pkgs.functions.container.projects ./containers (lib.debug.traceValSeqN 10 shared);
+
+in {
+
+  ########
+  # Boot #
+  ########
 
   # Modules
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+
+  #######
+  # Own #
+  #######
 
   # My own configuration
   mine = {
@@ -23,8 +104,43 @@
     };
   };
 
-  # Import the containers
-  imports = [ ./containers ];
+  ##############
+  # Containers #
+  ##############
+
+  # Containers
+  virtualisation.arion.projects = builtProjects;
+
+  # Create all the needed dependencies
+  systemd.services = pkgs.functions.container.createDependencies
+    (pkgs.functions.container.extractDependencies (lib.debug.traceValSeqN 10 builtProjects));
+
+  # Publish Avahi
+  # Which is needed to advertise the network share
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    publish = {
+      enable = true;
+      addresses = true;
+      workstation = true;
+    };
+    extraServiceFiles.smb = ''
+      <?xml version="1.0" standalone='no'?><!--*-nxml-*-->
+      <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+      <service-group>
+        <name replace-wildcards="yes">%h</name>
+        <service>
+          <type>_smb._tcp</type>
+          <port>445</port>
+        </service>
+      </service-group>
+    '';
+  };
+
+  #######
+  # UPS #
+  #######
 
   # UPS client
   power.ups = {
@@ -59,6 +175,10 @@
 
   };
 
+  #########
+  # Email #
+  #########
+
   # Allow msmtp to work with my configs
   programs.msmtp = {
     enable = true;
@@ -84,6 +204,10 @@
     };
   };
 
+  ###############
+  # Disk Health #
+  ###############
+
   # Set up SMARTD
   services.smartd = {
     enable = true;
@@ -94,7 +218,8 @@
       wall.enable = false;
       mail = {
         enable = true;
-        sender = builtins.replaceStrings [ "\n" "\t" ] [ "" "" ] (lib.strings.fileContents /data/local/mail/account);
+        sender = builtins.replaceStrings [ "\n" "\t" ] [ "" "" ]
+          (lib.strings.fileContents /data/local/mail/account);
         recipient = "root";
         mailer = "${pkgs.msmtp}/bin/msmtp";
       };
@@ -123,7 +248,9 @@
     };
   };
 
-  # File Systems
+  ################
+  # File Systems #
+  ################
 
   fileSystems."/" =
     { device = "into/root";

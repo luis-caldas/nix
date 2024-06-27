@@ -35,7 +35,7 @@ let
 
     # Database
     DJANGO_DB_ENGINE = "django.db.backends.postgresql";
-    DJANGO_DB_DATABASE = names.wger.wger;
+    DJANGO_DB_DATABASE = names.wger.app;
     DJANGO_DB_HOST = names.wger.database;
     DJANGO_DB_PORT = 5432;
     DJANGO_PERFORM_MIGRATIONS = "True";
@@ -72,14 +72,14 @@ let
 in {
 
   # Networking
-  networks."${networks.front.name}".external = true;
-  networks."${networks.workout.name}".name = networks.workout.name;
+  networks."${networks.front}".external = true;
+  networks."${networks.workout}".name = networks.workout;
 
        ######
   ### # WGer # ###
        ######
 
-  services."${names.wger.wger}".service = let
+  services."${names.wger.app}".service = let
 
     healthPort = 8000;
 
@@ -89,7 +89,7 @@ in {
     image = "wger/server:latest";
 
     # Name
-    container_name = names.wger.wger;
+    container_name = names.wger.app;
 
     # Environment
     environment = commonEnvironment;
@@ -122,7 +122,7 @@ in {
     expose = [ (builtins.toString healthPort) ];
 
     # Network
-    networks = [ networks.workout.name ];
+    networks = [ networks.workout ];
 
   };
 
@@ -139,7 +139,7 @@ in {
     container_name = names.wger.web;
 
     # Depends on
-    depends_on = [ names.wger.wger ];
+    depends_on = [ names.wger.app ];
 
     # Volumes
     volumes = let
@@ -147,7 +147,7 @@ in {
       # Nginx configuration file
       configNginx = builtins.toFile "nginx.conf" ''
         upstream wger {
-            server ${names.wger.wger}:8000;
+            server ${names.wger.app}:8000;
         }
 
         server {
@@ -197,7 +197,7 @@ in {
     };
 
     # Networking
-    networks = [ networks.front.name networks.workout.name ];
+    networks = [ networks.front networks.workout ];
 
   };
 
@@ -215,7 +215,7 @@ in {
 
     # Environment
     environment = {
-      POSTGRES_DATABASE = names.wger.wger;
+      POSTGRES_DATABASE = names.wger.app;
     };
     env_file = [ "/data/local/containers/workout/database.env" ];
 
@@ -239,7 +239,7 @@ in {
     };
 
     # Networking
-    networks = [ networks.workout.name ];
+    networks = [ networks.workout ];
 
   };
 
@@ -275,7 +275,7 @@ in {
     };
 
     # Networking
-    networks = [ networks.workout.name ];
+    networks = [ networks.workout ];
 
   };
 
@@ -283,13 +283,13 @@ in {
   ### # Worker # ###
        ########
 
-  services."${names.wger.worker}".service = {
+  services."${names.wger.celery.worker}".service = {
 
     # Image
     image = "wger/server:latest";
 
     # Name
-    container_name = names.wger.worker;
+    container_name = names.wger.celery.worker;
 
     # Command
     command = "/start-worker";
@@ -318,10 +318,10 @@ in {
     };
 
     # Depends
-    depends_on = [ names.wger.wger ];
+    depends_on = [ names.wger.app ];
 
     # Networking
-    networks = [ networks.workout.name ];
+    networks = [ networks.workout ];
 
   };
 
@@ -329,13 +329,13 @@ in {
   ### # Celery # ###
        ########
 
-  services."${names.wger.beat}".service = {
+  services."${names.wger.celery.beat}".service = {
 
     # Image
     image = "wger/server:latest";
 
     # Name
-    container_name = names.wger.beat;
+    container_name = names.wger.celery.beat;
 
     # Command
     command = "/start-beat";
@@ -350,10 +350,10 @@ in {
     ];
 
     # Depends
-    depends_on = [ names.wger.worker ];
+    depends_on = [ names.wger.celery.worker ];
 
     # Networking
-    networks = [ networks.workout.name ];
+    networks = [ networks.workout ];
 
   };
 
@@ -361,7 +361,7 @@ in {
   ### # Flower # ###
        ########
 
-  services."${names.wger.flower}".service = let
+  services."${names.wger.celery.flower}".service = let
 
     healthPort = 5555;
 
@@ -371,7 +371,7 @@ in {
     image = "wger/server:latest";
 
     # Name
-    container_name = names.wger.flower;
+    container_name = names.wger.celery.flower;
 
     # Command
     command = "/start-flower";
@@ -386,7 +386,7 @@ in {
     ];
 
     # Depends
-    depends_on = [ names.wger.worker ];
+    depends_on = [ names.wger.celery.worker ];
 
     # Healthcheck
     healthcheck = {
@@ -406,7 +406,7 @@ in {
     expose = [ (builtins.toString healthPort) ];
 
     # Networking
-    networks = [ networks.workout.name ];
+    networks = [ networks.workout ];
 
   };
 

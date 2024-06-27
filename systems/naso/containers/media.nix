@@ -6,7 +6,7 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front.name}".external = true;
+  networks."${networks.front}".external = true;
 
        ##########
   ### # Jellyfin # ###
@@ -40,7 +40,7 @@ with shared;
     (map (eachFolder: "/data/chunk/media/${eachFolder}:/data/${eachFolder}:ro") syncFolders);
 
     # Networking
-    networks = [ networks.front.name ];
+    networks = [ networks.front ];
 
   };
 
@@ -65,7 +65,7 @@ with shared;
       "/data/chunk/media/manga:/data:ro"
     ];
     # Networking
-    networks = [ networks.front.name ];
+    networks = [ networks.front ];
   };
 
        ##############
@@ -90,7 +90,7 @@ with shared;
       "/data/local/containers/browser/config:/config"
     ];
     # Networking
-    networks = [ networks.front.name ];
+    networks = [ networks.front ];
   };
 
        ##############
@@ -107,7 +107,7 @@ with shared;
       "/data/chunk/media:/web:ro"
     ];
     # Networking
-    networks = [ networks.front.name ];
+    networks = [ networks.front ];
   };
 
 

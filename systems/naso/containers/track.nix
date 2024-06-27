@@ -6,8 +6,8 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front.name}".external = true;
-  networks."${networks.track.name}".name = networks.track.name;
+  networks."${networks.front}".external = true;
+  networks."${networks.track}".name = networks.track;
 
        #########
   ### # Traccar # ###
@@ -43,7 +43,7 @@ with shared;
     ];
 
     # Networking
-    networks = [ networks.track.name networks.front.name ];
+    networks = [ networks.track networks.front ];
 
   };
 
@@ -68,7 +68,7 @@ with shared;
       "/data/bunker/data/containers/track/database:/var/lib/mysql"
     ];
     # Networking
-    networks = [ networks.track.name ];
+    networks = [ networks.track ];
   };
 
 }

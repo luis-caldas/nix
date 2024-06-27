@@ -16,8 +16,8 @@ let
 in {
 
   # Networking
-  networks."${networks.front.name}".external = true;
-  networks."${networks.recipe.name}".name = networks.recipe.name;
+  networks."${networks.front}".external = true;
+  networks."${networks.recipe}".name = networks.recipe;
 
        #########
   ### # Tandoor # ###
@@ -51,7 +51,7 @@ in {
     ];
 
     # Networking
-    networks = [ networks.recipe.name networks.front.name ];
+    networks = [ networks.recipe networks.front ];
 
   };
 
@@ -77,7 +77,7 @@ in {
     ];
 
     # Networking
-    networks = [ networks.recipe.name networks.front.name ];
+    networks = [ networks.recipe networks.front ];
 
   };
 

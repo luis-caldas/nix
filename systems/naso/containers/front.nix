@@ -6,17 +6,17 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front.name}".name = networks.front.name;
+  networks."${networks.front}".name = networks.front;
 
        #######
   ### # Proxy # ###
        #######
 
-  services."${names.front}".service = {
+  services."${names.front.app}".service = {
     # Image
     image = "jc21/nginx-proxy-manager:latest";
     # Name
-    container_name = names.front;
+    container_name = names.front.app;
     # Volumes
     volumes = [
       "/data/local/containers/proxy/application:/data"
@@ -29,18 +29,18 @@ with shared;
       "81:81/tcp"
     ];
     # Networking
-    networks = [ networks.front.name ];
+    networks = [ networks.front ];
   };
 
        ########
   ### # Access # ###
        ########
 
-  services."${names.access}".service = {
+  services."${names.front.access}".service = {
     # Image
     image = "xavierh/goaccess-for-nginxproxymanager:latest";
     # Name
-    container_name = names.access;
+    container_name = names.front.access;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;
@@ -58,7 +58,7 @@ with shared;
       "/data/local/containers/proxy/application/logs:/opt/log"
     ];
     # Networking
-    networks = [ networks.front.name ];
+    networks = [ networks.front ];
   };
 
 }
