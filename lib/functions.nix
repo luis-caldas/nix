@@ -69,6 +69,10 @@ let
         properName = lib.strings.concatStringsSep splitChar capitalisedList;
       in properName;
 
+    # Get last with separator
+    getLastDash = inputString:
+      lib.lists.last (lib.strings.splitString "-" inputString);
+
     # Generates SSL Key and Certificate
     generateUnsafeSSL = let
       duration = 365 * 10;
