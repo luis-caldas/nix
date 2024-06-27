@@ -3,7 +3,21 @@
 # Inherit the shared values
 with shared;
 
-{
+let
+
+  # Paths
+  paths = {
+    local = rec {
+      matrix = "/data/local/containers/matrix";
+      bridge = "${matrix}/bridge";
+    };
+    safe = rec {
+      matrix = "/data/bunker/data/containers/matrix";
+      bridge = "${matrix}/bridge";
+    };
+  };
+
+in {
 
   # Networking
   networks."${networks.front}".external = true;
@@ -28,8 +42,8 @@ with shared;
     };
     # Volumes
     volumes = [
-      "/data/local/containers/matrix/main:/data"
-      "/data/local/containers/matrix/bridge:/bridge"
+      "${paths.local.matrix}/main:/data"
+      "${paths.local.bridge}:/bridge"
     ];
     # Networking
     networks = [ networks.front networks.social ];
@@ -51,11 +65,11 @@ with shared;
       POSTGRES_INITDB_ARGS = "--encoding=UTF-8 --lc-collate=C --lc-ctype=C";
     };
     env_file = [
-      "/data/local/containers/matrix/database/database.env"
+      "${paths.local.matrix}/database/database.env"
     ];
     # Volumes
     volumes = [
-      "/data/bunker/data/containers/matrix/database/data:/var/lib/postgresql/data"
+      "${paths.safe.matrix}/database/data:/var/lib/postgresql/data"
     ];
     # Networking
     networks = [ networks.social ];
@@ -94,7 +108,7 @@ with shared;
     depends_on = [ names.matrix.app names.matrix.bridge.database.whats ];
     # Volumes
     volumes = [
-      "/data/local/containers/matrix/bridge/whats/app:/data"
+      "${paths.local.bridge}/${names.matrix.bridge.whats}/app:/data"
     ];
     # Networking
     networks = [ networks.social ];
@@ -119,7 +133,7 @@ with shared;
     depends_on = [ names.matrix.app names.matrix.bridge.database.discord ];
     # Volumes
     volumes = [
-      "/data/local/containers/matrix/bridge/disc/app:/data"
+      "${paths.local.bridge}/${names.matrix.bridge.discord}/app:/data"
     ];
     # Networking
     networks = [ networks.social ];
@@ -144,7 +158,7 @@ with shared;
     depends_on = [ names.matrix.app names.matrix.bridge.database.telegram ];
     # Volumes
     volumes = [
-      "/data/local/containers/matrix/bridge/gram/app:/data"
+      "${paths.local.bridge}/${names.matrix.bridge.telegram}/app:/data"
     ];
     # Networking
     networks = [ networks.social ];
@@ -169,7 +183,7 @@ with shared;
     depends_on = [ names.matrix.app names.matrix.bridge.database.slack ];
     # Volumes
     volumes = [
-      "/data/local/containers/matrix/bridge/slac/app:/data"
+      "${paths.local.bridge}/${names.matrix.bridge.slack}/app:/data"
     ];
     # Networking
     networks = [ networks.social ];
@@ -194,7 +208,7 @@ with shared;
     depends_on = [ names.matrix.app names.matrix.bridge.database.signal ];
     # Volumes
     volumes = [
-      "/data/local/containers/matrix/bridge/sig/app:/data"
+      "${paths.local.bridge}/${names.matrix.bridge.signal}/app:/data"
     ];
     # Networking
     networks = [ networks.social ];
@@ -219,7 +233,7 @@ with shared;
     depends_on = [ names.matrix.app names.matrix.bridge.database.meta ];
     # Volumes
     volumes = [
-      "/data/local/containers/matrix/bridge/meta/app:/data"
+      "${paths.local.bridge}/${names.matrix.bridge.meta}/app:/data"
     ];
     # Networking
     networks = [ networks.social ];
@@ -244,11 +258,11 @@ with shared;
       POSTGRES_DB = names.matrix.bridge.whats;
     };
     env_file = [
-      "/data/local/containers/matrix/bridge/whats/env/database.env"
+      "${paths.local.bridge}/${names.matrix.bridge.whats}/env/database.env"
     ];
     # Volumes
     volumes = [
-      "/data/bunker/data/containers/matrix/bridge/whats/database:/var/lib/postgresql/data"
+      "${paths.safe.bridge}/${names.matrix.bridge.whats}/database:/var/lib/postgresql/data"
     ];
     # Networking
     networks = [ networks.social ];
@@ -269,11 +283,11 @@ with shared;
       POSTGRES_DB = names.matrix.bridge.discord;
     };
     env_file = [
-      "/data/local/containers/matrix/bridge/disc/env/database.env"
+      "${paths.local.bridge}/${names.matrix.bridge.discord}/env/database.env"
     ];
     # Volumes
     volumes = [
-      "/data/bunker/data/containers/matrix/bridge/disc/database:/var/lib/postgresql/data"
+      "${paths.safe.bridge}/${names.matrix.bridge.discord}/database:/var/lib/postgresql/data"
     ];
     # Networking
     networks = [ networks.social ];
@@ -294,11 +308,11 @@ with shared;
       POSTGRES_DB = names.matrix.bridge.telegram;
     };
     env_file = [
-      "/data/local/containers/matrix/bridge/gram/env/database.env"
+      "${paths.local.bridge}/${names.matrix.bridge.telegram}/env/database.env"
     ];
     # Volumes
     volumes = [
-      "/data/bunker/data/containers/matrix/bridge/gram/database:/var/lib/postgresql/data"
+      "${paths.safe.bridge}/${names.matrix.bridge.telegram}/database:/var/lib/postgresql/data"
     ];
     # Networking
     networks = [ networks.social ];
@@ -319,11 +333,11 @@ with shared;
       POSTGRES_DB = names.matrix.bridge.slack;
     };
     env_file = [
-      "/data/local/containers/matrix/bridge/slac/env/database.env"
+      "${paths.local.bridge}/${names.matrix.bridge.slack}/env/database.env"
     ];
     # Volumes
     volumes = [
-      "/data/bunker/data/containers/matrix/bridge/slac/database:/var/lib/postgresql/data"
+      "${paths.safe.bridge}/${names.matrix.bridge.slack}/database:/var/lib/postgresql/data"
     ];
     # Networking
     networks = [ networks.social ];
@@ -344,11 +358,11 @@ with shared;
       POSTGRES_DB = names.matrix.bridge.signal;
     };
     env_file = [
-      "/data/local/containers/matrix/bridge/sig/env/database.env"
+      "${paths.local.bridge}/${names.matrix.bridge.signal}/env/database.env"
     ];
     # Volumes
     volumes = [
-      "/data/bunker/data/containers/matrix/bridge/sig/database:/var/lib/postgresql/data"
+      "${paths.safe.bridge}/${names.matrix.bridge.signal}/database:/var/lib/postgresql/data"
     ];
     # Networking
     networks = [ networks.social ];
@@ -369,11 +383,11 @@ with shared;
       POSTGRES_DB = names.matrix.bridge.meta;
     };
     env_file = [
-      "/data/local/containers/matrix/bridge/meta/env/database.env"
+      "${paths.local.bridge}/${names.matrix.bridge.meta}/env/database.env"
     ];
     # Volumes
     volumes = [
-      "/data/bunker/data/containers/matrix/bridge/meta/database:/var/lib/postgresql/data"
+      "${paths.safe.bridge}/${names.matrix.bridge.meta}/database:/var/lib/postgresql/data"
     ];
     # Networking
     networks = [ networks.social ];

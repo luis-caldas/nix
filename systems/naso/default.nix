@@ -70,7 +70,7 @@
   };
 
   # Build the whole project
-  builtProjects = pkgs.functions.container.projects ./containers (lib.debug.traceValSeqN 10 shared);
+  builtProjects = pkgs.functions.container.projects ./containers shared;
 
 in {
 
@@ -113,7 +113,7 @@ in {
 
   # Create all the needed dependencies
   systemd.services = pkgs.functions.container.createDependencies
-    (pkgs.functions.container.extractDependencies (lib.debug.traceValSeqN 10 builtProjects));
+    (pkgs.functions.container.extractDependencies builtProjects);
 
   # Publish Avahi
   # Which is needed to advertise the network share
