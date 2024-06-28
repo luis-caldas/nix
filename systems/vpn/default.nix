@@ -12,6 +12,7 @@ let
 
     # Set up container names
     names = pkgs.functions.container.createNames { dataIn = {
+      # Non split containers
       app = [
         # VPN
         "wire"
