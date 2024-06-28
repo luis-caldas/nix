@@ -15,8 +15,6 @@ with shared;
   services."${names.nut}".service = {
     # Image
     image = "teknologist/webnut:latest";
-    # Name
-    container_name = names.nut;
     # Environment
     environment = {
       TZ = config.mine.system.timezone;

@@ -17,8 +17,6 @@ with shared;
     build.image = lib.mkForce pkgs.containers.asterisk;
     # Configuration
     service = {
-      # Name
-      container_name = names.asterisk.app;
       # Volumes
       volumes = [
         "/data/local/containers/asterisk/config/conf:/etc/asterisk/conf.mine"
@@ -43,8 +41,6 @@ with shared;
     build.image = lib.mkForce (pkgs.containers.web {});
     # Options
     service = {
-      # Name
-      container_name = names.asterisk.web.normal;
       # Volumes
       volumes = [
         "/data/local/containers/asterisk/config/voicemail:/web/voicemail:ro"
@@ -62,8 +58,6 @@ with shared;
   services."${names.asterisk.web.simple}".service = {
     # Image
     image = "halverneus/static-file-server:latest";
-    # Name
-    container_name = names.asterisk.web.simple;
     # Volumes
     volumes = [
       "/data/local/containers/asterisk/config/voicemail:/web/voicemail:ro"

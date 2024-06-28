@@ -15,8 +15,6 @@ with shared;
   services."${names.front}".service = {
     # Image
     image = "jc21/nginx-proxy-manager:latest";
-    # Name
-    container_name = names.front;
     # Volumes
     volumes = [
       "/data/local/containers/proxy/application:/data"

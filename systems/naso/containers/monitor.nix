@@ -20,9 +20,6 @@ with shared;
     # Hostname
     hostname = names.monitor;
 
-    # Name
-    container_name = names.monitor;
-
     # Run with default user
     user = config.mine.user.name;
 
@@ -52,9 +49,6 @@ with shared;
 
     # Hostname
     hostname = names.kuma;
-
-    # Name
-    container_name = names.kuma;
 
     # Environment
     environment = {

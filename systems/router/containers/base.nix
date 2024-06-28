@@ -21,8 +21,6 @@ with shared;
   services."${names.dns.up}" = {
     build.image = lib.mkForce pkgs.containers.dns;
     service = {
-      # Name
-      container_name = names.dns.up;
       # Networking
       networks."${networks.dns}".ipv4_address = pkgs.networks.docker.dns.main.ips.upstream;
     };
@@ -37,9 +35,6 @@ with shared;
 
     # Image
     image = "pihole/pihole:latest";
-
-    # Name
-    container_name = names.dns.app;
 
     # Environment
     environment = {
@@ -72,8 +67,6 @@ with shared;
   services."${names.time}".service = {
     # Image file
     image = "simonrupf/chronyd:latest";
-    # Name
-    container_name = names.time;
     # Environment
     environment = {
       TZ = config.mine.system.timezone;

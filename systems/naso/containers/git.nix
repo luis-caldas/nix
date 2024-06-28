@@ -29,9 +29,6 @@ with shared;
     # Image
     image = "gitea/gitea:latest";
 
-    # Name
-    container_name = names.gitea.app;
-
     # Depends
     depends_on = [ names.gitea.database ];
 
@@ -77,8 +74,6 @@ with shared;
   services."${names.gitea.database}".service = {
     # Image
     image = "mariadb:latest";
-    # Name
-    container_name = names.gitea.database;
     # Environment
     environment = {
       TZ = config.mine.system.timezone;

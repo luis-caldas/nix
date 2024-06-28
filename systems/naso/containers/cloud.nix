@@ -40,8 +40,6 @@ in {
   services."${names.cloud.app}".service = {
     # Image
     image = imagePath;
-    # Name
-    container_name = names.cloud.app;
     # Dependend
     depends_on = [ names.cloud.maria names.cloud.redis ];
     # Environment
@@ -63,8 +61,6 @@ in {
   services."${names.cloud.cron}".service = {
     # Image
     image = imagePath;
-    # Name
-    container_name = names.cloud.cron;
     # Dependend
     depends_on = [ names.cloud.app ];
     # Entrypoint
@@ -88,8 +84,6 @@ in {
   services."${names.cloud.maria}".service = {
     # Image
     image = "mariadb:latest";
-    # Name
-    container_name = names.cloud.maria;
     # Environment
     environment = {
       TZ = config.mine.system.timezone;
@@ -112,8 +106,6 @@ in {
   services."${names.cloud.redis}".service = {
     # Image
     image = "redis:latest";
-    # Name
-    container_name = names.cloud.redis;
     # Environment
     environment = {
       TZ = config.mine.system.timezone;

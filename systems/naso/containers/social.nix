@@ -30,8 +30,6 @@ in {
   services."${names.matrix.app}".service = {
     # Image
     image = "matrixdotorg/synapse:latest";
-    # Name
-    container_name = names.matrix.app;
     # Depends
     depends_on = [ names.matrix.database ];
     # Environment
@@ -56,8 +54,6 @@ in {
   services."${names.matrix.database}".service = {
     # Image
     image = "postgres:latest";
-    # Name
-    container_name = names.matrix.database;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       POSTGRES_USER = names.matrix.app;
@@ -82,8 +78,6 @@ in {
   services."${names.matrix.admin}".service = {
     # Image
     image = "awesometechnologies/synapse-admin:latest";
-    # Name
-    container_name = names.matrix.admin;
     # Depends
     depends_on = [ names.matrix.app ];
     # Networking
@@ -101,8 +95,6 @@ in {
   services."${names.matrix.bridge.whats}".service = {
     # Image
     image = "dock.mau.dev/mautrix/whatsapp:latest";
-    # Name
-    container_name = names.matrix.bridge.whats;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;
@@ -126,8 +118,6 @@ in {
   # services."${names.matrix.bridge.discord}".service = {
   #   # Image
   #   image = "dock.mau.dev/mautrix/discord:latest";
-  #   # Name
-  #   container_name = names.matrix.bridge.discord;
   #   # Environment
   #   environment = pkgs.functions.container.fixEnvironment {
   #     TZ = config.mine.system.timezone;
@@ -151,8 +141,6 @@ in {
   # services."${names.matrix.bridge.telegram}".service = {
   #   # Image
   #   image = "dock.mau.dev/mautrix/telegram:latest";
-  #   # Name
-  #   container_name = names.matrix.bridge.telegram;
   #   # Environment
   #   environment = pkgs.functions.container.fixEnvironment {
   #     TZ = config.mine.system.timezone;
@@ -176,8 +164,6 @@ in {
   # services."${names.matrix.bridge.slack}".service = {
   #   # Image
   #   image = "dock.mau.dev/mautrix/slack:latest";
-  #   # Name
-  #   container_name = names.matrix.bridge.slack;
   #   # Environment
   #   environment = pkgs.functions.container.fixEnvironment {
   #     TZ = config.mine.system.timezone;
@@ -201,8 +187,6 @@ in {
   # services."${names.matrix.bridge.signal}".service = {
   #   # Image
   #   image = "dock.mau.dev/mautrix/signal:latest";
-  #   # Name
-  #   container_name = names.matrix.bridge.signal;
   #   # Environment
   #   environment = pkgs.functions.container.fixEnvironment {
   #     TZ = config.mine.system.timezone;
@@ -226,8 +210,6 @@ in {
   # services."${names.matrix.bridge.meta}".service = {
   #   # Image
   #   image = "dock.mau.dev/mautrix/meta:latest";
-  #   # Name
-  #   container_name = names.matrix.bridge.meta;
   #   # Environment
   #   environment = pkgs.functions.container.fixEnvironment {
   #     TZ = config.mine.system.timezone;
@@ -255,8 +237,6 @@ in {
   services."${names.matrix.bridge.database.whats}".service = {
     # Image
     image = "postgres:latest";
-    # Name
-    container_name = names.matrix.bridge.database.whats;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       POSTGRES_USER = names.matrix.bridge.whats;
@@ -280,8 +260,6 @@ in {
   # services."${names.matrix.bridge.database.discord}".service = {
   #   # Image
   #   image = "postgres:latest";
-  #   # Name
-  #   container_name = names.matrix.bridge.database.discord;
   #   # Environment
   #   environment = pkgs.functions.container.fixEnvironment {
   #     POSTGRES_USER = names.matrix.bridge.discord;
@@ -305,8 +283,6 @@ in {
   # services."${names.matrix.bridge.database.telegram}".service = {
   #   # Image
   #   image = "postgres:latest";
-  #   # Name
-  #   container_name = names.matrix.bridge.database.telegram;
   #   # Environment
   #   environment = pkgs.functions.container.fixEnvironment {
   #     POSTGRES_USER = names.matrix.bridge.telegram;
@@ -330,8 +306,6 @@ in {
   # services."${names.matrix.bridge.database.slack}".service = {
   #   # Image
   #   image = "postgres:latest";
-  #   # Name
-  #   container_name = names.matrix.bridge.database.slack;
   #   # Environment
   #   environment = pkgs.functions.container.fixEnvironment {
   #     POSTGRES_USER = names.matrix.bridge.slack;
@@ -355,8 +329,6 @@ in {
   # services."${names.matrix.bridge.database.signal}".service = {
   #   # Image
   #   image = "postgres:latest";
-  #   # Name
-  #   container_name = names.matrix.bridge.database.signal;
   #   # Environment
   #   environment = pkgs.functions.container.fixEnvironment {
   #     POSTGRES_USER = names.matrix.bridge.signal;
@@ -380,8 +352,6 @@ in {
   # services."${names.matrix.bridge.database.meta}".service = {
   #   # Image
   #   image = "postgres:latest";
-  #   # Name
-  #   container_name = names.matrix.bridge.database.meta;
   #   # Environment
   #   environment = pkgs.functions.container.fixEnvironment {
   #     POSTGRES_USER = names.matrix.bridge.meta;

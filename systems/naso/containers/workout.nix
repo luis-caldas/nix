@@ -88,9 +88,6 @@ in {
     # Image
     image = "wger/server:latest";
 
-    # Name
-    container_name = names.wger.app;
-
     # Environment
     environment = commonEnvironment;
     env_file = [ "/data/local/containers/workout/wger.env" ];
@@ -134,9 +131,6 @@ in {
 
     # Image
     image = "nginx:stable";
-
-    # Name
-    container_name = names.wger.web;
 
     # Depends on
     depends_on = [ names.wger.app ];
@@ -210,9 +204,6 @@ in {
     # Image
     image = "postgres:15-alpine";
 
-    # Name
-    container_name = names.wger.database;
-
     # Environment
     environment = {
       POSTGRES_DATABASE = names.wger.app;
@@ -252,9 +243,6 @@ in {
     # Image
     image = "redis:latest";
 
-    # Name
-    container_name = names.wger.cache;
-
     # Volumes
     volumes = [
       "/data/local/containers/workout/cache:/data"
@@ -287,9 +275,6 @@ in {
 
     # Image
     image = "wger/server:latest";
-
-    # Name
-    container_name = names.wger.celery.worker;
 
     # Command
     command = "/start-worker";
@@ -334,9 +319,6 @@ in {
     # Image
     image = "wger/server:latest";
 
-    # Name
-    container_name = names.wger.celery.beat;
-
     # Command
     command = "/start-beat";
 
@@ -369,9 +351,6 @@ in {
 
     # Image
     image = "wger/server:latest";
-
-    # Name
-    container_name = names.wger.celery.flower;
 
     # Command
     command = "/start-flower";

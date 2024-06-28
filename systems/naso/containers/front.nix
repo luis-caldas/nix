@@ -15,8 +15,6 @@ with shared;
   services."${names.front.app}".service = {
     # Image
     image = "jc21/nginx-proxy-manager:latest";
-    # Name
-    container_name = names.front.app;
     # Volumes
     volumes = [
       "/data/local/containers/proxy/application:/data"
@@ -39,8 +37,6 @@ with shared;
   services."${names.front.access}".service = {
     # Image
     image = "xavierh/goaccess-for-nginxproxymanager:latest";
-    # Name
-    container_name = names.front.access;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;

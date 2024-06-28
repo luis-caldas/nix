@@ -28,9 +28,6 @@ in {
     # Image
     image = "vabene1111/recipes:latest";
 
-    # Name
-    container_name = names.tandoor.app;
-
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       # Do not debug
@@ -63,9 +60,6 @@ in {
 
     # Image
     image = "postgres:16-alpine";
-
-    # Name
-    container_name = names.tandoor.database;
 
     # Environment
     environment = connection;

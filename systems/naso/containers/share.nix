@@ -17,9 +17,6 @@ with shared;
     # Image
     image = "dperson/samba:latest";
 
-    # Name
-    container_name = names.samba;
-
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;
@@ -69,8 +66,6 @@ with shared;
   services."${names.shout}".service = {
     # Image
     image = "aovestdipaperino/wsdd2";
-    # Name
-    container_name = names.shout;
     # Environment
     environment = {
       TZ = config.mine.system.timezone;

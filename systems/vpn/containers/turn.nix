@@ -52,8 +52,6 @@ with shared;
   in {
     # Image
     image = "ghcr.io/processone/eturnal:latest";
-    # Name
-    container_name = names.turn;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;

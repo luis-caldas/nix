@@ -19,8 +19,6 @@ with shared;
   services."${names.dns.up}" = {
     build.image = lib.mkForce pkgs.containers.dns;
     service = {
-      # Name
-      container_name = names.dns.up;
       # Networking
       networks."${networks.wire}".ipv4_address = pkgs.networks.docker.dns.vpn.ips.upstream;
     };
@@ -34,9 +32,6 @@ with shared;
   services."${names.dns.app}".service = {
     # Image
     image = "pihole/pihole:latest";
-
-    # Name
-    container_name = names.dns.app;
 
     # Depends
     depends_on = [ names.dns.up ];
@@ -69,9 +64,6 @@ with shared;
 
     # Image file
     image = "lscr.io/linuxserver/wireguard:latest";
-
-    # Name
-    container_name = names.wire;
 
     # Environments
     environment = let

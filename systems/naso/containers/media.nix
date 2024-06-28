@@ -22,9 +22,6 @@ with shared;
     # Image
     image = "lscr.io/linuxserver/jellyfin:latest";
 
-    # Name
-    container_name = names.jellyfin;
-
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;
@@ -51,8 +48,6 @@ with shared;
   services."${names.komga}".service = {
     # Image
     image = "gotson/komga:latest";
-    # Name
-    container_name = names.komga;
     # Environment
     environment = {
       TZ = config.mine.system.timezone;
@@ -75,8 +70,6 @@ with shared;
   services."${names.browser}".service = {
     # Image
     image = "filebrowser/filebrowser:s6";
-    # Name
-    container_name = names.browser;
     # Environment
     environment = {
       TZ = config.mine.system.timezone;
@@ -100,8 +93,6 @@ with shared;
   services."${names.shower}".service = {
     # Image
     image = "halverneus/static-file-server:latest";
-    # Name
-    container_name = names.shower;
     # Volumes
     volumes = [
       "/data/chunk/media:/web:ro"

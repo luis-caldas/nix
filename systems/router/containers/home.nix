@@ -20,9 +20,6 @@ with shared;
     # Hostname
     hostname = names.assistant;
 
-    # Name
-    container_name = names.assistant;
-
     # Environment
     environment = {
       TZ = config.mine.system.timezone;

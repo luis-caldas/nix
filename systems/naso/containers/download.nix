@@ -30,8 +30,6 @@ in {
   services."${names.download.torrent}".service = {
     # Image
     image = "lscr.io/linuxserver/qbittorrent:latest";
-    # Name
-    container_name = names.download.torrent;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;
@@ -55,8 +53,6 @@ in {
   services."${names.download.usenet}".service = {
     # Image
     image = "hurlenko/aria2-ariang:latest";
-    # Name
-    container_name = names.download.usenet;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       PUID = config.mine.user.uid;
@@ -80,8 +76,6 @@ in {
 
     # Image
     image = "lscr.io/linuxserver/prowlarr:latest";
-    # Name
-    container_name = names.download.arr.fetch;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;
@@ -104,8 +98,6 @@ in {
   services."${names.download.arr.series}".service = {
     # Image
     image = "lscr.io/linuxserver/sonarr:latest";
-    # Name
-    container_name = names.download.arr.series;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;
@@ -130,8 +122,6 @@ in {
   services."${names.download.arr.films}".service = {
     # Image
     image = "lscr.io/linuxserver/radarr:latest";
-    # Name
-    container_name = names.download.arr.films;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;
@@ -155,8 +145,6 @@ in {
   services."${names.download.arr.books}".service = {
     # Image
     image = "lscr.io/linuxserver/readarr:develop";
-    # Name
-    container_name = names.download.arr.books;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;
@@ -180,8 +168,6 @@ in {
   services."${names.download.arr.subtitles}".service = {
     # Image
     image = "lscr.io/linuxserver/bazarr:latest";
-    # Name
-    container_name = names.download.arr.subtitles;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;

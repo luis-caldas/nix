@@ -21,9 +21,6 @@ with shared;
     # Internal hostname
     hostname = names.track.app;
 
-    # Name
-    container_name = names.track.app;
-
     # Depends
     depends_on = [ names.track.database ];
 
@@ -54,8 +51,6 @@ with shared;
   services."${names.track.database}".service = {
     # Image
     image = "mariadb:latest";
-    # Name
-    container_name = names.track.database;
     # Environment
     environment = {
       TZ = config.mine.system.timezone;

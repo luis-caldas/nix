@@ -15,8 +15,6 @@ with shared;
   services."${names.vault}".service = {
     # Image
     image = "vaultwarden/server:latest";
-    # Name
-    container_name = names.vault;
     # Environment
     environment = {
       TZ = config.mine.system.timezone;

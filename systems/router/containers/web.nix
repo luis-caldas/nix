@@ -17,8 +17,6 @@ with shared;
     build.image = lib.mkForce (pkgs.containers.web { name = "dashboard"; url = "https://github.com/luis-caldas/personal"; });
     # Options
     service = {
-      # Name
-      container_name = names.dash;
       # Volumes
       volumes = [
         "/data/local/containers/dash/config:/web/more:ro"
