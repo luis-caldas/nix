@@ -17,8 +17,6 @@
       "social"
       # Git
       "git"
-      # Downloading
-      "download"
       # Tracking
       "track"
       # Workout
@@ -35,15 +33,22 @@
       app = [
         # Share
         "samba" "shout"
-        # Download
-        "torrent" "aria"
         # Media
         "jellyfin" "komga" "browser" "shower"
         # Vault
         "vault"
+        # Monitoring
+        "monitor" "kuma"
       ];
       # Front
       front = [ "app" "access" ];
+      # Download
+      download = {
+        app = [ "torrent" "usenet" ];
+        arr = [
+          "fetch" "series" "films" "books" "subtitles"
+        ];
+      };
       # Track
       track = [ "app" "database" ];
       # Workout
