@@ -55,7 +55,7 @@ in {
   networking.firewall = {
     allowedTCPPorts = [
       # Escape port
-      pkgs.networks.ports.https;
+      pkgs.networks.ports.https
       # SSH
       (builtins.head config.services.openssh.ports)
       # Prometheus
