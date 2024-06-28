@@ -6,7 +6,7 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front.name}".external = true;
+  networks."${networks.front}".external = true;
 
        ##########
   ### # Asterisk # ###
@@ -51,7 +51,7 @@ with shared;
         "/data/local/containers/asterisk/config/record:/web/monitor:ro"
       ];
       # Networking
-      networks = [ networks.front.name ];
+      networks = [ networks.front ];
     };
   };
 
@@ -70,7 +70,7 @@ with shared;
       "/data/local/containers/asterisk/config/record:/web/monitor:ro"
     ];
     # Networking
-    networks = [ networks.front.name ];
+    networks = [ networks.front ];
   };
 
 }

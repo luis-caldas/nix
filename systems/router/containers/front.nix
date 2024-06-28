@@ -6,7 +6,7 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front.name}".name = networks.front.name;
+  networks."${networks.front}".name = networks.front;
 
        #######
   ### # Proxy # ###
@@ -29,7 +29,7 @@ with shared;
       "81:81/tcp"
     ];
     # Networking
-    networks = [ networks.front.name ];
+    networks = [ networks.front ];
   };
 
 }

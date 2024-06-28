@@ -6,7 +6,7 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front.name}".external = true;
+  networks."${networks.front}".external = true;
 
        ######
   ### # Dash # ###
@@ -24,7 +24,7 @@ with shared;
         "/data/local/containers/dash/config:/web/more:ro"
       ];
       # Networking
-      networks = [ networks.front.name ];
+      networks = [ networks.front ];
     };
   };
 

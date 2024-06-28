@@ -6,7 +6,7 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front.name}".external = true;
+  networks."${networks.front}".external = true;
 
        ################
   ### # Home Assistant # ###
@@ -34,7 +34,7 @@ with shared;
     ];
 
     # Networking
-    networks = [ networks.front.name ];
+    networks = [ networks.front ];
 
   };
 

@@ -6,7 +6,7 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front.name}".external = true;
+  networks."${networks.front}".external = true;
 
        #####
   ### # NUT # ###
@@ -23,7 +23,7 @@ with shared;
     };
     env_file = [ "/data/local/containers/nut/nut.env" ];
     # Networking
-    networks = [ networks.front.name ];
+    networks = [ networks.front ];
   };
 
 }

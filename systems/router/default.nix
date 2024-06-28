@@ -1,5 +1,52 @@
-{ pkgs, lib, config, ... }:
-{
+{ pkgs, lib, config, ... }: let
+
+  # Shared information
+  shared = {
+
+    # Configure all the needed networks
+    networks = pkgs.functions.container.createNetworkNames [
+      # Reverse Proxy
+      "front"
+      # NTP
+      "time"
+      # DNS
+      "dns"
+    ];
+
+    # Configure the needed names
+    names =  pkgs.functions.container.createNames { dataIn = {
+      # Non split containers
+      app = [
+        # Front
+        "front"
+        # Time
+        "time"
+        # Dashboard
+        "dash"
+        # Home Assistant
+        "assistant"
+        # UPS
+        "nut"
+      ];
+      # DNS
+      dns = [ "app" "up" ];
+      # Asterisk
+      asterisk = {
+        app = [ "app" ];
+        web = [ "simple" "normal" ];
+      };
+    };};
+
+  };
+
+  # Build the projects
+  builtProjects = pkgs.functions.container.projects ./containers shared;
+
+in {
+
+  ########
+  # Boot #
+  ########
 
   # Modules for startup
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "vfio-pci" ];
@@ -7,6 +54,10 @@
   boot.kernelParams = [ "pcie_aspm=off" "amd_iommu=on" "iommu=pt" "pci=noaer" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+
+  ########
+  # VFIO #
+  ########
 
   # VFIO overrides for VMs
   boot.initrd.preDeviceCommands = ''
@@ -16,6 +67,10 @@
     done
     modprobe -i vfio-pci
   '';
+
+  #######
+  # Own #
+  #######
 
   # My own configuration
   mine = {
@@ -32,6 +87,10 @@
       };
     };
   };
+
+  ##############
+  # Networking #
+  ##############
 
   # Enable IP forwarding
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
@@ -67,11 +126,24 @@
 
   };
 
+  ##################
+  # Virtualisation #
+  ##################
+
   # Virtualisation options
   virtualisation.libvirtd.onShutdown = "shutdown";
 
-  # Import all conatiners
-  imports = [ ./containers ];
+  # Arion
+  virtualisation.arion.projects = builtProjects;
+
+  # Create all the needed dependencies
+  systemd.services = pkgs.functions.container.createDependencies (
+    pkgs.functions.container.extractDependencies builtProjects
+  );
+
+  #######
+  # UPS #
+  #######
 
   # UPS configuration
   power.ups = {
@@ -137,6 +209,10 @@
 
   };
 
+  #########
+  # Email #
+  #########
+
   # Configure email sender
   programs.msmtp = {
     enable = true;
@@ -162,7 +238,9 @@
     };
   };
 
-  # File systems
+  ################
+  # File Systems #
+  ################
 
   fileSystems."/" =
     { device = "vimmer/root";

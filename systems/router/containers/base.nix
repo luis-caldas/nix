@@ -6,25 +6,25 @@ with shared;
 {
 
   # Networking
-  networks."${networks.dns.name}" = {
-    name = networks.dns.name;
-    ipam.config = [{ inherit (networks.dns) subnet gateway; }];
+  networks."${networks.dns}" = {
+    name = networks.dns;
+    ipam.config = [{ inherit (pkgs.networks.docker.dns.main) subnet gateway; }];
   };
-  networks."${networks.time.name}".name = networks.time.name;
-  networks."${networks.front.name}".external = true;
+  networks."${networks.time}".name = networks.time;
+  networks."${networks.front}".external = true;
 
        #####
   ### # DNS # ###
        #####
 
   # Upstream DNS server
-  services."${names.dnsUp}" = {
+  services."${names.dns.up}" = {
     build.image = lib.mkForce pkgs.containers.dns;
     service = {
       # Name
-      container_name = names.dnsUp;
+      container_name = names.dns.up;
       # Networking
-      networks."${networks.dns.name}".ipv4_address = networks.dns.ips.dnsUp;
+      networks."${networks.dns}".ipv4_address = pkgs.networks.docker.dns.main.ips.upstream;
     };
   };
 
@@ -33,19 +33,19 @@ with shared;
        ########
 
   # PiHole
-  services."${names.dns}".service = {
+  services."${names.dns.app}".service = {
 
     # Image
     image = "pihole/pihole:latest";
 
     # Name
-    container_name = names.dns;
+    container_name = names.dns.app;
 
     # Environment
     environment = {
       TZ = config.mine.system.timezone;
       DNSMASQ_LISTENING = "all";
-      PIHOLE_DNS_ = networks.dns.ips.dnsUp;
+      PIHOLE_DNS_ = pkgs.networks.docker.dns.main.ips.upstream;
     };
     env_file = [ "/data/local/containers/pihole/env/adblock.env" ];
 
@@ -61,7 +61,7 @@ with shared;
       "53:53/udp"
     ];
     dns = [ "127.0.0.1" ];
-    networks = [ networks.dns.name networks.front.name ];
+    networks = [ networks.dns networks.front ];
 
   };
 
@@ -84,7 +84,7 @@ with shared;
     ports = [
       "123:123/udp"
     ];
-    networks = [ networks.time.name ];
+    networks = [ networks.time ];
   };
 
 }
