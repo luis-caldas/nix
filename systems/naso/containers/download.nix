@@ -70,7 +70,6 @@ in {
     ];
     # Networking
     networks = [ networks.front ];
-    # TODO Service doesn't gracefully shut down, it may need tini
   };
 
        ##########

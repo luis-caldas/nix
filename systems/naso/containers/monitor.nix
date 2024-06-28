@@ -23,6 +23,9 @@ with shared;
     # Name
     container_name = names.monitor;
 
+    # Run with default user
+    user = config.mine.user.name;
+
     # Environment
     environment = {
       TZ = config.mine.system.timezone;
