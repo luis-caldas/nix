@@ -3,6 +3,9 @@ let
 
   allFunctions = rec {
 
+    # Max retries for a container to be restarted
+    maxRetries = 32;
+
     # Keyword that will be simplified for the parents namin
     # When used with dynamic naming
     simplifier = "app";
@@ -35,7 +38,7 @@ let
       possible = pkgs.functions.listFileNamesExtensionExcluded path [ "default" ] extension;
       # The permanent configurations to all services
       permanent = {
-        restart = "unless-stopped";
+        restart = "on-failure:${builtins.toString maxRetries}";
       };
       # Configuration to be done if container is locally built
       # or not
@@ -60,7 +63,12 @@ let
             sortedServices = builtins.mapAttrs
               (name: value: let
                 # Join the service with the permanent info
-                newServiceInfo = { service = value.service // permanent; };
+                newServiceInfo = {
+                  service = value.service // permanent // {
+                    # Also manually set the container name
+                    container_name = name;
+                  };
+                };
                 # Check if there is a need to add the pull policy
                 newRaw =
                   if builtins.hasAttr "build" value then {
