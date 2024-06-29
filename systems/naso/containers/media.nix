@@ -70,6 +70,8 @@ with shared;
   services."${names.browser}".service = {
     # Image
     image = "filebrowser/filebrowser:s6";
+    # User
+    user = "${builtins.toString config.mine.user.uid}:${builtins.toString config.mine.user.gid}";
     # Environment
     environment = {
       TZ = config.mine.system.timezone;
