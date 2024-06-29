@@ -15,7 +15,7 @@ with shared;
   services."${names.jellyfin}".service = let
 
     # Names of the folders that will be synced
-    syncFolders = [ "anime" "cartoons" "films" "series" ];
+    syncFolders = [ "anime" "cartoons" "films" "series" "eiga" ];
 
   in {
 

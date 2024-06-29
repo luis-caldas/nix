@@ -9,15 +9,10 @@ let
   paths = rec {
     local = "/data/local/containers";
     base = "/data/chunk/media";
-    on = {
-      downloads = "${base}/downloads";
-      anime = "${base}/anime";
-      cartoons = "${base}/cartoons";
-      series = "${base}/series";
-      films = "${base}/films";
-      eiga = "${base}/eiga";
-      manga = "${base}/manga";
-    };
+    on = builtins.listToAttrs (map
+      (each: { name = each; value = "${base}/${each}"; })
+      [ "downloads" "anime" "cartoons" "series" "films" "eiga" "manga" ]
+    );
   };
 
 in {
