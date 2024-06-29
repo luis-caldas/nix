@@ -188,6 +188,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Networking
     wireshark
+    hoppscotch
 
     # Files
     nextcloud-client
