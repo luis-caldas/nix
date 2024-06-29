@@ -177,6 +177,7 @@ lib.mkIf osConfig.mine.graphics.enable
     gnomeExtensions.wintile-windows-10-window-tiling-for-gnome
     gnomeExtensions.panel-date-format
     gnomeExtensions.weather-oclock
+    gnomeExtensions.customize-clock-on-lock-screen
 
     ################
     # Applications #
