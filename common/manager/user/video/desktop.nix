@@ -255,6 +255,7 @@ in {
         "Vitals@CoreCoding.com"
         "dash-to-dock@micxgx.gmail.com"
         "trayIconsReloaded@selfmade.pl"
+        "CustomizeClockOnLockScreen@pratap.fastmail.fm"
       ];
     };
 
@@ -303,6 +304,13 @@ in {
 
     panel-date-format = {
       format = "%Y/%m/%d %H:%M:%S %V %a %z";
+    };
+
+    customize-clock-on-lockscreen = {
+      custom-date-text = "%Y/%m/%d %V %a %z";
+      custom-style = false;
+      custom-time-text = "%H:%M:%S";
+      remove-hint = true;
     };
 
     trayIconsReloaded = {
