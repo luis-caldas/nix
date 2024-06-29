@@ -12,8 +12,10 @@ let
     on = {
       downloads = "${base}/downloads";
       anime = "${base}/anime";
+      cartoons = "${base}/cartoons";
       series = "${base}/series";
       films = "${base}/films";
+      eiga = "${base}/eiga";
       manga = "${base}/manga";
     };
   };
@@ -111,6 +113,7 @@ in {
       "${paths.local}/servarr/sonarr:/config"
       "${paths.on.series}:/series"
       "${paths.on.anime}:/anime"
+      "${paths.on.cartoons}:/cartoons"
       "${paths.on.downloads}:/downloads"
     ];
   };
@@ -134,55 +137,58 @@ in {
     volumes = [
       "${paths.local}/servarr/radarr:/config"
       "${paths.on.films}:/films"
+      "${paths.on.eiga}:/eiga"
       "${paths.on.downloads}:/downloads"
     ];
   };
 
-       #########
-  ### # Readarr # ###
-       #########
+  #      #########
+  # ### # Readarr # ###
+  #      #########
 
-  services."${names.download.arr.books}".service = {
-    # Image
-    image = "lscr.io/linuxserver/readarr:develop";
-    # Environment
-    environment = pkgs.functions.container.fixEnvironment {
-      TZ = config.mine.system.timezone;
-      PUID = config.mine.user.uid;
-      PGID = config.mine.user.gid;
-    };
-    # Networking
-    networks = [ networks.front ];
-    # Volumes
-    volumes = [
-      "${paths.local}/servarr/readarr:/config"
-      "${paths.on.manga}:/manga"
-      "${paths.on.downloads}:/downloads"
-    ];
-  };
+  # services."${names.download.arr.books}".service = {
+  #   # Image
+  #   image = "lscr.io/linuxserver/readarr:develop";
+  #   # Environment
+  #   environment = pkgs.functions.container.fixEnvironment {
+  #     TZ = config.mine.system.timezone;
+  #     PUID = config.mine.user.uid;
+  #     PGID = config.mine.user.gid;
+  #   };
+  #   # Networking
+  #   networks = [ networks.front ];
+  #   # Volumes
+  #   volumes = [
+  #     "${paths.local}/servarr/readarr:/config"
+  #     "${paths.on.manga}:/manga"
+  #     "${paths.on.downloads}:/downloads"
+  #   ];
+  # };
 
-       ########
-  ### # Bazarr # ###
-       ########
+  #      ########
+  # ### # Bazarr # ###
+  #      ########
 
-  services."${names.download.arr.subtitles}".service = {
-    # Image
-    image = "lscr.io/linuxserver/bazarr:latest";
-    # Environment
-    environment = pkgs.functions.container.fixEnvironment {
-      TZ = config.mine.system.timezone;
-      PUID = config.mine.user.uid;
-      PGID = config.mine.user.gid;
-    };
-    # Networking
-    networks = [ networks.front ];
-    # Volumes
-    volumes = [
-      "${paths.local}/servarr/bazarr:/config"
-      "${paths.on.films}:/films"
-      "${paths.on.anime}:/anime"
-      "${paths.on.series}:/series"
-    ];
-  };
+  # services."${names.download.arr.subtitles}".service = {
+  #   # Image
+  #   image = "lscr.io/linuxserver/bazarr:latest";
+  #   # Environment
+  #   environment = pkgs.functions.container.fixEnvironment {
+  #     TZ = config.mine.system.timezone;
+  #     PUID = config.mine.user.uid;
+  #     PGID = config.mine.user.gid;
+  #   };
+  #   # Networking
+  #   networks = [ networks.front ];
+  #   # Volumes
+  #   volumes = [
+  #     "${paths.local}/servarr/bazarr:/config"
+  #     "${paths.on.films}:/films"
+  #     "${paths.on.eiga}:/eiga"
+  #     "${paths.on.anime}:/anime"
+  #     "${paths.on.cartoons}:/cartoons"
+  #     "${paths.on.series}:/series"
+  #   ];
+  # };
 
 }
