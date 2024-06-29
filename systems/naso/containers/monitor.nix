@@ -21,7 +21,7 @@ with shared;
     hostname = names.monitor;
 
     # Run with default user
-    user = config.mine.user.name;
+    user = config.mine.user.uid;
 
     # Environment
     environment = {
