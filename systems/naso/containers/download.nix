@@ -11,7 +11,7 @@ let
     base = "/data/chunk/media";
     on = builtins.listToAttrs (map
       (each: { name = each; value = "${base}/${each}"; })
-      [ "downloads" "anime" "cartoons" "series" "films" "eiga" "manga" ]
+      [ "downloads" ]
     );
   };
 
@@ -106,10 +106,7 @@ in {
     # Volumes
     volumes = [
       "${paths.local}/servarr/sonarr:/config"
-      "${paths.on.series}:/series"
-      "${paths.on.anime}:/anime"
-      "${paths.on.cartoons}:/cartoons"
-      "${paths.on.downloads}:/downloads"
+      "${paths.base}:/media"
     ];
   };
 
@@ -131,9 +128,7 @@ in {
     # Volumes
     volumes = [
       "${paths.local}/servarr/radarr:/config"
-      "${paths.on.films}:/films"
-      "${paths.on.eiga}:/eiga"
-      "${paths.on.downloads}:/downloads"
+      "${paths.base}:/media"
     ];
   };
 
@@ -155,8 +150,7 @@ in {
   #   # Volumes
   #   volumes = [
   #     "${paths.local}/servarr/readarr:/config"
-  #     "${paths.on.manga}:/manga"
-  #     "${paths.on.downloads}:/downloads"
+  #     "${paths.base}:/media"
   #   ];
   # };
 
@@ -178,11 +172,7 @@ in {
   #   # Volumes
   #   volumes = [
   #     "${paths.local}/servarr/bazarr:/config"
-  #     "${paths.on.films}:/films"
-  #     "${paths.on.eiga}:/eiga"
-  #     "${paths.on.anime}:/anime"
-  #     "${paths.on.cartoons}:/cartoons"
-  #     "${paths.on.series}:/series"
+  #     "${paths.base}:/media"
   #   ];
   # };
 
