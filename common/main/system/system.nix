@@ -4,12 +4,6 @@
   # Enable Gnome Virtual Filesystem to browse shares
   services.gvfs.enable = config.mine.graphics.enable;
 
-  # Add zfs scrubbing
-  services.zfs.autoScrub.enable = true;
-
-  # Enable trimming when possible
-  services.zfs.trim.enable = true;
-
   # My timezone
   time.timeZone = config.mine.system.timezone;
 

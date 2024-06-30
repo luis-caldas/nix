@@ -253,6 +253,13 @@ in {
     };
   };
 
+  # Add zfs scrubbing
+  services.zfs.autoScrub = {
+    enable = true;
+    interval = "weekly";
+    pools = [ "bunker" "chunk" ];
+  };
+
   ################
   # File Systems #
   ################
