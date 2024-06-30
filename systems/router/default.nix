@@ -124,6 +124,12 @@ in {
     # Create the firewall bridge
     bridges.firewall-bridge.interfaces = [];
 
+    # Add another DNS to the DHCP acquired list
+    # That is because the DNS server itself depends on this to start
+    resolvconf.extraConfig = ''
+      name_servers_append="${builtins.concatStringsSep " " pkgs.networks.dns}"
+    '';
+
   };
 
   ##################
