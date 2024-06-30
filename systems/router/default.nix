@@ -126,9 +126,12 @@ in {
 
     # Add another DNS to the DHCP acquired list
     # That is because the DNS server itself depends on this to start
-    resolvconf.extraConfig = ''
-      name_servers_append="${builtins.concatStringsSep " " pkgs.networks.dns}"
-    '';
+    resolvconf = {
+      enable = true;
+      extraConfig = ''
+        name_servers_append="${builtins.concatStringsSep " " pkgs.networks.dns}"
+      '';
+    };
 
   };
 
