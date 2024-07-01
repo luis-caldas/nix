@@ -69,6 +69,21 @@ let
         properName = lib.strings.concatStringsSep splitChar capitalisedList;
       in properName;
 
+    # Function to check if item exists and then append to it if so
+    appendExists = where: attrName: dataIn: let
+      returnFunction = itemIn: where // { "${attrName}" = itemIn; };
+    in
+      if builtins.hasAttr attrName where then let
+          itemNow = builtins.getAttr attrName where;
+        in if (builtins.typeOf itemNow) == "set" then
+            returnFunction (itemNow // dataIn)
+          else if (builtins.typeOf itemNow) == "list" then
+            returnFunction (itemNow ++ dataIn)
+          else
+            returnFunction dataIn
+      else
+        returnFunction dataIn;
+
     # Generates SSL Key and Certificate
     generateUnsafeSSL = let
       duration = 365 * 10;
