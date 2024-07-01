@@ -146,9 +146,7 @@ in {
   virtualisation.arion.projects = builtProjects;
 
   # Create all the needed dependencies
-  systemd.services = pkgs.functions.container.createDependencies (
-    pkgs.functions.container.extractDependencies builtProjects
-  );
+  systemd.services = pkgs.functions.container.createDependencies builtProjects;
 
   #######
   # UPS #

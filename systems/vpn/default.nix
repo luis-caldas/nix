@@ -56,6 +56,9 @@ let
 
   };
 
+  # Build docker projects
+  builtProjects = pkgs.functions.container.projects ./containers shared;
+
 in {
 
   #######
@@ -142,7 +145,10 @@ in {
   ##############
 
   # Arion
-  virtualisation.arion.projects = pkgs.functions.container.projects ./containers shared;
+  virtualisation.arion.projects = builtProjects;
+
+  # Docker dependencies
+  systemd.services = pkgs.functions.container.createDependencies builtProjects;
 
   #############
   # Wireguard #

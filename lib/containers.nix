@@ -25,7 +25,7 @@ let
       extra = { init = true; };
     in originalObject // {
       out.service =
-        if builtins.hasAttr "out" then
+        if builtins.hasAttr "out" originalObject then
           originalObject.out.service // extra
         else
           extra;
@@ -88,6 +88,7 @@ let
 
     # Extract net network dependencies so that we can build the systemd
     # dependencies after
+    # ! The network name must match the project name (file name)
     extractDependencies = arionProjects:
       # Join all the data to the wanted format
       lib.attrsets.zipAttrs (builtins.concatLists
@@ -99,7 +100,7 @@ let
             builtins.filter (each: each != false) (lib.attrsets.mapAttrsToList (network: content:
               # If we found an external network we can add it to the data
               if (builtins.hasAttr "external" content) && (content.external == true) then
-                { "${network}" = name; }
+                { "${name}" = network; }
               else
                 false
             ) value.settings.networks)
@@ -110,22 +111,38 @@ let
 
     # Create list of dependencies for systemd services
     createDependencies = dependencies: let
+      # Data to be added
+      serviceData = {
+        unitConfig = {
+          StartLimitBurst = 8;
+          StartLimitInterval = "infinity";
+        };
+        serviceConfig = {
+          Restart = "on-failure";
+          RestartSec = 8;
+          RestartSteps = 4;
+          RestartMaxDelaySec = 128;
+        };
+      };
       # Service extension
       serviceExtension = "service";
-      # List of list of services
-      nestedServices = lib.attrsets.mapAttrsToList
-        (name: value:
-          (map
-            (each: { "${each}".requires = [ "${name}.${serviceExtension}" ]; } )
-          value)
-        )
-        dependencies;
-      # Bring all services to the top
-      allServices = lib.attrsets.mergeAttrsList (builtins.concatLists nestedServices);
-    in allServices;
+      # Extract the network dependencies
+      networkDependencies = extractDependencies dependencies;
+      # Add all the needed information to the services
+      updatedServices = lib.attrsets.mapAttrsToList (name: value:
+        {
+          "${name}" = serviceData //
+          (if (builtins.hasAttr name networkDependencies) then {
+            requires = map (netName: "${netName}.${serviceExtension}")
+              networkDependencies."${name}";
+          } else {});
+        }) dependencies;
+    in lib.attrsets.mergeAttrsList updatedServices;
 
     # Fix attr names
     createNames = { dataIn, previousPath ? [] }: let
+      # Return variable when an error occurs
+      errorReturn = "unknown";
       # Helper to cut simplifier
       cutSimplifier = previousNames: finalName: let
         # Fix the list
@@ -176,7 +193,7 @@ let
         # If we dont know what we received
         else
           # Throw error because we should not be here
-          builtins.trace "" "Data type inputted is invalid"
+          errorReturn
       ) dataIn;
 
     # Create the names for the networks
