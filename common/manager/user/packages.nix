@@ -293,7 +293,7 @@
     # Web
     browsh
     firefox
-    youtube-dl
+    # youtube-dl
 
     # KVM & Virtualisation
     qemu_full
