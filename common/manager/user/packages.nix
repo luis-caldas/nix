@@ -14,6 +14,9 @@
     geteltorito
     payload-dumper-go
 
+    # Text
+    recode
+
     # Usage
     duf
     ncdu
