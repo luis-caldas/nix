@@ -101,6 +101,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Music
     fretboard
+    pkgs.unstable.decibels  # TODO 24.11
 
     # Look & Feel
     gradience

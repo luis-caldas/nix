@@ -293,7 +293,7 @@
     # Web
     browsh
     firefox
-    # youtube-dl
+    # youtube-dl  # TODO Insecure
 
     # KVM & Virtualisation
     qemu_full
