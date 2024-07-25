@@ -98,6 +98,8 @@
 
     # Download
     aria
+    pkgs.custom.n-m3u8dl-re
+    bento4
 
     # Web Services
     frp
