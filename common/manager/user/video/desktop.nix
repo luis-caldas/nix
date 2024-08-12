@@ -324,7 +324,7 @@ in {
       hot-sensors = [
         "_processor_usage_"
         "_memory_allocated_"
-        "__temperature_avg__" "__temperature_max__"
+        "__temperature_max__"
       ];
       position-in-panel = 1;
       show-fan = false;
