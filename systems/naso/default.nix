@@ -257,7 +257,7 @@ in {
   # Add zfs scrubbing
   services.zfs.autoScrub = {
     enable = true;
-    interval = "weekly";
+    interval = "Sat *-*-* 06:00:00";
     pools = [ "bunker" "chunk" ];
   };
 
