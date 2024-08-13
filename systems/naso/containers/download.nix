@@ -149,7 +149,7 @@ in {
     networks = [ networks.front ];
     # Volumes
     volumes = [
-      "${paths.local}/servarr/radarr:/config"
+      "${paths.local}/servarr/lidarr:/config"
       "${paths.base}:/media"
     ];
   };
