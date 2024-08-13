@@ -39,6 +39,8 @@
         "vault"
         # Monitoring
         "monitor" "kuma"
+        # Music
+        "music"
       ];
       # Front
       front = [ "app" "access" ];
@@ -46,7 +48,7 @@
       download = {
         app = [ "torrent" "usenet" ];
         arr = [
-          "fetch" "series" "films" "books" "subtitles"
+          "fetch" "series" "films" "books" "subtitles" "music"
         ];
       };
       # Track

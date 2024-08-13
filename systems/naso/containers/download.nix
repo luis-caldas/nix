@@ -132,6 +132,28 @@ in {
     ];
   };
 
+       ########
+  ### # Lidarr # ###
+       ########
+
+  services."${names.download.arr.music}".service = {
+    # Image
+    image = "lscr.io/linuxserver/lidarr:latest";
+    # Environment
+    environment = pkgs.functions.container.fixEnvironment {
+      TZ = config.mine.system.timezone;
+      PUID = config.mine.user.uid;
+      PGID = config.mine.user.gid;
+    };
+    # Networking
+    networks = [ networks.front ];
+    # Volumes
+    volumes = [
+      "${paths.local}/servarr/radarr:/config"
+      "${paths.base}:/media"
+    ];
+  };
+
   #      #########
   # ### # Readarr # ###
   #      #########
