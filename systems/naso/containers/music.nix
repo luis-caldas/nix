@@ -8,9 +8,9 @@ with shared;
   # Networking
   networks."${networks.front}".external = true;
 
-       #########
-  ### # Traccar # ###
-       #########
+       ###########
+  ### # Navidrome # ###
+       ###########
 
   services."${names.music}".service = {
 
