@@ -38,9 +38,7 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     homepage = "https://github.com/albar965/atools";
-    description = "A static library extending Qt for exception handling,
-a log4j like logging framework, Flight Simulator related utilities like BGL reader
-and more";
+    description = "A static library extending Qt for exception handling, a log4j like logging framework, Flight Simulator related utilities like BGL reader and more";
     license = licenses.gpl3Plus;
     platforms = platforms.linux;
   };
