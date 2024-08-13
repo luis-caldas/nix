@@ -274,6 +274,9 @@ lib.mkIf osConfig.mine.graphics.enable
     # Graph plotting
     gnuplot
 
+    # Aviation
+    pkgs.custom.littlenavmap
+
     # Finance
     gnucash
     monero-gui

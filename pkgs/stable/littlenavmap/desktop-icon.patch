@@ -1,0 +1,18 @@
+diff --git a/desktop/littlenavmap.desktop b/desktop/littlenavmap.desktop
+index 3a8e9d4..a5929ea 100755
+--- a/desktop/littlenavmap.desktop
++++ b/desktop/littlenavmap.desktop
+@@ -1,12 +1,9 @@
+ [Desktop Entry]
+ Type=Application
+-Exec='YOUR_PATH_TO_LITTLENAVMAP/littlenavmap'
+-# replace spaces with \s
+-Path=YOUR_PATH_TO_LITTLENAVMAP/
++Exec=littlenavmap
+ Name=Little Navmap
+ GenericName=Little Navmap
+-# replace spaces with \s
+-Icon=YOUR_PATH_TO_LITTLENAVMAP/littlenavmap.svg
++Icon=littlenavmap
+ Terminal=false
+ Categories=Qt;Utility;Geography;Maps;
