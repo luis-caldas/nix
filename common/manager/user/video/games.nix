@@ -55,7 +55,7 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     steam
 
     # Simulator
-    flightgear
+    # flightgear  # Not needed
 
     # Gnome
     gnome.aisleriot

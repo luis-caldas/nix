@@ -275,7 +275,7 @@ lib.mkIf osConfig.mine.graphics.enable
     gnuplot
 
     # Aviation
-    pkgs.custom.littlenavmap
+    # pkgs.custom.littlenavmap  # Not needed
 
     # Finance
     gnucash
