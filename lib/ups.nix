@@ -3,6 +3,9 @@ let
 
   allUps = rec {
 
+    # Wait time for shutdown on client machines
+    shutdownWait = 3 * 60;  # In seconds
+
     # Path to be used
     path = "/var/lib/nut";
 
@@ -26,7 +29,7 @@ let
       PIPEFN ${path}/upssched.pipe
       LOCKFN ${path}/upssched.lock
 
-      AT ONBATT * START-TIMER on-batt 180
+      AT ONBATT * START-TIMER on-batt ${builtins.toString shutdownWait}
       AT ONLINE * CANCEL-TIMER on-batt
     '';
 
