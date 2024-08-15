@@ -27,7 +27,7 @@ with shared;
       "81:81/tcp"
     ];
     # Networking
-    networks = [ networks.front ];
+    networks = [ networks.front networks.music ];
   };
 
        ########

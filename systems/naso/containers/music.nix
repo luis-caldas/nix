@@ -30,7 +30,7 @@ with shared;
     ];
 
     # Networking
-    networks = [ networks.front ];
+    networks = [ networks.music ];
 
   };
 

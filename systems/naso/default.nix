@@ -13,6 +13,8 @@
       "front"
       # Cloud
       "cloud"
+      # Music
+      "music"
       # Matrix
       "social"
       # Git
