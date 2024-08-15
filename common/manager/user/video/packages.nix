@@ -229,6 +229,9 @@ lib.mkIf osConfig.mine.graphics.enable
     # QR Code
     zbar
 
+    # Music
+    sublime-music
+
     # Video player
     vlc
     mpv
