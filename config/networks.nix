@@ -136,6 +136,9 @@ let
       "149.112.112.10"
     ];
 
+    # Time Providers
+    time = "time.cloudflare.com";
+
   };
 
 in {
