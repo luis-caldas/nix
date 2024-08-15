@@ -5,10 +5,14 @@ with shared;
 
 {
 
-  # Set up the network
-  networks."${networks.wire}" = {
-    name = networks.wire;
-    ipam.config = [{ inherit (pkgs.networks.docker.dns.vpn) subnet gateway; }];
+  # Set up the networks
+  networks = (pkgs.functions.container.populateNetworks [
+    networks.vpn.wire
+  ]) // {
+    "${networks.vpn.dns}" = {
+      name = networks.vpn.dns;
+      ipam.config = [{ inherit (pkgs.networks.docker.dns.vpn) subnet gateway; }];
+    };
   };
 
        #####
@@ -20,7 +24,7 @@ with shared;
     build.image = lib.mkForce pkgs.containers.dns;
     service = {
       # Networking
-      networks."${networks.wire}".ipv4_address = pkgs.networks.docker.dns.vpn.ips.upstream;
+      networks."${networks.vpn.dns}".ipv4_address = pkgs.networks.docker.dns.vpn.ips.upstream;
     };
   };
 
@@ -52,7 +56,8 @@ with shared;
 
     # Networking
     dns = [ "127.0.0.1" ];
-    networks."${networks.wire}".ipv4_address = pkgs.networks.docker.dns.vpn.ips.main;
+    networks."${networks.vpn.dns}".ipv4_address = pkgs.networks.docker.dns.vpn.ips.main;
+    networks."${networks.vpn.wire}" = {};
 
   };
 
@@ -90,7 +95,7 @@ with shared;
     ports = [
       "${builtins.toString pkgs.networks.ports.open}:${builtins.toString pkgs.networks.ports.wireguard}/udp"
     ];
-    networks = [ networks.wire ];
+    networks = [ networks.vpn.wire ];
     capabilities.NET_ADMIN = true;
 
   };

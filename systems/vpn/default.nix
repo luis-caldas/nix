@@ -5,10 +5,20 @@ let
   shared = {
 
     # Overall networking for docker
-    networks = pkgs.functions.container.createNetworkNames [
-      # Networks
-      "wire" "turn"
-    ];
+    networks = pkgs.functions.container.createNames (let
+      default = "default";
+    in {
+      simplifierIn = default;
+      dataIn = {
+        # Defaults
+        "${default}" = [
+          # TURN
+          "turn"
+        ];
+        # VPN
+        vpn = [ "dns" "wire" ];
+      };
+    });
 
     # Set up container names
     names = pkgs.functions.container.createNames { dataIn = {

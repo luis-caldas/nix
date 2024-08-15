@@ -6,7 +6,9 @@ with shared;
 {
 
   # Set up the network
-  networks."${networks.turn}".name = networks.turn;
+  networks = pkgs.functions.container.populateNetworks [
+    networks.turn
+  ];
 
        ######
   ### # TURN # ###
