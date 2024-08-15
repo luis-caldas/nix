@@ -23,6 +23,13 @@ with shared;
     # Run with default user
     user = builtins.toString config.mine.user.uid;
 
+    # Environment
+    environment = pkgs.functions.container.fixEnvironment {
+      # Visual
+      ND_DEFAULTTHEME = "Spotify-ish";
+      ND_UILOGINBACKGROUNDURL = "data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA4AAAAvY8AYAAcQEf0PRET/Aw==";
+    };
+
     # Volumes
     volumes = [
       "/data/local/containers/music:/data"
