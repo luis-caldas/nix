@@ -6,6 +6,7 @@ with shared;
 {
 
   # Networking
+  networks."${networks.music}".external = true;
   networks."${networks.front}".name = networks.front;
 
        #######

@@ -6,7 +6,7 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front}".external = true;
+  networks."${networks.music}".name = networks.music;
 
        ###########
   ### # Navidrome # ###
