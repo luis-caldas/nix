@@ -3,40 +3,46 @@
 # Inherit the shared values
 with shared;
 
-{
+let
+
+  # Networks needed
+  localNetworks = [
+    networks.front
+  ];
+  externalNetworks = [
+    # Cloud
+    networks.cloud.default
+    # Download
+    networks.download.torrent
+    networks.download.usenet
+    networks.download.arr
+    # Git
+    networks.git.default
+    # Media
+    networks.media.jellyfin
+    networks.media.komga
+    networks.media.navidrome
+    networks.media.browser
+    networks.media.simple
+    # Recipe
+    networks.recipe.default
+    # Social
+    networks.social.default
+    networks.social.admin
+    # Track
+    networks.track.default
+    # Vault
+    networks.vault
+    # Workout
+    networks.workout.default
+  ];
+
+in {
 
   # Networking
   networks =
-    (pkgs.functions.container.populateNetworks [
-      networks.front
-    ]) //
-    (pkgs.functions.container.generateExternalNetworks [
-      # Cloud
-      networks.cloud.default
-      # Download
-      networks.download.torrent
-      networks.download.usenet
-      networks.download.arr
-      # Git
-      networks.git.default
-      # Media
-      networks.media.jellyfin
-      networks.media.komga
-      networks.media.navidrome
-      networks.media.browser
-      networks.media.simple
-      # Recipe
-      networks.recipe.default
-      # Social
-      networks.social.default
-      networks.social.admin
-      # Track
-      networks.track.default
-      # Vault
-      networks.vault
-      # Workout
-      networks.workout.default
-    ]);
+    (pkgs.functions.container.populateNetworks localNetworks) //
+    (pkgs.functions.container.generateExternalNetworks externalNetworks);
 
        #######
   ### # Proxy # ###
@@ -57,7 +63,7 @@ with shared;
       "81:81/tcp"
     ];
     # Networking
-    networks = [ networks.front networks.music ];
+    networks = localNetworks ++ externalNetworks;
   };
 
   #      ########
