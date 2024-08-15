@@ -312,7 +312,10 @@ in {
     depends_on = [ names.wger.app ];
 
     # Networking
-    networks = [ networks.workout.internal ];
+    networks = [
+      networks.workout.internal
+      networks.workout.database
+    ];
 
   };
 
@@ -341,7 +344,10 @@ in {
     depends_on = [ names.wger.celery.worker ];
 
     # Networking
-    networks = [ networks.workout.internal ];
+    networks = [
+      networks.workout.internal
+      networks.workout.database
+    ];
 
   };
 
@@ -391,7 +397,10 @@ in {
     expose = [ (builtins.toString healthPort) ];
 
     # Networking
-    networks = [ networks.workout.internal ];
+    networks = [
+      networks.workout.internal
+      networks.workout.database
+    ];
 
   };
 
