@@ -20,8 +20,14 @@ let
 in {
 
   # Networking
-  networks."${networks.front}".external = true;
-  networks."${networks.social}".name = networks.social;
+  networks = pkgs.functions.container.populateNetworks (
+    [
+      networks.social.default
+      networks.social.internal
+      networks.social.admin
+    ] ++
+    (builtins.attrValues networks.social.bridge.whats)
+  );
 
        ########
   ### # Matrix # ###
@@ -44,7 +50,11 @@ in {
       "${paths.local.bridge}:/bridge"
     ];
     # Networking
-    networks = [ networks.front networks.social ];
+    networks = [
+      networks.social.default
+      networks.social.internal
+      networks.social.bridge.whats.default
+    ];
   };
 
        ##########
@@ -68,7 +78,7 @@ in {
       "${paths.safe.matrix}/database/data:/var/lib/postgresql/data"
     ];
     # Networking
-    networks = [ networks.social ];
+    networks = [ networks.social.internal ];
   };
 
        #################
@@ -81,7 +91,7 @@ in {
     # Depends
     depends_on = [ names.matrix.app ];
     # Networking
-    networks = [ networks.front ];
+    networks = [ networks.social.admin ];
   };
 
   ############################################################################
@@ -108,7 +118,10 @@ in {
       "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.whats}/app:/data"
     ];
     # Networking
-    networks = [ networks.social ];
+    networks = [
+      networks.social.bridge.whats.default
+      networks.social.bridge.whats.internal
+    ];
   };
 
   #      ################
@@ -250,7 +263,7 @@ in {
       "${paths.safe.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.whats}/database:/var/lib/postgresql/data"
     ];
     # Networking
-    networks = [ networks.social ];
+    networks = [ networks.social.bridge.whats.internal ];
   };
 
   #      ##################

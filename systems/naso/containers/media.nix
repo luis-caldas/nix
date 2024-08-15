@@ -6,7 +6,8 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front}".external = true;
+  networks = pkgs.functions.container.populateNetworks
+    (builtins.attrValues networks.media);
 
        ##########
   ### # Jellyfin # ###
@@ -37,7 +38,7 @@ with shared;
     (map (eachFolder: "/data/chunk/media/${eachFolder}:/data/${eachFolder}:ro") syncFolders);
 
     # Networking
-    networks = [ networks.front ];
+    networks = [ networks.media.jellyfin ];
 
   };
 
@@ -60,7 +61,33 @@ with shared;
       "/data/chunk/media/manga:/data:ro"
     ];
     # Networking
-    networks = [ networks.front ];
+    networks = [ networks.media.komga ];
+  };
+
+       ###########
+  ### # Navidrome # ###
+       ###########
+
+  services."${names.music}".service = {
+    # Image
+    image = "deluan/navidrome:latest";
+    # Internal hostname
+    hostname = names.music;
+    # Run with default user
+    user = builtins.toString config.mine.user.uid;
+    # Environment
+    environment = pkgs.functions.container.fixEnvironment {
+      # Visual
+      ND_DEFAULTTHEME = "Spotify-ish";
+      ND_UILOGINBACKGROUNDURL = "data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA4AAAAvY8AYAAcQEf0PRET/Aw==";
+    };
+    # Volumes
+    volumes = [
+      "/data/local/containers/music:/data"
+      "/data/chunk/media/music:/music:ro"
+    ];
+    # Networking
+    networks = [ networks.media.navidrome ];
   };
 
        ##############
@@ -83,7 +110,7 @@ with shared;
       "/data/local/containers/browser/config:/config"
     ];
     # Networking
-    networks = [ networks.front ];
+    networks = [ networks.media.browser ];
   };
 
        ##############
@@ -98,7 +125,7 @@ with shared;
       "/data/chunk/media:/web:ro"
     ];
     # Networking
-    networks = [ networks.front ];
+    networks = [ networks.media.simple ];
   };
 
 

@@ -72,8 +72,8 @@ let
 in {
 
   # Networking
-  networks."${networks.front}".external = true;
-  networks."${networks.workout}".name = networks.workout;
+  networks = pkgs.functions.container.populateNetworks
+    (builtins.attrValues networks.workout);
 
        ######
   ### # WGer # ###
@@ -119,7 +119,10 @@ in {
     expose = [ (builtins.toString healthPort) ];
 
     # Network
-    networks = [ networks.workout ];
+    networks = [
+      networks.workout.internal
+      networks.workout.database
+    ];
 
   };
 
@@ -191,7 +194,10 @@ in {
     };
 
     # Networking
-    networks = [ networks.front networks.workout ];
+    networks = [
+      networks.workout.default
+      networks.workout.internal
+    ];
 
   };
 
@@ -230,7 +236,7 @@ in {
     };
 
     # Networking
-    networks = [ networks.workout ];
+    networks = [ networks.workout.database ];
 
   };
 
@@ -263,7 +269,7 @@ in {
     };
 
     # Networking
-    networks = [ networks.workout ];
+    networks = [ networks.workout.internal ];
 
   };
 
@@ -306,7 +312,7 @@ in {
     depends_on = [ names.wger.app ];
 
     # Networking
-    networks = [ networks.workout ];
+    networks = [ networks.workout.internal ];
 
   };
 
@@ -335,7 +341,7 @@ in {
     depends_on = [ names.wger.celery.worker ];
 
     # Networking
-    networks = [ networks.workout ];
+    networks = [ networks.workout.internal ];
 
   };
 
@@ -385,7 +391,7 @@ in {
     expose = [ (builtins.toString healthPort) ];
 
     # Networking
-    networks = [ networks.workout ];
+    networks = [ networks.workout.internal ];
 
   };
 

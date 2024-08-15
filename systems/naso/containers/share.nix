@@ -6,7 +6,9 @@ with shared;
 {
 
   # Networking
-  networks."${networks.share}".name = networks.share;
+  networks = pkgs.functions.container.populateNetworks [
+    networks.share
+  ];
 
        #######
   ### # SAMBA # ###

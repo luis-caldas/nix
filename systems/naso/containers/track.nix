@@ -6,8 +6,8 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front}".external = true;
-  networks."${networks.track}".name = networks.track;
+  networks = pkgs.functions.container.populateNetworks
+    (builtins.attrValues networks.track);
 
        #########
   ### # Traccar # ###
@@ -40,7 +40,10 @@ with shared;
     ];
 
     # Networking
-    networks = [ networks.track networks.front ];
+    networks = [
+      networks.track.default
+      networks.track.internal
+    ];
 
   };
 
@@ -63,7 +66,7 @@ with shared;
       "/data/bunker/data/containers/track/database:/var/lib/mysql"
     ];
     # Networking
-    networks = [ networks.track ];
+    networks = [ networks.track.internal ];
   };
 
 }

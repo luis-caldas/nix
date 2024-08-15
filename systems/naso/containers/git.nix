@@ -6,8 +6,8 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front}".external = true;
-  networks."${networks.git}".name = networks.git;
+  networks = pkgs.functions.container.populateNetworks
+    (builtins.attrValues networks.git);
 
        #######
   ### # Gitea # ###
@@ -63,7 +63,10 @@ with shared;
     ports = [
       "${builtins.toString sshPort}:22"
     ];
-    networks = [ networks.front networks.git ];
+    networks = [
+      networks.git.default
+      networks.git.internal
+    ];
 
   };
 
@@ -86,7 +89,7 @@ with shared;
       "/data/bunker/data/containers/git/database:/var/lib/mysql"
     ];
     # Networking
-    networks = [ networks.git ];
+    networks = [ networks.git.internal ];
   };
 
 }

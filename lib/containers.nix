@@ -140,20 +140,24 @@ let
     in lib.attrsets.mergeAttrsList updatedServices;
 
     # Fix attr names
-    createNames = { dataIn, previousPath ? [] }: let
+    createNames = {
+      dataIn,
+      simplifierIn ? simplifier,
+      previousPath ? []
+    }: let
       # Return variable when an error occurs
       errorReturn = "unknown";
       # Helper to cut simplifier
       cutSimplifier = previousNames: finalName: let
         # Fix the list
         fixedPrevious =
-          if (lib.lists.last previousNames) == simplifier then
+          if (lib.lists.last previousNames) == simplifierIn then
             lib.lists.sublist 0 ((builtins.length previousNames) - 1) previousNames
           else
             previousNames;
         # Check if the name is to be fixed
         extraName =
-          if finalName == simplifier then [] else [ finalName ];
+          if finalName == simplifierIn then [] else [ finalName ];
       in
         lib.strings.concatStringsSep containerNameSeparator (fixedPrevious ++ extraName);
     in
@@ -169,13 +173,14 @@ let
           {
             "${name}" = createNames {
               dataIn = value;
+              simplifierIn = simplifierIn;
               previousPath = oldPath;
             };
           }
         # If we receive a list
         else if (builtins.typeOf value) == "list" then
           # Check to see if we need to expand the simplifier
-          if name == simplifier then
+          if name == simplifierIn then
             # Iterate the items and make them individual
             builtins.listToAttrs (map (each: {
               name = each;
@@ -196,12 +201,19 @@ let
           errorReturn
       ) dataIn;
 
-    # Create the names for the networks
-    createNetworkNames = inputList:
-      builtins.listToAttrs (map (each: {
-        name = each;
-        value = each;
-      }) inputList);
+    # Generate arion format for networks
+    populateNetworks = listItems: builtins.listToAttrs (
+      map
+      (each: { name = each; value = { name = each; }; })
+      listItems
+    );
+
+    # Generate arion format for external networks
+    generateExternalNetworks = listItems: builtins.listToAttrs (
+      map
+      (each: { name = each; value = { external = true; }; })
+      listItems
+    );
 
     # Create reverse proxy for https on the given container configuration
     createProxy = info: let

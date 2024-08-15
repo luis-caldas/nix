@@ -8,26 +8,43 @@
   shared = {
 
     # Configure all the needed networks
-    networks = pkgs.functions.container.createNetworkNames [
-      # Front Reverse Proxy
-      "front"
-      # Cloud
-      "cloud"
-      # Music
-      "music"
-      # Matrix
-      "social"
-      # Git
-      "git"
-      # Tracking
-      "track"
-      # Workout
-      "workout"
-      # Recipes
-      "recipe"
-      # Samba
-      "share"
-    ];
+    networks = pkgs.functions.container.createNames (let
+      default = "default";
+    in {
+      simplifierIn = default;
+      dataIn = {
+        # Defaults
+        "${default}" = [
+          # Front
+          "front"  # Should only be used for proxy
+          # Share
+          "share"
+          # Vault
+          "vault"
+        ];
+        # Cloud
+        cloud = [ default "internal" ];
+        # Download
+        download = [ "torrent" "usenet" "arr" ];
+        # Git
+        git = [ default "internal" ];
+        # Media
+        media = [ "jellyfin" "komga" "navidrome" "browser" "simple" ];
+        # Recipe
+        recipe = [ default "internal" ];
+        # Social
+        social = {
+          default = [ default "internal" "admin" ];
+          bridge = {
+            whats = [ default "internal" ];
+          };
+        };
+        # Track
+        track = [ default "internal" ];
+        # Workout
+        workout = [ default "internal" "database" ];
+      };
+    });
 
     # Keep track of all the names
     names = pkgs.functions.container.createNames { dataIn = {
@@ -50,7 +67,7 @@
       download = {
         app = [ "torrent" "usenet" ];
         arr = [
-          "fetch" "series" "films" "books" "subtitles" "music"
+          "fetch" "series" "films" "music"
         ];
       };
       # Track

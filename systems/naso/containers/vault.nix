@@ -6,7 +6,9 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front}".external = true;
+  networks = pkgs.functions.container.populateNetworks [
+    networks.vault
+  ];
 
        #######
   ### # Vault # ###
@@ -26,7 +28,7 @@ with shared;
       "/data/bunker/data/containers/warden:/data"
     ];
     # Networking
-    networks = [ networks.front ];
+    networks = [ networks.vault ];
   };
 
 }

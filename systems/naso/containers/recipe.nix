@@ -16,8 +16,8 @@ let
 in {
 
   # Networking
-  networks."${networks.front}".external = true;
-  networks."${networks.recipe}".name = networks.recipe;
+  networks = pkgs.functions.container.populateNetworks
+    (builtins.attrValues networks.recipe);
 
        #########
   ### # Tandoor # ###
@@ -48,13 +48,16 @@ in {
     ];
 
     # Networking
-    networks = [ networks.recipe networks.front ];
+    networks = [
+      networks.recipe.default
+      networks.recipe.internal
+    ];
 
   };
 
-       #########
-  ### # Tandoor # ###
-       #########
+       ##########
+  ### # Database # ###
+       ##########
 
   services."${names.tandoor.database}".service = {
 
@@ -71,7 +74,7 @@ in {
     ];
 
     # Networking
-    networks = [ networks.recipe networks.front ];
+    networks = [ networks.recipe.internal ];
 
   };
 

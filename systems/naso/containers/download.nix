@@ -18,7 +18,8 @@ let
 in {
 
   # Networking
-  networks."${networks.front}".external = true;
+  networks = pkgs.functions.container.populateNetworks
+    (builtins.attrValues networks.download);
 
        #########
   ### # Torrent # ###
@@ -40,7 +41,10 @@ in {
       "${paths.on.downloads}:/downloads"
     ];
     # Networking
-    networks = [ networks.front ];
+    networks = [
+      networks.download.torrent
+      networks.download.arr
+    ];
   };
 
        ######
@@ -62,7 +66,7 @@ in {
       "${paths.on.downloads}:/aria2/data"
     ];
     # Networking
-    networks = [ networks.front ];
+    networks = [ networks.download.usenet ];
   };
 
        ##########
@@ -80,7 +84,7 @@ in {
       PGID = config.mine.user.gid;
     };
     # Networking
-    networks = [ networks.front ];
+    networks = [ networks.download.arr ];
     # Volumes
     volumes = [
       "${paths.local}/servarr/prowlarr:/config"
@@ -102,7 +106,7 @@ in {
       PGID = config.mine.user.gid;
     };
     # Networking
-    networks = [ networks.front ];
+    networks = [ networks.download.arr ];
     # Volumes
     volumes = [
       "${paths.local}/servarr/sonarr:/config"
@@ -124,7 +128,7 @@ in {
       PGID = config.mine.user.gid;
     };
     # Networking
-    networks = [ networks.front ];
+    networks = [ networks.download.arr ];
     # Volumes
     volumes = [
       "${paths.local}/servarr/radarr:/config"
@@ -146,56 +150,12 @@ in {
       PGID = config.mine.user.gid;
     };
     # Networking
-    networks = [ networks.front ];
+    networks = [ networks.download.arr ];
     # Volumes
     volumes = [
       "${paths.local}/servarr/lidarr:/config"
       "${paths.base}:/media"
     ];
   };
-
-  #      #########
-  # ### # Readarr # ###
-  #      #########
-
-  # services."${names.download.arr.books}".service = {
-  #   # Image
-  #   image = "lscr.io/linuxserver/readarr:develop";
-  #   # Environment
-  #   environment = pkgs.functions.container.fixEnvironment {
-  #     TZ = config.mine.system.timezone;
-  #     PUID = config.mine.user.uid;
-  #     PGID = config.mine.user.gid;
-  #   };
-  #   # Networking
-  #   networks = [ networks.front ];
-  #   # Volumes
-  #   volumes = [
-  #     "${paths.local}/servarr/readarr:/config"
-  #     "${paths.base}:/media"
-  #   ];
-  # };
-
-  #      ########
-  # ### # Bazarr # ###
-  #      ########
-
-  # services."${names.download.arr.subtitles}".service = {
-  #   # Image
-  #   image = "lscr.io/linuxserver/bazarr:latest";
-  #   # Environment
-  #   environment = pkgs.functions.container.fixEnvironment {
-  #     TZ = config.mine.system.timezone;
-  #     PUID = config.mine.user.uid;
-  #     PGID = config.mine.user.gid;
-  #   };
-  #   # Networking
-  #   networks = [ networks.front ];
-  #   # Volumes
-  #   volumes = [
-  #     "${paths.local}/servarr/bazarr:/config"
-  #     "${paths.base}:/media"
-  #   ];
-  # };
 
 }

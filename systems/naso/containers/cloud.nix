@@ -30,8 +30,8 @@ let
 in {
 
   # Networking
-  networks."${networks.front}".external = true;
-  networks."${networks.cloud}".name = networks.cloud;
+  networks = pkgs.functions.container.populateNetworks
+    (builtins.attrValues networks.cloud);
 
        #############
   ### # Application # ###
@@ -51,7 +51,10 @@ in {
       "/data/bunker/cloud/cloud:/data"
     ];
     # Networking
-    networks = [ networks.cloud networks.front ];
+    networks = [
+      networks.cloud.default
+      networks.cloud.internal
+    ];
   };
 
        ######
@@ -74,7 +77,7 @@ in {
       "/data/bunker/cloud/cloud:/data"
     ];
     # Networking
-    networks = [ networks.cloud ];
+    networks = [ networks.cloud.internal ];
   };
 
        ##########
@@ -96,7 +99,7 @@ in {
       "/data/bunker/data/containers/cloud/mariadb:/var/lib/mysql"
     ];
     # Networking
-    networks = [ networks.cloud ];
+    networks = [ networks.cloud.internal ];
   };
 
        #######
@@ -117,7 +120,7 @@ in {
     # Command
     command = "--save 60 1";
     # Networking
-    networks = [ networks.cloud ];
+    networks = [ networks.cloud.internal ];
   };
 
 }

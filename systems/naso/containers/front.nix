@@ -6,8 +6,37 @@ with shared;
 {
 
   # Networking
-  networks."${networks.music}".external = true;
-  networks."${networks.front}".name = networks.front;
+  networks =
+    (pkgs.functions.container.populateNetworks [
+      networks.front
+    ]) //
+    (pkgs.functions.container.generateExternalNetworks [
+      # Cloud
+      networks.cloud.default
+      # Download
+      networks.download.torrent
+      networks.download.usenet
+      networks.download.arr
+      # Git
+      networks.git.default
+      # Media
+      networks.media.jellyfin
+      networks.media.komga
+      networks.media.navidrome
+      networks.media.browser
+      networks.media.simple
+      # Recipe
+      networks.recipe.default
+      # Social
+      networks.social.default
+      networks.social.admin
+      # Track
+      networks.track.default
+      # Vault
+      networks.vault
+      # Workout
+      networks.workout.default
+    ]);
 
        #######
   ### # Proxy # ###
@@ -31,31 +60,31 @@ with shared;
     networks = [ networks.front networks.music ];
   };
 
-       ########
-  ### # Access # ###
-       ########
+  #      ########
+  # ### # Access # ###
+  #      ########
 
-  services."${names.front.access}".service = {
-    # Image
-    image = "xavierh/goaccess-for-nginxproxymanager:latest";
-    # Environment
-    environment = pkgs.functions.container.fixEnvironment {
-      TZ = config.mine.system.timezone;
-      SKIP_ARCHIVED_LOGS = "False";
-      DEBUG = "False";
-      BASIC_AUTH = "True";
-      LOG_TYPE = "NPM+R";
-      HTML_REFRESH = 60;  # Every minute (between 1 ~ 60)
-      KEEP_LAST = 30;
-      PROCESSING_THREADS = 1;
-    };
-    env_file = [ "/data/local/containers/proxy/access.env" ];
-    # Volumes
-    volumes = [
-      "/data/local/containers/proxy/application/logs:/opt/log"
-    ];
-    # Networking
-    networks = [ networks.front ];
-  };
+  # services."${names.front.access}".service = {
+  #   # Image
+  #   image = "xavierh/goaccess-for-nginxproxymanager:latest";
+  #   # Environment
+  #   environment = pkgs.functions.container.fixEnvironment {
+  #     TZ = config.mine.system.timezone;
+  #     SKIP_ARCHIVED_LOGS = "False";
+  #     DEBUG = "False";
+  #     BASIC_AUTH = "True";
+  #     LOG_TYPE = "NPM+R";
+  #     HTML_REFRESH = 60;  # Every minute (between 1 ~ 60)
+  #     KEEP_LAST = 30;
+  #     PROCESSING_THREADS = 1;
+  #   };
+  #   env_file = [ "/data/local/containers/proxy/access.env" ];
+  #   # Volumes
+  #   volumes = [
+  #     "/data/local/containers/proxy/application/logs:/opt/log"
+  #   ];
+  #   # Networking
+  #   networks = [  ];
+  # };
 
 }
