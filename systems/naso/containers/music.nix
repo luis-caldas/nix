@@ -26,7 +26,7 @@ with shared;
     # Volumes
     volumes = [
       "/data/local/containers/music:/data"
-      "${paths.base}:/media/music:ro"
+      "/data/chunk/media/music:/music:ro"
     ];
 
     # Networking
