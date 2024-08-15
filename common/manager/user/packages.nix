@@ -87,7 +87,6 @@
 
     # Input
     xboxdrv
-    pkgs.custom.x56linux
     linuxConsoleTools
 
     # Bluetooth
@@ -98,7 +97,6 @@
 
     # Download
     aria
-    pkgs.custom.n-m3u8dl-re
     bento4
 
     # Web Services
@@ -302,6 +300,16 @@
 
     # Video
     ffmpeg-full
+
+    ##### Compiled
+
+    # Input
+    pkgs.custom.x56linux
+
+    # Download
+    pkgs.custom.n-m3u8dl-re
+
+    #####
 
     ##### Development
 
