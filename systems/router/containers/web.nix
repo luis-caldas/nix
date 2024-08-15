@@ -6,7 +6,9 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front}".external = true;
+  networks = pkgs.functions.container.populateNetworks [
+    networks.dash
+  ];
 
        ######
   ### # Dash # ###
@@ -22,7 +24,7 @@ with shared;
         "/data/local/containers/dash/config:/web/more:ro"
       ];
       # Networking
-      networks = [ networks.front ];
+      networks = [ networks.dash ];
     };
   };
 

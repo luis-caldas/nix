@@ -6,7 +6,9 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front}".external = true;
+  networks = pkgs.functions.container.populateNetworks [
+    networks.asterisk
+  ];
 
        ##########
   ### # Asterisk # ###
@@ -47,7 +49,7 @@ with shared;
         "/data/local/containers/asterisk/config/record:/web/monitor:ro"
       ];
       # Networking
-      networks = [ networks.front ];
+      networks = [ networks.asterisk ];
     };
   };
 
@@ -64,7 +66,7 @@ with shared;
       "/data/local/containers/asterisk/config/record:/web/monitor:ro"
     ];
     # Networking
-    networks = [ networks.front ];
+    networks = [ networks.asterisk ];
   };
 
 }

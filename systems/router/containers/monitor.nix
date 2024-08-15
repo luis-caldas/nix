@@ -6,7 +6,8 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front}".external = true;
+  networks = pkgs.functions.container.populateNetworks
+    (builtins.attrValues networks.monitor);
 
        #########
   ### # Grafana # ###
@@ -34,7 +35,7 @@ with shared;
     ];
 
     # Networking
-    networks = [ networks.front ];
+    networks = [ networks.monitor.grafana ];
 
   };
 
@@ -61,7 +62,7 @@ with shared;
     ];
 
     # Networking
-    networks = [ networks.front ];
+    networks = [ networks.monitor.kuma ];
 
   };
 

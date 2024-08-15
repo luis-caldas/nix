@@ -1,4 +1,4 @@
-{ shared, config, ... }:
+{ shared, pkgs, config, ... }:
 
 # Inherit the shared values
 with shared;
@@ -6,7 +6,9 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front}".external = true;
+  networks = pkgs.functions.container.populateNetworks [
+    networks.home
+  ];
 
        ################
   ### # Home Assistant # ###
@@ -31,7 +33,7 @@ with shared;
     ];
 
     # Networking
-    networks = [ networks.front ];
+    networks = [ networks.home ];
 
   };
 

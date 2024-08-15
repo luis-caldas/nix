@@ -3,10 +3,34 @@
 # Inherit the shared values
 with shared;
 
-{
+let
+
+  # Networks needed
+  localNetworks = [
+    networks.front
+  ];
+  externalNetworks = [
+    # DNS
+    networks.base.hole
+    # Asterisk
+    networks.asterisk
+    # Nut
+    networks.nut
+    # Dashboard
+    networks.dash
+    # Monitor
+    networks.monitor.grafana
+    networks.monitor.kuma
+    # Home Assistant
+    networks.home
+  ];
+
+in {
 
   # Networking
-  networks."${networks.front}".name = networks.front;
+  networks =
+    (pkgs.functions.container.populateNetworks localNetworks) //
+    (pkgs.functions.container.generateExternalNetworks externalNetworks);
 
        #######
   ### # Proxy # ###
@@ -27,7 +51,7 @@ with shared;
       "81:81/tcp"
     ];
     # Networking
-    networks = [ networks.front ];
+    networks = localNetworks ++ externalNetworks;
   };
 
 }

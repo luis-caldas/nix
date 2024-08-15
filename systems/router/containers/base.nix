@@ -6,12 +6,15 @@ with shared;
 {
 
   # Networking
-  networks."${networks.dns}" = {
-    name = networks.dns;
-    ipam.config = [{ inherit (pkgs.networks.docker.dns.main) subnet gateway; }];
+  networks = (pkgs.functions.container.populateNetworks [
+    networks.base.time
+    networks.base.hole
+  ]) // {
+    "${networks.base.dns}" = {
+      name = networks.base.dns;
+      ipam.config = [{ inherit (pkgs.networks.docker.dns.main) subnet gateway; }];
+    };
   };
-  networks."${networks.time}".name = networks.time;
-  networks."${networks.front}".external = true;
 
        #####
   ### # DNS # ###
@@ -22,7 +25,7 @@ with shared;
     build.image = lib.mkForce pkgs.containers.dns;
     service = {
       # Networking
-      networks."${networks.dns}".ipv4_address = pkgs.networks.docker.dns.main.ips.upstream;
+      networks."${networks.base.dns}".ipv4_address = pkgs.networks.docker.dns.main.ips.upstream;
     };
   };
 
@@ -56,7 +59,10 @@ with shared;
       "53:53/udp"
     ];
     dns = [ "127.0.0.1" ];
-    networks = [ networks.dns networks.front ];
+    networks = [
+      networks.base.dns
+      networks.base.hole
+    ];
 
   };
 
@@ -70,14 +76,14 @@ with shared;
     # Environment
     environment = {
       TZ = config.mine.system.timezone;
-      NTP_SERVERS = "time.cloudflare.com";
+      NTP_SERVERS = pkgs.networks.time;
       ENABLE_NTS = "true";
     };
     # Networking
     ports = [
       "123:123/udp"
     ];
-    networks = [ networks.time ];
+    networks = [ networks.base.time ];
   };
 
 }

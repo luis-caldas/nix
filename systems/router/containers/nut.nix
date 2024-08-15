@@ -6,7 +6,9 @@ with shared;
 {
 
   # Networking
-  networks."${networks.front}".external = true;
+  networks = pkgs.functions.container.populateNetworks [
+    networks.nut
+  ];
 
        #####
   ### # NUT # ###
@@ -21,7 +23,7 @@ with shared;
     };
     env_file = [ "/data/local/containers/nut/nut.env" ];
     # Networking
-    networks = [ networks.front ];
+    networks = [ networks.nut ];
   };
 
 }

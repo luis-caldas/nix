@@ -4,14 +4,30 @@
   shared = {
 
     # Configure all the needed networks
-    networks = pkgs.functions.container.createNetworkNames [
-      # Reverse Proxy
-      "front"
-      # NTP
-      "time"
-      # DNS
-      "dns"
-    ];
+    networks = pkgs.functions.container.createNames (let
+      default = "default";
+    in {
+      simplifierIn = default;
+      dataIn = {
+        # Defaults
+        "${default}" = [
+          # Front
+          "front"  # Should only be used for proxy
+          # Asterisk
+          "asterisk"
+          # Home Assistant
+          "home"
+          # Nut
+          "nut"
+          # Dashboard
+          "dash"
+        ];
+        # Base
+        base = [ "dns" "hole" "time" ];
+        # Monitor
+        monitor = [ "grafana" "kuma" ];
+      };
+    });
 
     # Configure the needed names
     names =  pkgs.functions.container.createNames { dataIn = {
