@@ -39,10 +39,12 @@
         "time"
         # Dashboard
         "dash"
-        # Home Assistant
-        "assistant"
         # UPS
         "nut"
+        # Monitoring
+        "monitor" "kuma"
+        # Home Assistant
+        "assistant"
       ];
       # DNS
       dns = [ "app" "up" ];

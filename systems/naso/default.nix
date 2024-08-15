@@ -56,8 +56,6 @@
         "jellyfin" "komga" "browser" "shower"
         # Vault
         "vault"
-        # Monitoring
-        "monitor" "kuma"
         # Music
         "music"
       ];
