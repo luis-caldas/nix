@@ -89,25 +89,58 @@ let
     # Extract net network dependencies so that we can build the systemd
     # dependencies after
     # ! The network name must match the project name (file name)
-    extractDependencies = arionProjects:
+    extractDependencies = arionProjects: let
+
+      # Gets list of all the native project networks
+      projectNetworks = projectIn:
+        # Check if the project has networks
+        if builtins.hasAttr "networks" projectIn.settings then
+          # Get all the items and filter the false ones
+          builtins.filter (each: each != false) (lib.attrsets.mapAttrsToList (network: content:
+            # If we found an external network we can add it to the data
+            if (builtins.hasAttr "external" content) && (content.external == true) then
+              false
+            else
+              network
+          ) projectIn.settings.networks)
+        else [];
+
+      # Get a list of all the external networks of the project
+      externalNetworks = projectIn:
+        # Check if the project has networks
+        if builtins.hasAttr "networks" projectIn.settings then
+          # Get all the items and filter the false ones
+          builtins.filter (each: each != false) (lib.attrsets.mapAttrsToList (network: content:
+            # If we found an external network we can add it to the data
+            if (builtins.hasAttr "external" content) && (content.external == true) then
+              network
+            else
+              false
+          ) projectIn.settings.networks)
+        else [];
+
+      # Create a correlation list containing all the native networks
+      allNativeNetworks = let
+        normalList = builtins.mapAttrs (projectName: settings:
+          projectNetworks settings
+        ) arionProjects;
+        invertedList = lib.attrsets.concatMapAttrs (name: value:
+          lib.attrsets.mergeAttrsList (map (each: { "${each}" = name; }) value)
+        ) normalList;
+      in invertedList;
+
+    in
       # Join all the data to the wanted format
-      lib.attrsets.zipAttrs (builtins.concatLists
+      lib.attrsets.zipAttrs (lib.lists.unique (builtins.concatLists
         # Iterate the data and filter the false entries
-        (builtins.filter (each: each != false) (lib.attrsets.mapAttrsToList (name: value:
-          # Check if the entry has networks
-          if builtins.hasAttr "networks" value.settings then
-            # If so we can iterate over it, and filter the wanted results
-            builtins.filter (each: each != false) (lib.attrsets.mapAttrsToList (network: content:
-              # If we found an external network we can add it to the data
-              if (builtins.hasAttr "external" content) && (content.external == true) then
-                { "${name}" = network; }
-              else
-                false
-            ) value.settings.networks)
-          else
-            false
-        ) arionProjects))
-      );
+        (lib.attrsets.mapAttrsToList (name: value: let
+            # Get the current list of external network dependencies
+            externalDependencies = externalNetworks value;
+          in
+            # Iterate the values and return the dependencies
+            map (dependent: { "${name}" = allNativeNetworks."${dependent}"; }) externalDependencies
+        ) arionProjects)
+      ));
 
     # Create list of dependencies for systemd services
     createDependencies = dependencies: let
