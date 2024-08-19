@@ -6,7 +6,7 @@ with shared;
 {
 
   # Set up the networks
-  networks = pkgs.functions.container.populateNetworks {
+  networks = {
     "${networks.vpn.dns}" = {
       name = networks.vpn.dns;
       ipam.config = [{ inherit (pkgs.networks.docker.dns.vpn.dns) subnet gateway; }];
