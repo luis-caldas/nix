@@ -6,12 +6,14 @@ with shared;
 {
 
   # Set up the networks
-  networks = (pkgs.functions.container.populateNetworks [
-    networks.vpn.wire
-  ]) // {
+  networks = pkgs.functions.container.populateNetworks {
     "${networks.vpn.dns}" = {
       name = networks.vpn.dns;
-      ipam.config = [{ inherit (pkgs.networks.docker.dns.vpn) subnet gateway; }];
+      ipam.config = [{ inherit (pkgs.networks.docker.dns.vpn.dns) subnet gateway; }];
+    };
+    "${networks.vpn.wire}" = {
+      name = networks.vpn.wire;
+      ipam.config = [{ inherit (pkgs.networks.docker.dns.vpn.wire) subnet gateway; }];
     };
   };
 
@@ -24,7 +26,7 @@ with shared;
     build.image = lib.mkForce pkgs.containers.dns;
     service = {
       # Networking
-      networks."${networks.vpn.dns}".ipv4_address = pkgs.networks.docker.dns.vpn.ips.upstream;
+      networks."${networks.vpn.dns}".ipv4_address = pkgs.networks.docker.dns.vpn.dns.ips.upstream;
     };
   };
 
@@ -44,7 +46,7 @@ with shared;
     environment = {
       TZ = config.mine.system.timezone;
       DNSMASQ_LISTENING = "all";
-      PIHOLE_DNS_ = pkgs.networks.docker.dns.vpn.ips.upstream;
+      PIHOLE_DNS_ = pkgs.networks.docker.dns.vpn.dns.ips.upstream;
     };
     env_file = [ "/data/containers/pihole/env/adblock.env" ];
 
@@ -56,8 +58,8 @@ with shared;
 
     # Networking
     dns = [ "127.0.0.1" ];
-    networks."${networks.vpn.dns}".ipv4_address = pkgs.networks.docker.dns.vpn.ips.main;
-    networks."${networks.vpn.wire}" = {};
+    networks."${networks.vpn.dns}".ipv4_address = pkgs.networks.docker.dns.vpn.dns.ips.main;
+    networks."${networks.vpn.wire}".ipv4_address = pkgs.networks.docker.dns.vpn.wire.ip;
 
   };
 
@@ -78,10 +80,10 @@ with shared;
       PUID = config.mine.user.uid;
       GUID = config.mine.user.gid;
       INTERNAL_SUBNET = subnet;
-      ALLOWEDIPS = "0.0.0.0/0,${pkgs.networks.docker.dns.vpn.ips.main}/32,${subnet},${pkgs.networks.internal}";
+      ALLOWEDIPS = "0.0.0.0/0,${pkgs.networks.docker.dns.vpn.wire.ip}/32,${subnet},${pkgs.networks.internal}";
       PEERS = listUsers;
       SERVERPORT = pkgs.networks.ports.open;
-      PEERDNS = pkgs.networks.docker.dns.vpn.ips.main;
+      PEERDNS = pkgs.networks.docker.dns.vpn.wire.ip;
       PERSISTENTKEEPALIVE_PEERS = "all";
     };
     env_file = [ "/data/containers/wireguard/env/wire.env" ];

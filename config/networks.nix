@@ -59,29 +59,37 @@ let
 
         # Main DNS
         main = {
-
           # Network information
           subnet = "172.16.20.0/24"; gateway = "172.16.20.1";
-
           # IPs
           ips = {
             main = "172.16.20.11";
             upstream = "172.16.20.10";
           };
-
         };
 
         # VPN DNS
         vpn = {
 
-          # Network information
-          subnet = "172.16.50.0/24"; gateway = "172.16.50.1";
-
-          # IPs
-          ips = {
-            main = "172.16.50.11";
-            upstream = "172.16.50.10";
+          # DNS
+          dns = {
+            # Network information
+            subnet = "172.16.49.0/24"; gateway = "172.16.49.1";
+            # IPs
+            ips = {
+              main = "172.16.49.11";
+              upstream = "172.16.49.10";
+            };
           };
+
+          # Wire
+          wire = {
+            # Network information
+            subnet = "172.16.50.0/24"; gateway = "172.16.50.1";
+            # IPs
+            ip = "172.16.50.10";
+          };
+
 
         };
 
