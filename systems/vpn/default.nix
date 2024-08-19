@@ -139,7 +139,7 @@ in {
 
   # Set the DNS
   networking.networkmanager.insertNameservers = [
-    pkgs.networks.docker.dns.vpn.ips.main
+    pkgs.networks.docker.dns.vpn.dns.ips.main
   ] ++ pkgs.networks.dns;
 
   # User keys for ssh
