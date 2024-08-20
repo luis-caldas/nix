@@ -295,6 +295,7 @@ in {
       hot-keys = false;
       isolate-monitors = false;
       multi-monitor = false;
+      preferred-monitor = -2;
       show-mounts-network = true;
     };
 
