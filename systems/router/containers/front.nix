@@ -50,6 +50,15 @@ in {
       "${builtins.toString pkgs.networks.ports.https}:443/tcp"
       "81:81/tcp"
     ];
+    # Health
+    healthcheck = {
+      # Test command
+      test = [ "CMD" "/usr/bin/check-health" ];
+      # Timing
+      interval = "10s";
+      timeout = "3s";
+      retries = 5;
+    };
     # Networking
     networks = localNetworks ++ externalNetworks;
   };
