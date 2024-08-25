@@ -43,7 +43,9 @@
         "download_history",
         "cached_images_and_files",
         "autofill"
-      ]
+      ],
+
+      "ExtensionManifestV2Availability": 2
 
     },
 
