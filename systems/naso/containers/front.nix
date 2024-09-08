@@ -22,7 +22,6 @@ let
     networks.media.jellyfin
     networks.media.komga
     networks.media.navidrome
-    networks.media.browser
     networks.media.simple
     # Recipe
     networks.recipe.default
