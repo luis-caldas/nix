@@ -117,7 +117,7 @@
 
     # Messaging
     irssi
-    gomuks
+    # gomuks  # TODO libolm insecure
 
     # AI
     chatgpt-cli
