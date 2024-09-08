@@ -179,7 +179,7 @@ in {
       files
       chat
       "deck.desktop"
-      "sublime-music.desktop"
+      "feishin.desktop"
     ];
     "org/gnome/mutter" = {
       edge-tiling = true;

@@ -230,7 +230,7 @@ lib.mkIf osConfig.mine.graphics.enable
     zbar
 
     # Music
-    sublime-music
+    feishin
 
     # Video player
     vlc
