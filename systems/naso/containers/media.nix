@@ -84,7 +84,7 @@ with shared;
     env_file = [ "/data/local/containers/music/navi.env" ];
     # Volumes
     volumes = [
-      "/data/local/containers/music:/data"
+      "/data/local/containers/music/config:/data"
       "/data/chunk/media/music:/music:ro"
     ];
     # Networking
