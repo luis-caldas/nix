@@ -157,7 +157,7 @@ in {
     # Disable bonjour
     dhcpcd.extraConfig = ''
       noipv4ll
-      noption domain_name
+      nooption domain_name
     '';
 
     # Hangup on startup
