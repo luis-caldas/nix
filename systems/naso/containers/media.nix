@@ -85,7 +85,7 @@ with shared;
     # Volumes
     volumes = [
       "/data/local/containers/music/config:/data"
-      "/data/chunk/media/music:/music:ro"
+      "/data/chunk/media/music/serve:/music:ro"
     ];
     # Networking
     networks = [ networks.media.navidrome ];
