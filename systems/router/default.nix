@@ -21,6 +21,8 @@
           "nut"
           # Dashboard
           "dash"
+          # VPN
+          "wire"
         ];
         # Base
         base = [ "dns" "hole" "time" ];
@@ -45,6 +47,8 @@
         "monitor" "kuma"
         # Home Assistant
         "assistant"
+        # VPN
+        "wire"
       ];
       # DNS
       dns = [ "app" "up" ];
@@ -54,6 +58,37 @@
         web = [ "simple" "normal" ];
       };
     };};
+
+    # List of users for wireguard
+    listUsers = let
+
+      # Simple list that can be easily understood
+      simpleList = [
+        # Names will be changed for numbers starting on zero
+        { home = [ "house" "router" "server" ]; }
+        { lu = [ "laptop" "phone" "tablet" ]; }
+        { m = [ "laptop" "phone" "extra" ]; }
+        { lak = [ "laptop" "phone" "desktop" ]; }
+        { extra = [ "first" "second" "third" "fourth" ]; }
+      ];
+
+      # Rename all users to
+      arrayUsersDevices = map
+        (eachEntry:
+          builtins.concatLists (lib.attrsets.mapAttrsToList
+          (eachUser: allDevices: map
+            (eachDevice: "${eachUser}${pkgs.functions.capitaliseString eachDevice}")
+            allDevices
+          )
+          eachEntry)
+        )
+        simpleList;
+
+      # Join all the created lists
+      interspersedUsers = lib.strings.concatStrings
+        (lib.strings.intersperse "," (builtins.concatLists arrayUsersDevices));
+
+    in interspersedUsers;
 
   };
 
