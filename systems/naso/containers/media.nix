@@ -81,6 +81,7 @@ with shared;
       ND_DEFAULTTHEME = "Spotify-ish";
       ND_UILOGINBACKGROUNDURL = "data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA4AAAAvY8AYAAcQEf0PRET/Aw==";
     };
+    env_file = [ "/data/local/containers/music/navi.env" ];
     # Volumes
     volumes = [
       "/data/local/containers/music:/data"
