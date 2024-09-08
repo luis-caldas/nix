@@ -154,14 +154,18 @@ in {
     # Disable global DHCP
     useDHCP = false;
 
-    # Disable bonjour
-    dhcpcd.extraConfig = ''
-      noipv4ll
-      nooption domain_name
-    '';
+    # Use old dhcpcd
+    dhcpcd = {
 
-    # Hangup on startup
-    dhcpcd.wait = "background";
+      # Disable bonjour
+      extraConfig = ''
+        noipv4ll
+      '';
+
+      # Don't hangup on startup
+      wait = "background";
+
+    };
 
     # Force disable Network Manager
     networkmanager.enable = lib.mkForce false;
@@ -183,6 +187,7 @@ in {
     resolvconf = {
       enable = true;
       extraConfig = ''
+        search_domains_append="example.com"
         name_servers_append="${builtins.concatStringsSep " " pkgs.networks.dns}"
       '';
     };
