@@ -29,7 +29,7 @@
         # Git
         git = [ default "internal" ];
         # Media
-        media = [ "jellyfin" "komga" "navidrome" "browser" "simple" ];
+        media = [ "jellyfin" "komga" "navidrome" "simple" ];
         # Recipe
         recipe = [ default "internal" ];
         # Social
@@ -53,7 +53,7 @@
         # Share
         "samba" "shout"
         # Media
-        "jellyfin" "komga" "browser" "shower"
+        "jellyfin" "komga" "shower"
         # Vault
         "vault"
         # Music

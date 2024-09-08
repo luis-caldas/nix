@@ -92,29 +92,6 @@ with shared;
   };
 
        ##############
-  ### # File Browser # ###
-       ##############
-
-  services."${names.browser}".service = {
-    # Image
-    image = "filebrowser/filebrowser:s6";
-    # Environment
-    environment = {
-      TZ = config.mine.system.timezone;
-      PUID = config.mine.user.uid;
-      PGID = config.mine.user.gid;
-    };
-    # Volumes
-    volumes = [
-      "/data/chunk/media:/srv"
-      "/data/local/containers/browser/database:/database"
-      "/data/local/containers/browser/config:/config"
-    ];
-    # Networking
-    networks = [ networks.media.browser ];
-  };
-
-       ##############
   ### # Simple Serve # ###
        ##############
 
