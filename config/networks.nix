@@ -116,7 +116,10 @@ let
       # Port needs also be opened on hosting side
       open = 3478;
 
-      # Simple UDP port
+      # Simple port used for TURN
+      turn = 37;
+
+      # Simple UDP port used for wireguard
       simple = 123;
 
       # Start and end of registered ports
