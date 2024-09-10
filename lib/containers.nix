@@ -147,14 +147,14 @@ let
       # Data to be added
       serviceData = {
         unitConfig = {
-          StartLimitBurst = 8;
-          StartLimitInterval = "infinity";
+          StartLimitBurst = 10;  # Block restart after 10 tries
+          StartLimitInterval = 2 * 60 * 60;  # Reset after 2 hours
         };
         serviceConfig = {
           Restart = "on-failure";
-          RestartSec = 8;
-          RestartSteps = 4;
-          RestartMaxDelaySec = 128;
+          RestartSec = 10;  # Start waiting 10 seconds
+          RestartSteps = 5;  # Gradually grow restart time during each step
+          RestartMaxDelaySec = 2 * 60;  # Finish waiting 2 minutes
         };
       };
       # Service extension
