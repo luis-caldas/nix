@@ -46,7 +46,7 @@ with shared;
       GITEA__service__DISABLE_REGISTRATION = "true";
       GITEA__service_0X2E_explore__REQUIRE_SIGNIN_VIEW = "true";
       GITEA__server__SSH_PORT = sshPort;
-      GITEA__server__SSH_LISTEN_PORT = 22;
+      GITEA__server__SSH_LISTEN_PORT = builtins.head config.services.openssh.ports;
       GITEA__server__LANDING_PAGE = "login";
       GITEA__ui__DEFAULT_THEME = themeName;
       GITEA__ui__THEMES = "auto,gitea,arc-green,${themeName}";
@@ -61,7 +61,7 @@ with shared;
 
     # Networking
     ports = [
-      "${builtins.toString sshPort}:22"
+      "${builtins.toString sshPort}:${builtins.toString (builtins.head config.services.openssh.ports)}"
     ];
     networks = [
       networks.git.default
