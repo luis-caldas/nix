@@ -86,11 +86,11 @@ in {
     enable = true;
     externalInterface = interfaces.local;
     internalInterfaces = [ interfaces.wireguard ];
-    forwardPorts = lib.debug.traceValSeqN 10 [
+    forwardPorts = [
       # SSH Port redirection to self
       {
         proto = "tcp";
-        sourcePort = config.services.openssh.ports;
+        sourcePort = builtins.head config.services.openssh.ports;
         destination = "${pkgs.networks.tunnel.ips.host}:${builtins.toString (builtins.head config.services.openssh.ports)}";
       }
       # Redirect the VPN ports to self
