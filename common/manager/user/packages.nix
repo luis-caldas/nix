@@ -260,8 +260,19 @@
     dfu-util
     dfu-programmer
 
-    # Live
+    # CAN
     can-utils
+    python3Packages.can
+    python3Packages.cantools
+    python3Packages.scapy
+    python3Packages.ipykernel
+    python3Packages.ipython
+    python3Packages.ipywidgets
+    python3Packages.pyserial
+    python3Packages.numpy
+    python3Packages.pandas
+    python3Packages.z3-solver
+    python3Packages.bokeh
 
     # AI
     ollama

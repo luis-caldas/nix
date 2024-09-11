@@ -290,6 +290,10 @@ lib.mkIf osConfig.mine.graphics.enable
     # Binary Visualiser
     binocle
 
+    # Analiser
+    smuview
+    pulseview
+
     # Joysticks
     jstest-gtk
     python3Packages.ds4drv
