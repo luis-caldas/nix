@@ -8,6 +8,7 @@
   ];
 
   # Add needed udev rules
+  # The uaccess tags dont work above priority 73, extra rules are 99
   services.udev = {
     extraRules = ''
 
@@ -25,6 +26,11 @@
 
       # XGecu programmer
       SUBSYSTEM=="usb", ATTR{idVendor}=="a466", ATTR{idProduct}=="0a53", GROUP="plugdev", MODE="0666"
+
+      # Hantek DSO-6022BL
+      SUBSYSTEM=="usb", ACTION=="add", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="04b4", ATTRS{idProduct}=="602a", GROUP="plugdev", TAG+="udev-acl"
+      SUBSYSTEM=="usb", ACTION=="add", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="04b5", ATTRS{idProduct}=="602a", GROUP="plugdev", TAG+="udev-acl"
+      SUBSYSTEM=="usb", ACTION=="add", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="0925", ATTRS{idProduct}=="3881", GROUP="plugdev", TAG+="udev-acl"
 
     '';
   };
