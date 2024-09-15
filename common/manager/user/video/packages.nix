@@ -294,6 +294,7 @@ lib.mkIf osConfig.mine.graphics.enable
     # Analiser
     smuview
     pulseview
+    openhantek6022
 
     # Joysticks
     jstest-gtk
