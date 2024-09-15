@@ -4,7 +4,7 @@ let
   # The system interfaces
   interfaces = {
     wireguard = "wire";
-    local = "ens5";
+    local = "enX0";
   };
 
 in {
