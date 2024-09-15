@@ -5,7 +5,7 @@
   boot.extraModulePackages = with config.boot.kernelPackages; [
 
     # Wifi
-    # rtw88  # TODO Build problems
+    rtw88
 
     # Video loopback
     v4l2loopback

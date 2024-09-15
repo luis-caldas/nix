@@ -9,9 +9,6 @@
   # ZFS ask for password
   boot.zfs.requestEncryptionCredentials = true;
 
-  # Use latest kernel
-  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
-
   # Hardware from NixOS
   imports = [
     "${builtins.fetchGit "https://github.com/NixOS/nixos-hardware"}/framework/13-inch/7040-amd"
