@@ -187,7 +187,6 @@ in {
     resolvconf = {
       enable = true;
       extraConfig = ''
-        search_domains_append="example.com"
         name_servers_append="${builtins.concatStringsSep " " pkgs.networks.dns}"
       '';
     };
