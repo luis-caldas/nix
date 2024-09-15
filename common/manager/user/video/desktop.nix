@@ -256,6 +256,7 @@ in {
         "dash-to-dock@micxgx.gmail.com"
         "trayIconsReloaded@selfmade.pl"
         "CustomizeClockOnLockScreen@pratap.fastmail.fm"
+        "ding@rastersoft.com"
       ];
     };
 

@@ -179,6 +179,7 @@ lib.mkIf osConfig.mine.graphics.enable
     gnomeExtensions.panel-date-format
     gnomeExtensions.weather-oclock
     gnomeExtensions.customize-clock-on-lock-screen
+    gnomeExtensions.desktop-icons-ng-ding
 
     ################
     # Applications #
