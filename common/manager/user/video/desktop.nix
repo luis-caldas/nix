@@ -184,7 +184,7 @@ in {
     "org/gnome/mutter" = {
       edge-tiling = true;
       workspaces-only-on-primary = true;
-      experimental-features = [ "scale-monitor-framebuffer" ];
+      # experimental-features = [ "scale-monitor-framebuffer" ];
     };
     "org/gnome/desktop/interface" = {
 
