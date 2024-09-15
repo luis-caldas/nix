@@ -37,7 +37,6 @@ with shared;
     # Volumes
     volumes = [
       "/data/local/containers/wireguard/config:/config"
-      "/etc/resolv.conf:/etc/resolv.conf:ro"
     ];
 
     # Networking
