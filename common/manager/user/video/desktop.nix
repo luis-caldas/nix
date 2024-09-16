@@ -248,7 +248,7 @@ in {
       disabled-extensions = [];
       enabled-extensions = [
         # Official
-        "drive-menu@gnome-shell-extensions.gcampax.github.com"
+        # "drive-menu@gnome-shell-extensions.gcampax.github.com"
         # Others
         "clipboard-indicator@tudmotu.com"
         "panel-date-format@keiii.github.com"
@@ -316,7 +316,14 @@ in {
     };
 
     trayIconsReloaded = {
-      icons-limit = 1;
+      icons-limit = 2;
+      icon-size = 20;
+      icon-brightness = 0;
+      icon-contrast = 0;
+      icon-margin-horizontal = 5;
+      icon-padding-horizontal = 20;
+      tray-margin-left = 0;
+      tray-margin-right = 0;
     };
 
     vitals = {
