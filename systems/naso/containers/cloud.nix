@@ -43,7 +43,12 @@ in {
     # Dependend
     depends_on = [ names.cloud.maria names.cloud.redis ];
     # Environment
-    environment = commonEnv;
+    environment = {
+      # File upload size
+      PHP_UPLOAD_LIMIT = "10G";
+    }
+    # Add shared environment vars
+    // commonEnv;
     env_file = [ "/data/local/containers/cloud/cloud.env" ];
     # Volumes
     volumes = [
