@@ -316,7 +316,7 @@ in {
     };
 
     trayIconsReloaded = {
-      icons-limit = 2;
+      icons-limit = 5;
       icon-size = 20;
       icon-brightness = 0;
       icon-contrast = 0;
