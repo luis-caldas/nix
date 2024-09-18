@@ -180,6 +180,7 @@ lib.mkIf osConfig.mine.graphics.enable
     gnomeExtensions.weather-oclock
     gnomeExtensions.customize-clock-on-lock-screen
     gnomeExtensions.desktop-icons-ng-ding
+    gnomeExtensions.appindicator
 
     ################
     # Applications #

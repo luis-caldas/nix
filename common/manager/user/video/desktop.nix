@@ -247,16 +247,13 @@ in {
       disable-user-extensions = false;
       disabled-extensions = [];
       enabled-extensions = [
-        # Official
-        # "drive-menu@gnome-shell-extensions.gcampax.github.com"
         # Others
         "clipboard-indicator@tudmotu.com"
         "panel-date-format@keiii.github.com"
         "Vitals@CoreCoding.com"
         "dash-to-dock@micxgx.gmail.com"
-        "trayIconsReloaded@selfmade.pl"
         "CustomizeClockOnLockScreen@pratap.fastmail.fm"
-        # "ding@rastersoft.com"
+        "appindicatorsupport@rgcjonas.gmail.com"
       ];
     };
 
