@@ -111,7 +111,7 @@ lib.mkIf osConfig.mine.graphics.enable
       value = rec {
         name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] eachEntry.name);
         comment = "${name} web page running as an application";
-        exec = ''/usr/bin/env sh -c "${osConfig.mine.browser.command} --user-data-dir=\\$HOME/.config/browser-apps/${eachEntry.name} --profile-directory=${eachEntry.name} --app=${eachEntry.url}"'';
+        exec = ''${osConfig.mine.browser.command} --user-data-dir="${config.xdg.configHome}/browser-apps/${eachEntry.name}" --profile-directory="${eachEntry.name}" --app="${eachEntry.url}"'';
         icon = eachEntry.icon;
         terminal = false;
         categories = [ "Network" "WebBrowser" ];
