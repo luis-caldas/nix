@@ -49,11 +49,11 @@ lib.mkIf osConfig.mine.graphics.enable
       value = {
         name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] extraBrowserInfo.name);
         comment = "Browser Customized ${pkgs.functions.capitaliseString eachBrowser.name}";
-        exec = ''/usr/bin/env sh -c "${osConfig.mine.browser.command} --user-data-dir=${config.xdg.configHome}/${extraBrowserInfo.path} %U"'';
+        exec = ''${osConfig.mine.browser.command} --class="${extraBrowserInfo.name}" --user-data-dir="${config.xdg.configHome}/${extraBrowserInfo.path}" %U'';
         icon = "web-browser";
         terminal = false;
         categories = [ "Network" "WebBrowser" ];
-        settings.StartupWMClass = "chromium-browser (${config.xdg.configHome}/${extraBrowserInfo.path})";
+        settings.StartupWMClass = extraBrowserInfo.name;
       };
     }) osConfig.mine.browser.others)
   );
