@@ -34,6 +34,9 @@ lib.mkIf osConfig.mine.graphics.enable
     # Phone
     calls
 
+    # Recording
+    gnome.gnome-sound-recorder
+
     # Scan
     gnome.simple-scan
 
