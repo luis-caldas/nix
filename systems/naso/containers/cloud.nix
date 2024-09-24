@@ -91,7 +91,7 @@ in {
 
   services."${names.cloud.maria}".service = {
     # Image
-    image = "mariadb:latest";
+    image = "mariadb:lts";
     # Environment
     environment = {
       TZ = config.mine.system.timezone;
