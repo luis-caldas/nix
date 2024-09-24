@@ -90,8 +90,8 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # List of applications to be created
     browserApplications = [
-      { name = "deck"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
-      { name = "notes"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
+      { name = "deck"; icon = "plan"; url = "https://redirect.caldas.ie"; }
+      { name = "notes"; icon = "notes"; url = "https://redirect.caldas.ie"; }
       { name = "files"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
       { name = "jellyfin-web"; icon = "jellyfin"; url = "https://redirect.caldas.ie"; }
       { name = "whatsapp-web"; icon = "whatsapp"; url = "https://web.whatsapp.com"; }
@@ -101,7 +101,7 @@ lib.mkIf osConfig.mine.graphics.enable
       { name = "spotify-web"; icon = "spotify"; url = "https://open.spotify.com"; }
       { name = "youtube-web"; icon = "youtube"; url = "https://www.youtube.com"; }
       { name = "youtube-music-web"; icon = "youtube-music"; url = "https://music.youtube.com"; }
-      { name = "defence-forces"; icon = "knavalbattle"; url = "https://irishdefenceforces.workvivo.com"; }
+      { name = "defence-forces"; icon = "europa-universalis-IV"; url = "https://irishdefenceforces.workvivo.com"; }
     ];
 
   in (
