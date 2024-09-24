@@ -176,10 +176,11 @@ in {
       browser
       email
       "codium.desktop"
-      files
       chat
-      "deck.desktop"
       "feishin.desktop"
+      "deck.desktop"
+      files
+      "net.nokyan.Resources.desktop"
     ];
     "org/gnome/mutter" = {
       edge-tiling = true;
@@ -327,6 +328,7 @@ in {
       alphabetize = true;
       fixed-widths = true;
       hide-icons = false;
+      icon-style = 1;
       hot-sensors = [
         "_processor_usage_"
         "_memory_allocated_"

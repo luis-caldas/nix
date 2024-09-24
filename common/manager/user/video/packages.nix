@@ -74,6 +74,9 @@ lib.mkIf osConfig.mine.graphics.enable
     # Gnome Extra #
     ###############
 
+    # System Monitor
+    resources
+
     # Files
     warp
     raider

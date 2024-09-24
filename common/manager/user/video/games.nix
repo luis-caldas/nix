@@ -9,7 +9,7 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
 
     # Emulators
     pcsxr
-    pcsx2
+    (lib.lowPrio pcsx2)
     mednafen
     desmume
     dolphinEmu
