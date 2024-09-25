@@ -28,7 +28,6 @@
 
     # Disk
     squashfsTools
-    smartmontools
 
     # Disk Clearing
     zerofree

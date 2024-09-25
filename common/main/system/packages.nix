@@ -36,6 +36,7 @@
     hdparm
     hddtemp
     nvme-cli
+    smartmontools
 
     # Paritioning
     parted
