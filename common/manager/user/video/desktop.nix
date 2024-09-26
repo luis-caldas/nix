@@ -18,7 +18,7 @@ lib.mkIf osConfig.mine.graphics.enable
     terminal = "Alacritty.desktop";
     browser = "${(builtins.head browsersNewInfo).name}.desktop";
     email = "org.gnome.Evolution.desktop";
-    chat = "org.gnome.Fractal.desktop";
+    chat = "element-desktop.desktop";
     text = "org.gnome.TextEditor.desktop";
     audio = "org.gnome.Decibels.desktop";
     video = "io.github.celluloid_player.Celluloid.desktop";
