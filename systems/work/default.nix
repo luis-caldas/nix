@@ -33,7 +33,7 @@
       ssh = false;
       avahi = true;
       docker = true;
-      printing = true;
+      printing = false;
       virtual.enable = true;
       virtual.android = true;
     };
