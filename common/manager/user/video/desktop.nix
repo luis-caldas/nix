@@ -451,7 +451,7 @@ in {
   # Add theming for qt
   qt = {
     enable = true;
-    platformTheme = "gnome";
+    platformTheme.name = "adwaita";
     style.name = lib.strings.toLower (
       if osConfig.mine.graphics.dark then
         osConfig.mine.graphics.themeDark
