@@ -102,12 +102,7 @@ in
   programs = {
 
     # Enable chromium
-    chromium = {
-      enable = true;
-      package = pkgs.chromium.override {
-        commandLineArgs = "--force-dark-mode --enable-features=WebUIDarkMode";
-      };
-    };
+    chromium.enable = true;
 
     # Enable vscode
     vscode = {
