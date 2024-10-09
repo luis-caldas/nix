@@ -334,14 +334,20 @@ in {
     keybindingsKey = "custom-keybindings";
     keybindingsPath = "${startMedia}/${keybindingsKey}";
 
+    # Launcher
+    launcher = "gtk-launch";
+
+    # Super key
+    superKey = "<Super>";
+
     # Custom list of keybindings
     keybindings = (lib.attrsets.concatMapAttrs (name: value: {
       "${pkgs.functions.capitaliseString name}" = {
-        command = "gtk-lauch ${if (builtins.hasAttr name defaultApplications) then
+        command = "${launcher} ${if (builtins.hasAttr name defaultApplications) then
             builtins.getAttr name defaultApplications
           else
             name}";
-        binding = "<Super>${pkgs.functions.capitaliseString value}";
+        binding = "${superKey}${pkgs.functions.capitaliseString value}";
       };
     }) osConfig.mine.graphics.keybindings)
     # Custom keybindings for the browser
@@ -351,8 +357,8 @@ in {
         lib.attrsets.nameValuePair
           "Browser ${pkgs.functions.capitaliseString eachBrowser.name}"
           {
-            command = "gtk-launch ${(builtins.elemAt browsersNewInfo index).name}.desktop";
-            binding = "<Super>${pkgs.functions.capitaliseString eachBrowser.key}";
+            command = "${launcher} ${(builtins.elemAt browsersNewInfo index).name}.desktop";
+            binding = "${superKey}${pkgs.functions.capitaliseString eachBrowser.key}";
           }
       )
       osConfig.mine.browser.others
