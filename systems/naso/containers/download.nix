@@ -41,6 +41,11 @@ in {
       "${paths.local}/torrent:/config"
       "${paths.on.downloads}:/downloads"
     ];
+    # Ports
+    ports = [
+      "6881:6881"
+      "6881:6881/udp"
+    ];
     # Networking
     networks = [
       networks.download.torrent
