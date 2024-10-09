@@ -13,21 +13,9 @@ lib.mkIf osConfig.mine.graphics.enable
     path = "${osConfig.mine.browser.command}-${eachBrowser.name}";
   }) osConfig.mine.browser.others;
 
-  # List of default apps for the desktop
-  defaultApplications = {
-    terminal = "Alacritty.desktop";
+  # Join the default applications from config with our browser
+  defaultApplications = osConfig.mine.graphics.applications // {
     browser = "${(builtins.head browsersNewInfo).name}.desktop";
-    email = "org.gnome.Evolution.desktop";
-    chat = "element-desktop.desktop";
-    text = "org.gnome.TextEditor.desktop";
-    audio = "org.gnome.Decibels.desktop";
-    video = "io.github.celluloid_player.Celluloid.desktop";
-    image = "org.gnome.Loupe.desktop";
-    files = "org.gnome.Nautilus.desktop";
-    archive = "org.gnome.FileRoller.desktop";
-    pdf = "org.gnome.Evince.desktop";
-    calendar = "org.gnome.Calendar.desktop";
-    iso = "gnome-disk-image-mounter.desktop";
   };
 
   # Create the massive list of the default applications for everything
@@ -86,48 +74,26 @@ lib.mkIf osConfig.mine.graphics.enable
   ));
 
   # Create custom electron applications for all my used websites
-  customElectron = let
-
-    # List of applications to be created
-    browserApplications = [
-      { name = "deck"; icon = "plan"; url = "https://redirect.caldas.ie"; }
-      { name = "notes"; icon = "notes"; url = "https://redirect.caldas.ie"; }
-      { name = "files"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
-      { name = "jellyfin-web"; icon = "jellyfin"; url = "https://redirect.caldas.ie"; }
-      { name = "whatsapp-web"; icon = "whatsapp"; url = "https://web.whatsapp.com"; }
-      { name = "discord-web"; icon = "discord"; url = "https://discord.com/app"; }
-      { name = "github-web"; icon = "github"; url = "https://github.com"; }
-      { name = "chess-web"; icon = "chess"; url = "https://chess.com"; }
-      { name = "spotify-web"; icon = "spotify"; url = "https://open.spotify.com"; }
-      { name = "youtube-web"; icon = "youtube"; url = "https://www.youtube.com"; }
-      { name = "youtube-music-web"; icon = "youtube-music"; url = "https://music.youtube.com"; }
-      { name = "defence-forces"; icon = "europa-universalis-IV"; url = "https://irishdefenceforces.workvivo.com"; }
-      { name = "canvas"; icon = "applications-education"; url = "https://cit.instructure.com"; }
-    ];
-
-  in (
-    # Automatically create the chromium applications from a list
-    builtins.listToAttrs (map (eachEntry: {
-      name = eachEntry.name;
-      value = rec {
-        name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] eachEntry.name);
-        comment = "${name} web page running as an application";
-        exec = ''${osConfig.mine.browser.command} --user-data-dir="${config.xdg.configHome}/browser-apps/${eachEntry.name}" --profile-directory="${eachEntry.name}" --app="${eachEntry.url}"'';
-        icon = eachEntry.icon;
-        terminal = false;
-        categories = [ "Network" "WebBrowser" ];
-        settings.StartupWMClass = let
-          splitString = lib.lists.drop 1 (
-            builtins.filter
-            (each: !(builtins.elem each [ [] "" ]))
-            (lib.strings.split "/" eachEntry.url)
-          );
-          fixedUrl = builtins.head splitString;
-          after = lib.strings.concatStringsSep "_" (lib.lists.drop 1 splitString);
-        in "chrome-${fixedUrl}__${after}-${eachEntry.name}";
-      };
-    }) browserApplications)
-  );
+  customElectron = builtins.listToAttrs (map (eachEntry: {
+    name = eachEntry.name;
+    value = rec {
+      name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] eachEntry.name);
+      comment = "${name} web page running as an application";
+      exec = ''${osConfig.mine.browser.command} --user-data-dir="${config.xdg.configHome}/browser-apps/${eachEntry.name}" --profile-directory="${eachEntry.name}" --app="${eachEntry.url}"'';
+      icon = eachEntry.icon;
+      terminal = false;
+      categories = [ "Network" "WebBrowser" ];
+      settings.StartupWMClass = let
+        splitString = lib.lists.drop 1 (
+          builtins.filter
+          (each: !(builtins.elem each [ [] "" ]))
+          (lib.strings.split "/" eachEntry.url)
+        );
+        fixedUrl = builtins.head splitString;
+        after = lib.strings.concatStringsSep "_" (lib.lists.drop 1 splitString);
+      in "chrome-${fixedUrl}__${after}-${eachEntry.name}";
+    };
+  }) osConfig.mine.browser.apps);
 
 in {
 
@@ -150,11 +116,6 @@ in {
         dark  = genUrlPath files.dark;
       };
 
-    # My workspaces
-    workspaces = [
-      "Main" "Browse" "Mail" "Docs" "Game" "Design" "Web" "Links" "Music"
-    ];
-
   in lib.mkMerge [
 
   # All my configuration that can be easily set
@@ -172,17 +133,12 @@ in {
     "org/gnome/desktop/peripherals/keyboard" = {
       numlock-state = osConfig.mine.graphics.numlock;
     };
-    "org/gnome/shell".favorite-apps = with defaultApplications; [
-      terminal
-      browser
-      email
-      "codium.desktop"
-      chat
-      "feishin.desktop"
-      "deck.desktop"
-      files
-      "net.nokyan.Resources.desktop"
-    ];
+    "org/gnome/shell".favorite-apps = map (each:
+      if (builtins.hasAttr each defaultApplications) then
+        builtins.getAttr each defaultApplications
+      else
+        each
+    ) osConfig.mine.graphics.favourites;
     "org/gnome/mutter" = {
       edge-tiling = true;
       workspaces-only-on-primary = true;
@@ -195,9 +151,18 @@ in {
 
       # Theming
       cursor-theme = osConfig.mine.graphics.cursor;
-      icon-theme = osConfig.mine.graphics.icon;
-      gtk-theme = osConfig.mine.graphics.theme;
-      color-scheme = "prefer-dark";
+      icon-theme = if osConfig.mine.graphics.dark then
+          osConfig.mine.graphics.iconDark
+        else
+          osConfig.mine.graphics.icon;
+      gtk-theme = if osConfig.mine.graphics.dark then
+          osConfig.mine.graphics.themeDark
+        else
+          osConfig.mine.graphics.theme;
+      color-scheme = if osConfig.mine.graphics.dark then
+          "prefer-dark"
+        else
+          "prefer-light";
 
       # Bar
       enable-hot-corners = false;
@@ -221,8 +186,8 @@ in {
       remember-recent-files = false;
     };
     "org/gnome/desktop/wm/preferences" = {
-      num-workspaces = builtins.length workspaces;
-      workspace-names = workspaces;
+      num-workspaces = builtins.length osConfig.mine.graphics.workspaces;
+      workspace-names = osConfig.mine.graphics.workspaces;
       button-layout = "menu,appmenu:minimize,maximize,close";
     };
     "org/gnome/desktop/background" = {
@@ -370,33 +335,24 @@ in {
     keybindingsPath = "${startMedia}/${keybindingsKey}";
 
     # Custom list of keybindings
-    keybindings = with defaultApplications; {
-      "Terminal" = {
-        command = "gtk-launch ${terminal}";
-        binding = "<Super>Return";
+    keybindings = (lib.attrsets.concatMapAttrs (name: value: {
+      "${pkgs.functions.capitaliseString name}" = {
+        command = "gtk-lauch ${if (builtins.hasAttr name defaultApplications) then
+            builtins.getAttr name defaultApplications
+          else
+            name}";
+        binding = "<Super>${pkgs.functions.capitaliseString value}";
       };
-      "File" = {
-        command = "gtk-launch ${files}";
-        binding = "<Super>E";
-      };
-    }
+    }) osConfig.mine.graphics.keybindings)
     # Custom keybindings for the browser
     //
-    (builtins.listToAttrs (let
-      # List with the keys for the browsers
-      browserKeys = [
-        "N"  # Main
-        "M"  # Persistent
-        "B"  # Normal
-        "G"  # Other
-      ];
-    in lib.lists.imap0
+    (builtins.listToAttrs (lib.lists.imap0
       (index: eachBrowser:
         lib.attrsets.nameValuePair
           "Browser ${pkgs.functions.capitaliseString eachBrowser.name}"
           {
             command = "gtk-launch ${(builtins.elemAt browsersNewInfo index).name}.desktop";
-            binding = "<Super>${builtins.elemAt browserKeys index}";
+            binding = "<Super>${pkgs.functions.capitaliseString eachBrowser.key}";
           }
       )
       osConfig.mine.browser.others
@@ -447,7 +403,7 @@ in {
       map
         (eachIndex:
         { name = "switch-to-application-${eachIndex}"; value = []; })
-      (genStrRange (builtins.length workspaces))
+      (genStrRange (builtins.length osConfig.mine.graphics.workspaces))
     );
 
     # Media keys reassignment
@@ -474,13 +430,13 @@ in {
         { name = "switch-to-workspace-${eachIndex}"; value = [
           "<Super>${eachIndex}" "<Super><Alt>${eachIndex}" "<Control><Alt>${eachIndex}"
         ]; }
-      ) (genStrRange (builtins.length workspaces))) ++
+      ) (genStrRange (builtins.length osConfig.mine.graphics.workspaces))) ++
       # Moving workspaces
       (map (eachIndex:
         { name = "move-to-workspace-${eachIndex}"; value = [
           "<Super><Shift>${eachIndex}" "<Super><Shift><Alt>${eachIndex}" "<Control><Shift><Alt>${eachIndex}"
         ]; }
-      ) (genStrRange (builtins.length workspaces)))
+      ) (genStrRange (builtins.length osConfig.mine.graphics.workspaces)))
     );
 
   })];
@@ -495,8 +451,13 @@ in {
   # Add theming for qt
   qt = {
     enable = true;
-    platformTheme.name = "adwaita";
-    style.name = lib.strings.toLower osConfig.mine.graphics.theme;
+    platformTheme = "gnome";
+    style.name = lib.strings.toLower (
+      if osConfig.mine.graphics.dark then
+        osConfig.mine.graphics.themeDark
+      else
+        osConfig.mine.graphics.theme
+    );
   };
 
   # Add my own custom desktop files

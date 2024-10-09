@@ -319,13 +319,128 @@
       icon = mkOption {
         description = "Name of the preferred icon theme to use";
         type = str;
+        default = "Papirus";
+      };
+
+      iconDark = mkOption {
+        description = "Name of the preferred icon theme to use when dark";
+        type = str;
         default = "Papirus-Dark";
       };
 
       theme = mkOption {
         description = "Name of the preferred system theme to use";
         type = str;
+        default = "Adwaita";
+      };
+
+      themeDark = mkOption {
+        description = "Name of the preferred system theme to use when dark";
+        type = str;
         default = "Adwaita-dark";
+      };
+
+      dark = mkOption {
+        description = "Enable dark mode by default";
+        type = bool;
+        default = true;
+      };
+
+      workspaces = mkOption {
+        description = "List of workspaces";
+        type = listOf str;
+        default = [
+          "Main" "Browse" "Mail" "Docs" "Game" "Design" "Web" "Links" "Music"
+        ];
+      };
+
+      applications = {
+
+        terminal = mkOption {
+          type = str;
+          default = "Alacritty.desktop";
+        };
+
+        email = mkOption {
+          type = str;
+          default = "org.gnome.Evolution.desktop";
+        };
+
+        chat = mkOption {
+          type = str;
+          default = "element-desktop.desktop";
+        };
+
+        text = mkOption {
+          type = str;
+          default = "org.gnome.TextEditor.desktop";
+        };
+
+        audio = mkOption {
+          type = str;
+          default = "org.gnome.Decibels.desktop";
+        };
+
+        video = mkOption {
+          type = str;
+          default = "io.github.celluloid_player.Celluloid.desktop";
+        };
+
+        image = mkOption {
+          type = str;
+          default = "org.gnome.Loupe.desktop";
+        };
+
+        files = mkOption {
+          type = str;
+          default = "org.gnome.Nautilus.desktop";
+        };
+
+        archive = mkOption {
+          type = str;
+          default = "org.gnome.FileRoller.desktop";
+        };
+
+        pdf = mkOption {
+          type = str;
+          default = "org.gnome.Evince.desktop";
+        };
+
+        calendar = mkOption {
+          type = str;
+          default = "org.gnome.Calendar.desktop";
+        };
+
+        iso = mkOption {
+          type = str;
+          default = "gnome-disk-image-mounter.desktop";
+        };
+
+      };
+
+      favourites = mkOption {
+        description = "List of desktop items to be favourites, items can be a generic application name";
+        type = listOf str;
+        default = [
+          "terminal"
+          "browser"
+          "email"
+          "codium.desktop"
+          "chat"
+          "feishin.desktop"
+          "deck.desktop"
+          "files"
+          "net.nokyan.Resources.desktop"
+        ];
+      };
+
+      keybindings = mkOption {
+        description = "Extra keybindings to launch applications, items can be a generic application name";
+        type = attrsOf str;
+        default = {
+          terminal = "Return";
+          files = "E";
+        };
       };
 
     };
@@ -387,18 +502,41 @@
           # The main installation
           { name = "main";
             extensions = [ "bjilljlpencdcpihofiobpnfgcakfdbe" ];  # clear browsing data
+            key = "N";
           }
 
           # The persistent installation
           { name = "persistent";
             extensions = [];
+            key = "M";
           }
 
           # The unchanged installation
           { name = "normal";
             extensions = [];
+            key = "B";
           }
 
+        ];
+      };
+
+      apps = mkOption {
+        description = "Extra applications that use the browser";
+        type = listOf (attrsOf str);
+        default = [
+          { name = "deck"; icon = "plan"; url = "https://redirect.caldas.ie"; }
+          { name = "notes"; icon = "notes"; url = "https://redirect.caldas.ie"; }
+          { name = "files"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
+          { name = "jellyfin-web"; icon = "jellyfin"; url = "https://redirect.caldas.ie"; }
+          { name = "whatsapp-web"; icon = "whatsapp"; url = "https://web.whatsapp.com"; }
+          { name = "discord-web"; icon = "discord"; url = "https://discord.com/app"; }
+          { name = "github-web"; icon = "github"; url = "https://github.com"; }
+          { name = "chess-web"; icon = "chess"; url = "https://chess.com"; }
+          { name = "spotify-web"; icon = "spotify"; url = "https://open.spotify.com"; }
+          { name = "youtube-web"; icon = "youtube"; url = "https://www.youtube.com"; }
+          { name = "youtube-music-web"; icon = "youtube-music"; url = "https://music.youtube.com"; }
+          { name = "defence-forces"; icon = "europa-universalis-IV"; url = "https://irishdefenceforces.workvivo.com"; }
+          { name = "canvas"; icon = "applications-education"; url = "https://cit.instructure.com"; }
         ];
       };
 
