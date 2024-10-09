@@ -319,7 +319,7 @@
       icon = mkOption {
         description = "Name of the preferred icon theme to use";
         type = str;
-        default = "Papirus";
+        default = "Papirus-Light";
       };
 
       iconDark = mkOption {
