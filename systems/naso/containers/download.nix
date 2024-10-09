@@ -34,6 +34,7 @@ in {
       PUID = config.mine.user.uid;
       PGID = config.mine.user.gid;
       WEBUI_PORT = 8080;
+      DOCKER_MODS = "ghcr.io/vuetorrent/vuetorrent-lsio-mod:latest";
     };
     # Volumes
     volumes = [
