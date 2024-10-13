@@ -71,6 +71,9 @@
     heimdall
     dfu-programmer
 
+    # Running Programs
+    steam-run
+
     # Tor
     tor
 
@@ -176,7 +179,6 @@
 
     # C
     gcc
-    gdb
     cmake
     gnumake
 
@@ -184,6 +186,8 @@
     llvm
 
     # Debug
+    gdb
+    gef
     valgrind
 
     # Fuzz
