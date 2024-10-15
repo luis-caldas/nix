@@ -63,7 +63,7 @@ in {
 
   services."${names.matrix.database}".service = {
     # Image
-    image = "postgres:latest";
+    image = "postgres:16";
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       POSTGRES_USER = names.matrix.app;
@@ -249,7 +249,7 @@ in {
 
   services."${names.matrix.bridge.database.whats}".service = {
     # Image
-    image = "postgres:latest";
+    image = "postgres:16";
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       POSTGRES_USER = names.matrix.bridge.whats;
@@ -272,7 +272,7 @@ in {
 
   # services."${names.matrix.bridge.database.discord}".service = {
   #   # Image
-  #   image = "postgres:latest";
+  #   image = "postgres:16";
   #   # Environment
   #   environment = pkgs.functions.container.fixEnvironment {
   #     POSTGRES_USER = names.matrix.bridge.discord;
@@ -295,7 +295,7 @@ in {
 
   # services."${names.matrix.bridge.database.telegram}".service = {
   #   # Image
-  #   image = "postgres:latest";
+  #   image = "postgres:16";
   #   # Environment
   #   environment = pkgs.functions.container.fixEnvironment {
   #     POSTGRES_USER = names.matrix.bridge.telegram;
@@ -318,7 +318,7 @@ in {
 
   # services."${names.matrix.bridge.database.slack}".service = {
   #   # Image
-  #   image = "postgres:latest";
+  #   image = "postgres:16";
   #   # Environment
   #   environment = pkgs.functions.container.fixEnvironment {
   #     POSTGRES_USER = names.matrix.bridge.slack;
@@ -341,7 +341,7 @@ in {
 
   # services."${names.matrix.bridge.database.signal}".service = {
   #   # Image
-  #   image = "postgres:latest";
+  #   image = "postgres:16";
   #   # Environment
   #   environment = pkgs.functions.container.fixEnvironment {
   #     POSTGRES_USER = names.matrix.bridge.signal;
@@ -364,7 +364,7 @@ in {
 
   # services."${names.matrix.bridge.database.meta}".service = {
   #   # Image
-  #   image = "postgres:latest";
+  #   image = "postgres:16";
   #   # Environment
   #   environment = pkgs.functions.container.fixEnvironment {
   #     POSTGRES_USER = names.matrix.bridge.meta;
