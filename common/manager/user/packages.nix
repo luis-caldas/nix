@@ -94,6 +94,9 @@
     # Bluetooth
     bluetooth_battery
 
+    # Documents
+    pdfgrep
+
     # Web
     w3m
 
@@ -250,6 +253,9 @@
 
     # Networking
     inetutils
+
+    # Web
+    gobuster
 
     # Logger
     logkeys
