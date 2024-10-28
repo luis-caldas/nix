@@ -298,6 +298,9 @@ lib.mkIf osConfig.mine.graphics.enable
     # Binary Visualiser
     binocle
 
+    # RISC-V
+    rars
+
     # Analiser
     smuview
     pulseview
