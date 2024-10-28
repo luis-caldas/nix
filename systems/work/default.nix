@@ -34,8 +34,11 @@
       avahi = true;
       docker = true;
       printing = true;
-      virtual.enable = true;
-      virtual.android = true;
+      virtual = {
+        enable = true;
+        swtpm = true;
+        android = true;
+      };
     };
     graphics.enable = true;
     production = {
