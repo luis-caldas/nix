@@ -80,6 +80,7 @@
       # Software Development
       "pycharm-professional" "webstorm" "clion" "datagrip" "idea-ultimate"
       "ciscoPacketTracer8"
+      "volatility3"
 
       # Work
       "zoom"

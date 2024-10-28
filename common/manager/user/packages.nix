@@ -251,6 +251,9 @@
     sqlmap
     thc-hydra
 
+    # Fuzz
+    aflplusplus
+
     # Networking
     inetutils
 
@@ -262,6 +265,9 @@
 
     # Reverse
     radare2
+
+    # Memory
+    volatility3
 
     # Flashing
     avrdude
