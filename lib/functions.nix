@@ -84,6 +84,16 @@ let
       else
         returnFunction dataIn;
 
+    # Get a value from an attrset safely
+    safeGetAttr = wholeAttrSet: path: let
+      # Extract first
+      firstItem = builtins.head path;
+    in
+      if builtins.hasAttr firstItem wholeAttrSet then
+        safeGetAttr (builtins.getAttr firstItem wholeAttrSet) (pkgs.lib.lists.drop 1 path)
+      else
+        {};
+
     # Generates SSL Key and Certificate
     generateUnsafeSSL = let
       duration = 365 * 10;

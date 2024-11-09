@@ -20,17 +20,6 @@ let
     getLastDash = inputString:
       lib.lists.last (lib.strings.splitString containerNameSeparator inputString);
 
-    # Add a custom init to the configuration
-    addCustomInit = originalObject: let
-      extra = { init = true; };
-    in originalObject // {
-      out.service =
-        if builtins.hasAttr "out" originalObject then
-          originalObject.out.service // extra
-        else
-          extra;
-    };
-
     # Import container files from a directory
     projects = path: shared: let
       # All the possible imports
@@ -69,13 +58,15 @@ let
                     container_name = name;
                   };
                 };
+                # Check if we have already data to the raw section
+                originalRaw = pkgs.functions.safeGetAttr value [ "out" "service" ];
                 # Check if there is a need to add the pull policy
-                newRaw =
-                  if builtins.hasAttr "build" value then {
-                    out.service = rawConfig.local;
-                  } else {
-                    out.service = rawConfig.remote;
-                  };
+                newRaw = {
+                  out.service = (if builtins.hasAttr "build" value then
+                      rawConfig.local
+                    else
+                      rawConfig.remote) // originalRaw;
+                };
               in
                 value // newServiceInfo // newRaw
               ) imported.services;
