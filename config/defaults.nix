@@ -427,8 +427,8 @@
           "email"
           "codium.desktop"
           "chat"
-          "feishin.desktop"
-          "deck.desktop"
+          "spotify.desktop"
+          "io.github.mrvladus.List.desktop"
           "files"
           "net.nokyan.Resources.desktop"
         ];
