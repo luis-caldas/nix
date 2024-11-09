@@ -59,6 +59,7 @@
     rdfind
     rmlint
     rmtrash
+    czkawka
 
     # Time
     libfaketime
