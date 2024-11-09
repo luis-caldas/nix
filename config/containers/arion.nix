@@ -3,7 +3,7 @@
 
   # Import arion
   imports = [
-     "${builtins.fetchGit "https://github.com/hercules-ci/arion"}/nixos-module.nix"
+     "${builtins.fetchGit "https://github.com/luis-caldas/arion"}/nixos-module.nix"
   ];
 
   # Set docker as backend
