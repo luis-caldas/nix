@@ -53,11 +53,11 @@ with shared;
 
     };
 
-  };
+    # Extra for dns name search
+    out.service = {
+      dns_search = ".";
+    };
 
-  # Extra for dns name search
-  out.service = {
-    dns_search = ".";
   };
 
 }

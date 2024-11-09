@@ -86,11 +86,15 @@ let
 
     # Get a value from an attrset safely
     safeGetAttr = wholeAttrSet: path: let
-      # Extract first
+      # Manipulate the path list
       firstItem = builtins.head path;
+      dropped = pkgs.lib.lists.drop 1 path;
     in
       if builtins.hasAttr firstItem wholeAttrSet then
-        safeGetAttr (builtins.getAttr firstItem wholeAttrSet) (pkgs.lib.lists.drop 1 path)
+        if dropped == [] then
+          builtins.getAttr firstItem wholeAttrSet
+        else
+          safeGetAttr (builtins.getAttr firstItem wholeAttrSet) dropped
       else
         {};
 
