@@ -157,6 +157,16 @@ in
 
   };
 
+  # Services
+  services.nextcloud-client = {
+    enable = true;
+    startInBackground = true;
+  };
+  systemd.user.services.nextcloud-client.Unit.PartOf = lib.mkForce [ ];
+  systemd.user.services.nextcloud-client.Unit.After = lib.mkForce [ "xdg-desktop-portal.service" ];
+  systemd.user.services.nextcloud-client.Install.WantedBy = lib.mkForce [ "xdg-desktop-portal.service" ];
+  systemd.user.services.nextcloud-client.Service.Type = "Idle";
+
   # All the needed links for the system to have its flair
   home.file = lib.mkMerge (
 
