@@ -54,6 +54,7 @@ lib.mkIf osConfig.mine.graphics.enable
     gnome.gnome-contacts
     gnome.gnome-calculator
     epiphany
+    errands
 
     # Monitor
     gnome.gnome-system-monitor
