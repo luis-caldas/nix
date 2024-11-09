@@ -8,7 +8,7 @@ import subprocess
 import urllib.request
 
 USER_NAME    = "luis-caldas"
-REPOS_BRANCH = "master"
+REPOS_BRANCH = [ "master", "main" ]
 
 PER_PAGE = 10
 
@@ -138,7 +138,7 @@ def main():
             projURL = "https://api.github.com/repos/%s/%s/branches" % (USER_NAME, eachProject)
 
             # Extract chosen branch and last commit hash
-            chosenBranch = [each for each in json.load(urllib.request.urlopen(projURL)) if each["name"] == REPOS_BRANCH].pop()
+            chosenBranch = [each for each in json.load(urllib.request.urlopen(projURL)) if each["name"] in REPOS_BRANCH].pop()
             lastCommitHash = chosenBranch["commit"]["sha"]
 
             # Generate hash command
