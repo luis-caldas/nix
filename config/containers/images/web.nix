@@ -1,4 +1,4 @@
-{ baseImage, pkgs, ... }:
+{ baseImage, information, pkgs, ... }:
 
 #######
 # Web #
@@ -15,7 +15,7 @@
 }: let
 
   # Create the image name depending on the given name
-  baseName = "local/web";
+  baseName = "${information.repo}/web";
   newName = if name == null then
     baseName
   else
@@ -31,7 +31,7 @@ in pkgs.dockerTools.buildImage {
 
   # Naming
   name = newName;
-  tag = "latest";
+  tag = information.tag;
 
   # Use the base image
   fromImage = baseImage;

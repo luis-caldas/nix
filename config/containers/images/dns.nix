@@ -1,4 +1,4 @@
-{ baseImage, pkgs, ... }:
+{ baseImage, information, pkgs, ... }:
 
 ###################
 # DNS Crypt Proxy #
@@ -17,8 +17,8 @@ let
 in pkgs.dockerTools.buildImage {
 
   # Names and tags
-  name = "local/dns";
-  tag = "latest";
+  name = "${information.repo}/dns";
+  tag = information.tag;
 
   # Use the base image
   fromImage = baseImage;

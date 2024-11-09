@@ -1,4 +1,4 @@
-{ baseImage, pkgs, ... }:
+{ baseImage, information, pkgs, ... }:
 
 ############
 # Asterisk #
@@ -17,8 +17,8 @@ let
 in pkgs.dockerTools.buildImage {
 
   # Naming
-  name = "local/asterisk";
-  tag = "latest";
+  name = "${information.repo}/asterisk";
+  tag = information.tag;
 
   # Base image
   fromImage = baseImage;

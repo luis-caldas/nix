@@ -1,4 +1,4 @@
-{ baseImage, pkgs, ... }:
+{ baseImage, information, pkgs, ... }:
 
 ###########
 # FreeDNS #
@@ -64,8 +64,8 @@ let
 in pkgs.dockerTools.buildImage {
 
   # Tags
-  name = "local/freedns";
-  tag = "latest";
+  name = "${information.repo}/freedns";
+  tag = information.tag;
 
   # Base Image
   fromImage = baseImage;

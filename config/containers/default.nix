@@ -1,12 +1,18 @@
 { pkgs, lib, config, ... }@args:
 let
 
+  # All information passed on
+  information = {
+    repo = "local";
+    tag = "latest";
+  };
+
   # A base image for all the custom images that will be built on top of it
   baseImage = pkgs.dockerTools.buildImage {
 
     # Names
-    name = "local/base";
-    tag = "latest";
+    name = "${information.repo}/base";
+    tag = information.tag;
 
     # Packages needed for the image
     copyToRoot = with pkgs; [
@@ -69,7 +75,7 @@ in {
       # All the images
       containers = builtins.listToAttrs (map (eachFile: {
         name = lib.strings.removeSuffix ".nix" eachFile;
-        value = import (imagesPath + ("/" + eachFile)) (args // { inherit baseImage; });
+        value = import (imagesPath + ("/" + eachFile)) (args // { inherit baseImage information; });
       }) allImages);
 
     })
