@@ -20,6 +20,7 @@ with shared;
     # Environment
     environment = {
       TZ = config.mine.system.timezone;
+      UPS_PORT = 3493;  # Default Port
     };
     env_file = [ "/data/local/containers/nut/nut.env" ];
     # Networking
