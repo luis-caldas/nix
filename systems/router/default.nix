@@ -162,6 +162,11 @@ in {
         noipv4ll
       '';
 
+      # Replace the domain for a search
+      runHook = ''
+        sed 's/^domain/search/' -i /etc/resolv.conf
+      '';
+
       # Don't hangup on startup
       wait = "background";
 
