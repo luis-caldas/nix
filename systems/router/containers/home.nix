@@ -35,7 +35,7 @@ with shared;
     # Ports
     ports = [
       "10000:10000/udp"
-    ]
+    ];
 
     # Networking
     networks = [ networks.home ];
