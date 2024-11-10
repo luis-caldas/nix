@@ -24,7 +24,7 @@ let
     networks.media.navidrome
     networks.media.simple
     # Recipe
-    networks.recipe.default
+    # networks.recipe.default
     # Social
     networks.social.default
     networks.social.admin
@@ -33,7 +33,7 @@ let
     # Vault
     networks.vault
     # Workout
-    networks.workout.default
+    # networks.workout.default
   ];
 
 in {
