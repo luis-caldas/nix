@@ -4,7 +4,7 @@ let
   # All information passed on
   information = {
     repo = "local";
-    tag = "latest";
+    when = "now";
   };
 
   # A base image for all the custom images that will be built on top of it
@@ -12,7 +12,7 @@ let
 
     # Names
     name = "${information.repo}/base";
-    tag = information.tag;
+    created = information.when;
 
     # Packages needed for the image
     copyToRoot = with pkgs; [

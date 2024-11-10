@@ -18,7 +18,7 @@ in pkgs.dockerTools.buildImage {
 
   # Names and tags
   name = "${information.repo}/dns";
-  tag = information.tag;
+  created = information.when;
 
   # Use the base image
   fromImage = baseImage;

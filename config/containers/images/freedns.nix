@@ -65,7 +65,7 @@ in pkgs.dockerTools.buildImage {
 
   # Tags
   name = "${information.repo}/freedns";
-  tag = information.tag;
+  created = information.when;
 
   # Base Image
   fromImage = baseImage;

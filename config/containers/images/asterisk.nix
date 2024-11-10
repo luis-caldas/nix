@@ -18,7 +18,7 @@ in pkgs.dockerTools.buildImage {
 
   # Naming
   name = "${information.repo}/asterisk";
-  tag = information.tag;
+  created = information.when;
 
   # Base image
   fromImage = baseImage;

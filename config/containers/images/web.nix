@@ -31,7 +31,7 @@ in pkgs.dockerTools.buildImage {
 
   # Naming
   name = newName;
-  tag = information.tag;
+  created = information.when;
 
   # Use the base image
   fromImage = baseImage;
