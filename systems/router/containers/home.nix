@@ -32,6 +32,11 @@ with shared;
       "/data/local/containers/assistant/config:/config"
     ];
 
+    # Ports
+    ports = [
+      "10000:10000/udp"
+    ]
+
     # Networking
     networks = [ networks.home ];
 
