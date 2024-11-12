@@ -22,7 +22,7 @@ let
     networks.monitor.grafana
     networks.monitor.kuma
     # Home Assistant
-    networks.home
+    # networks.home
   ];
 
 in {
