@@ -201,6 +201,7 @@
     jq
 
     # XML & YAML
+    libxml2
     python3Packages.yq
 
     # Python
@@ -265,6 +266,7 @@
     logkeys
 
     # Reverse
+    pev
     radare2
 
     # Memory
@@ -281,6 +283,10 @@
     python3Packages.can
     python3Packages.cantools
     python3Packages.scapy
+
+    # UBI
+    ubi_reader
+    ubidump
 
     # AI
     ollama
