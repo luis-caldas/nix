@@ -10,7 +10,6 @@
     # Binary
     flips
     xdelta
-    ubi_reader
     geteltorito
     payload-dumper-go
 
