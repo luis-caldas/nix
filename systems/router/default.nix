@@ -183,13 +183,13 @@ in {
     # Pon Bridge
     interfaces.pon-bridge.useDHCP = false;
 
-    # Wonderwall Bridge
-    interfaces.wonderwall-bridge.useDHCP = false;
+    # Icewall Bridge
+    interfaces.icewall-bridge.useDHCP = false;
 
     # Populate bridges
     bridges.firewall-bridge.interfaces = [ "ix0" ];
     bridges.pon-bridge.interfaces = [ "ix1" ];
-    bridges.wonderwall-bridge.interfaces = [ "stub" ];
+    bridges.icewall-bridge.interfaces = [ "stub" ];
 
     # Add another DNS to the DHCP acquired list
     # That is because the DNS server itself depends on this to start
