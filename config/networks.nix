@@ -134,7 +134,7 @@ let
     mac = {
 
       # Routers virtual bridge
-      router = "ff:54:ff:00:00:01";
+      firewall = "ff:54:ff:00:10:01";
 
       # VPNs mac for its virtual bridge
       vpn = "ff:54:ff:33:00:01";

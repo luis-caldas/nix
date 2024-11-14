@@ -108,19 +108,6 @@ in {
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  ########
-  # VFIO #
-  ########
-
-  # VFIO overrides for VMs
-  boot.initrd.preDeviceCommands = ''
-    devices="0000:06:00.0 0000:06:00.1"
-    for each_device in $devices; do
-      echo "vfio-pci" > /sys/bus/pci/devices/$each_device/driver_override
-    done
-    modprobe -i vfio-pci
-  '';
-
   #######
   # Own #
   #######
@@ -175,17 +162,34 @@ in {
     # Force disable Network Manager
     networkmanager.enable = lib.mkForce false;
 
-    # Per interface configuration
-    interfaces = {
-      enp5s0.useDHCP = true;
-      firewall-bridge = {
-        useDHCP = true;
-        macAddress = pkgs.networks.mac.router;
-      };
+    # VLANs
+    vlans = {
+      # Stub
+      stub = { id = 10; interface = "ix1"; };
     };
 
-    # Create the firewall bridge
-    bridges.firewall-bridge.interfaces = [];
+    # Default Gigabit & Management Network
+    interfaces.enp5s0.useDHCP = true;
+
+    # Sub
+    interfaces.stub.useDHCP = false;
+
+    # Bridge to firewall
+    interfaces.firewall-bridge = {
+      useDHCP = true;
+      macAddress = pkgs.networks.mac.firewall;
+    };
+
+    # Pon Bridge
+    interfaces.pon-bridge.useDHCP = false;
+
+    # Wonderwall Bridge
+    interfaces.wonderwall-bridge.useDHCP = false;
+
+    # Populate bridges
+    bridges.firewall-bridge.interfaces = [ "ix0" ];
+    bridges.pon-bridge.interfaces = [ "ix1" ];
+    bridges.wonderwall-bridge.interfaces = [ "stub" ];
 
     # Add another DNS to the DHCP acquired list
     # That is because the DNS server itself depends on this to start
