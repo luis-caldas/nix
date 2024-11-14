@@ -165,7 +165,7 @@ in {
     # VLANs
     vlans = {
       # Stub
-      stub = { id = 10; interface = "ix1"; };
+      stub = { id = 10; interface = "ix0"; };
     };
 
     # Default Gigabit & Management Network
@@ -187,8 +187,8 @@ in {
     interfaces.icewall-bridge.useDHCP = false;
 
     # Populate bridges
-    bridges.firewall-bridge.interfaces = [ "ix0" ];
-    bridges.pon-bridge.interfaces = [ "ix1" ];
+    bridges.firewall-bridge.interfaces = [ "ix1" ];
+    bridges.pon-bridge.interfaces = [ "ix0" ];
     bridges.icewall-bridge.interfaces = [ "stub" ];
 
     # Add another DNS to the DHCP acquired list
