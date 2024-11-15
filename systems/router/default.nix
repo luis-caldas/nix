@@ -165,7 +165,7 @@ in {
     # VLANs
     vlans = {
       # Stub
-      stub = { id = 10; interface = "ix0"; };
+      stub = { id = 10; interface = "enp6s0f0"; };
     };
 
     # Default Gigabit & Management Network
@@ -174,11 +174,14 @@ in {
     # Sub
     interfaces.stub.useDHCP = false;
 
-    # Bridge to firewall
-    interfaces.firewall-bridge = {
+    # Internal Bridge
+    interfaces.virtuall-bridge = {
       useDHCP = true;
       macAddress = pkgs.networks.mac.firewall;
     };
+
+    # Firewall Bridge
+    interfaces.firewall-bridge.useDHCP = false;
 
     # Pon Bridge
     interfaces.pon-bridge.useDHCP = false;
@@ -187,8 +190,9 @@ in {
     interfaces.icewall-bridge.useDHCP = false;
 
     # Populate bridges
-    bridges.firewall-bridge.interfaces = [ "ix1" ];
-    bridges.pon-bridge.interfaces = [ "ix0" ];
+    bridges.virtuall-bridge.interfaces = [];
+    bridges.firewall-bridge.interfaces = [ "enp6s0f1" ];
+    bridges.pon-bridge.interfaces = [ "enp6s0f0" ];
     bridges.icewall-bridge.interfaces = [ "stub" ];
 
     # Add another DNS to the DHCP acquired list
