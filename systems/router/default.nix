@@ -136,6 +136,16 @@ in {
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
   boot.kernel.sysctl."net.ipv4.conf.all.forwarding" = 1;
 
+  # Disable Bridge filtering
+  boot.kernel.sysctl."net.bridge.bridge-nf-call-ip6tables" = 0;
+  boot.kernel.sysctl."net.bridge.bridge-nf-call-iptables" = 0;
+  boot.kernel.sysctl."net.bridge.bridge-nf-call-arptables" = 0;
+  boot.kernel.sysctl."net.bridge.bridge-nf-filter-vlan-tagged" = 0;
+
+  # Disable IPv6
+  boot.kernel.sysctl."net.ipv6.conf.all.disable_ipv6" = 1;
+  boot.kernel.sysctl."net.ipv6.conf.default.disable_ipv6" = 1;
+
   # Networling
   networking = {
 
