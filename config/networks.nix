@@ -67,12 +67,6 @@ let
           };
         };
 
-        # NUT
-        nut = {
-          # Network information
-          subnet = "172.16.30.0/24"; gateway = "172.16.30.1";
-        };
-
         # VPN DNS
         vpn = {
 
@@ -97,6 +91,12 @@ let
 
         };
 
+      };
+
+      # NUT
+      nut = {
+        # Network information
+        subnet = "172.16.30.0/24"; gateway = "172.16.30.1";
       };
 
     };
