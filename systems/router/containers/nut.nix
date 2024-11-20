@@ -6,9 +6,14 @@ with shared;
 {
 
   # Networking
-  networks = pkgs.functions.container.populateNetworks [
+  networks = (pkgs.functions.container.populateNetworks [
     networks.nut
-  ];
+  ]) // {
+    "${networks.nut}" = {
+      name = networks.nut;
+      ipam.config = [{ inherit (pkgs.networks.docker.nut) subnet gateway; }];
+    };
+  };
 
        #####
   ### # NUT # ###
@@ -20,6 +25,7 @@ with shared;
     # Environment
     environment = {
       TZ = config.mine.system.timezone;
+      UPS_HOST = pkgs.networks.docker.nut.gateway;
       UPS_PORT = 3493;  # Default Port
     };
     env_file = [ "/data/local/containers/nut/nut.env" ];

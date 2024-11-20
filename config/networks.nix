@@ -63,9 +63,14 @@ let
           subnet = "172.16.20.0/24"; gateway = "172.16.20.1";
           # IPs
           ips = {
-            main = "172.16.20.11";
             upstream = "172.16.20.10";
           };
+        };
+
+        # NUT
+        nut = {
+          # Network information
+          subnet = "172.16.30.0/24"; gateway = "172.16.30.1";
         };
 
         # VPN DNS
@@ -89,7 +94,6 @@ let
             # IPs
             ip = "172.16.50.10";
           };
-
 
         };
 
