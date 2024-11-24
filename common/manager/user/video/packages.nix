@@ -207,6 +207,9 @@ lib.mkIf osConfig.mine.graphics.enable
     # File organizing
     qdirstat
 
+    # Disk
+    gparted
+
     # Terminal
     alacritty
     cool-retro-term
