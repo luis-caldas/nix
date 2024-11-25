@@ -1,5 +1,14 @@
 { pkgs, lib, config, ... }: let
 
+  # Interfaces informaion
+  interfaces = {
+    one = "enp5s0";
+    ten = {
+      outside = "enp6s0f0";
+      inside = "enp6s0f1";
+    };
+  };
+
   # Shared information
   shared = {
 
@@ -176,11 +185,11 @@ in {
     # VLANs
     vlans = {
       # Stub
-      stub = { id = 10; interface = "enp6s0f0"; };
+      stub = { id = 10; interface = interfaces.ten.outside; };
     };
 
     # Default Gigabit & Management Network
-    interfaces.enp5s0.useDHCP = true;
+    interfaces."${interfaces.one}".useDHCP = true;
 
     # Sub
     interfaces.stub.useDHCP = false;
@@ -202,9 +211,16 @@ in {
 
     # Populate bridges
     bridges.virtuall-bridge.interfaces = [];
-    bridges.firewall-bridge.interfaces = [ "enp6s0f1" ];
-    bridges.pon-bridge.interfaces = [ "enp6s0f0" ];
+    bridges.firewall-bridge.interfaces = [ interfaces.ten.inside ];
+    bridges.pon-bridge.interfaces = [ interfaces.ten.outside ];
     bridges.icewall-bridge.interfaces = [ "stub" ];
+
+    # Stop firewall messing with interfaces
+    # We do not manage or connect to these interfaces
+    firewall.trustedInterfaces = [
+      interfaces.ten.inside interfaces.ten.outside
+      "firewall-bridge" "icewall-bridge" "pon-bridge"
+    ]
 
     # Add another DNS to the DHCP acquired list
     # That is because the DNS server itself depends on this to start
