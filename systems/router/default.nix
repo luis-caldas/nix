@@ -145,12 +145,6 @@ in {
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
   boot.kernel.sysctl."net.ipv4.conf.all.forwarding" = 1;
 
-  # Disable Bridge filtering
-  boot.kernel.sysctl."net.bridge.bridge-nf-call-ip6tables" = 0;
-  boot.kernel.sysctl."net.bridge.bridge-nf-call-iptables" = 0;
-  boot.kernel.sysctl."net.bridge.bridge-nf-call-arptables" = 0;
-  boot.kernel.sysctl."net.bridge.bridge-nf-filter-vlan-tagged" = 0;
-
   # Disable IPv6
   boot.kernel.sysctl."net.ipv6.conf.all.disable_ipv6" = 1;
   boot.kernel.sysctl."net.ipv6.conf.default.disable_ipv6" = 1;
@@ -214,13 +208,6 @@ in {
     bridges.firewall-bridge.interfaces = [ interfaces.ten.inside ];
     bridges.pon-bridge.interfaces = [ interfaces.ten.outside ];
     bridges.icewall-bridge.interfaces = [ "stub" ];
-
-    # Stop firewall messing with interfaces
-    # We do not manage or connect to these interfaces
-    firewall.trustedInterfaces = [
-      interfaces.ten.inside interfaces.ten.outside
-      "firewall-bridge" "icewall-bridge" "pon-bridge"
-    ];
 
     # Add another DNS to the DHCP acquired list
     # That is because the DNS server itself depends on this to start
