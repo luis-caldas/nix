@@ -220,7 +220,7 @@ in {
     firewall.trustedInterfaces = [
       interfaces.ten.inside interfaces.ten.outside
       "firewall-bridge" "icewall-bridge" "pon-bridge"
-    ]
+    ];
 
     # Add another DNS to the DHCP acquired list
     # That is because the DNS server itself depends on this to start
