@@ -196,7 +196,7 @@ in {
       # VLANs
       interfaces.stub
       # Bridges
-      interfaces.bridges.fire interfaces.bridge.ice interfaces.bridge.pon
+      interfaces.bridges.fire interfaces.bridges.ice interfaces.bridges.pon
       interfaces.virt
     ];
 
