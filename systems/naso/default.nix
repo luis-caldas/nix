@@ -17,6 +17,8 @@
         "${default}" = [
           # Front
           "front"  # Should only be used for proxy
+          # Manage
+          "manage"
           # Share
           "share"
           # Vault
@@ -50,6 +52,8 @@
     names = pkgs.functions.container.createNames { dataIn = {
       # Non split containers
       app = [
+        # Manage
+        "portainer"
         # Share
         "samba" "shout"
         # Media

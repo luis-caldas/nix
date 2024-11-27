@@ -10,6 +10,8 @@ let
     networks.front
   ];
   externalNetworks = [
+    # Manage
+    networks.manage
     # Cloud
     networks.cloud.default
     # Download
@@ -23,8 +25,6 @@ let
     networks.media.komga
     networks.media.navidrome
     networks.media.simple
-    # Recipe
-    # networks.recipe.default
     # Social
     networks.social.default
     networks.social.admin
@@ -32,8 +32,6 @@ let
     networks.track.default
     # Vault
     networks.vault
-    # Workout
-    # networks.workout.default
   ];
 
 in {
