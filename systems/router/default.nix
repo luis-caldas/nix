@@ -106,7 +106,6 @@ in {
     minimal = true;
     system.hostname = "router";
     user.admin = false;
-    network.firewall.enable = true;
     services = {
       ssh = true;
       docker = true;
@@ -125,6 +124,12 @@ in {
   # Enable IP forwarding
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
   boot.kernel.sysctl."net.ipv4.conf.all.forwarding" = 1;
+
+  # Dont filter traffic through bridges
+  boot.kernel.sysctl."net.bridge.bridge-nf-call-arptables" = 0;
+  boot.kernel.sysctl."net.bridge.bridge-nf-call-iptables" = 0;
+  boot.kernel.sysctl."net.bridge.bridge-nf-call-ip6tables" = 0;
+  boot.kernel.sysctl."net.bridge.bridge-nf-filter-vlan-tagged" = 0;
 
   # Disable IPv6
   boot.kernel.sysctl."net.ipv6.conf.all.disable_ipv6" = 1;
@@ -186,19 +191,6 @@ in {
     bridges."${interfaces.bridges.fire}".interfaces = [ interfaces.ten.inside ];
     bridges."${interfaces.bridges.pon}".interfaces = [ interfaces.ten.outside ];
     bridges."${interfaces.bridges.ice}".interfaces = [ interfaces.stub ];
-
-    # We do not manage or connect to these interfaces
-    # If we ever come to enable the firewall
-    firewall.trustedInterfaces = [
-      # Physical
-      interfaces.one
-      interfaces.ten.inside interfaces.ten.outside
-      # VLANs
-      interfaces.stub
-      # Bridges
-      interfaces.bridges.fire interfaces.bridges.ice interfaces.bridges.pon
-      interfaces.bridges.virt
-    ];
 
     # Add another DNS to the DHCP acquired list
     # That is because the DNS server itself depends on this to start
