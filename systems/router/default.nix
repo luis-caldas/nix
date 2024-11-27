@@ -7,6 +7,13 @@
       outside = "enp6s0f0";
       inside = "enp6s0f1";
     };
+    bridges = {
+      fire = "firewall-bridge";
+      ice  = "icewall-bridge";
+      virt = "virtuall-bridge";
+      pon  = "pon-bridge"
+    };
+    stub = "stub";
   };
 
   # Shared information
@@ -152,35 +159,38 @@ in {
     # VLANs
     vlans = {
       # Stub
-      stub = { id = 10; interface = interfaces.ten.outside; };
+      "${interfaces.stub}" = { id = 10; interface = interfaces.ten.outside; };
     };
 
     # Default Gigabit & Management Network
     interfaces."${interfaces.one}".useDHCP = true;
 
-    # Sub
+    # Stub
     interfaces.stub.useDHCP = false;
 
     # Internal Bridge
-    interfaces.virtuall-bridge = {
+    interfaces."${interfaces.bridges.virt}" = {
       useDHCP = true;
       macAddress = pkgs.networks.mac.firewall;
     };
-
     # Firewall Bridge
-    interfaces.firewall-bridge.useDHCP = false;
-
+    interfaces."${interfaces.bridges.fire}".useDHCP = false;
     # Pon Bridge
-    interfaces.pon-bridge.useDHCP = false;
-
+    interfaces."${interfaces.bridges.pon}".useDHCP = false;
     # Icewall Bridge
-    interfaces.icewall-bridge.useDHCP = false;
+    interfaces."${interfaces.bridges.ice}".useDHCP = false;
 
     # Populate bridges
-    bridges.virtuall-bridge.interfaces = [];
-    bridges.firewall-bridge.interfaces = [ interfaces.ten.inside ];
-    bridges.pon-bridge.interfaces = [ interfaces.ten.outside ];
-    bridges.icewall-bridge.interfaces = [ "stub" ];
+    bridges."${interfaces.bridges.virt}".interfaces = [];
+    bridges."${interfaces.bridges.fire}".interfaces = [ interfaces.ten.inside ];
+    bridges."${interfaces.bridges.pon}".interfaces = [ interfaces.ten.outside ];
+    bridges."${interfaces.bridges.ice}".interfaces = [ interfaces.stub ];
+
+    # We do not manage or connect to these interfaces
+    firewall.trustedInterfaces = [
+      interfaces.ten.inside interfaces.ten.outside
+      interfaces.bridges.fire interfaces.bridge.ice interfaces.bridge.pon
+    ];
 
     # Add another DNS to the DHCP acquired list
     # That is because the DNS server itself depends on this to start
