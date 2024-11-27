@@ -197,7 +197,7 @@ in {
       interfaces.stub
       # Bridges
       interfaces.bridges.fire interfaces.bridges.ice interfaces.bridges.pon
-      interfaces.virt
+      interfaces.bridges.virt
     ];
 
     # Add another DNS to the DHCP acquired list
