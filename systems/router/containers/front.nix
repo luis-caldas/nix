@@ -12,6 +12,8 @@ let
   externalNetworks = [
     # DNS
     networks.base.hole
+    # Portainer
+    networks.manage
     # Asterisk
     networks.asterisk
     # Nut
@@ -21,8 +23,6 @@ let
     # Monitor
     networks.monitor.grafana
     networks.monitor.kuma
-    # Home Assistant
-    # networks.home
   ];
 
 in {
