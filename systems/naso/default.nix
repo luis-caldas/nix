@@ -69,7 +69,7 @@
       download = {
         app = [ "torrent" "usenet" ];
         arr = [
-          "fetch" "series" "films" "music"
+          "fetch" "series" "films" "music" "subtitles"
         ];
       };
       # Track

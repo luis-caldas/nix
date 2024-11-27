@@ -164,4 +164,26 @@ in {
     ];
   };
 
+       ########
+  ### # Bazarr # ###
+       ########
+
+  services."${names.download.arr.subtitles}".service = {
+    # Image
+    image = "lscr.io/linuxserver/bazarr:latest";
+    # Environment
+    environment = pkgs.functions.container.fixEnvironment {
+      TZ = config.mine.system.timezone;
+      PUID = config.mine.user.uid;
+      PGID = config.mine.user.gid;
+    };
+    # Networking
+    networks = [ networks.download.arr ];
+    # Volumes
+    volumes = [
+      "${paths.local}/servarr/bazarr:/config"
+      "${paths.base}:/media"
+    ];
+  };
+
 }
