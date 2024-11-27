@@ -11,7 +11,7 @@
       fire = "firewall-bridge";
       ice  = "icewall-bridge";
       virt = "virtuall-bridge";
-      pon  = "pon-bridge"
+      pon  = "pon-bridge";
     };
     stub = "stub";
   };
