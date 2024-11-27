@@ -22,6 +22,8 @@
         "${default}" = [
           # Front
           "front"  # Should only be used for proxy
+          # Manage
+          "manage"
           # Asterisk
           "asterisk"
           # Home Assistant
@@ -46,6 +48,8 @@
       app = [
         # Front
         "front"
+        # Portainer
+        "portainer"
         # Time
         "time"
         # Dashboard
