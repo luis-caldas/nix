@@ -17,7 +17,7 @@ with shared;
   services."${names.vpn}".service = {
 
     # Image file
-    image = "ghcr.io/wg-easy/wg-easyas:latest";
+    image = "ghcr.io/wg-easy/wg-easy:latest";
 
     # Environments
     environment = pkgs.functions.container.fixEnvironment {
