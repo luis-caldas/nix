@@ -81,14 +81,6 @@ let
             };
           };
 
-          # Wire
-          wire = {
-            # Network information
-            subnet = "172.16.50.0/24"; gateway = "172.16.50.1";
-            # IPs
-            ip = "172.16.50.10";
-          };
-
         };
 
       };
@@ -114,16 +106,19 @@ let
       # Original port of Wireguard
       wireguard = 51820;
 
-      # Port (udp) most comonly used by VoIP providers (Zoom, Skype)
+      # Port (UDP) most comonly used by VoIP providers (Zoom, Skype)
       # Therefore high change of not being blocked
       # Complete range is 3478 -> 3481
       # Port needs also be opened on hosting side
       open = 3478;
 
+      # Port (TCP) where traffic is most likely to work
+      free = 143;
+
       # Simple port used for TURN
       turn = 37;
 
-      # Simple UDP port used for wireguard
+      # Simple UDP used
       simple = 123;
 
       # Start and end of registered ports
