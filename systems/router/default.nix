@@ -194,9 +194,16 @@ in {
 
     # We do not manage or connect to these interfaces
     # If we ever come to enable the firewall
+    firewall.enable = true;
     firewall.trustedInterfaces = [
+      # Physical
+      interfaces.one
       interfaces.ten.inside interfaces.ten.outside
+      # VLANs
+      interfaces.stub
+      # Bridges
       interfaces.bridges.fire interfaces.bridge.ice interfaces.bridge.pon
+      interfaces.virt
     ];
 
     # Add another DNS to the DHCP acquired list
