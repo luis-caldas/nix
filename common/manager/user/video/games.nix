@@ -9,7 +9,7 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
 
     # Emulators
     duckstation
-    pcsx2
+    (lib.lowPrio pcsx2)
     mednafen
     desmume
     dolphin-emu
@@ -28,7 +28,7 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     ]; })
 
     # Decompiled
-    shipwright
+    # shipwright  # TODO Broken
     sm64ex
     (pkgs.writeShellScriptBin
       "sm64ex-coop"

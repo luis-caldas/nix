@@ -337,7 +337,7 @@
     pkgs.custom.x56linux
 
     # Download
-    pkgs.custom.n-m3u8dl-re
+    # pkgs.custom.n-m3u8dl-re  # TODO Failing
 
     #####
 
