@@ -56,7 +56,7 @@
 
       # Games
       "assaultcube" "SpaceCadetPinball"
-      "steam" "steam-original" "steam-runtime" "steam-run"
+      "steam" "steam-unwrapped" "steam-original" "steam-runtime" "steam-run"
       "minecraft-launcher"
       "dwarf-fortress"
       "clonehero"
@@ -81,6 +81,7 @@
       "pycharm-professional" "webstorm" "clion" "datagrip" "idea-ultimate"
       "ciscoPacketTracer8"
       "volatility3"
+      "drawio"
 
       # Work
       "zoom"

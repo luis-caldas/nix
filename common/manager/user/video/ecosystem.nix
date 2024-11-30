@@ -56,8 +56,8 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Themes
     themesList = with pkgs; [
-      gnome.gnome-themes-extra
-      cinnamon.mint-themes
+      gnome-themes-extra
+      mint-themes
     ];
 
     # The packing function

@@ -11,65 +11,65 @@ lib.mkIf osConfig.mine.graphics.enable
     ##################
 
     # File
-    gnome.nautilus
-    gnome.file-roller
+    nautilus
+    file-roller
 
     # Terminal
-    gnome.gnome-terminal
+    gnome-terminal
     gnome-console
 
     # Text
     gnome-text-editor
-    gnome.gnome-characters
+    gnome-characters
 
     # Pictures
     loupe
 
     # Font
-    gnome.gnome-font-viewer
+    gnome-font-viewer
 
     # Movies
-    gnome.totem
+    totem
 
     # Phone
     calls
 
     # Recording
-    gnome.gnome-sound-recorder
+    gnome-sound-recorder
 
     # Scan
-    gnome.simple-scan
+    simple-scan
 
     # Disk
-    gnome.baobab
-    gnome.gnome-disk-utility
+    baobab
+    gnome-disk-utility
 
     # Camera
     snapshot
 
     # Organising
     evince
-    gnome.gnome-clocks
-    gnome.gnome-calendar
-    gnome.gnome-contacts
-    gnome.gnome-calculator
+    gnome-clocks
+    gnome-calendar
+    gnome-contacts
+    gnome-calculator
     epiphany
     errands
 
     # Monitor
-    gnome.gnome-system-monitor
+    gnome-system-monitor
 
     # Web
     gnome-connections
 
     # Admin
-    gnome.gnome-weather
+    gnome-weather
 
     # Passwords
-    gnome.seahorse
+    seahorse
 
     # Tools
-    gnome.gnome-tweaks
+    gnome-tweaks
 
     # Themes
     gnome-themes-extra
@@ -93,7 +93,7 @@ lib.mkIf osConfig.mine.graphics.enable
     # Organising
     citations
     dialect
-    # gaphor  # TODO Failing
+    gaphor
     plots
     iotas
     denaro
@@ -108,7 +108,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Music
     fretboard
-    pkgs.unstable.decibels  # TODO 24.11
+    decibels
 
     # Look & Feel
     gradience
@@ -137,7 +137,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Chat
     fractal
-    gnome.polari
+    polari
 
     # CW
     telegraph
@@ -155,10 +155,10 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Virtualisation
     bottles
-    gnome.gnome-boxes
+    gnome-boxes
 
     # Development
-    gnome.dconf-editor
+    dconf-editor
     gnome-builder
     d-spy
     sysprof
@@ -175,14 +175,12 @@ lib.mkIf osConfig.mine.graphics.enable
     gnomeExtensions.gsconnect
     gnomeExtensions.clipboard-indicator
     gnomeExtensions.mpris-label
-    gnomeExtensions.remove-app-menu
     gnomeExtensions.just-perfection
     gnomeExtensions.dash-to-dock
     gnomeExtensions.media-controls
     gnomeExtensions.desktop-icons-ng-ding
     gnomeExtensions.gtk4-desktop-icons-ng-ding
     gnomeExtensions.tray-icons-reloaded
-    gnomeExtensions.wintile-windows-10-window-tiling-for-gnome
     gnomeExtensions.panel-date-format
     gnomeExtensions.weather-oclock
     gnomeExtensions.customize-clock-on-lock-screen
@@ -236,7 +234,7 @@ lib.mkIf osConfig.mine.graphics.enable
     inkscape
 
     # 3D
-    cura
+    # cura  # TODO Insecure
 
     # QR Code
     zbar
@@ -377,7 +375,7 @@ lib.mkIf osConfig.mine.graphics.enable
     jetbrains.idea-ultimate
     jetbrains.datagrip
     jetbrains.webstorm
-    jetbrains.clion
+    # jetbrains.clion  # TODO Broken
 
     # Jetbrains free
     jetbrains.pycharm-community
@@ -432,6 +430,9 @@ lib.mkIf osConfig.mine.graphics.enable
     blender
     freecad
     librecad
+
+    # House
+    sweethome3d.application
 
   ] else []) ++
 

@@ -8,11 +8,11 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
   home.packages = with pkgs; [
 
     # Emulators
-    pcsxr
-    (lib.lowPrio pcsx2)
+    duckstation
+    pcsx2
     mednafen
     desmume
-    dolphinEmu
+    dolphin-emu
     cemu
 
     # Emulator GUI
@@ -58,10 +58,10 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     # flightgear  # Not needed
 
     # Gnome
-    gnome.aisleriot
-    gnome.gnome-mines
-    gnome.gnome-sudoku
-    gnome.gnome-chess
+    aisleriot
+    gnome-mines
+    gnome-sudoku
+    gnome-chess
 
     # Chess
     gnuchess

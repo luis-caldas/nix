@@ -40,7 +40,7 @@ in
   programs.wireshark.enable = config.mine.graphics.enable;
 
   # Enable bash auto completion
-  programs.bash.enableCompletion = true;
+  programs.bash.completion.enable = true;
 
   # Enable gnupg
   programs.gnupg.agent.enable = true;

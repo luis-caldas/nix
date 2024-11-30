@@ -81,12 +81,12 @@ lib.mkIf config.mine.graphics.enable
   security.pam.services.gdm.enableGnomeKeyring = true;
 
   # Add 32 bit support and other acceleration packages
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
   } //
   # Check architectures and set proper packages
   (if (!pkgs.stdenv.hostPlatform.isAarch) then rec {
-    driSupport32Bit = true;
+    enable32Bit = true;
     # Packages for video acceleration
     extraPackages32 = with pkgs; [
       pkgsi686Linux.libva

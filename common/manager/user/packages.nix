@@ -71,6 +71,9 @@
     heimdall
     dfu-programmer
 
+    # ESP
+    esphome
+
     # Running Programs
     steam-run
 
@@ -320,7 +323,7 @@
     # Web
     browsh
     firefox
-    # youtube-dl  # TODO Insecure
+    yt-dlp
 
     # KVM & Virtualisation
     qemu_full
@@ -382,7 +385,7 @@
 
     # Tools
     pipewire
-    alsaUtils
+    alsa-utils
     pulseaudio
 
     # Mixers
