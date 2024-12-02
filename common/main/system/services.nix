@@ -148,6 +148,7 @@
   # Add gotop if wanted
   systemd.services.gotopper = lib.mkIf config.mine.boot.top {
     after = [ "getty.target" ];
+    description = "Show systems resources instead of terminal";
     serviceConfig = {
       ExecStart = [ "${pkgs.gotop}/bin/gotop" ];
       Type = "idle";
