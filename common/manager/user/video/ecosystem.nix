@@ -150,7 +150,7 @@ in
       config = pkgs.reference.more.mpv.settings;
     };
 
-    # Configuratio for alacritty
+    # Configuration for alacritty
     alacritty = {
       enable = true;
       # All the settings
