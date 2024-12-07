@@ -363,7 +363,7 @@
 
         email = mkOption {
           type = str;
-          default = "org.gnome.Evolution.desktop";
+          default = "org.gnome.Geary.desktop";
         };
 
         chat = mkOption {

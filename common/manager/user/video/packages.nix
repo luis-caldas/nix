@@ -88,6 +88,7 @@ lib.mkIf osConfig.mine.graphics.enable
     collision
 
     # Email
+    geary
     evolution
 
     # Organising
