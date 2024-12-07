@@ -124,6 +124,8 @@ in
         esbenp.prettier-vscode
         foxundermoon.shell-format
         streetsidesoftware.code-spell-checker
+        # Typing
+        valentjn.vscode-ltex
         # AI
         continue.continue
       # Custom
