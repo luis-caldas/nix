@@ -535,6 +535,7 @@
           { name = "spotify-web"; icon = "spotify"; url = "https://open.spotify.com"; }
           { name = "youtube-web"; icon = "youtube"; url = "https://www.youtube.com"; }
           { name = "youtube-music-web"; icon = "youtube-music"; url = "https://music.youtube.com"; }
+          { name = "suno"; icon = "atunes"; url = "https://suno.com/"; }
           { name = "defence-forces"; icon = "europa-universalis-IV"; url = "https://irishdefenceforces.workvivo.com"; }
           { name = "canvas"; icon = "applications-education"; url = "https://cit.instructure.com"; }
         ];
