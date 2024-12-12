@@ -253,6 +253,13 @@ in {
       passwordFile = "/data/local/nut/pass";
     };
 
+    # Maintenance
+    users.maintenance = {
+      instcmds = [ "ALL" ];
+      actions = [ "set" "fsd" ];
+      # Password
+      passwordFile = "/data/local/nut/maintenance_pass";
+    };
     # Monitor
     upsmon = {
 
