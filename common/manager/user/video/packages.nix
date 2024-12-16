@@ -235,7 +235,7 @@ lib.mkIf osConfig.mine.graphics.enable
     inkscape
 
     # 3D
-    # cura  # TODO Insecure
+    orca-slicer
 
     # QR Code
     zbar
