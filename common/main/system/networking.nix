@@ -24,6 +24,9 @@
   networking.firewall.enable = config.mine.network.firewall.enable;
   networking.firewall.allowPing = config.mine.network.firewall.ping;
 
+  # Disable failing wait online service
+  systemd.services.NetworkManager-wait-online.enable = pkgs.lib.mkForce false;
+
   # Enable editing of hosts file
   environment.etc.hosts.mode = "0644";
 
