@@ -28,7 +28,7 @@
     # Disk
     squashfsTools
     simg2img
-    dimg2img
+    dmg2img
 
     # Disk Clearing
     zerofree
