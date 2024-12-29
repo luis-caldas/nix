@@ -27,6 +27,8 @@
 
     # Disk
     squashfsTools
+    simg2img
+    dimg2img
 
     # Disk Clearing
     zerofree
@@ -142,7 +144,6 @@
 
     # Android
     gitRepo
-    simg2img
 
     # Android Video
     scrcpy
