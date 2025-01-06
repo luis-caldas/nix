@@ -26,7 +26,9 @@ in {
       networks.social.internal
       networks.social.admin
     ] ++
-    (builtins.attrValues networks.social.bridge.whats)
+    (builtins.concatLists (lib.attrsets.mapAttrsToList
+      (name: value: builtins.attrValues value)
+      networks.social.bridge))
   );
 
        ########
@@ -118,10 +120,7 @@ in {
       "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.whats}/app:/data"
     ];
     # Networking
-    networks = [
-      networks.social.bridge.whats.default
-      networks.social.bridge.whats.internal
-    ];
+    networks = builtins.attrValues networks.social.bridge.whats;
   };
 
        ##################
@@ -144,10 +143,7 @@ in {
       "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.sms}/app:/data"
     ];
     # Networking
-    networks = [
-      networks.social.bridge.sms.default
-      networks.social.bridge.sms.internal
-    ];
+    networks = builtins.attrValues networks.social.bridge.sms;
   };
 
   #############################################################################
