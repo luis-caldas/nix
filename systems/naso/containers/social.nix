@@ -56,9 +56,9 @@ in {
       networks.social.default
       networks.social.internal
     ] ++
-    (builtins.concatLists (lib.attrsets.mapAttrsToList
+    ( lib.attrsets.mapAttrsToList
       (name: value: value.default)
-      networks.social.bridge));
+      networks.social.bridge);
   };
 
        ##########
