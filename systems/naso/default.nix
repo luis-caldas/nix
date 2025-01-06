@@ -39,6 +39,7 @@
           default = [ default "internal" "admin" ];
           bridge = {
             whats = [ default "internal" ];
+            sms = [ default "internal" ];
           };
         };
         # Track

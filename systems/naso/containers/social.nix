@@ -124,120 +124,31 @@ in {
     ];
   };
 
-  #      ################
-  # ### # Bridge Discord # ###
-  #      ################
+       ##################
+  ### # Bridge Messaging # ###
+       ##################
 
-  # services."${names.matrix.bridge.discord}".service = {
-  #   # Image
-  #   image = "dock.mau.dev/mautrix/discord:latest";
-  #   # Environment
-  #   environment = pkgs.functions.container.fixEnvironment {
-  #     TZ = config.mine.system.timezone;
-  #     UID = config.mine.user.uid;
-  #     GID = config.mine.user.gid;
-  #   };
-  #   # Depends
-  #   depends_on = [ names.matrix.app names.matrix.bridge.database.discord ];
-  #   # Volumes
-  #   volumes = [
-  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.discord}/app:/data"
-  #   ];
-  #   # Networking
-  #   networks = [ networks.social ];
-  # };
-
-  #      #################
-  # ### # Bridge Telegram # ###
-  #      #################
-
-  # services."${names.matrix.bridge.telegram}".service = {
-  #   # Image
-  #   image = "dock.mau.dev/mautrix/telegram:latest";
-  #   # Environment
-  #   environment = pkgs.functions.container.fixEnvironment {
-  #     TZ = config.mine.system.timezone;
-  #     UID = config.mine.user.uid;
-  #     GID = config.mine.user.gid;
-  #   };
-  #   # Depends
-  #   depends_on = [ names.matrix.app names.matrix.bridge.database.telegram ];
-  #   # Volumes
-  #   volumes = [
-  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.telegram}/app:/data"
-  #   ];
-  #   # Networking
-  #   networks = [ networks.social ];
-  # };
-
-  #      ##############
-  # ### # Bridge Slack # ###
-  #      ##############
-
-  # services."${names.matrix.bridge.slack}".service = {
-  #   # Image
-  #   image = "dock.mau.dev/mautrix/slack:latest";
-  #   # Environment
-  #   environment = pkgs.functions.container.fixEnvironment {
-  #     TZ = config.mine.system.timezone;
-  #     UID = config.mine.user.uid;
-  #     GID = config.mine.user.gid;
-  #   };
-  #   # Depends
-  #   depends_on = [ names.matrix.app names.matrix.bridge.database.slack ];
-  #   # Volumes
-  #   volumes = [
-  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.slack}/app:/data"
-  #   ];
-  #   # Networking
-  #   networks = [ networks.social ];
-  # };
-
-  #      ###############
-  # ### # Bridge Signal # ###
-  #      ###############
-
-  # services."${names.matrix.bridge.signal}".service = {
-  #   # Image
-  #   image = "dock.mau.dev/mautrix/signal:latest";
-  #   # Environment
-  #   environment = pkgs.functions.container.fixEnvironment {
-  #     TZ = config.mine.system.timezone;
-  #     UID = config.mine.user.uid;
-  #     GID = config.mine.user.gid;
-  #   };
-  #   # Depends
-  #   depends_on = [ names.matrix.app names.matrix.bridge.database.signal ];
-  #   # Volumes
-  #   volumes = [
-  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.signal}/app:/data"
-  #   ];
-  #   # Networking
-  #   networks = [ networks.social ];
-  # };
-
-  #      #############
-  # ### # Bridge Meta # ###
-  #      #############
-
-  # services."${names.matrix.bridge.meta}".service = {
-  #   # Image
-  #   image = "dock.mau.dev/mautrix/meta:latest";
-  #   # Environment
-  #   environment = pkgs.functions.container.fixEnvironment {
-  #     TZ = config.mine.system.timezone;
-  #     UID = config.mine.user.uid;
-  #     GID = config.mine.user.gid;
-  #   };
-  #   # Depends
-  #   depends_on = [ names.matrix.app names.matrix.bridge.database.meta ];
-  #   # Volumes
-  #   volumes = [
-  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.meta}/app:/data"
-  #   ];
-  #   # Networking
-  #   networks = [ networks.social ];
-  # };
+  services."${names.matrix.bridge.sms}".service = {
+    # Image
+    image = "dock.mau.dev/mautrix/gmessages:latest";
+    # Environment
+    environment = pkgs.functions.container.fixEnvironment {
+      TZ = config.mine.system.timezone;
+      UID = config.mine.user.uid;
+      GID = config.mine.user.gid;
+    };
+    # Depends
+    depends_on = [ names.matrix.app names.matrix.bridge.database.sms ];
+    # Volumes
+    volumes = [
+      "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.sms}/app:/data"
+    ];
+    # Networking
+    networks = [
+      networks.social.bridge.sms.default
+      networks.social.bridge.sms.internal
+    ];
+  };
 
   #############################################################################
   #                                Databases                                  #
@@ -266,119 +177,27 @@ in {
     networks = [ networks.social.bridge.whats.internal ];
   };
 
-  #      ##################
-  # ### # Discord Database # ###
-  #      ##################
+       ##############
+  ### # SMS Database # ###
+       ##############
 
-  # services."${names.matrix.bridge.database.discord}".service = {
-  #   # Image
-  #   image = "postgres:16";
-  #   # Environment
-  #   environment = pkgs.functions.container.fixEnvironment {
-  #     POSTGRES_USER = names.matrix.bridge.discord;
-  #     POSTGRES_DB = names.matrix.bridge.discord;
-  #   };
-  #   env_file = [
-  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.discord}/env/database.env"
-  #   ];
-  #   # Volumes
-  #   volumes = [
-  #     "${paths.safe.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.discord}/database:/var/lib/postgresql/data"
-  #   ];
-  #   # Networking
-  #   networks = [ networks.social ];
-  # };
-
-  #      ###################
-  # ### # Telegram Database # ###
-  #      ###################
-
-  # services."${names.matrix.bridge.database.telegram}".service = {
-  #   # Image
-  #   image = "postgres:16";
-  #   # Environment
-  #   environment = pkgs.functions.container.fixEnvironment {
-  #     POSTGRES_USER = names.matrix.bridge.telegram;
-  #     POSTGRES_DB = names.matrix.bridge.telegram;
-  #   };
-  #   env_file = [
-  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.telegram}/env/database.env"
-  #   ];
-  #   # Volumes
-  #   volumes = [
-  #     "${paths.safe.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.telegram}/database:/var/lib/postgresql/data"
-  #   ];
-  #   # Networking
-  #   networks = [ networks.social ];
-  # };
-
-  #      ################
-  # ### # Slack Database # ###
-  #      ################
-
-  # services."${names.matrix.bridge.database.slack}".service = {
-  #   # Image
-  #   image = "postgres:16";
-  #   # Environment
-  #   environment = pkgs.functions.container.fixEnvironment {
-  #     POSTGRES_USER = names.matrix.bridge.slack;
-  #     POSTGRES_DB = names.matrix.bridge.slack;
-  #   };
-  #   env_file = [
-  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.slack}/env/database.env"
-  #   ];
-  #   # Volumes
-  #   volumes = [
-  #     "${paths.safe.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.slack}/database:/var/lib/postgresql/data"
-  #   ];
-  #   # Networking
-  #   networks = [ networks.social ];
-  # };
-
-  #      #################
-  # ### # Signal Database # ###
-  #      #################
-
-  # services."${names.matrix.bridge.database.signal}".service = {
-  #   # Image
-  #   image = "postgres:16";
-  #   # Environment
-  #   environment = pkgs.functions.container.fixEnvironment {
-  #     POSTGRES_USER = names.matrix.bridge.signal;
-  #     POSTGRES_DB = names.matrix.bridge.signal;
-  #   };
-  #   env_file = [
-  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.signal}/env/database.env"
-  #   ];
-  #   # Volumes
-  #   volumes = [
-  #     "${paths.safe.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.signal}/database:/var/lib/postgresql/data"
-  #   ];
-  #   # Networking
-  #   networks = [ networks.social ];
-  # };
-
-  #      ###############
-  # ### # Meta Database # ###
-  #      ###############
-
-  # services."${names.matrix.bridge.database.meta}".service = {
-  #   # Image
-  #   image = "postgres:16";
-  #   # Environment
-  #   environment = pkgs.functions.container.fixEnvironment {
-  #     POSTGRES_USER = names.matrix.bridge.meta;
-  #     POSTGRES_DB = names.matrix.bridge.meta;
-  #   };
-  #   env_file = [
-  #     "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.meta}/env/database.env"
-  #   ];
-  #   # Volumes
-  #   volumes = [
-  #     "${paths.safe.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.meta}/database:/var/lib/postgresql/data"
-  #   ];
-  #   # Networking
-  #   networks = [ networks.social ];
-  # };
+  services."${names.matrix.bridge.database.sms}".service = {
+    # Image
+    image = "postgres:16";
+    # Environment
+    environment = pkgs.functions.container.fixEnvironment {
+      POSTGRES_USER = names.matrix.bridge.sms;
+      POSTGRES_DB = names.matrix.bridge.sms;
+    };
+    env_file = [
+      "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.sms}/env/database.env"
+    ];
+    # Volumes
+    volumes = [
+      "${paths.safe.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.sms}/database:/var/lib/postgresql/data"
+    ];
+    # Networking
+    networks = [ networks.social.bridge.sms.internal ];
+  };
 
 }
