@@ -241,7 +241,7 @@ lib.mkIf osConfig.mine.graphics.enable
     zbar
 
     # Music
-    feishin
+    # feishin  # TODO Insecure
 
     # Video player
     vlc
