@@ -14,6 +14,16 @@
       pon  = "pon-bridge";
     };
     stub = "stub";
+    upper = {
+      one   = "upper-one";
+      two   = "upper-two";
+      three = "upper-three";
+      four  = "upper-four";
+      five  = "upper-five";
+      six   = "upper-six";
+      seven = "upper-seven";
+      eight = "upper-eight";
+    };
   };
 
   # Shared information
@@ -186,11 +196,31 @@ in {
     # Icewall Bridge
     interfaces."${interfaces.bridges.ice}".useDHCP = false;
 
+    # Upper Interfaces
+    interfaces."${interfaces.upper.one}".useDHCP = false;
+    interfaces."${interfaces.upper.two}".useDHCP = false;
+    interfaces."${interfaces.upper.three}".useDHCP = false;
+    interfaces."${interfaces.upper.four}".useDHCP = false;
+    interfaces."${interfaces.upper.five}".useDHCP = false;
+    interfaces."${interfaces.upper.six}".useDHCP = false;
+    interfaces."${interfaces.upper.seven}".useDHCP = false;
+    interfaces."${interfaces.upper.eight}".useDHCP = false;
+
     # Populate bridges
     bridges."${interfaces.bridges.virt}".interfaces = [];
     bridges."${interfaces.bridges.fire}".interfaces = [ interfaces.ten.inside ];
     bridges."${interfaces.bridges.pon}".interfaces = [ interfaces.ten.outside ];
     bridges."${interfaces.bridges.ice}".interfaces = [ interfaces.stub ];
+
+    # Populate the upper interfaces
+    bridges."${interfaces.upper.one}".interfaces = [];
+    bridges."${interfaces.upper.two}".interfaces = [];
+    bridges."${interfaces.upper.three}".interfaces = [];
+    bridges."${interfaces.upper.four}".interfaces = [];
+    bridges."${interfaces.upper.five}".interfaces = [];
+    bridges."${interfaces.upper.six}".interfaces = [];
+    bridges."${interfaces.upper.seven}".interfaces = [];
+    bridges."${interfaces.upper.eight}".interfaces = [];
 
     # Add another DNS to the DHCP acquired list
     # That is because the DNS server itself depends on this to start
