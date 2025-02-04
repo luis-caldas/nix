@@ -358,6 +358,11 @@ in {
       fsType = "zfs";
     };
 
+  fileSystems."/data/vm" =
+    { device = "vimmer/vm";
+      fsType = "zfs";
+    };
+
   fileSystems."/nix" =
     { device = "vimmer/nix";
       fsType = "zfs";
