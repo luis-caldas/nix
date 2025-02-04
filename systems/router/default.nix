@@ -41,8 +41,6 @@
           "asterisk"
           # Home Assistant
           "home"
-          # Nut
-          "nut"
           # Dashboard
           "dash"
           # VPN
@@ -67,8 +65,6 @@
         "time"
         # Dashboard
         "dash"
-        # UPS
-        "nut"
         # Monitoring
         "monitor" "kuma"
         # Home Assistant
