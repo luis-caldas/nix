@@ -16,8 +16,6 @@ let
     networks.manage
     # Asterisk
     networks.asterisk
-    # Nut
-    networks.nut
     # Dashboard
     networks.dash
     # Monitor
