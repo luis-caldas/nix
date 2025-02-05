@@ -14,7 +14,7 @@ with shared;
   ### # Mail # ###
        ######
 
-  services."${names.mail}".service = {
+  services."${names.mail.app}".service = {
 
     # Image
     image = "ghcr.io/docker-mailserver/docker-mailserver:latest";
@@ -23,7 +23,7 @@ with shared;
     hostname = lib.strings.fileContents /data/local/containers/mail/hostname;
 
     # Name
-    container_name = names.mail;
+    container_name = names.mail.app;
 
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
