@@ -6,8 +6,9 @@ with shared;
 {
 
   # Networking
-  networks = pkgs.functions.container.populateNetworks
-    (builtins.attrValues networks.mail);
+  networks = pkgs.functions.container.populateNetworks [
+    networks.mail
+  ];
 
        ######
   ### # Mail # ###
