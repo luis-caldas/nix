@@ -30,6 +30,8 @@ let
     networks.social.admin
     # Track
     networks.track.default
+    # Mail
+    networks.mail
     # Vault
     networks.vault
   ];

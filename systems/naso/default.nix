@@ -96,6 +96,8 @@
           database = app;
         };
       };
+      # Mail
+      mail = [ "app" "web" ];
       # Cloud
       cloud = [ "app" "maria" "redis" "proxy" "cron" ];
     };};

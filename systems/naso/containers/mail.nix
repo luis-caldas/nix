@@ -74,4 +74,28 @@ with shared;
 
   };
 
+       ###########
+  ### # Interface # ###
+       ###########
+
+  services."${names.mail.web}".service = {
+
+    # Image
+    image = "roundcube/roundcubemail:latest";
+
+    # Name
+    container_name = names.mail.web;
+
+    # Environment
+    environment = pkgs.functions.container.fixEnvironment {
+      # Settings
+      ROUNDCUBEMAIL_DEFAULT_PORT = 993;
+      ROUNDCUBEMAIL_SMTP_PORT = 587;
+      ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE = "100M";
+    };
+    env_file = [ "/data/local/containers/mail/web.env" ];
+
+    # Networking
+    networks = [ networks.mail ];
+
 }
