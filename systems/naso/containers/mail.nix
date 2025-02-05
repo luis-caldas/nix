@@ -32,6 +32,8 @@ with shared;
       ENABLE_RSPAMD = 1;
       ENABLE_CLAMAV = 1;
       ENABLE_FAIL2BAN = 1;
+      # Limits
+      POSTFIX_MESSAGE_SIZE_LIMIT = 100;
       # SSL
       SSL_TYPE = "manual";
       SSL_KEY_PATH = "/ssl/main.key";
