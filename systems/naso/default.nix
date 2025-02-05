@@ -21,13 +21,13 @@
           "manage"
           # Share
           "share"
-          # Mail
-          "mail"
           # Vault
           "vault"
         ];
         # Cloud
         cloud = [ default "internal" ];
+        # Mail
+        mail = [ default "web" ]
         # Download
         download = [ "torrent" "usenet" "arr" ];
         # Git
@@ -63,8 +63,6 @@
         "jellyfin" "komga" "shower"
         # Music
         "music"
-        # Mail
-        "mail"
         # Vault
         "vault"
       ];

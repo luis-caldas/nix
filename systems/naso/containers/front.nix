@@ -31,7 +31,7 @@ let
     # Track
     networks.track.default
     # Mail
-    networks.mail
+    networks.mail.web
     # Vault
     networks.vault
   ];

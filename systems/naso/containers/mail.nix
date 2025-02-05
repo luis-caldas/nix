@@ -6,9 +6,8 @@ with shared;
 {
 
   # Networking
-  networks = pkgs.functions.container.populateNetworks [
-    networks.mail
-  ];
+  networks = pkgs.functions.container.populateNetworks
+    (builtins.attrValues networks.mail);
 
        ######
   ### # Mail # ###
@@ -96,7 +95,7 @@ with shared;
     env_file = [ "/data/local/containers/mail/web.env" ];
 
     # Networking
-    networks = [ networks.mail ];
+    networks = [ networks.mail.web ];
 
   };
 
