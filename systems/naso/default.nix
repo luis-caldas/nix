@@ -21,6 +21,8 @@
           "manage"
           # Share
           "share"
+          # Mail
+          "mail"
           # Vault
           "vault"
         ];
@@ -59,10 +61,12 @@
         "samba" "shout"
         # Media
         "jellyfin" "komga" "shower"
-        # Vault
-        "vault"
         # Music
         "music"
+        # Mail
+        "mail"
+        # Vault
+        "vault"
       ];
       # Front
       front = [ "app" "access" ];
