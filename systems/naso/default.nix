@@ -27,7 +27,7 @@
         # Cloud
         cloud = [ default "internal" ];
         # Mail
-        mail = [ default "web" ]
+        mail = [ default "web" ];
         # Download
         download = [ "torrent" "usenet" "arr" ];
         # Git
