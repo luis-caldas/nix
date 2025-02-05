@@ -98,4 +98,6 @@ with shared;
     # Networking
     networks = [ networks.mail ];
 
+  };
+
 }
