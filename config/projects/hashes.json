@@ -24,16 +24,16 @@
         "sha256": "10z2v5amvbi95lzgxy7676k9arafj287qi6qnn9601fyrmqb681f"
     },
     "myfonts": {
-        "commit": "4a5a53622f4823eb5eeb278f2ae4f188d0f3f796",
-        "sha256": "0h1lagmwvr5bs51lmcyb9ikbwlyb4k4kq01pynwdr8bxrkm71mc2"
+        "commit": "430038515314bd098cd7f2374f85d0e416418d7a",
+        "sha256": "0i3xm05izz9y2i3vswldg8c205w33nszlywn6b4007156z3p3s84"
     },
     "myicons": {
         "commit": "fd4692ed166aab23865a45ee154bf23cadb843e9",
         "sha256": "017pqsqhln6hjs2ini4f9fabf7smj628dyavr2w7566vv13hqni6"
     },
     "myimages": {
-        "commit": "10b7841ebeea4eb9c0c847cf9944b1c1504b5ea2",
-        "sha256": "0mlsx952n3n5rshbrpag248i9lnl9xawl7jnyfsr95kalv4xbw1m"
+        "commit": "60d2b3f7b8c7ad703f177cf00041423a560b9bac",
+        "sha256": "1xkqinv0lck21pnvc42kmsh85g03wawfk8z84h62ld3qhykhmx3s"
     },
     "mypub": {
         "commit": "2823e94bfb97d734d2e7d385839a9a615808ca97",

@@ -41,7 +41,7 @@ lib.mkIf osConfig.mine.graphics.enable
       courier-prime
       apl386 bqn386
       sarasa-gothic
-      noto-fonts-emoji-blob-bin
+      noto-fonts-monochrome-emoji
     ];
 
     # Icons
