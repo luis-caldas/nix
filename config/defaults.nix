@@ -368,7 +368,7 @@
 
         chat = mkOption {
           type = str;
-          default = "org.gnome.Fractal.desktop";
+          default = "element-desktop.desktop";
         };
 
         text = mkOption {
@@ -426,9 +426,9 @@
           "browser"
           "email"
           "codium.desktop"
+          "deck.desktop"
           "chat"
           "spotify.desktop"
-          "io.github.mrvladus.List.desktop"
           "files"
           "net.nokyan.Resources.desktop"
         ];
