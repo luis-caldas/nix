@@ -28,6 +28,10 @@ with shared;
 
     # Volumes
     volumes = [
+      # Data
+      "/data/local/containers/emulator/config:/config"
+      "/data/local/containers/emulator/data:/data"
+      # Games
       "/data/chunk/media/games/roms:/roms:ro"
     ];
 
