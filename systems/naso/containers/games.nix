@@ -30,7 +30,7 @@ with shared;
     volumes = [
       # Data
       "/data/local/containers/emulator/config:/config"
-      "/data/local/containers/emulator/data:/data"
+      "/data/chunk/media/games/meta:/data"
       # Games
       "/data/chunk/media/games/roms:/roms:ro"
     ];
