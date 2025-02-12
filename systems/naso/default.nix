@@ -19,6 +19,8 @@
           "front"  # Should only be used for proxy
           # Manage
           "manage"
+          # Games
+          "games"
           # Share
           "share"
           # Vault
@@ -61,6 +63,8 @@
         "samba" "shout"
         # Media
         "jellyfin" "komga" "shower"
+        # Gaming
+        "emulator"
         # Music
         "music"
         # Vault
