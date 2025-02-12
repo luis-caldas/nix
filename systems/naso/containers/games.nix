@@ -25,7 +25,6 @@ with shared;
       PUID = config.mine.user.uid;
       PGID = config.mine.user.gid;
     };
-    env_file = [ "/data/local/containers/media/samba.env" ];
 
     # Volumes
     volumes = [
