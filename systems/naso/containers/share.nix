@@ -34,6 +34,7 @@ with shared;
       "/data/chunk/media/games/roms/ps2/dvd:/ps2/DVD:ro"
       "/data/chunk/media/games/roms/ps2/cd:/ps2/CD:ro"
       "/data/chunk/media/games/roms/ps2/art:/ps2/ART:ro"
+      "/data/chunk/media/games/roms:/roms:ro"
     ];
 
     # Networking
@@ -52,6 +53,7 @@ with shared;
       "-S" # Disable minimum SMB2
       "-s" "\"media;/media;yes;no;no;all;;;Share for media files\"" # Share config
       "-s" "\"ps2;/ps2;yes;no;yes;all;;;PS2 Games\""
+      "-s" "\"roms;/roms;yes;no;yes;all;;;All ROMs\""
       "-w" "WORKGROUP" # Default workgroup
       "-W" # Wide link support
     ]);
