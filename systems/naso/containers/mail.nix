@@ -13,13 +13,22 @@ with shared;
   ### # Mail # ###
        ######
 
-  services."${names.mail.app}".service = {
+  services."${names.mail.app}".service = let
+
+    fullHostname = lib.strings.fileContents /data/local/containers/mail/hostname;
+    domainName = let
+      splitter = ".";
+    in lib.strings.concatStringsSep splitter (
+      lib.lists.drop 1 (lib.strings.splitString splitter fullHostname)
+    );
+
+  in {
 
     # Image
     image = "ghcr.io/docker-mailserver/docker-mailserver:latest";
 
     # Hostname
-    hostname = lib.strings.fileContents /data/local/containers/mail/hostname;
+    hostname = fullHostname;
 
     # Name
     container_name = names.mail.app;
@@ -59,11 +68,18 @@ with shared;
     };
 
     # Volumes
-    volumes = [
+    volumes = let
+      virtualFix = pkgs.writeText "postfix-main.cf" ''
+        virtual_mailbox_domains = ${domainName}
+      '';
+    in [
+      # Config
       "/data/bunker/data/containers/mail/data/:/var/mail/"
       "/data/bunker/data/containers/mail/state/:/var/mail-state/"
       "/data/bunker/data/containers/mail/logs/:/var/log/mail/"
       "/data/bunker/data/containers/mail/config/:/tmp/docker-mailserver/"
+      # Fix alias and relays
+      "${virtualFix}:/tmp/docker-mailserver/postfix-main.cf:ro"
       # Locale
       "/etc/localtime:/etc/localtime:ro"
       # SSL
