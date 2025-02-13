@@ -89,7 +89,7 @@ with shared;
     environment = pkgs.functions.container.fixEnvironment {
       # Settings
       ROUNDCUBEMAIL_DEFAULT_PORT = 993;
-      ROUNDCUBEMAIL_SMTP_PORT = 587;
+      ROUNDCUBEMAIL_SMTP_PORT = 465;
       ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE = "100M";
     };
     env_file = [ "/data/local/containers/mail/web.env" ];
