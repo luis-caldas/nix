@@ -121,6 +121,9 @@ in {
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  # Encryption
+  boot.zfs.requestEncryptionCredentials = true;
+
   #######
   # Own #
   #######
@@ -298,6 +301,12 @@ in {
   fileSystems."/" =
     { device = "into/root";
       fsType = "zfs";
+    };
+
+  fileSystems."/keys" =
+    { device = "into/keys";
+      fsType = "zfs";
+      neededForBoot = true;
     };
 
   fileSystems."/boot" =

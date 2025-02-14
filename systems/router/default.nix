@@ -99,6 +99,9 @@ in {
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  # Encryption
+  boot.zfs.requestEncryptionCredentials = true;
+
   #######
   # Own #
   #######
@@ -341,6 +344,12 @@ in {
   fileSystems."/" =
     { device = "vimmer/root";
       fsType = "zfs";
+    };
+
+  fileSystems."/keys" =
+    { device = "vimmer/keys";
+      fsType = "zfs";
+      neededForBoot = true;
     };
 
   fileSystems."/boot" =
