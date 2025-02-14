@@ -260,6 +260,7 @@
     aflplusplus
 
     # Networking
+    mtr
     inetutils
 
     # Web
