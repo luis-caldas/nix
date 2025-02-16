@@ -58,7 +58,7 @@ let
 
     # Extra entries
     memtest86.enable = true;
-    netbootxyz.enable;
+    netbootxyz.enable = true;
 
   };
 
