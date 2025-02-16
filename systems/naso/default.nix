@@ -350,6 +350,12 @@ in {
       options = [ "nofail" "ro" ];
     };
 
+  fileSystems."/data/bunker/ever/dump" =
+    { device = "bunker/safe/ever/dump";
+      fsType = "zfs";
+      options = [ "nofail" "ro" ];
+    };
+
   fileSystems."/data/bunker/ever/mess" =
     { device = "bunker/everything";
       fsType = "zfs";
