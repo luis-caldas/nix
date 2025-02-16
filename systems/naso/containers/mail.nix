@@ -22,6 +22,10 @@ with shared;
       lib.lists.drop 1 (lib.strings.splitString splitter fullHostname)
     );
 
+    extraHostnames = lib.strings.splitString "\n" (
+      lib.strings.fileContents /data/local/containers/mail/othernames
+    );
+
   in {
 
     # Image
@@ -70,7 +74,7 @@ with shared;
     # Volumes
     volumes = let
       virtualFix = pkgs.writeText "postfix-main.cf" ''
-        virtual_mailbox_domains = ${domainName}
+        virtual_mailbox_domains = ${domainName}, ${lib.strings.concatStringsSep ", " extraHostnames}
       '';
     in [
       # Config
