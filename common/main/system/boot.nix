@@ -56,6 +56,10 @@ let
     # Set the UEFI resolution
     consoleMode = "keep";
 
+    # Extra entries
+    memtest86.enable = true;
+    netbootxyz.enable;
+
   };
 
 in {
