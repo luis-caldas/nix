@@ -344,13 +344,13 @@ in {
       fsType = "zfs";
     };
 
-  fileSystems."/data/bunker/main" =
-    { device = "bunker/main";
+  fileSystems."/data/bunker/ever/tidy" =
+    { device = "bunker/safe/ever/tidy";
       fsType = "zfs";
       options = [ "nofail" "ro" ];
     };
 
-  fileSystems."/data/bunker/everything" =
+  fileSystems."/data/bunker/ever/mess" =
     { device = "bunker/everything";
       fsType = "zfs";
       options = [ "nofail" "ro" ];
