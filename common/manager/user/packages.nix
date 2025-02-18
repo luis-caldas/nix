@@ -30,6 +30,9 @@
     simg2img
     dmg2img
 
+    # Disk Data
+    pkgs.custom.bs
+
     # Disk Clearing
     zerofree
 
