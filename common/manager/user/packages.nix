@@ -129,8 +129,12 @@
     bitwarden-cli
 
     # Messaging
+    iamb
     irssi
-    # gomuks  # TODO libolm insecure
+
+    # Email
+    meli
+    neomutt
 
     # AI
     chatgpt-cli
