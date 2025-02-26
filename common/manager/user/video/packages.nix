@@ -234,9 +234,6 @@ lib.mkIf osConfig.mine.graphics.enable
     gimp
     inkscape
 
-    # 3D
-    orca-slicer
-
     # QR Code
     zbar
 
@@ -434,6 +431,9 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # House
     sweethome3d.application
+
+    # Slicer
+    orca-slicer
 
   ] else []) ++
 
