@@ -48,7 +48,7 @@
   # Boot
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/48AB-6331";
+    { device = "/dev/disk/by-uuid/F234-282A";
       fsType = "vfat";
     };
 
@@ -91,7 +91,7 @@
 
   swapDevices =
     [ {
-        device = "/dev/disk/by-partuuid/2d711bec-cde7-4a6d-a80b-bee0e002d1b8";
+        device = "/dev/disk/by-partuuid/05acc9db-43ed-4a04-a1dd-88469ef98eeb";
         randomEncryption.enable = true;
       }
     ];
