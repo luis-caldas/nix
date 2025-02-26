@@ -117,6 +117,9 @@ in {
 
   ];
 
+  # Set the default hostname
+  mine.system.hostname = lib.mkDefault systemName;
+
   # Add all the configuration to an overlay
   nixpkgs.overlays = [
 

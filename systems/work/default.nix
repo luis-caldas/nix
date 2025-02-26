@@ -65,7 +65,6 @@
 
   # My specific configuration
   mine = {
-    system.hostname = "work";
     services = {
       ssh = false;
       avahi = true;

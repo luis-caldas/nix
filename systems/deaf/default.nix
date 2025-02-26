@@ -12,7 +12,6 @@
 
   # My specific configuration
   mine = {
-    system.hostname = "deaf";
     services = {
       ssh = false;
       avahi = true;
