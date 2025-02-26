@@ -32,7 +32,6 @@
       business = true;
       electronics = true;
     };
-
     audio = true;
     bluetooth = true;
     games = true;
