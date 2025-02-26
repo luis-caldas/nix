@@ -60,7 +60,7 @@
       "minecraft-launcher"
       "dwarf-fortress"
       "clonehero"
-      "shipwright" (pkgs.unstable.shipwright.name)
+      "shipwright"
       "sm64ex" "sm64ex-coop"
       "libretro-snes9x"
 
