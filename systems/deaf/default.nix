@@ -51,12 +51,6 @@
       fsType = "vfat";
     };
 
-  fileSystems."/keys" =
-    { device = "seac/keys";
-      fsType = "zfs";
-      neededForBoot = true;
-    };
-
   # System
 
   fileSystems."/" =
@@ -90,7 +84,7 @@
 
   swapDevices =
     [ {
-        device = "/dev/disk/by-partuuid/05acc9db-43ed-4a04-a1dd-88469ef98eeb";
+        device = "/dev/disk/by-partuuid/a0e0573f-0232-483b-b5ac-c0beaeb8c8ee";
         randomEncryption.enable = true;
       }
     ];
