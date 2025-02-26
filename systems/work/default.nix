@@ -120,6 +120,7 @@
   # Governor and arch
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # State initialisation version
   system.stateVersion = "23.05";
