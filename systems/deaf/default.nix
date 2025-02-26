@@ -52,6 +52,12 @@
       fsType = "vfat";
     };
 
+  fileSystems."/keys" =
+    { device = "seac/keys";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
   # System
 
   fileSystems."/" =
