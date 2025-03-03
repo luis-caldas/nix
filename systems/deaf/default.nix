@@ -21,7 +21,6 @@
         enable = true;
         swtpm = true;
         android = true;
-        vmware = true;
       };
     };
     graphics.enable = true;
@@ -36,9 +35,13 @@
     games = true;
   };
 
+  # Virtualisation options
+  virtualisation.libvirtd.onShutdown = "shutdown";
+
   # Packages
   environment.systemPackages = with pkgs; [
     vmware-horizon-client
+    virtiofsd
   ];
 
   # File systems
