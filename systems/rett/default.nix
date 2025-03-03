@@ -12,6 +12,7 @@
 
   # My specific configuration
   mine = {
+    system.getty.help = "\\4";
     services = {
       ssh = true;
       avahi = true;
