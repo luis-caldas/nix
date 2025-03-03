@@ -24,6 +24,74 @@
     };
   };
 
+  ##############
+  # Networking #
+  ##############
+
+  # Enable IP forwarding
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+  boot.kernel.sysctl."net.ipv4.conf.all.forwarding" = 1;
+
+  # Dont filter traffic through bridges
+  boot.kernel.sysctl."net.bridge.bridge-nf-call-arptables" = 0;
+  boot.kernel.sysctl."net.bridge.bridge-nf-call-iptables" = 0;
+  boot.kernel.sysctl."net.bridge.bridge-nf-call-ip6tables" = 0;
+  boot.kernel.sysctl."net.bridge.bridge-nf-filter-vlan-tagged" = 0;
+
+  # Disable IPv6
+  boot.kernel.sysctl."net.ipv6.conf.all.disable_ipv6" = 1;
+  boot.kernel.sysctl."net.ipv6.conf.default.disable_ipv6" = 1;
+
+  # Networling
+  networking = {
+
+    # Disable global DHCP
+    useDHCP = false;
+
+    # Use old dhcpcd
+    dhcpcd = {
+
+      # Disable bonjour
+      extraConfig = ''
+        noipv4ll
+      '';
+
+      # Replace the domain for a search
+      runHook = ''
+        sed 's/^domain/search/' -i /etc/resolv.conf
+      '';
+
+      # Don't hangup on startup
+      wait = "background";
+
+    };
+
+    # Force disable Network Manager
+    networkmanager.enable = lib.mkForce false;
+
+    # Stub
+    interfaces.stub.useDHCP = false;
+
+    # Internal Bridge
+    interfaces."lano" = {
+      useDHCP = true;
+      macAddress = "7a:f2:41:60:f0:01";
+    };
+
+    # Populate bridges
+    bridges."lano".interfaces = [ "eno1" ];
+
+    # Add another DNS to the DHCP acquired list
+    # That is because the DNS server itself depends on this to start
+    resolvconf = {
+      enable = true;
+      extraConfig = ''
+        name_servers_append="${builtins.concatStringsSep " " pkgs.networks.dns}"
+      '';
+    };
+
+  };
+
   # Virtualisation options
   virtualisation.libvirtd.onShutdown = "shutdown";
 
