@@ -69,9 +69,6 @@
     # Force disable Network Manager
     networkmanager.enable = lib.mkForce false;
 
-    # Stub
-    interfaces.stub.useDHCP = false;
-
     # Internal Bridge
     interfaces."lano" = {
       useDHCP = true;
