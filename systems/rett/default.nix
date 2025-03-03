@@ -76,8 +76,14 @@
       macAddress = "7a:f2:41:60:f0:01";
     };
 
+    # Other Interfaces
+    interfaces."intr".useDHCP = false;
+    interfaces."xtrr".useDHCP = false;
+
     # Populate bridges
     bridges."lano".interfaces = [ "eno1" ];
+    bridges."intr".interfaces = [ ];
+    bridges."xtrr".interfaces = [ ];
 
     # Add another DNS to the DHCP acquired list
     # That is because the DNS server itself depends on this to start
