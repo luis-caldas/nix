@@ -157,7 +157,10 @@
 
     # ASCII
     jp2a
+    boxes
+    cowsay
     figlet
+    toilet
     pipes
     cbonsai
     tty-clock
