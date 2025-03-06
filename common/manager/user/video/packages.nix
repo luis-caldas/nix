@@ -402,6 +402,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Video
     zoom-us
+    teams-for-linux
 
   ] else []) ++
 
