@@ -304,6 +304,12 @@
 
       enable = mkEnableOption "Graphical Inteface";
 
+      cloud = mkOption {
+        description = "Enable NextCloud Client at Startup";
+        type = bool;
+        default = false;
+      };
+
       numlock = mkOption {
         description = "Startup system with NumLock enabled";
         type = bool;

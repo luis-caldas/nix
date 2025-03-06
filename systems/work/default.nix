@@ -76,7 +76,10 @@
         android = true;
       };
     };
-    graphics.enable = true;
+    graphics = {
+      enable = true;
+      cloud = true;
+    };
     production = {
       audio = true;
       models = true;

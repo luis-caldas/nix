@@ -162,13 +162,17 @@ in
 
   # Services
   services.nextcloud-client = {
-    enable = true;
+    enable = osConfig.mine.graphics.cloud;
     startInBackground = true;
   };
-  systemd.user.services.nextcloud-client.Unit.PartOf = lib.mkForce [ ];
-  systemd.user.services.nextcloud-client.Unit.After = lib.mkForce [ "xdg-desktop-portal.service" ];
-  systemd.user.services.nextcloud-client.Install.WantedBy = lib.mkForce [ "xdg-desktop-portal.service" ];
-  systemd.user.services.nextcloud-client.Service.Type = "Idle";
+  systemd.user.services = lib.mkIf osConfig.mine.graphics.cloud {
+    nextcloud-client = {
+      Unit.PartOf = lib.mkForce [ ];
+      Unit.After = lib.mkForce [ "xdg-desktop-portal.service" ];
+      Install.WantedBy = lib.mkForce [ "xdg-desktop-portal.service" ];
+      Service.Type = "Idle";
+    };
+  };
 
   # All the needed links for the system to have its flair
   home.file = lib.mkMerge (
