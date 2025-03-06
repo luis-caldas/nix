@@ -134,7 +134,7 @@
 
     # Email
     meli
-    neomutt
+    # neomutt  # TODO Broken
 
     # AI
     chatgpt-cli
@@ -349,7 +349,7 @@
     pkgs.custom.x56linux
 
     # Download
-    # pkgs.custom.n-m3u8dl-re  # TODO Failing
+    # n-m3u8dl-re  # TODO 25.05
 
     #####
 

@@ -80,7 +80,6 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
   (if (!pkgs.stdenv.hostPlatform.isAarch) then [
 
     # Minecraft
-    # minecraft  # TODO Broken
     prismlauncher
 
     # FPS

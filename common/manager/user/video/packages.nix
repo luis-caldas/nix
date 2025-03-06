@@ -238,7 +238,7 @@ lib.mkIf osConfig.mine.graphics.enable
     zbar
 
     # Music
-    # feishin  # TODO Insecure
+    feishin
 
     # Video player
     vlc
@@ -373,7 +373,7 @@ lib.mkIf osConfig.mine.graphics.enable
     jetbrains.idea-ultimate
     jetbrains.datagrip
     jetbrains.webstorm
-    # jetbrains.clion  # TODO Broken
+    jetbrains.clion
 
     # Jetbrains free
     jetbrains.pycharm-community
