@@ -335,7 +335,7 @@ in {
   # Data Local
 
   fileSystems."/data/local" =
-    { device = "into/data";
+    { device = "into/safe/data";
       fsType = "zfs";
     };
 
