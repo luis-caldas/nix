@@ -109,7 +109,6 @@ in {
   # My own configuration
   mine = {
     minimal = true;
-    system.hostname = "router";
     user.admin = false;
     services = {
       ssh = true;
@@ -341,49 +340,54 @@ in {
   # File Systems #
   ################
 
-  fileSystems."/" =
-    { device = "vimmer/root";
-      fsType = "zfs";
-    };
-
-  fileSystems."/keys" =
-    { device = "vimmer/keys";
-      fsType = "zfs";
-      neededForBoot = true;
-    };
+  # Boot
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/B7F0-3A34";
       fsType = "vfat";
     };
 
-  fileSystems."/home" =
-    { device = "vimmer/home";
+  # System
+
+  fileSystems."/" =
+    { device = "vimmer/safe/system/root";
       fsType = "zfs";
     };
 
-  fileSystems."/data/local" =
-    { device = "vimmer/data";
+  fileSystems."/home" =
+    { device = "vimmer/safe/system/home";
       fsType = "zfs";
     };
 
   fileSystems."/data/vm" =
-    { device = "vimmer/vm";
+    { device = "vimmer/safe/system/vm";
       fsType = "zfs";
     };
 
   fileSystems."/nix" =
-    { device = "vimmer/nix";
+    { device = "vimmer/safe/system/nix";
       fsType = "zfs";
     };
 
   fileSystems."/tmp" =
-    { device = "vimmer/tmp";
+    { device = "vimmer/safe/system/tmp";
       fsType = "zfs";
     };
 
+  # Data
+
+  fileSystems."/data/local" =
+    { device = "vimmer/safe/data";
+      fsType = "zfs";
+    };
+
+  # SWAP
+
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/8306532e-4a62-4f99-b3df-7a7aa362958d"; }
+    [ {
+        device = "/dev/disk/by-partuuid/63383757-a754-4c79-9754-5d4d8feab235";
+        randomEncryption.enable = true;
+      }
     ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
