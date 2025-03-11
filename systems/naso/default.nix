@@ -133,7 +133,6 @@ in {
     minimal = true;
     user.admin = false;
     user.groups = [ "cdrom" ];
-    system.hostname = "naso";
     services = {
       ssh = true;
       docker = true;
@@ -298,49 +297,57 @@ in {
   # File Systems #
   ################
 
-  fileSystems."/" =
-    { device = "into/root";
-      fsType = "zfs";
-    };
-
-  fileSystems."/keys" =
-    { device = "into/keys";
-      fsType = "zfs";
-      neededForBoot = true;
-    };
+  # Boot
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/F62C-297C";
       fsType = "vfat";
     };
 
-  fileSystems."/home" =
-    { device = "into/home";
+  fileSystems."/keys" =
+    { device = "into/safe/keys";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
+  # System
+
+  fileSystems."/" =
+    { device = "into/safe/system/root";
       fsType = "zfs";
     };
 
-  fileSystems."/tmp" =
-    { device = "into/tmp";
+  fileSystems."/home" =
+    { device = "into/safe/system/home";
       fsType = "zfs";
     };
 
   fileSystems."/nix" =
-    { device = "into/nix";
+    { device = "into/safe/system/nix";
       fsType = "zfs";
     };
+
+  fileSystems."/tmp" =
+    { device = "into/safe/system/tmp";
+      fsType = "zfs";
+    };
+
+  # Data Local
 
   fileSystems."/data/local" =
     { device = "into/data";
       fsType = "zfs";
     };
 
+  # Data Bunker
+
   fileSystems."/data/bunker/data" =
-    { device = "bunker/data";
+    { device = "bunker/safe/data";
       fsType = "zfs";
     };
 
   fileSystems."/data/bunker/cloud" =
-    { device = "bunker/cloud";
+    { device = "bunker/safe/cloud";
       fsType = "zfs";
     };
 
@@ -362,13 +369,20 @@ in {
       options = [ "nofail" "ro" ];
     };
 
+  # Data Chunk
+
   fileSystems."/data/chunk" =
     { device = "chunk/bundle";
       fsType = "zfs";
     };
 
+  # SWAP
+
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/118dc015-fd73-456c-86fd-00aa279b0fa9"; }
+    [ {
+        device = "/dev/disk/by-partuuid/2feabc2c-61df-4f72-8f59-04fbda2e6bcf";
+        randomEncryption.enable = true;
+      }
     ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
