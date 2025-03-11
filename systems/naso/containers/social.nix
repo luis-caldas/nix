@@ -48,7 +48,7 @@ in {
     };
     # Volumes
     volumes = [
-      "${paths.local.matrix}/main:/data"
+      "${paths.safe.matrix}/main:/data"
       "${paths.local.bridge}:/bridge"
     ];
     # Networking
