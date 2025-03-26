@@ -23,6 +23,8 @@
           "games"
           # Share
           "share"
+          # List
+          "list"
           # Vault
           "vault"
         ];
@@ -63,6 +65,8 @@
         "samba" "shout"
         # Media
         "jellyfin" "komga" "shower"
+        # List
+        "list"
         # Gaming
         "emulator"
         # Music

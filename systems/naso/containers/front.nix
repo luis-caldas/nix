@@ -25,6 +25,8 @@ let
     networks.media.komga
     networks.media.navidrome
     networks.media.simple
+    # List
+    networks.list
     # Gaming
     networks.games
     # Social
