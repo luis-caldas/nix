@@ -38,7 +38,7 @@ with shared;
     };
     # Volumes
     volumes = [
-      /data/bunker/data/containers/list:/data
+      "/data/bunker/data/containers/list:/data"
     ];
     # Networking
     networks = [
