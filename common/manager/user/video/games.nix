@@ -28,7 +28,8 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     ]; })
 
     # Decompiled
-    # shipwright  # TODO Broken
+    shipwright
+    _2ship2harkinian
     sm64ex
     (pkgs.writeShellScriptBin
       "sm64ex-coop"

@@ -60,7 +60,7 @@
       "minecraft-launcher"
       "dwarf-fortress"
       "clonehero"
-      "shipwright"
+      "shipwright" "2ship2harkinian"
       "sm64ex" "sm64ex-coop"
       "libretro-snes9x"
 
