@@ -8,8 +8,8 @@
         "sha256": "0xq0h24ibhqqz22a1s442jlky2x9hprkxj4v2xb5bmhdr1gpkcb3"
     },
     "mycontainers": {
-        "commit": "981fae2b7ca7cec6e7026951f77ac84f6e1c36e5",
-        "sha256": "1h3w70pfmaqjicym521nmysys3k68lwfxxzdi8jbbl9m8qczqbg3"
+        "commit": "75ac8e8c32126c34c28655314d03cc7469440b93",
+        "sha256": "0i98hk5qpb56jkarwk34fvp9jbk91srb6vgvdjixxg97rm4d7dky"
     },
     "mycursors": {
         "commit": "0ad226382175f0b956a328f3c951f791e487efaf",
@@ -24,8 +24,8 @@
         "sha256": "10z2v5amvbi95lzgxy7676k9arafj287qi6qnn9601fyrmqb681f"
     },
     "myfonts": {
-        "commit": "6f57b2b72d4597d1100bd46b7bd756efe4ecf154",
-        "sha256": "0wnrwawibh6sf16aggch41chywalsabz9x3cn4pbyvdb1363avkm"
+        "commit": "0fe1d5e3d051e4b1c2bedbcb29a24a5450e39ecb",
+        "sha256": "118q9hy6f549wv28g4d4hwaf7cbc8ll0zwciqhha9r7ijq5cfamp"
     },
     "myicons": {
         "commit": "fd4692ed166aab23865a45ee154bf23cadb843e9",
