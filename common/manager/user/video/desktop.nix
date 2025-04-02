@@ -10,7 +10,7 @@ lib.mkIf osConfig.mine.graphics.enable
   # Create an object with all the new browser info so it can be referenced
   browsersNewInfo = map (eachBrowser: {
     name = "browser-${eachBrowser.name}";
-    path = "${osConfig.mine.browser.command}-${eachBrowser.name}";
+    path = "${osConfig.mine.browser.name}-${eachBrowser.name}";
   }) osConfig.mine.browser.others;
 
   # Join the default applications from config with our browser
@@ -37,7 +37,7 @@ lib.mkIf osConfig.mine.graphics.enable
       value = {
         name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] extraBrowserInfo.name);
         comment = "Browser Customized ${pkgs.functions.capitaliseString eachBrowser.name}";
-        exec = ''${osConfig.mine.browser.command} --class="${extraBrowserInfo.name}" --user-data-dir="${config.xdg.configHome}/${extraBrowserInfo.path}" %U'';
+        exec = ''${osConfig.mine.browser.name} --class="${extraBrowserInfo.name}" --user-data-dir="${config.xdg.configHome}/${extraBrowserInfo.path}" %U'';
         icon = "web-browser";
         terminal = false;
         categories = [ "Network" "WebBrowser" ];
@@ -79,7 +79,7 @@ lib.mkIf osConfig.mine.graphics.enable
     value = rec {
       name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] eachEntry.name);
       comment = "${name} web page running as an application";
-      exec = ''${osConfig.mine.browser.command} --user-data-dir="${config.xdg.configHome}/browser-apps/${eachEntry.name}" --profile-directory="${eachEntry.name}" --app="${eachEntry.url}"'';
+      exec = ''${osConfig.mine.browser.name} --user-data-dir="${config.xdg.configHome}/browser-apps/${eachEntry.name}" --profile-directory="${eachEntry.name}" --app="${eachEntry.url}"'';
       icon = eachEntry.icon;
       terminal = false;
       categories = [ "Network" "WebBrowser" ];

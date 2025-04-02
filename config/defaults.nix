@@ -494,10 +494,10 @@
         ];
       };
 
-      command = mkOption {
-        description = "Command to execute the browser";
+      name = mkOption {
+        description = "Browser name / command";
         type = str;
-        default = "chromium";
+        default = "cromite";
       };
 
       others = mkOption {

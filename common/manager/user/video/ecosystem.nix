@@ -103,7 +103,10 @@ in
   programs = {
 
     # Enable chromium
-    chromium.enable = true;
+    chromium = {
+      enable = true;
+      package = pkgs.unstable."${osConfig.mine.browser.name}";
+    };
 
     # Enable vscode
     vscode = {
