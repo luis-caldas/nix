@@ -46,9 +46,7 @@
 
   # Also set the paths for all the certificates so they stick
   environment.sessionVariables = {
-    NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt";
     SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt";
-    SYSTEM_CERTIFICATE_PATH = "/etc/ssl/certs/ca-bundle.crt";
   };
 
 
