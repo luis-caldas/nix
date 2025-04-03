@@ -32,12 +32,31 @@ lib.mkIf osConfig.mine.graphics.enable
     # Automatically create the chromium applications from a list
     builtins.listToAttrs (lib.lists.imap0 (index: eachBrowser: let
       extraBrowserInfo = builtins.elemAt browsersNewInfo index;
+      features = let
+        flag = {
+          enable = "--enable-features";
+          disable = "--disable-features";
+        };
+        build = inFlag: listItems:
+          "${inFlag}=${
+            lib.strings.concatStringsSep "," (
+              map (inString:
+                (builtins.replaceStrings [" "] [""]
+                  (pkgs.functions.capitaliseString
+                    (builtins.replaceStrings ["-"] [" "] inString)))
+              ) listItems
+            )
+          }";
+      in lib.strings.concatStringsSep " " (
+        [(build flag.enable osConfig.mine.browser.enableFlags)
+        (build flag.disable osConfig.mine.browser.disableFlags)]
+      );
     in {
       name = extraBrowserInfo.name;
       value = {
         name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] extraBrowserInfo.name);
         comment = "Browser Customized ${pkgs.functions.capitaliseString eachBrowser.name}";
-        exec = ''${osConfig.mine.browser.name} --class="${extraBrowserInfo.name}" --user-data-dir="${config.xdg.configHome}/${extraBrowserInfo.path}" %U'';
+        exec = ''${osConfig.mine.browser.name} ${features} --class="${extraBrowserInfo.name}" --user-data-dir="${config.xdg.configHome}/${extraBrowserInfo.path}" %U'';
         icon = "web-browser";
         terminal = false;
         categories = [ "Network" "WebBrowser" ];

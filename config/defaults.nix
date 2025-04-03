@@ -482,16 +482,30 @@
         description = "Extensions for all the installations";
         type = listOf str;
         default = [
-          "padekgcemlokbadohgkifijomclgjgif" # switchy proxy omega
           "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
-          "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # privacy badger
-          "fnaicdffflnofjppbagibeoednhnbjhg" # floccus bookmarks manager
-          "cnojnbdhbhnkbcieeekonklommdnndci" # search by image
-          "gbmdgpbipfallnflgajpaliibnhdgobh" # json viewer
           "nngceckbapebfimnlniiiahkandclblb" # bitwarden client
-          "hkgfoiooedgoejojocmhlaklaeopbecg" # picture in picture
-          "dneaehbmnbhcippjikoajpoabadpodje" # old reddit
+          "fnaicdffflnofjppbagibeoednhnbjhg" # floccus bookmarks manager
+          "gbmdgpbipfallnflgajpaliibnhdgobh" # json viewer
+          # "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # privacy badger
+          # "padekgcemlokbadohgkifijomclgjgif" # switchy proxy omega
+          # "cnojnbdhbhnkbcieeekonklommdnndci" # search by image
+          # "hkgfoiooedgoejojocmhlaklaeopbecg" # picture in picture
+          # "dneaehbmnbhcippjikoajpoabadpodje" # old reddit
         ];
+      };
+
+      enableFlags = mkOption {
+        description = "Flags to be enabled";
+        type = listOf str;
+        default = [
+          "enable-extension-autoupdate"
+        ];
+      };
+
+      disableFlags = mkOption {
+        description = "Flags to be disabled";
+        type = listOf str;
+        default = [];
       };
 
       name = mkOption {

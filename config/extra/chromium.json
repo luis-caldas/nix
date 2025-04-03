@@ -23,10 +23,14 @@
 
       "DownloadRestrictions": 0,
 
+      "PasswordManagerEnabled": false,
+      "AutofillCreditCardEnabled": false,
       "AutofillAddressEnabled": false,
-      "BuiltInDnsClientEnabled": false,
       "MetricsReportingEnabled": false,
       "PaymentMethodQueryEnabled": false,
+
+      "BuiltInDnsClientEnabled": false,
+      "DnsOverHttpsMode": "off",
 
       "AlwaysOpenPdfExternally": true,
 
@@ -35,6 +39,8 @@
       "HomepageIsNewTabPage": true,
       "ShowHomeButton": true,
       "NewTabPageLocation": "caldas.ie",
+
+      "BookmarkBarEnabled": false,
 
       "BlockThirdPartyCookies": true,
 
@@ -45,14 +51,14 @@
         "autofill"
       ],
 
+      "ComponentUpdatesEnabled": false,
+
       "ExtensionManifestV2Availability": 2
 
     },
 
     "recommended": {
-      "SpellcheckEnabled": true,
-      "PasswordManagerEnabled": false,
-      "AutofillCreditCardEnabled": false
+      "SpellcheckEnabled": true
     }
 
   },
