@@ -105,7 +105,14 @@ in
     # Enable chromium
     chromium = {
       enable = true;
-      package = pkgs.unstable."${osConfig.mine.browser.name}";
+      # TODO Update
+      package = pkgs.unstable."${osConfig.mine.browser.name}".overrideAttrs (old: {
+        nativeBuildInputs = [
+          pkgs.makeWrapper
+          pkgs.patchelf
+          pkgs.copyDesktopItems
+        ];
+      });
     };
 
     # Enable vscode
