@@ -47,7 +47,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Icons
     iconsList = with pkgs; [
-      papirus-icon-theme
+      custom.poorpirus
     ];
 
     # Cursors
