@@ -108,9 +108,9 @@ in
       # TODO Update
       package = pkgs.unstable."${osConfig.mine.browser.name}".overrideAttrs (old: {
         nativeBuildInputs = [
-          pkgs.makeWrapper
-          pkgs.patchelf
-          pkgs.copyDesktopItems
+          pkgs.unstable.makeWrapper
+          pkgs.unstable.patchelf
+          pkgs.unstable.copyDesktopItems
         ];
       });
     };
@@ -125,6 +125,7 @@ in
         jnoortheen.nix-ide
         ms-python.python
         ms-vscode.powershell
+        rust-lang.rust-analyzer
         yzhang.markdown-all-in-one
         # IDE
         eamodio.gitlens
