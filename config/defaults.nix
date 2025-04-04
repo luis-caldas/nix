@@ -325,13 +325,13 @@
       icon = mkOption {
         description = "Name of the preferred icon theme to use";
         type = str;
-        default = "Poorpirus-Light";
+        default = "Papirus-Light";
       };
 
       iconDark = mkOption {
         description = "Name of the preferred icon theme to use when dark";
         type = str;
-        default = "Poorpirus-Dark";
+        default = "Papirus-Dark";
       };
 
       theme = mkOption {
