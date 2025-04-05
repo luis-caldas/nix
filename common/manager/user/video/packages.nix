@@ -458,8 +458,6 @@ lib.mkIf osConfig.mine.graphics.enable
     # Patchers
     carla
     helvum
-    qpwgraph
-    raysession
 
   ] else []) ++
 
