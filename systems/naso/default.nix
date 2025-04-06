@@ -25,6 +25,8 @@
           "share"
           # List
           "list"
+          # Map
+          "tile"
           # Vault
           "vault"
         ];
@@ -63,6 +65,8 @@
         "portainer"
         # Share
         "samba" "shout"
+        # Map
+        "tile"
         # Media
         "jellyfin" "komga" "shower"
         # List

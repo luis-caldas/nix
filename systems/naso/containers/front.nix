@@ -34,6 +34,8 @@ let
     networks.social.admin
     # Track
     networks.track.default
+    # Map
+    networks.tile
     # Mail
     networks.mail.web
     # Vault
