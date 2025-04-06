@@ -114,21 +114,6 @@ lib.mkIf osConfig.mine.graphics.enable
     };
   }) osConfig.mine.browser.apps);
 
-  # Override already existing items
-  overrideItems = {
-    "cisco-pt8.desktop" = {
-      name = "Packet Tracer";
-      genericName = "Cisco Packet Tracer 8";
-      icon = "packet-tracer";
-      exec = "packettracer8 %f";
-      mimeType = [
-        "application/x-pkt"
-        "application/x-pka"
-        "application/x-pkz"
-      ];
-    };
-  };
-
 in {
 
   # All gnome configuration
@@ -501,7 +486,7 @@ in {
   };
 
   # Add my own custom desktop files
-  xdg.desktopEntries = customElectron // newBrowsersDesktops // overrideItems;
+  xdg.desktopEntries = customElectron // newBrowsersDesktops;
 
   # Set my own default applications
   xdg.mimeApps = {
