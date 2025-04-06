@@ -76,14 +76,31 @@ with shared;
       virtualFix = pkgs.writeText "postfix-main.cf" ''
         virtual_mailbox_domains = ${domainName}, ${lib.strings.concatStringsSep ", " extraHostnames}
       '';
+      amavis = pkgs.writeTest "amavis.cf" ''
+        %final_destiny_by_ccat = (
+          CC_VIRUS,      D_DISCARD,
+          CC_SPAM,       D_DISCARD,
+          CC_BANNED,     D_BOUNCE,
+          CC_OVERSIZED,  D_BOUNCE,
+          CC_BADH.',4',  D_PASS,
+          CC_BADH.',3',  D_BOUNCE,
+          CC_BADH,       D_PASS,
+          CC_UNCHECKED,  D_PASS,
+          CC_CLEAN,      D_PASS,
+          CC_CATCHALL,   D_PASS,
+        );
+      '';
+      configFolder = "/tmp/docker-mailserver";
     in [
       # Config
       "/data/bunker/data/containers/mail/data/:/var/mail/"
       "/data/bunker/data/containers/mail/state/:/var/mail-state/"
       "/data/bunker/data/containers/mail/logs/:/var/log/mail/"
-      "/data/bunker/data/containers/mail/config/:/tmp/docker-mailserver/"
+      "/data/bunker/data/containers/mail/config/:${configFolder}/"
       # Fix alias and relays
-      "${virtualFix}:/tmp/docker-mailserver/postfix-main.cf:ro"
+      "${virtualFix}:${configFolder}/postfix-main.cf:ro"
+      # Amavis configuration
+      "${amavis}:${configFolder}/amavis.cf1:ro"
       # Locale
       "/etc/localtime:/etc/localtime:ro"
       # SSL
