@@ -76,7 +76,7 @@ with shared;
       virtualFix = pkgs.writeText "postfix-main.cf" ''
         virtual_mailbox_domains = ${domainName}, ${lib.strings.concatStringsSep ", " extraHostnames}
       '';
-      amavis = pkgs.writeTest "amavis.cf" ''
+      amavis = pkgs.writeText "amavis.cf" ''
         %final_destiny_by_ccat = (
           CC_VIRUS,      D_DISCARD,
           CC_SPAM,       D_DISCARD,
