@@ -180,6 +180,7 @@ in {
     # Volumes
     volumes = [
       "${paths.local}/servarr/soulseek:/app"
+      "${paths.base}:/media"
     ];
   };
 
