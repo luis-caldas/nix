@@ -173,7 +173,7 @@ in {
     image = "slskd/slskd:latest";
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
-      SLSKD_REMOTE_CONFIGURATION = true;
+      SLSKD_REMOTE_CONFIGURATION = "true";
     };
     # Networking
     networks = [ networks.download.arr ];
