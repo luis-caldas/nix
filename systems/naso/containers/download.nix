@@ -171,6 +171,8 @@ in {
   services."${names.download.soulseek}".service = {
     # Image
     image = "slskd/slskd:latest";
+    # User
+    user = builtins.toString config.mine.user.uid;
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       SLSKD_REMOTE_CONFIGURATION = "true";

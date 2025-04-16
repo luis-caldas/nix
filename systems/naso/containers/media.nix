@@ -54,7 +54,7 @@ with shared;
       TZ = config.mine.system.timezone;
     };
     # User information
-    user = "${builtins.toString config.mine.user.uid}";
+    user = builtins.toString config.mine.user.uid;
     # Volumes
     volumes = [
       "/data/local/containers/komga:/config"
