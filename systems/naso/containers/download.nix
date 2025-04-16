@@ -148,7 +148,7 @@ in {
 
   services."${names.download.arr.music}".service = {
     # Image
-    image = "lscr.io/linuxserver/lidarr:latest";
+    image = "ghcr.io/linuxserver-labs/prarr:lidarr-plugins";
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
       TZ = config.mine.system.timezone;
@@ -161,6 +161,25 @@ in {
     volumes = [
       "${paths.local}/servarr/lidarr:/config"
       "${paths.base}:/media"
+    ];
+  };
+
+       ##########
+  ### # SoulSeek # ###
+       ##########
+
+  services."${names.download.soulseek}".service = {
+    # Image
+    image = "slskd/slskd:latest";
+    # Environment
+    environment = pkgs.functions.container.fixEnvironment {
+      SLSKD_REMOTE_CONFIGURATION = true;
+    };
+    # Networking
+    networks = [ networks.download.arr ];
+    # Volumes
+    volumes = [
+      "${paths.local}/servarr/soulseek:/app"
     ];
   };
 

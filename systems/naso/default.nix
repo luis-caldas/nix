@@ -82,7 +82,7 @@
       front = [ "app" "access" ];
       # Download
       download = {
-        app = [ "torrent" "usenet" ];
+        app = [ "torrent" "usenet" "soulseek" ];
         arr = [
           "fetch" "series" "films" "music" "subtitles"
         ];
