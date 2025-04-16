@@ -74,6 +74,8 @@
   virtualisation.docker.enable = config.mine.services.docker;
   # Set default backend for containers
   virtualisation.oci-containers.backend = "docker";
+  # Disable live restore
+  virtualisation.docker.liveRestore = false;
 
   # libvirt config
   virtualisation.libvirtd = lib.mkIf config.mine.services.virtual.enable {
