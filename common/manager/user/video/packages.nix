@@ -499,6 +499,10 @@ lib.mkIf osConfig.mine.graphics.enable
     zyn-fusion
     zita-at1
 
+    # Bridge
+    yabridge
+    yabridgectl
+
     # Samplers
     qsampler
     linuxsampler
