@@ -10,8 +10,6 @@ let
     networks.front
   ];
   externalNetworks = [
-    # DNS
-    networks.base.hole
     # Portainer
     networks.manage
     # Asterisk
