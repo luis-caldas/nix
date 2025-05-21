@@ -106,7 +106,7 @@ with shared;
       # Fix alias and relays
       "${virtualFix}:${configFolder}/postfix-main.cf:ro"
       # Amavis configuration
-      "${amavis}:${configFolder}/amavis.cf1:ro"
+      "${amavis}:${configFolder}/amavis.cf:ro"
       # Locale
       "/etc/localtime:/etc/localtime:ro"
       # SSL
