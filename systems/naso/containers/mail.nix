@@ -82,9 +82,15 @@ with shared;
           CC_SPAM,       D_DISCARD,
           CC_BANNED,     D_BOUNCE,
           CC_OVERSIZED,  D_BOUNCE,
-          CC_BADH.',4',  D_PASS,
-          CC_BADH.',3',  D_BOUNCE,
-          CC_BADH,       D_PASS,
+          CC_BADH.',1',  D_PASS,    # BAD HEADER: MIME error
+          CC_BADH.',2',  D_BOUNCE,  # BAD HEADER: nonencoded 8-bit character
+          CC_BADH.',3',  D_BOUNCE,  # BAD HEADER: contains invalid control character
+          CC_BADH.',4',  D_BOUNCE,  # BAD HEADER: line made up entirely of whitespace
+          CC_BADH.',5',  D_BOUNCE,  # BAD HEADER: line longer than RFC 5322 limit
+          CC_BADH.',6',  D_BOUNCE,  # BAD HEADER: syntax error
+          CC_BADH.',7',  D_BOUNCE,  # BAD HEADER: missing required header field
+          CC_BADH.',8',  D_PASS,    # BAD HEADER: duplicate header field
+          CC_BADH,       D_PASS,    # BAD HEADER
           CC_UNCHECKED,  D_PASS,
           CC_CLEAN,      D_PASS,
           CC_CATCHALL,   D_PASS,
