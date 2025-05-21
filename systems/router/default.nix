@@ -46,8 +46,6 @@
           # VPN
           "vpn"
         ];
-        # Base
-        base = [ "dns" "hole" "time" ];
         # Monitor
         monitor = [ "grafana" "kuma" ];
       };
@@ -72,8 +70,6 @@
         # VPN
         "vpn"
       ];
-      # DNS
-      dns = [ "app" "up" ];
       # Asterisk
       asterisk = {
         app = [ "app" ];
