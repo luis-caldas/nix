@@ -8,7 +8,7 @@ lib.mkIf config.mine.audio
   security.rtkit.enable = true;
 
   # Disable pulseaudio
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
 
   # Pipewire config
   services.pipewire = {

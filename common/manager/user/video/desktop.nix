@@ -159,6 +159,7 @@ in {
         each
     ) osConfig.mine.graphics.favourites;
     "org/gnome/mutter" = {
+      dynamic-workspaces = false;
       edge-tiling = true;
       workspaces-only-on-primary = true;
       experimental-features = [ "scale-monitor-framebuffer" ];
@@ -166,7 +167,7 @@ in {
     "org/gnome/desktop/interface" = {
 
       # Cursor
-      cursor-size = lib.mkForce 32;
+      cursor-size = lib.mkForce 24;
 
       # Theming
       cursor-theme = osConfig.mine.graphics.cursor;

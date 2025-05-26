@@ -72,7 +72,7 @@ lib.mkIf config.mine.graphics.enable
     games.enable = false;
     gnome-keyring.enable = true;
     core-shell.enable = true;
-    core-utilities.enable = false;
+    core-apps.enable = false;
     core-os-services.enable = true;
     core-developer-tools.enable = true;
   };

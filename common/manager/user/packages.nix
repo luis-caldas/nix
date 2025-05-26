@@ -43,8 +43,8 @@
     # Rescue
     ddrescue
 
-    # Bootable
-    ventoy-full
+    # Boot
+    # ventoy-full  # TODO Dodgy
 
     # Bitlocker
     dislocker
@@ -96,7 +96,6 @@
     rtl-sdr  # RTL-SDR
 
     # Input
-    xboxdrv
     linuxConsoleTools
 
     # Bluetooth
@@ -134,7 +133,6 @@
 
     # Email
     meli
-    # neomutt  # TODO Broken
 
     # AI
     chatgpt-cli
@@ -262,7 +260,7 @@
     hashcat
 
     # Brute
-    ncrack
+    # ncrack  # TODO Broken
     sqlmap
     thc-hydra
 
@@ -327,7 +325,7 @@
     pwncat
 
     # Binary
-    python3Packages.binwalk-full
+    binwalk
 
     # Haskell
     ghc
@@ -349,7 +347,7 @@
     pkgs.custom.x56linux
 
     # Download
-    # n-m3u8dl-re  # TODO 25.05
+    n-m3u8dl-re
 
     #####
 

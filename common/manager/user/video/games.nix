@@ -19,22 +19,19 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     mednaffe
 
     # Retroarch
-    (retroarch.override { cores = with libretro; [
+    (retroarch.withCores (cores: with cores; [
       mgba
       citra
       snes9x
       fceumm
       mupen64plus
-    ]; })
+    ]))
 
     # Decompiled
     shipwright
     _2ship2harkinian
     sm64ex
-    (pkgs.writeShellScriptBin
-      "sm64ex-coop"
-      "exec -a $0 ${sm64ex-coop}/bin/sm64ex $@"
-    )  # Coop with different name
+    sm64coopdx
 
     # Proper
     zeroad

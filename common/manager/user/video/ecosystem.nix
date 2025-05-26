@@ -34,10 +34,10 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Fonts
     fontsList = with pkgs; [
-      iosevka-bin
-      (iosevka-bin.override { variant = "Aile"; })
-      (iosevka-bin.override { variant = "Slab"; })
-      (iosevka-bin.override { variant = "Etoile"; })
+      # iosevka-bin
+      # (iosevka-bin.override { variant = "Aile"; })
+      # (iosevka-bin.override { variant = "Slab"; })
+      # (iosevka-bin.override { variant = "Etoile"; })
       courier-prime
       apl386 bqn386
       sarasa-gothic
@@ -105,13 +105,11 @@ in
     # Enable chromium
     chromium = {
       enable = true;
-      # TODO Update
-      package = pkgs.unstable."${osConfig.mine.browser.name}".overrideAttrs (old: {
+      package = pkgs."${osConfig.mine.browser.name}".overrideAttrs (old: {
         nativeBuildInputs = [
-          pkgs.unstable.makeWrapper
-          pkgs.unstable.patchelf
-          pkgs.unstable.copyDesktopItems
-        ];
+          pkgs.makeWrapper
+        ] ++
+        (lib.lists.remove pkgs.makeBinaryWrapper old.nativeBuildInputs);
       });
     };
 
@@ -120,40 +118,43 @@ in
       enable = true;
       package = pkgs.vscodium;
       # Normal
-      extensions = with pkgs.vscode-extensions; [
-        # Code
-        jnoortheen.nix-ide
-        ms-python.python
-        ms-vscode.powershell
-        rust-lang.rust-analyzer
-        yzhang.markdown-all-in-one
-        # IDE
-        eamodio.gitlens
-        gruntfuggly.todo-tree
-        pkief.material-icon-theme
-        zhuangtongfa.material-theme
-        # Formatting
-        esbenp.prettier-vscode
-        foxundermoon.shell-format
-        streetsidesoftware.code-spell-checker
-        # Typing
-        valentjn.vscode-ltex
-        # AI
-        continue.continue
-      # Custom
-      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-        {
-          name = "cisco";
-          publisher = "jamiewoodio";
-          version = "1.9.1";
-          sha256 = "sha256-CHvB6UspXnyui0uwykB+UrMp+IDZsaym7hX6rq68FUM=";
-        }
-      ];
+      profiles.default = {
+        extensions = with pkgs.vscode-extensions; [
+          # Code
+          jnoortheen.nix-ide
+          ms-python.python
+          ms-vscode.powershell
+          rust-lang.rust-analyzer
+          yzhang.markdown-all-in-one
+          # IDE
+          eamodio.gitlens
+          gruntfuggly.todo-tree
+          pkief.material-icon-theme
+          zhuangtongfa.material-theme
+          # Formatting
+          esbenp.prettier-vscode
+          foxundermoon.shell-format
+          streetsidesoftware.code-spell-checker
+          # Typing
+          valentjn.vscode-ltex
+          # AI
+          continue.continue
+        # Custom
+        ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "cisco";
+            publisher = "jamiewoodio";
+            version = "1.9.1";
+            sha256 = "sha256-CHvB6UspXnyui0uwykB+UrMp+IDZsaym7hX6rq68FUM=";
+          }
+        ];
+        # User settings
+        userSettings = pkgs.reference.more.codium.settings;
+      };
       haskell = {
         enable = true;
         hie.enable = false;
       };
-      userSettings = pkgs.reference.more.codium.settings;
     };
 
     # Enable mpv with config

@@ -44,8 +44,8 @@
       "nvidia-x11" "nvidia-settings"
 
       # Browser
-      "chromium" "chromium-unwrapped" "chrome-widevine-cdm"
-      "ungoogled-chromium" "ungoogled-chromium-unwrapped"
+      "chromium" "chromium-unwrapped"
+      "chrome-widevine-cdm"
 
       # Widevine
       "widevine-cdm"
@@ -61,7 +61,7 @@
       "dwarf-fortress"
       "clonehero"
       "shipwright" "2ship2harkinian"
-      "sm64ex" "sm64ex-coop"
+      "sm64ex" "sm64coopdx"
       "libretro-snes9x"
 
       # Production
@@ -87,6 +87,9 @@
       "zoom"
       "vmware-horizon-client"
       "vmware-workstation"
+
+      # System
+      "unrar"
 
     ]);
 

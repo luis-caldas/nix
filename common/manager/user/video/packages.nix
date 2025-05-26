@@ -95,7 +95,6 @@ lib.mkIf osConfig.mine.graphics.enable
     citations
     dialect
     gaphor
-    plots
     iotas
     denaro
     gnome-graphs
@@ -328,7 +327,7 @@ lib.mkIf osConfig.mine.graphics.enable
   (if (!osConfig.mine.minimal) then [
 
     # Video Editing
-    kdenlive
+    kdePackages.kdenlive
 
     # Image Editing
     krita
