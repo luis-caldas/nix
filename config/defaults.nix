@@ -316,10 +316,20 @@
         default = true;
       };
 
-      cursor = mkOption {
-        description = "Name of the default cursor used";
-        type = str;
-        default = "Breeze_Hacked";
+      cursor = {
+
+        name = mkOption {
+          description = "Name of the default cursor used";
+          type = str;
+          default = "Breeze_Hacked";
+        };
+
+        size = mkOption {
+          description = "Default size of the cursor";
+          type = int;
+          default = 24;
+        };
+
       };
 
       icon = mkOption {

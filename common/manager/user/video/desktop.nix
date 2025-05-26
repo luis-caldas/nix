@@ -167,10 +167,10 @@ in {
     "org/gnome/desktop/interface" = {
 
       # Cursor
-      cursor-size = lib.mkForce 24;
+      cursor-theme = osConfig.mine.graphics.cursor.name;
+      cursor-size = lib.mkForce osConfig.mine.graphics.cursor.size;
 
       # Theming
-      cursor-theme = osConfig.mine.graphics.cursor;
       icon-theme = if osConfig.mine.graphics.dark then
           osConfig.mine.graphics.iconDark
         else

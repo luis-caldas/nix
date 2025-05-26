@@ -25,7 +25,7 @@ lib.mkIf osConfig.mine.graphics.enable
   defaultCursorLink = {
     ".local/share/icons/default/index.theme".source = pkgs.writeTextFile {
       name = "default";
-      text = lib.generators.toINI {} {"Icon Theme" = { Inherits = osConfig.mine.graphics.cursor; }; };
+      text = lib.generators.toINI {} {"Icon Theme" = { Inherits = osConfig.mine.graphics.cursor.name; }; };
     };
   };
 
