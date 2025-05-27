@@ -515,7 +515,9 @@
       disableFlags = mkOption {
         description = "Flags to be disabled";
         type = listOf str;
-        default = [];
+        default = [
+          "global-shortcuts-portal"
+        ];
       };
 
       name = mkOption {
