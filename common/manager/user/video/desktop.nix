@@ -184,6 +184,9 @@ in {
         else
           "prefer-light";
 
+      # Colour
+      accent-color = "slate";
+
       # Bar
       enable-hot-corners = false;
       clock-show-seconds = true;
