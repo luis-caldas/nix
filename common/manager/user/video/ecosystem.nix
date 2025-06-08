@@ -147,6 +147,13 @@ in
             version = "1.9.1";
             sha256 = "sha256-CHvB6UspXnyui0uwykB+UrMp+IDZsaym7hX6rq68FUM=";
           }
+        ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "monkey-c";
+            publisher = "garmin";
+            version = "1.1.2";
+            sha256 = "sha256-+cZmPJsH6KYCm02s011QYIuzoBejFNfZaj3uYX9rbYQ=";
+          }
         ];
         # User settings
         userSettings = pkgs.reference.more.codium.settings;
