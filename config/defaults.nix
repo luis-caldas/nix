@@ -444,7 +444,7 @@
           "codium.desktop"
           "deck.desktop"
           "chat"
-          "spotify.desktop"
+          "feishin.desktop"
           "files"
           "net.nokyan.Resources.desktop"
         ];

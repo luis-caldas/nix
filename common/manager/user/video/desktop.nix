@@ -57,7 +57,7 @@ lib.mkIf osConfig.mine.graphics.enable
         name = pkgs.functions.capitaliseString (builtins.replaceStrings ["-"] [" "] extraBrowserInfo.name);
         comment = "Browser Customized ${pkgs.functions.capitaliseString eachBrowser.name}";
         exec = ''${osConfig.mine.browser.name} ${features} --class="${extraBrowserInfo.name}" --user-data-dir="${config.xdg.configHome}/${extraBrowserInfo.path}" %U'';
-        icon = "web-browser";
+        icon = "cromite";
         terminal = false;
         categories = [ "Network" "WebBrowser" ];
         settings.StartupWMClass = extraBrowserInfo.name;
