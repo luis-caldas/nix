@@ -32,7 +32,7 @@ let
   };
 
   # Concoction of packages
-  packagesStable = (pkgs // stablePackages);
+  packagesStable = (pkgs // pkgs.xorg // stablePackages);
   packagesUnstable = (pkgs.unstable // unstablePackages);
 
   # Create set of package names and calls

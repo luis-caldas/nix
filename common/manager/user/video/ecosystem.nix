@@ -34,10 +34,6 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Fonts
     fontsList = with pkgs; [
-      # iosevka-bin
-      # (iosevka-bin.override { variant = "Aile"; })
-      # (iosevka-bin.override { variant = "Slab"; })
-      # (iosevka-bin.override { variant = "Etoile"; })
       courier-prime
       apl386 bqn386
       sarasa-gothic
@@ -47,7 +43,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Icons
     iconsList = with pkgs; [
-      papirus-icon-theme
+      (pkgs.unstable.papirus-nord.override { accent = "snowstorm1b" ;} )  # TODO 25.11
     ];
 
     # Cursors
@@ -105,12 +101,14 @@ in
     # Enable chromium
     chromium = {
       enable = true;
-      package = pkgs."${osConfig.mine.browser.name}".overrideAttrs (old: {
-        nativeBuildInputs = [
-          pkgs.makeWrapper
-        ] ++
-        (lib.lists.remove pkgs.makeBinaryWrapper old.nativeBuildInputs);
-      });
+      package = let
+        name = osConfig.mine.browser.name;
+      in if builtins.hasAttr name pkgs.custom then
+        pkgs.custom.${name}
+      else if builtins.hasAttr name pkgs.unstable then
+        pkgs.unstable.${name}
+      else
+        pkgs.${name};
     };
 
     # Enable vscode
