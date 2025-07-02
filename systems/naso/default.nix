@@ -19,8 +19,6 @@
           "front"  # Should only be used for proxy
           # Manage
           "manage"
-          # Games
-          "games"
           # Share
           "share"
           # List

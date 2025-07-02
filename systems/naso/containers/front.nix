@@ -27,8 +27,6 @@ let
     networks.media.simple
     # List
     networks.list
-    # Gaming
-    networks.games
     # Social
     networks.social.default
     networks.social.admin
