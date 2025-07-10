@@ -10,8 +10,9 @@
   # ZFS ask for password
   boot.zfs.requestEncryptionCredentials = true;
 
-  # Disable fingerprint
-  services.fprintd.enable = false;
+  # Monado
+  services.monado.enable = true;
+  services.monado.defaultRuntime = true;
 
   # My specific configuration
   mine = {
