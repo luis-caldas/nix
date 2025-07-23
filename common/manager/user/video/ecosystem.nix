@@ -37,13 +37,13 @@ lib.mkIf osConfig.mine.graphics.enable
       courier-prime
       apl386 bqn386
       sarasa-gothic
-      noto-fonts
-      noto-fonts-emoji
+      atkinson-hyperlegible-next atkinson-hyperlegible-mono
+      noto-fonts noto-fonts-emoji
     ];
 
     # Icons
     iconsList = with pkgs; [
-      (pkgs.unstable.papirus-nord.override { accent = "snowstorm1b" ;} )  # TODO 25.11
+      (pkgs.unstable.papirus-nord.override { accent = "snowstorm1" ;} )  # TODO 25.11
     ];
 
     # Cursors
