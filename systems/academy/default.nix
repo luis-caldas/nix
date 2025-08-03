@@ -7,6 +7,12 @@
   boot.kernelModules = [ "kvm-amd" "kvmgt" "mdev" "vfio-iommu-type1" ];
   boot.extraModulePackages = [ ];
 
+  # Show windows boot options
+  boot.loader.systemd-boot.windows."11" = {
+    title = "Windows";
+    efiDeviceHandle = "HD1b";
+  };
+
   # ZFS ask for password
   boot.zfs.requestEncryptionCredentials = true;
 
@@ -76,9 +82,12 @@
       fsType = "zfs";
     };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/34a33299-8144-4f3d-a167-42447645fb8b"; }
-    ];
+  swapDevices = [
+    {
+      device = "/dev/disk/by-partuuid/3eeb2625-47cf-4282-a8c2-cc8de9e5f874";
+      randomEncryption.enable = true;
+    }
+  ];
 
   # Governor and arch
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
