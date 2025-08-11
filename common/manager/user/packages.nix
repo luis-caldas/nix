@@ -94,6 +94,10 @@
     # Devices
     ltunify  # Logitech
     rtl-sdr  # RTL-SDR
+    rtl_433
+    # HackRF One
+    hackrf
+    soapysdr-with-plugins
 
     # Input
     linuxConsoleTools
@@ -103,6 +107,7 @@
 
     # Documents
     pdfgrep
+    poppler-utils
 
     # Web
     w3m
@@ -213,6 +218,7 @@
 
     # XML & YAML
     libxml2
+    yamllint
     python3Packages.yq
 
     # Python
