@@ -21,7 +21,9 @@ with shared;
     service = {
       # Volumes
       volumes = [
-        "/data/local/containers/asterisk/config/conf:/etc/asterisk/conf.mine"
+        # Will merge with default configs
+        "/data/local/containers/asterisk/config/conf:/conf"
+        # Assets
         "/data/local/containers/asterisk/config/voicemail:/var/spool/asterisk/voicemail"
         "/data/local/containers/asterisk/config/record:/var/spool/asterisk/monitor"
         "/data/local/containers/asterisk/config/sounds:/var/lib/asterisk/sounds/mine"
