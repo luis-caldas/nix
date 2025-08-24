@@ -318,11 +318,7 @@ in {
     networks."6${bridgeOffset}-${net.bridges.out}" = {
       matchConfig.Name = "${net.bridges.out}${number}";
       networkConfig.VRF = "${net.vrf}${number}";
-      networkConfig.DHCPServer = "yes";
-      dhcpServerConfig.ServerAddress = "${net.inter.start}.${number}.${net.inter.host}/${net.inter.mask}";
-      dhcpServerConfig.Router = "${net.inter.start}.${number}.${net.inter.host}";
-      dhcpServerConfig.PoolSize = 1;
-      dhcpServerConfig.EmitDNS = "no";
+      networkConfig.Address = "${net.inter.start}.${number}.${net.inter.host}/${net.inter.mask}";
       networkConfig.LinkLocalAddressing = "no";
       linkConfig.RequiredForOnline = "routable";
     };
