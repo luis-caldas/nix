@@ -3,6 +3,9 @@ let
 
   allNetworks = {
 
+    # Hostname
+    hostname = "Router";
+
     # VNP IP information
     vpn = {
 
@@ -51,6 +54,9 @@ let
 
       # VPNs mac for its virtual bridge
       vpn = "ff:54:ff:33:00:01";
+
+      # Spoof
+      spoof = "3c:58:5d:00:00:00";
 
     };
 

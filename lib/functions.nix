@@ -114,6 +114,22 @@ let
             -subj "/CN=localhost" -addext "subjectAltName=DNS:localhost"
         '';
 
+    # Generate Spoofed MAC
+    spoofMAC = hostname: number: start: let
+      hashInput = "${hostname}${builtins.toString number}";
+      hashed = builtins.substring 0 6 (builtins.hashString "sha256" hashInput);
+      started = builtins.substring 0 8 start;
+    in
+      "${started}:${builtins.substring 0 2 hashed}:${builtins.substring 2 2 hashed}:${builtins.substring 4 2 hashed}";
+
+    # Power Function
+    pow = lib.fix (
+      self: base: power:
+        if power != 0
+        then base * (self base (power - 1))
+        else 1
+    );
+
   };
 
 in {
