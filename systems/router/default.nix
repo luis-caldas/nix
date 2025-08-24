@@ -191,7 +191,7 @@ in {
       networks."60-${net.bridges.stub}" = {
         matchConfig.Name = net.bridges.stub;
         networkConfig.LinkLocalAddressing = "no";
-        linkConfig.RequiredForOnline = "no";
+        linkConfig.RequiredForOnline = "carrier";
       };
 
       # VLAN
@@ -204,7 +204,7 @@ in {
         matchConfig.Name = net.vlans.stan.name;
         networkConfig.Bridge = net.bridges.pool;
         networkConfig.LinkLocalAddressing = "no";
-        linkConfig.RequiredForOnline = "no";
+        linkConfig.RequiredForOnline = "enslaved";
       };
 
       # Physical
@@ -228,7 +228,7 @@ in {
       networks."61-${net.bridges.pool}" = {
         matchConfig.Name = net.bridges.pool;
         networkConfig.LinkLocalAddressing = "no";
-        linkConfig.RequiredForOnline = "routable";
+        linkConfig.RequiredForOnline = "carrier";
       };
 
       #######
@@ -245,7 +245,7 @@ in {
         networkConfig.DHCP = "ipv4";
         networkConfig.VLAN = net.vlans.service.name;
         networkConfig.LinkLocalAddressing = "no";
-        linkConfig.RequiredForOnline = "no";
+        linkConfig.RequiredForOnline = "carrier";
       };
 
       # Physical
@@ -265,7 +265,7 @@ in {
         matchConfig.Name = net.vlans.service.name;
         networkConfig.DHCP = "ipv4";
         networkConfig.LinkLocalAddressing = "no";
-        linkConfig.RequiredForOnline = "routable";
+        linkConfig.RequiredForOnline = "no";
       };
 
       #########
@@ -277,6 +277,7 @@ in {
         matchConfig.Name = net.one;
         networkConfig.DHCP = "ipv4";
         networkConfig.LinkLocalAddressing = "no";
+        dhcpV4Config.RouteMetric = 16384;
         linkConfig.RequiredForOnline = "no";
       };
 
