@@ -1,26 +1,43 @@
 { pkgs, lib, config, ... }: let
 
-  # Interfaces informaion
-  interfaces = {
+  # Common Names
+  net = {
+    # Interfaces
     one = "enp5s0";
     ten = {
       outside = "enp6s0f0";
       inside = "enp6s0f1";
     };
+    # Bridges
     bridges = {
-      fire = "firewall-bridge";
-      ice  = "icewall-bridge";
-      virt = "virtuall-bridge";
-      pon  = "pon-bridge";
+      pool = "pool";
+      stub = "stub";
+      out = "out";
+      ice = "ice";
     };
-    stub = "stub";
-    upper = {
-      one   = "upper-one";
-      two   = "upper-two";
-      three = "upper-three";
-      four  = "upper-four";
+    # VLANs
+    vlans = {
+      stan = {
+        name = "stan"; id = 10;
+      };
+      service = {
+        name = "service"; id = 20;
+      };
+    };
+    # Names
+    ver = "ver";
+    vrf = "upp";
+    # IPs
+    inter = {
+      start = "100.100";
+      mask = "30";
+      host = "2";
+      client = "1";
     };
   };
+
+  # Number of networks to generate
+  numberNetworks = 3;
 
   # Shared information
   shared = {
@@ -117,103 +134,235 @@ in {
     };
   };
 
-  ##############
-  # Networking #
-  ##############
+  ######################
+  # === Networking === #
+  ######################
 
-  # Enable IP forwarding
-  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
-  boot.kernel.sysctl."net.ipv4.conf.all.forwarding" = 1;
+  # Enable SystemD
+  networking.networkmanager.enable = lib.mkForce false;
 
-  # Dont filter traffic through bridges
-  boot.kernel.sysctl."net.bridge.bridge-nf-call-arptables" = 0;
-  boot.kernel.sysctl."net.bridge.bridge-nf-call-iptables" = 0;
-  boot.kernel.sysctl."net.bridge.bridge-nf-call-ip6tables" = 0;
-  boot.kernel.sysctl."net.bridge.bridge-nf-filter-vlan-tagged" = 0;
+  # BUG https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=165059
 
-  # Disable IPv6
-  boot.kernel.sysctl."net.ipv6.conf.all.disable_ipv6" = 1;
-  boot.kernel.sysctl."net.ipv6.conf.default.disable_ipv6" = 1;
-
-  # Networling
-  networking = {
-
-    # Disable global DHCP
-    useDHCP = false;
-
-    # Use old dhcpcd
-    dhcpcd = {
-
-      # Disable bonjour
-      extraConfig = ''
-        noipv4ll
-      '';
-
-      # Replace the domain for a search
-      runHook = ''
-        sed 's/^domain/search/' -i /etc/resolv.conf
-      '';
-
-      # Don't hangup on startup
-      wait = "background";
-
-    };
-
-    # Force disable Network Manager
-    networkmanager.enable = lib.mkForce false;
-
-    # VLANs
-    vlans = {
-      # Stub
-      "${interfaces.stub}" = { id = 10; interface = interfaces.ten.outside; };
-    };
-
-    # Default Gigabit & Management Network
-    interfaces."${interfaces.one}".useDHCP = true;
-
-    # Stub
-    interfaces.stub.useDHCP = false;
-
-    # Internal Bridge
-    interfaces."${interfaces.bridges.virt}" = {
-      useDHCP = true;
-      macAddress = pkgs.networks.mac.firewall;
-    };
-    # Firewall Bridge
-    interfaces."${interfaces.bridges.fire}".useDHCP = false;
-    # Pon Bridge
-    interfaces."${interfaces.bridges.pon}".useDHCP = false;
-    # Icewall Bridge
-    interfaces."${interfaces.bridges.ice}".useDHCP = false;
-
-    # Upper Interfaces
-    interfaces."${interfaces.upper.one}".useDHCP = false;
-    interfaces."${interfaces.upper.two}".useDHCP = false;
-    interfaces."${interfaces.upper.three}".useDHCP = false;
-    interfaces."${interfaces.upper.four}".useDHCP = false;
-
-    # Populate bridges
-    bridges."${interfaces.bridges.virt}".interfaces = [];
-    bridges."${interfaces.bridges.fire}".interfaces = [ interfaces.ten.inside ];
-    bridges."${interfaces.bridges.pon}".interfaces = [ interfaces.ten.outside ];
-    bridges."${interfaces.bridges.ice}".interfaces = [ interfaces.stub ];
-
-    # Populate the upper interfaces
-    bridges."${interfaces.upper.one}".interfaces = [];
-    bridges."${interfaces.upper.two}".interfaces = [];
-    bridges."${interfaces.upper.three}".interfaces = [];
-    bridges."${interfaces.upper.four}".interfaces = [];
-
-    # Add another DNS to the DHCP acquired list
-    # That is because the DNS server itself depends on this to start
-    resolvconf = {
-      enable = true;
-      extraConfig = ''
-        name_servers_append="${builtins.concatStringsSep " " pkgs.networks.dns}"
-      '';
-    };
-
+  # Forwarding
+  boot.kernel.sysctl = {
+    # Forwarding
+    "net.ipv4.ip_forward" = 1;
+    # Disable Bridge Filtering
+    "net.bridge.bridge-nf-call-arptables" = 0;
+    "net.bridge.bridge-nf-call-iptables" = 0;
+    "net.bridge.bridge-nf-call-ip6tables" = 0;
+    "net.bridge.bridge-nf-filter-vlan-tagged" = 0;
+    # Disable IPv6
+    "net.ipv6.conf.all.disable_ipv6" = 1;
+    "net.ipv6.conf.default.disable_ipv6" = 1;
   };
+
+  # Config Layout #
+
+  # 0X - Virtual Devices - Bridges
+  # 1X - Virtual Devices - VLANs
+  # 3X - Virtual Devices - VRFs
+  # 4X - Virtual Devices - VEth
+
+  # 5X - Networks - Real Devices
+
+  # 6X - Networks - Bridges
+  # 7X - Networks - VLANs
+  # 8X - Networks - VRFs
+  # 9X - Networks - VEths
+
+  # Main Settings
+  systemd.network = lib.mkMerge ([
+
+    {
+
+      # Enable
+      enable = true;
+
+      ########
+      # Stub #
+      ########
+
+      # Bridge
+      netdevs."00-${net.bridges.stub}" = {
+        netdevConfig.Kind = "bridge";
+        netdevConfig.Name = net.bridges.stub;
+      };
+      networks."60-${net.bridges.stub}" = {
+        matchConfig.Name = net.bridges.stub;
+        networkConfig.LinkLocalAddressing = "no";
+        linkConfig.RequiredForOnline = "no";
+      };
+
+      # VLAN
+      netdevs."10-${net.vlans.stan.name}" = {
+        netdevConfig.Kind = "vlan";
+        netdevConfig.Name = net.vlans.stan.name;
+        vlanConfig.Id = net.vlans.stan.id;
+      };
+      networks."70-service" = {
+        matchConfig.Name = net.vlans.stan.name;
+        networkConfig.Bridge = net.bridges.pool;
+        networkConfig.LinkLocalAddressing = "no";
+        linkConfig.RequiredForOnline = "no";
+      };
+
+      # Physical
+      networks."50-wan" = {
+        matchConfig.Name = net.ten.outside;
+        networkConfig.Bridge = net.bridges.stub;
+        networkConfig.VLAN = net.vlans.stan.name;
+        networkConfig.LinkLocalAddressing = "no";
+        linkConfig.RequiredForOnline = "enslaved";
+      };
+
+      ########
+      # Pool #
+      ########
+
+      # Bridge
+      netdevs."01-${net.bridges.pool}" = {
+        netdevConfig.Kind = "bridge";
+        netdevConfig.Name = net.bridges.pool;
+      };
+      networks."61-${net.bridges.pool}" = {
+        matchConfig.Name = net.bridges.pool;
+        networkConfig.LinkLocalAddressing = "no";
+        linkConfig.RequiredForOnline = "routable";
+      };
+
+      #######
+      # Ice #
+      #######
+
+      # Bridge
+      netdevs."02-${net.bridges.ice}" = {
+        netdevConfig.Kind = "bridge";
+        netdevConfig.Name = net.bridges.ice;
+      };
+      networks."62-${net.bridges.ice}" = {
+        matchConfig.Name = net.bridges.ice;
+        networkConfig.DHCP = "ipv4";
+        networkConfig.VLAN = net.vlans.service.name;
+        networkConfig.LinkLocalAddressing = "no";
+        linkConfig.RequiredForOnline = "no";
+      };
+
+      # Physical
+      networks."51-lan" = {
+        matchConfig.Name = net.ten.inside;
+        networkConfig.Bridge = net.bridges.ice;
+        linkConfig.RequiredForOnline = "enslaved";
+      };
+
+      # VLAN
+      netdevs."11-${net.vlans.service.name}" = {
+        netdevConfig.Kind = "vlan";
+        netdevConfig.Name = net.vlans.service.name;
+        vlanConfig.Id = net.vlans.service.id;
+      };
+      networks."71-service" = {
+        matchConfig.Name = net.vlans.service.name;
+        networkConfig.DHCP = "ipv4";
+        networkConfig.LinkLocalAddressing = "no";
+        linkConfig.RequiredForOnline = "routable";
+      };
+
+      #########
+      # Maint #
+      #########
+
+      # Physical
+      networks."52-maint" = {
+        matchConfig.Name = net.one;
+        networkConfig.DHCP = "ipv4";
+        networkConfig.LinkLocalAddressing = "no";
+        linkConfig.RequiredForOnline = "no";
+      };
+
+    }
+
+  ] ++
+
+  # ---
+
+  (map (iteration: let
+    number = builtins.toString iteration;
+    bridgeOffset = builtins.toString (iteration + 4);
+  in {
+
+    ########
+    # VRFs #
+    ########
+
+    netdevs."3${number}-${net.vrf}" = {
+      netdevConfig.Kind = "vrf";
+      netdevConfig.Name = "${net.vrf}${number}";
+      vrfConfig.Table = 100 + iteration;
+    };
+    networks."8${number}-${net.vrf}" = {
+      matchConfig.Name = "${net.vrf}${number}";
+      networkConfig.LinkLocalAddressing = "no";
+      linkConfig.RequiredForOnline = "carrier";
+    };
+
+    ##############
+    # Out Bridge #
+    ##############
+
+    # Bridge
+    netdevs."0${bridgeOffset}-${net.bridges.out}" = {
+      netdevConfig.Kind = "bridge";
+      netdevConfig.Name = "${net.bridges.out}${number}";
+    };
+    networks."6${bridgeOffset}-${net.bridges.out}" = {
+      matchConfig.Name = "${net.bridges.out}${number}";
+      networkConfig.VRF = "${net.vrf}${number}";
+      networkConfig.DHCPServer = "yes";
+      dhcpServerConfig.ServerAddress = "${net.inter.start}.${number}.${net.inter.host}/${net.inter.mask}";
+      dhcpServerConfig.Router = "${net.inter.start}.${number}.${net.inter.host}";
+      dhcpServerConfig.PoolSize = 1;
+      dhcpServerConfig.EmitDNS = "no";
+      networkConfig.LinkLocalAddressing = "no";
+      linkConfig.RequiredForOnline = "routable";
+    };
+
+    ####################
+    # Virtual Ethernet #
+    ####################
+
+    # Connects Input Bridge to VRF
+
+    # Device
+    netdevs."3${number}-${net.ver}" = {
+      netdevConfig.Kind = "veth";
+      netdevConfig.Name = "${net.ver}${number}0";
+      peerConfig.Name = "${net.ver}${number}1";
+    };
+    networks."8${number}-${net.ver}-0" = {
+      matchConfig.Name = "${net.ver}${number}0";
+      networkConfig.Bridge = net.bridges.pool;
+      networkConfig.LinkLocalAddressing = "no";
+      linkConfig.RequiredForOnline = "enslaved";
+    };
+    networks."8${number}-${net.ver}-1" = {
+      matchConfig.Name = "${net.ver}${number}1";
+      networkConfig.VRF = "${net.vrf}${number}";
+      networkConfig.DHCP = "ipv4";
+      networkConfig.LinkLocalAddressing = "no";
+      dhcpV4Config.SendHostname = "yes";
+      dhcpV4Config.Hostname = pkgs.networks.hostname;
+      dhcpV4Config.UseDNS = "no";
+      dhcpV4Config.UseNTP = "no";
+      linkConfig.MACAddress = pkgs.functions.spoofMAC config.mine.system.hostname iteration pkgs.networks.mac.spoof;
+      linkConfig.RequiredForOnline = "routable";
+    };
+
+  })
+    (lib.lists.range 0 (numberNetworks - 1))
+  ));
+
+  # ===================================================== #
 
   ##################
   # Virtualisation #
@@ -226,7 +375,76 @@ in {
   virtualisation.arion.projects = builtProjects;
 
   # Create all the needed dependencies
-  systemd.services = pkgs.functions.container.createDependencies builtProjects;
+  systemd.services =
+    (pkgs.functions.container.createDependencies builtProjects)
+    //
+
+  ####################
+  # NAT & Forwarding #
+  ####################
+
+  {
+    natter = {
+      description = "Network Address Translation";
+      wantedBy = [ "network.target" ];
+      after = [
+        "network-pre.target"
+        "systemd-modules-load.service"
+      ];
+      path = [ config.networking.firewall.package ];
+      unitConfig.ConditionCapability = "CAP_NET_ADMIN";
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      # Script
+      script = ''
+
+        # == Filter == #
+
+        iptables -w -t filter -N MINE_FORWARD
+        iptables -w -t filter -I FORWARD 1 -j MINE_FORWARD
+
+        # == NAT == #
+
+        iptables -w -t nat -N MINE_PREROUTING
+        iptables -w -t nat -N MINE_POSTROUTING
+
+        iptables -w -t nat -I PREROUTING 1 -j MINE_PREROUTING
+        iptables -w -t nat -I POSTROUTING 1 -j MINE_POSTROUTING
+
+        # == Speed == #
+        iptables -w -t filter -A MINE_FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+      '' + (lib.strings.concatStrings (map (iteration: let
+        number = builtins.toString iteration;
+      in ''
+
+        # -- X -- #
+
+        iptables -w -t filter -A INPUT -i ${net.ver}${number}1 -j DROP
+        iptables -w -t filter -A MINE_FORWARD -i ${net.ver}${number}1 -j DROP
+
+        # ---> In #
+
+        # Masquerade
+        iptables -w -t nat -A MINE_POSTROUTING -o ${net.ver}${number}1 -j MASQUERADE
+
+        # Outgoing & Established Reply
+        iptables -w -t filter -A MINE_FORWARD -i ${net.bridges.out}${number} -o ${net.ver}${number}1 -j ACCEPT
+
+        # <--- Out #
+
+        # DMZ
+        iptables -w -t nat -A MINE_PREROUTING -i ${net.ver}${number}1 -j DNAT --to-destination ${net.inter.start}.${number}.${net.inter.client}
+
+      '')
+        (lib.lists.range 0 (numberNetworks - 1))
+      ));
+
+    };
+
+  };
 
   #######
   # UPS #
