@@ -255,6 +255,9 @@ lib.mkIf osConfig.mine.graphics.enable
     remmina
     moonlight-qt
 
+    # Maintenance
+    winbox4
+
     # Web
     electron
 

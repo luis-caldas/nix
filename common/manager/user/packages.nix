@@ -109,6 +109,9 @@
     pdfgrep
     poppler-utils
 
+    # Speed Test
+    fast-cli
+
     # Web
     w3m
 
