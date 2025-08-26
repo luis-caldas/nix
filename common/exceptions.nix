@@ -43,13 +43,6 @@
       "displaylink"
       "nvidia-x11" "nvidia-settings"
 
-      # Browser
-      "chromium" "chromium-unwrapped"
-      "chrome-widevine-cdm"
-
-      # Widevine
-      "widevine-cdm"
-
       ################
       # Home Manager #
       ################
