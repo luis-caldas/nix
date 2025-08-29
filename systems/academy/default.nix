@@ -11,6 +11,7 @@
   boot.loader.systemd-boot.windows."11" = {
     title = "Windows";
     efiDeviceHandle = "HD1b";
+    sortKey = "m_windows";
   };
 
   # ZFS ask for password
