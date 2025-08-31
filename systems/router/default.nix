@@ -242,7 +242,8 @@ in {
       };
       networks."62-${net.bridges.ice}" = {
         matchConfig.Name = net.bridges.ice;
-        networkConfig.DHCP = "ipv4";
+        # networkConfig.DHCP = "ipv4";
+        # dhcpV4Config.RouteMetric = 8192;
         networkConfig.VLAN = net.vlans.service.name;
         networkConfig.LinkLocalAddressing = "no";
         linkConfig.RequiredForOnline = "carrier";
