@@ -19,8 +19,6 @@ let
     # Monitor
     networks.monitor.grafana
     networks.monitor.kuma
-    # VPN
-    networks.vpn
   ];
 
 in {
