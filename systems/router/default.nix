@@ -14,6 +14,7 @@
       stub = "stub";
       out = "out";
       ice = "ice";
+      fire = "fire";
     };
     # VLANs
     vlans = {
@@ -260,9 +261,25 @@ in {
       };
       networks."71-service" = {
         matchConfig.Name = net.vlans.service.name;
+        networkConfig.Bridge = net.bridges.fire;
+        networkConfig.LinkLocalAddressing = "no";
+        linkConfig.RequiredForOnline = "enslaved";
+      };
+
+      ########
+      # Fire #
+      ########
+
+      # Bridge
+      netdevs."03-${net.bridges.fire}" = {
+        netdevConfig.Kind = "bridge";
+        netdevConfig.Name = net.bridges.fire;
+      };
+      networks."63-${net.bridges.fire}" = {
+        matchConfig.Name = net.bridges.fire;
         networkConfig.DHCP = "ipv4";
         networkConfig.LinkLocalAddressing = "no";
-        linkConfig.RequiredForOnline = "no";
+        linkConfig.RequiredForOnline = "carrier";
       };
 
       #########
