@@ -60,8 +60,6 @@
           "home"
           # Dashboard
           "dash"
-          # VPN
-          "vpn"
         ];
         # Monitor
         monitor = [ "grafana" "kuma" ];
@@ -84,8 +82,6 @@
         "monitor" "kuma"
         # Home Assistant
         "assistant"
-        # VPN
-        "vpn"
       ];
       # Asterisk
       asterisk = {
