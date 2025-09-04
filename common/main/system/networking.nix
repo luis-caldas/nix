@@ -20,6 +20,9 @@
   # Disable ipv6
   networking.enableIPv6 = lib.mkForce false;
 
+  # If ResolveD is somehow enabled
+  services.resolved.fallbackDns = lib.mkForce [];
+
   # Firewall configuration
   networking.firewall.enable = config.mine.network.firewall.enable;
   networking.firewall.allowPing = config.mine.network.firewall.ping;
