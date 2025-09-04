@@ -120,6 +120,7 @@
     iperf
 
     # Network Tools
+    iw
     ethtool
     iproute2
     shadowsocks-libev
