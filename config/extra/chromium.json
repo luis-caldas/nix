@@ -29,6 +29,8 @@
       "MetricsReportingEnabled": false,
       "PaymentMethodQueryEnabled": false,
 
+      "CAPlatformIntegrationEnabled": true,
+
       "BuiltInDnsClientEnabled": false,
       "DnsOverHttpsMode": "off",
 
