@@ -248,8 +248,17 @@ in {
     };
 
     # Other programs
+
+    "org/gnome/evolution/shell" = {
+      prefer-symbolic-icons = "yes";
+    };
+
     "nautilus/icon-view" = {
       captions = [ "size" "none" "none" ];
+    };
+
+    "de/haeckerfelix/Shortwave" = {
+      background-playback = false;
     };
 
   }
