@@ -517,6 +517,8 @@
         type = listOf str;
         default = [
           "global-shortcuts-portal"
+          "restrict-gamepad-access"
+          "system-keyboard-protection"
         ];
       };
 
