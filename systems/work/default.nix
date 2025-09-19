@@ -14,6 +14,12 @@
     "${builtins.fetchGit "https://github.com/NixOS/nixos-hardware"}/framework/13-inch/7040-amd"
   ];
 
+  # WiFi Regulatory Domain
+  hardware.wirelessRegulatoryDatabase = true;
+  boot.extraModprobeConfig = ''
+    options cfg80211 ieee80211_regdom="IE"
+  '';
+
   # AMD Fix
   boot.kernelParams = [ "amdgpu.sg_display=0" "amdgpu.mcbp=0" ];
 
