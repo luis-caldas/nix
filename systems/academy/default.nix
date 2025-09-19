@@ -17,6 +17,12 @@
   # ZFS ask for password
   boot.zfs.requestEncryptionCredentials = true;
 
+  # WiFi Regulatory Domain
+  hardware.wirelessRegulatoryDatabase = true;
+  boot.extraModprobeConfig = ''
+    options cfg80211 ieee80211_regdom="IE"
+  '';
+
   # Monado
   services.monado.enable = true;
   services.monado.defaultRuntime = true;
