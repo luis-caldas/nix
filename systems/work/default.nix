@@ -15,7 +15,7 @@
   ];
 
   # Latest Kernel
-  boot.kernelPackages = pkgs.linuxPackages_6_16;
+  boot.kernelPackages = pkgs.linuxPackages_6_16;  # TODO Until drivers
 
   # WiFi Regulatory Domain
   hardware.wirelessRegulatoryDatabase = true;
