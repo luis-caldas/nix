@@ -72,6 +72,9 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     # Streaming
     chiaki
 
+    # Switch
+    ns-usbloader
+
   ] ++
 
   # amd64 only games
