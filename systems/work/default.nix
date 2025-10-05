@@ -17,6 +17,9 @@
   # Latest Kernel
   boot.kernelPackages = pkgs.linuxPackages_6_16;
 
+  # Firmware
+  services.fwupd.enable = true;
+
   # WiFi Regulatory Domain
   hardware.wirelessRegulatoryDatabase = true;
   boot.extraModprobeConfig = ''

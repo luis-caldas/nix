@@ -30,6 +30,9 @@
       # General #
       ###########
 
+      # Browser
+      "chromium" "chromium-unwrapped" "widevine-cdm"
+
       # Printing
       "brgenml1lpr"
 

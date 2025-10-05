@@ -17,6 +17,9 @@
   # ZFS ask for password
   boot.zfs.requestEncryptionCredentials = true;
 
+  # Firmware
+  services.fwupd.enable = true;
+
   # WiFi Regulatory Domain
   hardware.wirelessRegulatoryDatabase = true;
   boot.extraModprobeConfig = ''

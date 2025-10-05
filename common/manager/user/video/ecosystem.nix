@@ -43,7 +43,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Icons
     iconsList = with pkgs; [
-      (pkgs.unstable.papirus-nord.override { accent = "snowstorm1" ;} )  # TODO 25.11
+      (pkgs.papirus-nord.override { accent = "snowstorm1b" ;})
     ];
 
     # Cursors
