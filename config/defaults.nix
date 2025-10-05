@@ -444,7 +444,7 @@
           "codium.desktop"
           "deck.desktop"
           "chat"
-          "feishin.desktop"
+          "de.haeckerfelix.Shortwave.desktop"
           "files"
           "net.nokyan.Resources.desktop"
         ];
@@ -493,9 +493,10 @@
         type = listOf str;
         default = [
           "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
+          "ddkjiahejlhfcafbddmgiahcphecmpfh" # ublock origin v3
           "nngceckbapebfimnlniiiahkandclblb" # bitwarden client
           "fnaicdffflnofjppbagibeoednhnbjhg" # floccus bookmarks manager
-          "gbmdgpbipfallnflgajpaliibnhdgobh" # json viewer
+          # "gbmdgpbipfallnflgajpaliibnhdgobh" # json viewer
           # "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # privacy badger
           # "padekgcemlokbadohgkifijomclgjgif" # switchy proxy omega
           # "cnojnbdhbhnkbcieeekonklommdnndci" # search by image
@@ -525,7 +526,13 @@
       name = mkOption {
         description = "Browser name / command";
         type = str;
-        default = "cromite";
+        default = "chromium";
+      };
+
+      icon = mkOption {
+        description = "Browser icon";
+        type = str;
+        default = "browser360-beta";
       };
 
       others = mkOption {
