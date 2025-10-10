@@ -384,7 +384,7 @@
 
         chat = mkOption {
           type = str;
-          default = "element-desktop.desktop";
+          default = "org.gnome.Fractal.desktop";
         };
 
         text = mkOption {
