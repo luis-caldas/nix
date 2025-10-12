@@ -84,6 +84,9 @@
       "vmware-horizon-client"
       "vmware-workstation"
 
+      # Fonts
+      "corefonts"
+
       # System
       "unrar"
 

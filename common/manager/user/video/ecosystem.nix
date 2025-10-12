@@ -34,11 +34,19 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Fonts
     fontsList = with pkgs; [
+      # Good
       courier-prime
       apl386 bqn386
-      sarasa-gothic
       atkinson-hyperlegible-next atkinson-hyperlegible-mono
+      # OK
+      sarasa-gothic
+      # Needed
       noto-fonts noto-fonts-emoji
+      # Extra
+      corefonts vista-fonts liberation_ttf
+      cascadia-code
+      meslo-lg
+      roboto aileron
     ];
 
     # Icons
