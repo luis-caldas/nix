@@ -30,6 +30,10 @@
   # Disable failing wait online service
   systemd.services.NetworkManager-wait-online.enable = pkgs.lib.mkForce false;
 
+  # Software production
+  programs.mininet.enable = config.mine.production.software;
+  virtualisation.vswitch.enable = config.mine.production.software;
+
   # Enable editing of hosts file
   environment.etc.hosts.mode = "0644";
 
