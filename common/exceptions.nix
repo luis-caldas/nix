@@ -85,7 +85,7 @@
       "vmware-workstation"
 
       # Fonts
-      "corefonts"
+      "corefonts" "vista-fonts"
 
       # System
       "unrar"
