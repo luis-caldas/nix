@@ -17,9 +17,6 @@
   # ZFS ask for password
   boot.zfs.requestEncryptionCredentials = true;
 
-  # Firmware
-  services.fwupd.enable = true;
-
   # WiFi Regulatory Domain
   hardware.wirelessRegulatoryDatabase = true;
   boot.extraModprobeConfig = ''
@@ -37,6 +34,7 @@
       avahi = true;
       docker = true;
       printing = true;
+      fwupd = true;
       virtual = {
         enable = true;
         swtpm = true;

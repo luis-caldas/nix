@@ -147,6 +147,9 @@
     restartTriggers = lib.mkForce [];
   };
 
+  # fwupd
+  services.fwupd.enable = config.mine.services.fwupd;
+
   # Add gotop if wanted
   systemd.services.gotopper = lib.mkIf config.mine.boot.top {
     after = [ "getty.target" ];

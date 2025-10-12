@@ -251,6 +251,8 @@
 
       printing = mkEnableOption "CUPS";
 
+      fwupd = mkEnableOption "Firmware Update";
+
       prometheus = {
 
         enable = mkEnableOption "Prometheus";
