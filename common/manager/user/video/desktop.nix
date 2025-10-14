@@ -209,6 +209,7 @@ in {
       recent-files-max-age = -1;
       remember-recent-files = false;
       remember-app-usage = false;
+      privacy-screen = true;
     };
     "org/gnome/desktop/wm/preferences" = {
       num-workspaces = builtins.length osConfig.mine.graphics.workspaces;
