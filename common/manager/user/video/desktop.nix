@@ -162,6 +162,7 @@ in {
       dynamic-workspaces = false;
       edge-tiling = true;
       workspaces-only-on-primary = true;
+      attach-modal-dialogs = false;
       experimental-features = [ "scale-monitor-framebuffer" ];
     };
     "org/gnome/desktop/interface" = {
@@ -207,6 +208,7 @@ in {
     "org/gnome/desktop/privacy" = {
       recent-files-max-age = -1;
       remember-recent-files = false;
+      remember-app-usage = false;
     };
     "org/gnome/desktop/wm/preferences" = {
       num-workspaces = builtins.length osConfig.mine.graphics.workspaces;
