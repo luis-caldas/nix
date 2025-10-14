@@ -58,8 +58,9 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     # Gnome
     aisleriot
     gnome-mines
-    gnome-sudoku
     gnome-chess
+    gnome-sudoku
+    gnome-mahjongg
 
     # Chess
     gnuchess

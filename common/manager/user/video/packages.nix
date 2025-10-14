@@ -105,10 +105,13 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Audio
     blanket
+    audio-sharing
 
     # Music
-    fretboard
+    mousai
     decibels
+    fretboard
+    drum-machine
 
     # Look & Feel
     gradience
@@ -116,6 +119,7 @@ lib.mkIf osConfig.mine.graphics.enable
     # Image Editing
     drawing
     emblem
+    switcheroo
     eyedropper
     gnome-obfuscate
 
@@ -158,6 +162,7 @@ lib.mkIf osConfig.mine.graphics.enable
     gnome-boxes
 
     # Development
+    binary
     dconf-editor
     gnome-builder
     d-spy
