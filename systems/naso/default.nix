@@ -23,6 +23,8 @@
           "share"
           # List
           "list"
+          # News
+          "news"
           # Map
           "tile"
           # Vault
@@ -48,8 +50,6 @@
             sms = [ default "internal" ];
           };
         };
-        # Track
-        track = [ default "internal" ];
         # Workout
         workout = [ default "internal" "database" ];
       };
@@ -69,6 +69,8 @@
         "jellyfin" "komga" "shower"
         # List
         "list"
+        # News
+        "fresh"
         # Gaming
         "emulator"
         # Music
@@ -85,8 +87,6 @@
           "fetch" "series" "films" "music" "subtitles"
         ];
       };
-      # Track
-      track = [ "app" "database" ];
       # Workout
       wger = {
         app = [ "app" "cache" "database" "web" ];

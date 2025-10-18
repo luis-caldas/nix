@@ -148,6 +148,29 @@ in {
     networks = builtins.attrValues networks.social.bridge.sms;
   };
 
+       ################
+  ### # Bridge Discord # ###
+       ################
+
+  services."${names.matrix.bridge.discord}".service = {
+    # Image
+    image = "dock.mau.dev/mautrix/discord:latest";
+    # Environment
+    environment = pkgs.functions.container.fixEnvironment {
+      TZ = config.mine.system.timezone;
+      UID = config.mine.user.uid;
+      GID = config.mine.user.gid;
+    };
+    # Depends
+    depends_on = [ names.matrix.app names.matrix.bridge.database.discord ];
+    # Volumes
+    volumes = [
+      "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.discord}/app:/data"
+    ];
+    # Networking
+    networks = builtins.attrValues networks.social.bridge.discord;
+  };
+
   #############################################################################
   #                                Databases                                  #
   #############################################################################
@@ -196,6 +219,29 @@ in {
     ];
     # Networking
     networks = [ networks.social.bridge.sms.internal ];
+  };
+
+       ##################
+  ### # Discord Database # ###
+       ##################
+
+  services."${names.matrix.bridge.database.discord}".service = {
+    # Image
+    image = "postgres:16";
+    # Environment
+    environment = pkgs.functions.container.fixEnvironment {
+      POSTGRES_USER = names.matrix.bridge.discord;
+      POSTGRES_DB = names.matrix.bridge.discord;
+    };
+    env_file = [
+      "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.discord}/env/database.env"
+    ];
+    # Volumes
+    volumes = [
+      "${paths.safe.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.discord}/database:/var/lib/postgresql/data"
+    ];
+    # Networking
+    networks = [ networks.social.bridge.discord.internal ];
   };
 
 }

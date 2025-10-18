@@ -30,8 +30,8 @@ let
     # Social
     networks.social.default
     networks.social.admin
-    # Track
-    networks.track.default
+    # News
+    networks.news
     # Map
     networks.tile
     # Mail
