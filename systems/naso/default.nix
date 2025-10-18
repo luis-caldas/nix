@@ -48,6 +48,7 @@
           bridge = {
             whats = [ default "internal" ];
             sms = [ default "internal" ];
+            discord = [ default "internal" ];
           };
         };
         # Workout
