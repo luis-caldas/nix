@@ -130,6 +130,7 @@ in
           jnoortheen.nix-ide
           ms-python.python
           ms-vscode.powershell
+          llvm-vs-code-extensions.vscode-clangd
           rust-lang.rust-analyzer
           yzhang.markdown-all-in-one
           # IDE
