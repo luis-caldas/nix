@@ -19,7 +19,7 @@ lib.mkIf config.mine.graphics.enable
     enable = true;
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
-    desktopManager.gnome.debug = true;
+    # desktopManager.gnome.debug = true;
   };
 
   # Fix mutter
