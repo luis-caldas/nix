@@ -247,6 +247,7 @@ in {
         "dash-to-dock@micxgx.gmail.com"
         "CustomizeClockOnLockScreen@pratap.fastmail.fm"
         "appindicatorsupport@rgcjonas.gmail.com"
+        "smart-home@chlumskyvaclav.gmail.com"
       ];
     };
 

@@ -46,6 +46,9 @@
       "displaylink"
       "nvidia-x11" "nvidia-settings"
 
+      # Ventoy
+      "ventoy"
+
       ################
       # Home Manager #
       ################
@@ -92,11 +95,29 @@
 
     ]);
 
+    # !!!!!!!!!!!!!! #
+    # Unsafe Section #
+    # !!!!!!!!!!!!!! #
+
     # Allow some insecure packages
     nixpkgs.config.permittedInsecurePackages = [
 
+      # BUG Unsafe
+
       # For Davinci Resolve
       pkgs.python2.name
+
+      # For ESPHome, John & Scapy
+      pkgs.python3Packages.ecdsa.name
+
+      # For Dolphin, Dislocker & RetroArch
+      pkgs.mbedtls_2.name
+
+      # JDK & Switch USB Loader
+      pkgs.gradle_7.name
+
+      # Ventoy
+      pkgs.ventoy.name
 
     ];
 

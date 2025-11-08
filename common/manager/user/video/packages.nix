@@ -191,6 +191,7 @@ lib.mkIf osConfig.mine.graphics.enable
     gnomeExtensions.customize-clock-on-lock-screen
     gnomeExtensions.desktop-icons-ng-ding
     gnomeExtensions.appindicator
+    gnomeExtensions.smart-home
 
     ################
     # Applications #

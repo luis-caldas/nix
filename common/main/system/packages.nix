@@ -123,7 +123,7 @@
     iw
     ethtool
     iproute2
-    shadowsocks-libev
+    shadowsocks-rust
 
     # Utils
     killall

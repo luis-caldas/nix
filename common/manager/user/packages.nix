@@ -44,7 +44,7 @@
     ddrescue
 
     # Boot
-    # ventoy-full  # TODO Dodgy
+    ventoy-full
 
     # Bitlocker
     dislocker
@@ -269,7 +269,7 @@
     hashcat
 
     # Brute
-    # ncrack  # TODO Broken
+    ncrack
     sqlmap
     thc-hydra
 
