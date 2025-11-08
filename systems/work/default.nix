@@ -14,9 +14,6 @@
     "${builtins.fetchGit "https://github.com/NixOS/nixos-hardware"}/framework/13-inch/7040-amd"
   ];
 
-  # Latest Kernel
-  boot.kernelPackages = pkgs.linuxPackages_6_16;  # TODO Until drivers
-
   # WiFi Regulatory Domain
   hardware.wirelessRegulatoryDatabase = true;
   boot.extraModprobeConfig = ''
