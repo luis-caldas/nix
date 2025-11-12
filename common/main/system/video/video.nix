@@ -30,19 +30,10 @@ lib.mkIf config.mine.graphics.enable
   systemd.services."autovt@tty1".enable = false;
 
   # Enable plymouth
-  boot.plymouth = let
-
-    # The default theme
-    defaultTheme = "main_custom";
-
-    # Create custom plymouth theme
-    customPlymouth = pkgs.custom.plymouth-mine defaultTheme;
-
-  in {
+  boot.plymouth = {
     enable = true;
-    themePackages = [ customPlymouth ];
-    theme = "main_custom";
-    font = "${pkgs.courier-prime}/share/fonts/truetype/CourierPrime-Regular.ttf";
+    theme = "bgrt";
+    font = "${pkgs.roboto}/share/fonts/truetype/Roboto-Regular.ttf";
   };
 
   # Fix for ZFS password asking

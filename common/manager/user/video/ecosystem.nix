@@ -34,11 +34,13 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Fonts
     fontsList = with pkgs; [
-      # Good
+      # Defaults
+      roboto roboto-slab roboto-serif roboto-mono roboto-flex
+      # Mine
       courier-prime
       apl386 bqn386
       atkinson-hyperlegible-next atkinson-hyperlegible-mono
-      # OK
+      # Japanese
       sarasa-gothic
       # Needed
       noto-fonts noto-fonts-emoji
