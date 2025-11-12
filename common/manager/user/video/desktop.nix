@@ -279,6 +279,12 @@ in {
         (builtins.attrNames wholeSet)
       );
     # The entire configuration
+
+    # Some custom settings
+    formatTime = "%H:%M:%S";
+    formatDate = "%Y/%m/%d (%a) [%V] {%z}";
+    formatAll = "${formatDate} ${formatTime}";
+
   in buildFull {
 
     clipboard-indicator = {
@@ -305,13 +311,13 @@ in {
     };
 
     panel-date-format = {
-      format = "%Y/%m/%d %H:%M:%S %V %a %z";
+      format = formatAll;
     };
 
     customize-clock-on-lockscreen = {
-      custom-date-text = "%Y/%m/%d %V %a %z";
+      custom-date-text = formatDate;
       custom-style = false;
-      custom-time-text = "%H:%M:%S";
+      custom-time-text = formatTime;
       remove-hint = true;
     };
 
