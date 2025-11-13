@@ -282,7 +282,7 @@ in {
 
     # Some custom settings
     formatTime = "%H:%M:%S";
-    formatDate = "%Y/%m/%d (%a) [%V] {%z}";
+    formatDate = "%Y/%m/%d %a %V %Z";
     formatAll = "${formatDate} ${formatTime}";
 
   in buildFull {
