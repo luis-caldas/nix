@@ -30,9 +30,10 @@ lib.mkIf config.mine.graphics.enable
   systemd.services."autovt@tty1".enable = false;
 
   # Enable plymouth
-  boot.plymouth = {
+  boot.plymouth = rec {
     enable = true;
-    theme = "bgrt";
+    theme = "main_custom";
+    themePackages = [ (pkgs.custom.plymouth-mine theme) ];
     font = "${pkgs.roboto}/share/fonts/truetype/Roboto-Regular.ttf";
   };
 
