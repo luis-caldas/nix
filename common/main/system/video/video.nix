@@ -33,8 +33,10 @@ lib.mkIf config.mine.graphics.enable
   boot.plymouth = rec {
     enable = true;
     theme = "main_custom";
-    themePackages = [ (pkgs.custom.plymouth-mine theme) ];
-    font = "${pkgs.roboto}/share/fonts/truetype/Roboto-Regular.ttf";
+    themePackages = let
+      inputText = lib.strings.toUpper (lib.lists.last (lib.splitString "-" pkgs.reference.owner));
+    in [ (pkgs.custom.plymouth-mine theme inputText) ];
+    font = "${pkgs.roboto}/share/fonts/truetype/Roboto-Bold.ttf";
   };
 
   # Fix for ZFS password asking

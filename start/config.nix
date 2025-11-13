@@ -138,6 +138,9 @@ in {
         # My projects
         projects = myProjects;
 
+        # Owner name
+        owner = ownerName;
+
       };
 
       # Unstable packages
