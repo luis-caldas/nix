@@ -29,13 +29,14 @@ lib.mkIf osConfig.mine.graphics.enable
     };
   };
 
-  # Link all the packages manuall
+  # Link all the packages manually
   linkAllPackages = let
 
     # Fonts
     fontsList = with pkgs; [
       # Defaults
       roboto roboto-slab roboto-serif roboto-mono roboto-flex
+      fira-code fira-code-symbols
       # Mine
       courier-prime
       apl386 bqn386

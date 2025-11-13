@@ -4,6 +4,7 @@
     "editor.fontFamily": "Monospace",
     "editor.fontLigatures": false,
     "editor.rulers": [80, 100, 120],
+    "editor.lineHeight": 1.1,
     "files.autoSave": "onFocusChange",
     "files.trimTrailingWhitespace": true,
     "keyboard.dispatch": "keyCode",
