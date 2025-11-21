@@ -50,7 +50,7 @@ with shared;
     # Volumes
     volumes = [
       "/data/local/containers/fmd:/var/lib/fmd-server/db/"
-    ]
+    ];
 
   };
 
