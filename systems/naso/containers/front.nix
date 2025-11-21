@@ -34,6 +34,7 @@ let
     networks.news
     # Map
     networks.tile
+    networks.fmd
     # Mail
     networks.mail.web
     # Vault
