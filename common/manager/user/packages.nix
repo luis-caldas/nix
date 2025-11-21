@@ -317,6 +317,7 @@
 
     # Servers
     fileshare
+    # copyparty  # TODO 25.11
     nodePackages.http-server
     (writeScriptBin "pyftp" "${python3.withPackages (ps: [ps.pyftpdlib])}/bin/python -m pyftpdlib \"$@\"")
 
