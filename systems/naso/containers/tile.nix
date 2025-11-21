@@ -8,6 +8,7 @@ with shared;
   # Networking
   networks = pkgs.functions.container.populateNetworks [
     networks.tile
+    networks.fmd
   ];
 
        ######
@@ -28,5 +29,30 @@ with shared;
     ];
 
   };
+
+       ################
+  ### # Find My Device # ###
+       ################
+
+  services."${names.fmd}".service = {
+
+    # Image
+    image = "registry.gitlab.com/fmd-foss/fmd-server:latest";
+
+    # Internal hostname
+    hostname = names.fmd;
+
+    # Networking
+    networks = [
+      networks.fmd
+    ];
+
+    # Volumes
+    volumes = [
+      "/data/local/containers/fmd:/var/lib/fmd-server/db/"
+    ]
+
+  };
+
 
 }

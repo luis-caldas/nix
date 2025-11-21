@@ -27,6 +27,8 @@
           "news"
           # Map
           "tile"
+          # FMD
+          "fmd"
           # Vault
           "vault"
         ];
@@ -66,6 +68,8 @@
         "samba" "shout"
         # Map
         "tile"
+        # FMD
+        "fmd"
         # Media
         "jellyfin" "komga" "shower"
         # List
