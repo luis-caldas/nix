@@ -37,7 +37,7 @@ with shared;
   services."${names.fmd}".service = {
 
     # Image
-    image = "registry.gitlab.com/fmd-foss/fmd-server:latest";
+    image = "registry.gitlab.com/fmd-foss/fmd-server:v0.12.0";
 
     # Internal hostname
     hostname = names.fmd;
@@ -49,7 +49,8 @@ with shared;
 
     # Volumes
     volumes = [
-      "/data/local/containers/fmd:/var/lib/fmd-server/db/"
+      "/data/local/containers/fmd/config:/etc/fmd-server/"
+      "/data/local/containers/fmd/database:/var/lib/fmd-server/db/"
     ];
 
   };
