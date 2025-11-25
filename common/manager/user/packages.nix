@@ -216,6 +216,9 @@
     # Fuzz
     ffuf
 
+    # Analysis
+    python3Packages.angr
+
     # JSON
     jq
 
@@ -291,6 +294,7 @@
     radare2
 
     # Memory
+    volatility2-bin
     volatility3
 
     # Flashing
