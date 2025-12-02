@@ -7,13 +7,6 @@
   boot.kernelModules = [ "kvm-amd" "kvmgt" "mdev" "vfio-iommu-type1" ];
   boot.extraModulePackages = [ ];
 
-  # Show windows boot options
-  boot.loader.systemd-boot.windows."11" = {
-    title = "Windows";
-    efiDeviceHandle = "HD1b";
-    sortKey = "m_windows";
-  };
-
   # ZFS ask for password
   boot.zfs.requestEncryptionCredentials = true;
 
@@ -29,6 +22,7 @@
 
   # My specific configuration
   mine = {
+    boot.secure = true;
     services = {
       ssh = false;
       avahi = true;

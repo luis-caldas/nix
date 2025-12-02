@@ -1,4 +1,5 @@
 { lib, config, ... }:
+
 let
 
   # GRUB Configuration
@@ -50,7 +51,7 @@ let
   systemDBootConfiguration = {
 
     # Enable it and disable command line editing
-    enable = true;
+    enable = if config.mine.boot.secure then (lib.mkForce false) else true;
     editor = false;
 
     # Set the UEFI resolution
@@ -94,6 +95,11 @@ in {
     else
       { grub = grubConfiguration; }
     ));
+
+    lanzaboote = lib.mkIf (config.mine.boot.secure) {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
 
   };
 

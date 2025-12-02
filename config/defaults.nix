@@ -7,6 +7,12 @@
     # The boot options be it MBR GRUB or EFI
     boot = {
 
+      secure = mkOption {
+        description = "Use Secure Boot";
+        type = bool;
+        default = false;
+      };
+
       efi = mkOption {
         description = "Use EFI for boot";
         type = bool;
