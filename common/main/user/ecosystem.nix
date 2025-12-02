@@ -92,7 +92,6 @@ in
       "virt/qemu".source = "${pkgs.qemu}/share/qemu";
       "virt/win/qemu".source = "${pkgs.virtio-win}";
       "virt/win/spice".source = "${pkgs.win-spice}";
-      "virt/win/virtio".source = "${pkgs.win-virtio}";
     } else {});
 
     # Default program configurations
@@ -102,17 +101,23 @@ in
       # Configure Git
       git = {
         enable = true;
-        userName = config.mine.user.git.name;
-        userEmail = config.mine.user.git.email;
-        package = pkgs.gitAndTools.gitFull;
-        extraConfig = { pull = { rebase = false; }; init = { defaultBranch = "master"; }; };
+        settings = {
+          user.name = config.mine.user.git.name;
+          user.email = config.mine.user.git.email;
+          pull.rebase = false;
+          init.defaultBranch = "master";
+        };
+        package = pkgs.gitFull;
       };
 
       # SSH configuration
       ssh = {
         enable = true;
-        serverAliveInterval = 60;
-        serverAliveCountMax = 5;
+        enableDefaultConfig = false;
+        matchBlocks."*" = {  # All Servers
+          serverAliveInterval = 60;
+          serverAliveCountMax = 5;
+        };
       };
 
     } //

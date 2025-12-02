@@ -116,7 +116,7 @@
     w3m
 
     # Download
-    aria
+    aria2
     bento4
 
     # Web Services
@@ -138,9 +138,6 @@
     # Messaging
     iamb
     irssi
-
-    # Email
-    meli
 
     # AI
     chatgpt-cli
@@ -228,7 +225,7 @@
     python3Packages.yq
 
     # Python
-    python3Full
+    python3
 
     # Ruby
     ruby
@@ -284,7 +281,7 @@
     inetutils
 
     # Web
-    gobuster
+    (lib.lowPrio gobuster)
 
     # Logger
     logkeys
@@ -305,9 +302,9 @@
 
     # CAN
     can-utils
-    python3Packages.can
-    python3Packages.cantools
     python3Packages.scapy
+    python3Packages.cantools
+    python3Packages.python-can
 
     # UBI
     ubi_reader
@@ -321,7 +318,7 @@
 
     # Servers
     fileshare
-    # copyparty  # TODO 25.11
+    copyparty
     nodePackages.http-server
     (writeScriptBin "pyftp" "${python3.withPackages (ps: [ps.pyftpdlib])}/bin/python -m pyftpdlib \"$@\"")
 
@@ -414,9 +411,6 @@
 
     # Mixers
     pamixer
-
-    # Visualizer
-    cli-visualizer
 
     # TUI mixer
     pamix

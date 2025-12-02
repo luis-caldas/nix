@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
 
   # Configure sudo to work the way I want
@@ -36,10 +36,10 @@
   programs.ssh = {
     # Disable askpass graphical password program
     askPassword = "";
-    # Enable agent
-    startAgent = true;
-    agentTimeout = "0";
   };
+
+  # Disable Gnome Agent
+  services.gnome.gcr-ssh-agent.enable = lib.mkForce false;
 
   # Add my custom certificate authorities
   security.pki.certificateFiles = pkgs.functions.listAllSuffixFiles "${pkgs.reference.projects.pub}/ssl" "pem";

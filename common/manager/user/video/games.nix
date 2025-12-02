@@ -8,7 +8,6 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
   home.packages = with pkgs; [
 
     # Emulators
-    duckstation
     (lib.lowPrio pcsx2)
     mednafen
     desmume
@@ -25,6 +24,7 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
       snes9x
       fceumm
       mupen64plus
+      swanstation
     ]))
 
     # Decompiled

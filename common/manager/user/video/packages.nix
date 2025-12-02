@@ -113,9 +113,6 @@ lib.mkIf osConfig.mine.graphics.enable
     fretboard
     drum-machine
 
-    # Look & Feel
-    gradience
-
     # Image Editing
     drawing
     emblem
@@ -198,7 +195,6 @@ lib.mkIf osConfig.mine.graphics.enable
     ################
 
     # XDG
-    awf
     dconf
 
     # Networking
@@ -255,7 +251,6 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Streaming
     streamlink
-    nodePackages.peerflix
 
     # Remote Desktop
     remmina
@@ -350,7 +345,7 @@ lib.mkIf osConfig.mine.graphics.enable
   (if pkgs.stdenv.hostPlatform.isx86_64 then [
 
     # Password manager
-    bitwarden
+    bitwarden-desktop
 
   ] else []) ++
 
@@ -388,7 +383,6 @@ lib.mkIf osConfig.mine.graphics.enable
     jetbrains.idea-community
 
     # Packet tracers
-    ciscoPacketTracer8
     gns3-gui
     gns3-server
 
@@ -493,7 +487,7 @@ lib.mkIf osConfig.mine.graphics.enable
     reaper
 
     # Sequencer
-    tuxguitar
+    # tuxguitar  # BUG gtk3
 
     # Editor
     tenacity
@@ -503,9 +497,9 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Plugins
     calf
-    lsp-plugins
-    zyn-fusion
     zita-at1
+    lsp-plugins
+    zynaddsubfx
 
     # Bridge
     yabridge

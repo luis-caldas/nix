@@ -15,12 +15,9 @@ lib.mkIf config.mine.graphics.enable
   };
 
   # Desktop Manager
-  services.xserver = {
-    enable = true;
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
-    # desktopManager.gnome.debug = true;
-  };
+  services.xserver.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
 
   # Fix mutter
   environment.sessionVariables = {
@@ -86,8 +83,8 @@ lib.mkIf config.mine.graphics.enable
       pkgsi686Linux.libva
     ] ++ extraPackages;
     extraPackages = with pkgs; [
-      vaapiVdpau
       libvdpau-va-gl
+      libva-vdpau-driver
     ];
   } else {});
 

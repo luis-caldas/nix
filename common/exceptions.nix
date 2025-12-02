@@ -78,7 +78,7 @@
 
       # Software Development
       "pycharm-professional" "webstorm" "clion" "datagrip" "idea-ultimate"
-      "ciscoPacketTracer8" "winbox"
+      "winbox"
       "volatility3"
       "drawio"
 

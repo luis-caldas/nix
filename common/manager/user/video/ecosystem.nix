@@ -44,7 +44,7 @@ lib.mkIf osConfig.mine.graphics.enable
       # Japanese
       sarasa-gothic
       # Needed
-      noto-fonts noto-fonts-emoji
+      noto-fonts noto-fonts-color-emoji
       # Extra
       corefonts vista-fonts liberation_ttf
       cascadia-code
@@ -90,7 +90,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
   # Link vst folders
   linkPossibleVSTs = lib.mkIf osConfig.mine.production.audio {
-    ".local/share/vst/zynaddsubfx" = { source = "${pkgs.zyn-fusion}/lib/vst"; };
+    ".local/share/vst/zynaddsubfx" = { source = "${pkgs.zynaddsubfx}/lib/vst"; };
     ".local/share/vst/lsp" = { source = "${pkgs.lsp-plugins}/lib/vst"; };
   };
 

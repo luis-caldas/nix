@@ -18,14 +18,24 @@
   zramSwap.enable = config.mine.zram;
   zramSwap.memoryPercent = 50;
 
-  # Set hardware switches
-  services.logind.lidSwitch = "lock";
-  services.logind.lidSwitchDocked = "lock";
-  services.logind.lidSwitchExternalPower = "lock";
-  services.logind.extraConfig = ''
-    HandlePowerKey=ignore
-    HandleSuspendKey=ignore
-    HandleHibernateKey=ignore
-  '';
+  # Hardware Switches
+  services.logind.settings.Login = {
+
+    # Lid Lock
+    HandleLidSwitch = "lock";
+    HandleLidSwitchDocked = "lock";
+    HandleLidSwitchExternalPower = "lock";
+
+    # Buttons Ignore
+    HandlePowerKey = "ignore";
+    HandlePowerKeyLongPress = "ignore";
+    HandleRebootKey = "ignore";
+    HandleRebootKeyLongPress = "ignore";
+    HandleSuspendKey = "ignore";
+    HandleSuspendKeyLongPress = "ignore";
+    HandleHibernateKey = "ignore";
+    HandleHibernateKeyLongPress = "ignore";
+
+  };
 
 }

@@ -82,10 +82,6 @@
     enable = true;
     onBoot = "start";
     onShutdown = "shutdown";
-    qemu.ovmf = {
-      enable = true;
-      packages = [ pkgs.OVMFFull.fd ];
-    };
     qemu.swtpm.enable = config.mine.services.virtual.swtpm;
   };
 
