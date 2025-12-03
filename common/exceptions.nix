@@ -84,7 +84,7 @@
 
       # Work
       "zoom"
-      "vmware-horizon-client"
+      "omnissa-horizon-client"
       "vmware-workstation"
 
       # Fonts
