@@ -227,6 +227,9 @@ in {
     "org/gnome/settings-daemon/plugins/power" = {
       power-button-action = "nothing";
     };
+    "org/gnome/settings-daemon/plugins/housekeeping" = {
+      donation-reminder-enabled = false;
+    };
     "org/gnome/shell/app-switcher" = {
       current-workspace-only = true;
     };
@@ -316,9 +319,12 @@ in {
 
     customize-clock-on-lockscreen = {
       custom-date-text = formatDate;
-      custom-style = false;
       custom-time-text = formatTime;
+      custom-style = false;
       remove-hint = true;
+      command-output-font-color = "";
+      date-font-color = "";
+      time-font-color = "";
     };
 
     trayIconsReloaded = {

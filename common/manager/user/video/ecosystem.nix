@@ -54,18 +54,19 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Icons
     iconsList = with pkgs; [
-      (pkgs.papirus-nord.override { accent = "snowstorm1b" ;})
+      (papirus-icon-theme.override { color = "white"; })
     ];
 
     # Cursors
     cursorList = with pkgs; [
       custom.breeze
+      graphite-cursors
     ];
 
     # Themes
     themesList = with pkgs; [
       gnome-themes-extra
-      mint-themes
+      graphite-gtk-theme
     ];
 
     # The packing function
