@@ -28,6 +28,7 @@
 
   # My specific configuration
   mine = {
+    boot.secure = true;
     services = {
       ssh = false;
       avahi = true;

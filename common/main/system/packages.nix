@@ -28,6 +28,7 @@
     mkpasswd
 
     # Boot
+    sbctl
     grub2
     grub2_efi
     efibootmgr
