@@ -90,6 +90,9 @@
       # Fonts
       "corefonts" "vista-fonts"
 
+      # Office
+      "aspell-dict-en-science"
+
       # System
       "unrar"
 

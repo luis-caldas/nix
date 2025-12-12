@@ -4,7 +4,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
 {
 
-  home.packages = with pkgs; [
+  home.packages = with pkgs; lib.lists.flatten [
 
     ##################
     # Gnome Defaults #
@@ -272,12 +272,32 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Office
     # Spellcheck
-    hunspell
-    hunspellDicts.en-us
-    hunspellDicts.en-gb-ise
-    hunspellDicts.pt-br
-    hunspellDicts.it-it
-    hunspellDicts.es-es
+    (let
+      hunDicts = (motherDict: with motherDict; [
+        en-gb-ise
+        en-us
+        pt-br
+        it-it
+        es-es
+      ]);
+      aspDicts = (motherDict: with motherDict; [
+        en
+        en-computers
+        en-science
+        pt_BR
+        it
+        es
+      ]);
+    in
+      [
+        hyphen
+        hyphenDicts.en-us
+        (hunspell.withDicts hunDicts)
+        (aspellWithDicts aspDicts)
+      ] ++
+      (hunDicts pkgs.hunspellDicts) ++
+      (aspDicts pkgs.aspellDicts)
+    )
 
     # Grammar
     languagetool
