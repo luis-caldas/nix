@@ -32,9 +32,6 @@ let
     networks.social.admin
     # News
     networks.news
-    # Map
-    networks.tile
-    networks.fmd
     # Mail
     networks.mail.web
     # Vault

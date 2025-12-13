@@ -25,10 +25,6 @@
           "list"
           # News
           "news"
-          # Map
-          "tile"
-          # FMD
-          "fmd"
           # Vault
           "vault"
         ];
@@ -66,10 +62,6 @@
         "portainer"
         # Share
         "samba" "shout"
-        # Map
-        "tile"
-        # FMD
-        "fmd"
         # Media
         "jellyfin" "komga" "shower"
         # List
