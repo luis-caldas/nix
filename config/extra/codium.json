@@ -25,6 +25,12 @@
         "end": "}}}"
       }
     },
-    "cSpell.language": "en,en-GB"
+    "cSpell.language": "en,en-GB",
+    "[cpp]": {
+      "editor.defaultFormatter": "xaver.clang-format"
+    },
+    "[c]": {
+      "editor.defaultFormatter": "xaver.clang-format"
+    }
   }
 }

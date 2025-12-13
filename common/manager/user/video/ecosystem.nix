@@ -126,7 +126,10 @@ in
     # Enable vscode
     vscode = {
       enable = true;
-      package = pkgs.vscodium;
+      package = pkgs.vscodium-fhsWithPackages (ps: with ps; [
+        rustup zlib openssl.dev pkg-config
+        clang-tools
+      ]);
       # Normal
       profiles.default = {
         extensions = with pkgs.vscode-extensions; [
@@ -143,6 +146,7 @@ in
           pkief.material-icon-theme
           zhuangtongfa.material-theme
           # Formatting
+          xaver.clang-format
           esbenp.prettier-vscode
           foxundermoon.shell-format
           streetsidesoftware.code-spell-checker
