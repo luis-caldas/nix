@@ -152,8 +152,6 @@ in
           streetsidesoftware.code-spell-checker
           # Typing
           valentjn.vscode-ltex
-          # AI
-          continue.continue
         # Custom
         ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
