@@ -392,15 +392,15 @@ lib.mkIf osConfig.mine.graphics.enable
   (if osConfig.mine.production.software then [
 
     # Jetbrains paid
-    jetbrains.pycharm-professional
-    jetbrains.idea-ultimate
+    jetbrains.pycharm
+    jetbrains.idea
     jetbrains.datagrip
     jetbrains.webstorm
     jetbrains.clion
 
     # Jetbrains free
-    jetbrains.pycharm-community
-    jetbrains.idea-community
+    jetbrains.pycharm-oss
+    jetbrains.idea-oss
 
     # Packet tracers
     gns3-gui

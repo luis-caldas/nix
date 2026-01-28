@@ -77,7 +77,7 @@
       "android-sdk-tools"
 
       # Software Development
-      "pycharm-professional" "webstorm" "clion" "datagrip" "idea-ultimate"
+      "pycharm" "webstorm" "clion" "datagrip" "idea"
       "winbox"
       "volatility3"
       "drawio"
