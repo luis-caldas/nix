@@ -322,6 +322,7 @@ in {
       custom-time-text = formatTime;
       custom-style = false;
       remove-hint = true;
+      remove-command-output = true;
       command-output-font-color = "";
       date-font-color = "";
       time-font-color = "";
