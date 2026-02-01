@@ -5,7 +5,7 @@
   security.sudo = {
     enable = true;
     extraConfig = ''
-      %wheel	ALL=(ALL:ALL)	NOPASSWD: ALL
+      %wheel	ALL=(ALL:ALL)	 ALL
 
       Defaults !mail_always
       Defaults !mail_badpass
@@ -16,13 +16,15 @@
   };
 
   # Disable power commands if not super user or on wheel group
+
+  # Legacy blocked
+  # (action.id.indexOf("org.freedesktop.consolekit.system.") == 0))
   security.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {
       if ((action.id.indexOf("org.freedesktop.login1.") == 0) ||
           (action.id.indexOf("org.freedesktop.upower.") == 0) ||
           (action.id.indexOf("org.freedesktop.udisks.") == 0) ||
-          (action.id.indexOf("org.freedesktop.udisks2.") == 0) ||
-          (action.id.indexOf("org.freedesktop.consolekit.system.") == 0)) {
+          (action.id.indexOf("org.freedesktop.udisks2.") == 0) {
         if (subject.isInGroup("wheel")) {
           return polkit.Result.YES;
         } else {
