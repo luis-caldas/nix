@@ -29,6 +29,9 @@ lib.mkIf osConfig.mine.graphics.enable
     };
   };
 
+  # Profile picture
+  defaultProfilePicture = { ".face".source = "${pkgs.reference.projects.images}/images/transparent.png"; };
+
   # Link all the packages manually
   linkAllPackages = let
 
@@ -215,6 +218,8 @@ in
     linkAllPackages ++
     # Link to custom files
     [ defaultCursorLink ] ++
+    # Profille picture
+    [ defaultProfilePicture ] ++
     # Extra linking for extra functionalities
     [ linkPossibleVSTs ]
 
