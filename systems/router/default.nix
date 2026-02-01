@@ -119,7 +119,6 @@ in {
   # My own configuration
   mine = {
     minimal = true;
-    user.admin = false;
     services = {
       ssh = true;
       docker = true;

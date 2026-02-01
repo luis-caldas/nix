@@ -134,7 +134,6 @@ in {
   # My own configuration
   mine = {
     minimal = true;
-    user.admin = false;
     user.groups = [ "cdrom" ];
     services = {
       ssh = true;

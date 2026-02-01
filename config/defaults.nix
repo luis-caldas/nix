@@ -122,7 +122,7 @@
       admin = mkOption {
         description = "Enable `sudo` command for user";
         type = bool;
-        default = true;
+        default = false;
       };
 
       pass = mkOption {

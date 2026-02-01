@@ -21,9 +21,13 @@
 
     # Give extra groups to the user
     extraGroups = [ "networkmanager"  ] ++
-                  (if config.mine.user.admin              then [ "wheel" "plugdev"
-                                                                 "kvm" "dialout"
-                                                                 "input" "disk" ]       else []) ++
+                  # Access to UDev ruled groups
+                  [ "plugdev" "dialout" ]++
+                  (if config.mine.user.admin              then [ "wheel"
+                                                                 "input"
+                                                                 "kvm"
+                                                                 "disk" "floppy" "optical" "storage"
+                                                               ] else []) ++
                   (if config.mine.audio                   then [ "audio" ]              else []) ++
                   (if config.mine.graphics.enable         then [ "video" "wireshark" ]  else []) ++
                   (if config.mine.services.docker         then [ "docker" ]             else []) ++
