@@ -323,7 +323,10 @@ in {
       custom-style = false;
       remove-hint = true;
       remove-command-output = true;
+      remove-date = false;
+      remove-time = false;
       command-output-font-color = "";
+      hint-font-color = "";
       date-font-color = "";
       time-font-color = "";
     };
