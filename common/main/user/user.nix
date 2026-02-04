@@ -31,7 +31,7 @@
                   (if config.mine.audio                   then [ "audio" ]              else []) ++
                   (if config.mine.graphics.enable         then [ "video" "wireshark" ]  else []) ++
                   (if config.mine.services.docker         then [ "docker" ]             else []) ++
-                  (if config.mine.services.virtual.enable then [ "libvirtd" ]           else []) ++
+                  (if config.mine.services.virtual.enable then [ "libvirt" ]           else []) ++
                   (if config.mine.services.printing       then [ "scanner" "lp" ]       else []) ++
                   (if (!pkgs.stdenv.hostPlatform.isAarch) then [ "adbusers" ]           else []) ++
                   config.mine.user.groups;
