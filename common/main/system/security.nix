@@ -30,7 +30,6 @@
         if (subject.isInGroup("wheel")) {
           return polkit.Result.YES;
         }
-        return polkit.Result.NO;
       }
     });
   '';
