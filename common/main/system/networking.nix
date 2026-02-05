@@ -17,6 +17,9 @@
   networking.networkmanager.ethernet.macAddress = config.mine.network.mac;
   networking.networkmanager.wifi.macAddress = config.mine.network.mac;
 
+  # VPN
+  networking.networkmanager.plugins = with pkgs; [ networkmanager-openvpn ];
+
   # Disable ipv6
   networking.enableIPv6 = lib.mkForce false;
 
