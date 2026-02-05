@@ -71,7 +71,7 @@
   };
 
   # Vitualisation
-  virtualisation.docker.enable = config.mine.services.docker;
+  virtualisation.docker.enable = config.mine.services.docker.enable;
   # Set default backend for containers
   virtualisation.oci-containers.backend = "docker";
   # Disable live restore

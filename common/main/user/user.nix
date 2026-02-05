@@ -23,18 +23,20 @@
     extraGroups = [ "networkmanager"  ] ++
                   # Access to UDev ruled groups
                   [ "plugdev" "dialout" ]++
-                  (if config.mine.user.admin              then [ "wheel"
-                                                                 "input"
-                                                                 "kvm"
-                                                                 "disk" "floppy" "optical" "storage"
-                                                               ] else []) ++
-                  (if config.mine.audio                   then [ "audio" ]              else []) ++
-                  (if config.mine.graphics.enable         then [ "video" "wireshark" ]  else []) ++
-                  (if config.mine.services.docker         then [ "docker" ]             else []) ++
-                  (if config.mine.services.virtual.enable then [ "libvirt" ]           else []) ++
-                  (if config.mine.services.printing       then [ "scanner" "lp" ]       else []) ++
-                  (if (!pkgs.stdenv.hostPlatform.isAarch) then [ "adbusers" ]           else []) ++
-                  config.mine.user.groups;
+      (if config.mine.user.admin                 then [ "wheel"
+                                                        "input"
+                                                        "kvm"
+                                                        "disk" "floppy" "optical" "storage"
+                                                      ] else []) ++
+      (if config.mine.audio                      then [ "audio" ]              else []) ++
+      (if config.mine.graphics.enable            then [ "video" "wireshark" ]  else []) ++
+      (if (config.mine.services.docker.enable
+        && config.mine.services.docker.manager)  then [ "docker" ]             else []) ++
+      (if (config.mine.services.virtual.enable
+        && config.mine.services.virtual.manager) then [ "libvirtd" ]           else []) ++
+      (if config.mine.services.printing          then [ "scanner" "lp" ]       else []) ++
+      (if (!pkgs.stdenv.hostPlatform.isAarch)    then [ "adbusers" ]           else []) ++
+      config.mine.user.groups;
 
     # Set out custom uid
     uid = config.mine.user.uid;

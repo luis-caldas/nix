@@ -253,7 +253,13 @@
 
       avahi = mkEnableOption "Avahi";
 
-      docker = mkEnableOption "docker";
+      docker = {
+
+        enable = mkEnableOption "docker";
+
+        manager = mkEnableOption "Docker Manager";
+
+      };
 
       printing = mkEnableOption "CUPS";
 
@@ -296,6 +302,8 @@
       virtual = {
 
         enable = mkEnableOption "libvirt";
+
+        manager = mkEnableOption "Management of libvirt";
 
         swtpm = mkEnableOption "TPM Emulation";
 

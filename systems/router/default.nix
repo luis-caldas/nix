@@ -121,7 +121,7 @@ in {
     minimal = true;
     services = {
       ssh = true;
-      docker = true;
+      docker.enable = true;
       virtual.enable = true;
       prometheus = {
         enable = true;

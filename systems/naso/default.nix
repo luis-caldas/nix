@@ -137,7 +137,7 @@ in {
     user.groups = [ "cdrom" ];
     services = {
       ssh = true;
-      docker = true;
+      docker.enable = true;
       prometheus = {
         enable = true;
         password = "/data/local/prometheus/pass";

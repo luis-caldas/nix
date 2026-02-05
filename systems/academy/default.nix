@@ -26,11 +26,15 @@
     services = {
       ssh = false;
       avahi = true;
-      docker = true;
       printing = true;
       fwupd = true;
+      docker = {
+        enable = true;
+        manager = true;
+      };
       virtual = {
         enable = true;
+        manager = true;
         swtpm = true;
         android = true;
       };
