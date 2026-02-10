@@ -244,6 +244,11 @@ in {
     };
   };
 
+  # ! We are our own mail server
+  networking.hosts = {
+    "127.0.0.1" = [ (lib.strings.fileContents /data/local/mail/domain) ];
+  };
+
   ###############
   # Disk Health #
   ###############
