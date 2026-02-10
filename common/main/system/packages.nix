@@ -83,6 +83,7 @@
     lsof
     psmisc
     sysstat
+    # witr  # TODO 26.05
 
     # Stress
     stress
