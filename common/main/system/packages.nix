@@ -16,6 +16,7 @@
     unar
     zip
     p7zip
+    lz4
 
     # Encryption
     gnupg

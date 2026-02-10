@@ -507,7 +507,7 @@ lib.mkIf osConfig.mine.graphics.enable
     reaper
 
     # Sequencer
-    # tuxguitar  # BUG gtk3
+    tuxguitar  # BUG gtk3
 
     # Editor
     tenacity

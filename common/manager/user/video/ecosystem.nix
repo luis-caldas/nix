@@ -57,7 +57,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Icons
     iconsList = with pkgs; [
-      (papirus-icon-theme.override { color = "white"; })
+      papirus-icon-theme
     ];
 
     # Cursors
@@ -143,6 +143,7 @@ in
           llvm-vs-code-extensions.vscode-clangd
           rust-lang.rust-analyzer
           yzhang.markdown-all-in-one
+          shopify.ruby-lsp
           # IDE
           eamodio.gitlens
           gruntfuggly.todo-tree
@@ -167,8 +168,8 @@ in
           {
             name = "monkey-c";
             publisher = "garmin";
-            version = "1.1.2";
-            sha256 = "sha256-+cZmPJsH6KYCm02s011QYIuzoBejFNfZaj3uYX9rbYQ=";
+            version = "1.1.3";
+            sha256 = "sha256-B2vpsgBn44EresrF3kKjWzsvFIHwnGZU1Nj1v6G6J9o=";
           }
         ];
         # User settings

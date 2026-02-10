@@ -31,7 +31,7 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     shipwright
     _2ship2harkinian
     sm64ex
-    sm64coopdx
+    # sm64coopdx  # BUG Broken
 
     # Proper
     zeroad

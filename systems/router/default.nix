@@ -137,8 +137,6 @@ in {
   # Enable SystemD
   networking.networkmanager.enable = lib.mkForce false;
 
-  # BUG https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=165059
-
   # Forwarding
   boot.kernel.sysctl = {
     # Forwarding
