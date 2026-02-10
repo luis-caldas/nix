@@ -216,9 +216,6 @@
     # Analysis
     python3Packages.angr
 
-    # JSON
-    jq
-
     # XML & YAML
     libxml2
     yamllint

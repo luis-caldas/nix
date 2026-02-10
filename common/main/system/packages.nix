@@ -95,6 +95,9 @@
     # Shell
     bc
 
+    # JSON
+    jq
+
     # Nix
     nix-du
     nix-top
