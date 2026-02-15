@@ -360,6 +360,12 @@ in {
       networkConfig.LinkLocalAddressing = "no";
       dhcpV4Config.SendHostname = "yes";
       dhcpV4Config.Hostname = pkgs.networks.hostname;
+      dhcpV4Config.ClientIdentifier = "mac";
+      dhcpV4Config.RapidCommit = "no";
+      dhcpV4Config.UseMTU = "yes";
+      dhcpV4Config.UseRoutes = "yes";
+      dhcpV4Config.UseGateway = "yes";
+      dhcpV4Config.MaxAttempts = "infinity";
       dhcpV4Config.UseDNS = "no";
       dhcpV4Config.UseNTP = "no";
       linkConfig.MACAddress = pkgs.functions.spoofMAC config.mine.system.hostname iteration pkgs.networks.mac.spoof;
