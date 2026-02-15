@@ -358,7 +358,7 @@ in {
       networkConfig.VRF = "${net.vrf}${number}";
       networkConfig.DHCP = "ipv4";
       networkConfig.LinkLocalAddressing = "no";
-      dhcpV4Config.SendHostname = "yes";
+      dhcpV4Config.SendHostname = "no";
       dhcpV4Config.Hostname = pkgs.networks.hostname;
       dhcpV4Config.ClientIdentifier = "mac";
       dhcpV4Config.RapidCommit = "no";

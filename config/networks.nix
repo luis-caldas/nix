@@ -4,7 +4,7 @@ let
   allNetworks = {
 
     # Hostname
-    hostname = "Router";
+    hostname = "MyRouter";
 
     # VNP IP information
     vpn = {
