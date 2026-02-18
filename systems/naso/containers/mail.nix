@@ -3,7 +3,20 @@
 # Inherit the shared values
 with shared;
 
-{
+let
+
+  fullHostname = lib.strings.fileContents /data/local/containers/mail/hostname;
+  domainName = let
+    splitter = ".";
+  in lib.strings.concatStringsSep splitter (
+    lib.lists.drop 1 (lib.strings.splitString splitter fullHostname)
+  );
+
+  extraHostnames = lib.strings.splitString "\n" (
+    lib.strings.fileContents /data/local/containers/mail/othernames
+  );
+
+in {
 
   # Networking
   networks = pkgs.functions.container.populateNetworks
@@ -13,20 +26,7 @@ with shared;
   ### # Mail # ###
        ######
 
-  services."${names.mail.app}".service = let
-
-    fullHostname = lib.strings.fileContents /data/local/containers/mail/hostname;
-    domainName = let
-      splitter = ".";
-    in lib.strings.concatStringsSep splitter (
-      lib.lists.drop 1 (lib.strings.splitString splitter fullHostname)
-    );
-
-    extraHostnames = lib.strings.splitString "\n" (
-      lib.strings.fileContents /data/local/containers/mail/othernames
-    );
-
-  in {
+  services."${names.mail.app}".service = {
 
     # Image
     image = "ghcr.io/docker-mailserver/docker-mailserver:latest";
@@ -59,12 +59,17 @@ with shared;
 
     # Networking
     ports = [
-      "25:25"
-      "143:143"
-      "465:465"
-      "587:587"
-      "993:993"
+      "25:25"     # SMTP    S2S         Plaintext + STARTTLS
+      #"110:110"  # POP3    Mailbox     Plaintext + STARTTLS
+      "143:143"   # IMAP    Mailbox     Plaintext + STARTTLS
+      "465:465"   # SMTPS               TLS
+      "587:587"   # SMTP    Submission  STARTTLS
+      "993:993"   # IMAPS               TLS
+      #"995:995"  # POP3S               TLS
     ];
+
+    # DNS
+    dns = pkgs.networks.dns;
 
     # Capabilities
     capabilities = {
@@ -113,7 +118,10 @@ with shared;
       "/data/local/containers/mail/ssl:/ssl:ro"
     ];
 
-    # No internal networking needed
+    # Internal routing to web
+    networks = {
+      "${networks.mail.default}" = { aliases = [ fullHostname ]; };
+    }
 
   };
 
@@ -134,12 +142,19 @@ with shared;
       # Settings
       ROUNDCUBEMAIL_DEFAULT_PORT = 993;
       ROUNDCUBEMAIL_SMTP_PORT = 587;
-      ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE = "100M";
+      ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE = "250M";
+      # Domains
+      ROUNDCUBEMAIL_DEFAULT_HOST = "ssl://${fullHostname}";
+      ROUNDCUBEMAIL_SMTP_SERVER = "tls://${fullHostname}";
+      #
+      ROUNDCUBEMAIL_USERNAME_DOMAIN = domainName;
     };
-    env_file = [ "/data/local/containers/mail/web.env" ];
 
     # Networking
-    networks = [ networks.mail.web ];
+    networks = [
+      networks.mail.default
+      networks.mail.web
+    ];
 
   };
 
