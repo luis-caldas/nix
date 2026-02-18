@@ -121,7 +121,7 @@ in {
     # Internal routing to web
     networks = {
       "${networks.mail.default}" = { aliases = [ fullHostname ]; };
-    }
+    };
 
   };
 
