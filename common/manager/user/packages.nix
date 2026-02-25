@@ -362,9 +362,7 @@
     ##### Development
 
     # Rust
-    cargo
-    rustc
-    rustfmt
+    rustup
 
     #####
 

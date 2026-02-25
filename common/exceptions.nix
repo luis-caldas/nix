@@ -77,7 +77,7 @@
       "android-sdk-tools"
 
       # Software Development
-      "pycharm" "webstorm" "clion" "datagrip" "idea"
+      "pycharm" "webstorm" "clion" "datagrip" "idea" "rust-rover"
       "winbox"
       "volatility3"
       "drawio"

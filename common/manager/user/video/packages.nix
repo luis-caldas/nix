@@ -397,6 +397,7 @@ lib.mkIf osConfig.mine.graphics.enable
     jetbrains.datagrip
     jetbrains.webstorm
     jetbrains.clion
+    jetbrains.rust-rover
 
     # Jetbrains free
     jetbrains.pycharm-oss
