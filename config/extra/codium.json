@@ -19,6 +19,11 @@
     "workbench.startupEditor": "none",
     "workbench.tree.indent": 24,
     "workbench.tree.renderIndentGuides": "always",
+    "gitlens.blame.line.enabled": false,
+    "gitlens.currentLine.enabled": false,
+    "gitlens.codeLens.authors.enabled": false,
+    "gitlens.codeLens.recentChange.enabled": false,
+    "rust-analyzer.lens.enable": false,
     "explicitFolding.rules": {
       "*": {
         "begin": "{{{",
@@ -31,6 +36,9 @@
     },
     "[c]": {
       "editor.defaultFormatter": "xaver.clang-format"
+    },
+    "[rust]": {
+      "editor.defaultFormatter": "rust-lang.rust-analyzer"
     }
   }
 }
