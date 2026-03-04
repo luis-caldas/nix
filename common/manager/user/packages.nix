@@ -100,6 +100,7 @@
     soapysdr-with-plugins
 
     # Input
+    rlwrap
     linuxConsoleTools
 
     # Bluetooth
