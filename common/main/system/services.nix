@@ -97,7 +97,6 @@
   services.printing = lib.mkIf config.mine.services.printing {
     enable = true;
     browsing = true;
-    logLevel = "debug";
     # Extra configuration
     browsedConf = "
       BrowseDNSSDSubTypes _cups,_print
