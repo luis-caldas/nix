@@ -64,30 +64,37 @@
   # File systems
 
   fileSystems."/" =
-    { device = "dark/root";
+    { device = "dark/safe/root";
       fsType = "zfs";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/6D1A-B930";
+    { device = "/dev/disk/by-uuid/222B-4DD8";
       fsType = "vfat";
       options = [ "umask=0077" ];
     };
 
   fileSystems."/home" =
-    { device = "dark/home";
+    { device = "dark/safe/home";
       fsType = "zfs";
     };
 
   fileSystems."/nix" =
-    { device = "dark/nix";
+    { device = "dark/safe/nix";
       fsType = "zfs";
     };
 
   fileSystems."/tmp" =
-    { device = "dark/tmp";
+    { device = "dark/safe/tmp";
       fsType = "zfs";
     };
+
+  swapDevices = [
+    {
+      device = "/dev/disk/by-partuuid/916fc614-2cf1-450c-bae2-8901e5171f74";
+      randomEncryption.enable = true;
+    }
+  ];
 
   # Governor and arch
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
