@@ -56,6 +56,8 @@ in {
     volumes = [
       "/data/local/containers/proxy/application:/data"
       "/data/local/containers/proxy/letsencrypt:/etc/letsencrypt"
+      # Custom
+      "/data/local/containers/proxy/custom:/custom"
     ];
     # Networking
     ports = [

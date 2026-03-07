@@ -14,8 +14,6 @@ let
     networks.manage
     # Asterisk
     networks.asterisk
-    # Dashboard
-    networks.dash
     # Monitor
     networks.monitor.grafana
     networks.monitor.kuma

@@ -57,10 +57,6 @@
           "manage"
           # Asterisk
           "asterisk"
-          # Home Assistant
-          "home"
-          # Dashboard
-          "dash"
         ];
         # Monitor
         monitor = [ "grafana" "kuma" ];
@@ -77,12 +73,8 @@
         "portainer"
         # Time
         "time"
-        # Dashboard
-        "dash"
         # Monitoring
         "monitor" "kuma"
-        # Home Assistant
-        "assistant"
       ];
       # Asterisk
       asterisk = {
