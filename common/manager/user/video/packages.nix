@@ -113,6 +113,9 @@ lib.mkIf osConfig.mine.graphics.enable
     fretboard
     drum-machine
 
+    # Screenshot
+    gradia
+
     # Image Editing
     drawing
     emblem
