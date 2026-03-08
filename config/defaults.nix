@@ -423,6 +423,11 @@
           default = "org.gnome.Loupe.desktop";
         };
 
+        screenshot = mkOption {
+          type = str;
+          default = "be.alexandervanhee.gradia.desktop";
+        };
+
         files = mkOption {
           type = str;
           default = "org.gnome.Nautilus.desktop";
@@ -471,6 +476,7 @@
         type = attrsOf str;
         default = {
           terminal = "Return";
+          screenshot = "G";
           files = "E";
         };
       };
