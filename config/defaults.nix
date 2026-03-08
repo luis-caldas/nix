@@ -473,11 +473,11 @@
 
       keybindings = mkOption {
         description = "Extra keybindings to launch applications, items can be a generic application name";
-        type = attrsOf str;
+        type = attrsOf (oneOf [ str (attrsOf str) ]);
         default = {
           terminal = "Return";
-          screenshot = "G";
           files = "E";
+          screenshot = { key = "G"; command = "gradia --screenshot"; };
         };
       };
 

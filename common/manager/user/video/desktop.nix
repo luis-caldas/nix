@@ -394,12 +394,31 @@ in {
 
     # Custom list of keybindings
     keybindings = (lib.attrsets.concatMapAttrs (name: value: {
-      "${pkgs.functions.capitaliseString name}" = {
-        command = "${launcher} ${if (builtins.hasAttr name defaultApplications) then
+      "${pkgs.functions.capitaliseString name}" = let
+
+        # Check what type it is
+        binder = if builtins.isAttrs value then
+            value.key
+          else
+            value;
+
+        # Extract from defaults if present
+        extracted = if (builtins.hasAttr name defaultApplications) then
             builtins.getAttr name defaultApplications
           else
-            name}";
-        binding = "${superKey}${pkgs.functions.capitaliseString value}";
+            name;
+
+        # Build either command or with arguments
+        command = if builtins.isAttrs value then
+            value.command
+          else
+            "${launcher} -- ${extracted}";
+
+      in {
+
+        inherit command;
+        binding = "${superKey}${pkgs.functions.capitaliseString binder}";
+
       };
     }) osConfig.mine.graphics.keybindings)
     # Custom keybindings for the browser
