@@ -89,13 +89,6 @@
       fsType = "zfs";
     };
 
-  swapDevices = [
-    {
-      device = "/dev/disk/by-partuuid/916fc614-2cf1-450c-bae2-8901e5171f74";
-      randomEncryption.enable = true;
-    }
-  ];
-
   # Governor and arch
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
