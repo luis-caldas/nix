@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 let
 
   # Extract this version from NixPkgs
@@ -16,11 +16,11 @@ let
 
   # Lanzaboote
   lanzaboote = let
-    version = "0.4.3";
+    version = "1.0.0";
   in import (builtins.fetchTarball ({
     url = "https://github.com/nix-community/lanzaboote/archive/v${version}.tar.gz";
-    sha256 = "sha256-If6vQ+KvtKs3ARBO9G3l+4wFSCYtRBrwX1z+I+B61wQ=";
-  }));
+    sha256 = "sha256:17srvx92f0xymayfislm5d87bjd6n1p80s350my8si737iaa16a4";
+  })) { inherit pkgs; };
 
 in {
 
@@ -39,9 +39,6 @@ in {
   ]
   # All the remaining files
   ++ (lib.filesystem.listFilesRecursive ../common/main);
-
-  # Overlays
-  nixpkgs.overlays = [ lanzaboote.overlays.default ];
 
   # Set Home Manager to use global Pkgs
   home-manager.useGlobalPkgs = true;
