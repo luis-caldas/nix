@@ -98,6 +98,7 @@
 
     # JSON
     jq
+    jless
 
     # Nix
     nix-du

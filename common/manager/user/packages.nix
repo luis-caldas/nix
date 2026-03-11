@@ -99,6 +99,9 @@
     hackrf
     soapysdr-with-plugins
 
+    # Radio
+    dump1090-fa
+
     # Input
     rlwrap
     linuxConsoleTools
