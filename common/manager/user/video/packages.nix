@@ -492,7 +492,6 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Audio Players
     spotify
-    spot
 
   ] else []) ++
 
