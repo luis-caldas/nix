@@ -115,6 +115,7 @@ in {
       ssh = true;
       docker.enable = true;
       virtual.enable = true;
+      virtual.remote = true;
       prometheus = {
         enable = true;
         password = "/data/local/prometheus/pass";

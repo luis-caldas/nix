@@ -41,9 +41,19 @@
     # Set out custom uid
     uid = config.mine.user.uid;
 
+    # Keys
+    openssh.authorizedKeys.keys = pkgs.reference.keys;
+
     # Set the user to the first default uid
     initialPassword = config.mine.user.pass;
 
+  };
+
+  # Management user
+  users.users.remote = lib.mkIf (config.mine.services.virtual.enable && config.mine.services.virtual.remote) {
+    isNormalUser = true;
+    extraGroups = [ "libvirtd" ];
+    openssh.authorizedKeys.keys = pkgs.reference.keys;
   };
 
   # Add custom getty message

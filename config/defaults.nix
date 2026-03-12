@@ -305,6 +305,8 @@
 
         manager = mkEnableOption "Management of libvirt";
 
+        remote = mkEnableOption "Enable remote access management";
+
         swtpm = mkEnableOption "TPM Emulation";
 
         vmware = mkEnableOption "VMWare Server";

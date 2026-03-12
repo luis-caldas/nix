@@ -84,6 +84,16 @@ let
 
   ) allProjectNames.projects);
 
+  # My own keys
+  keys = let
+    all = pkgs.fetchurl {
+      url = "https://github.com/${ownerName}.keys";
+      hash = "sha256-wlZp/obXRKqMlt0WfLNYZZgT2OSPeDTpmR4NE6eVHK8=";
+    };
+  in
+    builtins.filter (k: k != "")
+      (lib.splitString "\n" (builtins.readFile all));
+
   # Build the system path
   systemPath = ../systems + ("/" + systemName);
   # Save the name of the default file
@@ -140,6 +150,9 @@ in {
 
         # Owner name
         owner = ownerName;
+
+        # Keys
+        inherit keys;
 
       };
 
