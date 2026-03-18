@@ -83,11 +83,6 @@
       fsType = "zfs";
     };
 
-  fileSystems."/data" =
-    { device = "knight/safe/data";
-      fsType = "zfs";
-    };
-
   swapDevices = [
     {
       device = "/dev/disk/by-partuuid/3eeb2625-47cf-4282-a8c2-cc8de9e5f874";

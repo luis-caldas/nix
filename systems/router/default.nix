@@ -113,6 +113,7 @@ in {
     minimal = true;
     services = {
       ssh = true;
+      snapshot = true;
       docker.enable = true;
       virtual.enable = true;
       virtual.remote = true;

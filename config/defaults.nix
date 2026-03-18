@@ -251,6 +251,8 @@
 
       ssh = mkEnableOption "SSH Service";
 
+      snapshot = mkEnableOption "ZFS Snapshot";
+
       avahi = mkEnableOption "Avahi";
 
       docker = {

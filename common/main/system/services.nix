@@ -11,6 +11,9 @@
     };
   };
 
+  # Auto snapshotting
+  services.zfs.autoSnapshot.enable = config.mine.services.snapshot;
+
   # Avahi
   services.avahi = lib.mkIf config.mine.services.avahi {
     enable = true;

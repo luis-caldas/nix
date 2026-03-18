@@ -137,6 +137,7 @@ in {
     user.groups = [ "cdrom" ];
     services = {
       ssh = true;
+      snapshot = true;
       docker.enable = true;
       prometheus = {
         enable = true;
