@@ -20,8 +20,19 @@
     options cfg80211 ieee80211_regdom="IE"
   '';
 
-  # AMD Fix
-  boot.kernelParams = [ "amdgpu.sg_display=0" "amdgpu.mcbp=0" ];
+  boot.kernelParams = [
+
+    # ZSwap
+    "zswap.enabled=1"
+    "zswap.max_pool_percent=20"
+    "zswap.shrinker_enabled=1"
+    "zswap.compressor=lz4"
+
+    # AMD Fix
+    "amdgpu.sg_display=0"
+    "amdgpu.mcbp=0"
+
+  ];
 
   # Disable fingerprint
   services.fprintd.enable = false;
@@ -63,31 +74,38 @@
 
   # File systems
 
-  fileSystems."/" =
-    { device = "dark/safe/root";
-      fsType = "zfs";
-    };
-
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/222B-4DD8";
       fsType = "vfat";
       options = [ "umask=0077" ];
     };
 
+  fileSystems."/" =
+    { device = "dark/safe/system/root";
+      fsType = "zfs";
+    };
+
   fileSystems."/home" =
-    { device = "dark/safe/home";
+    { device = "dark/safe/system/home";
       fsType = "zfs";
     };
 
   fileSystems."/nix" =
-    { device = "dark/safe/nix";
+    { device = "dark/safe/system/nix";
       fsType = "zfs";
     };
 
   fileSystems."/tmp" =
-    { device = "dark/safe/tmp";
+    { device = "dark/safe/system/tmp";
       fsType = "zfs";
     };
+
+  swapDevices = [{
+    device = "/dev/disk/by-partuuid/cb8d5e6b-251f-4661-a31b-a2d925b90528";
+    randomEncryption = {
+      enable = true;
+    };
+  }];
 
   # Governor and arch
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
