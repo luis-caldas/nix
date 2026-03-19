@@ -64,22 +64,22 @@
     };
 
   fileSystems."/" =
-    { device = "knight/safe/root";
+    { device = "knight/safe/system/root";
       fsType = "zfs";
     };
 
   fileSystems."/home" =
-    { device = "knight/safe/home";
+    { device = "knight/safe/system/home";
       fsType = "zfs";
     };
 
   fileSystems."/nix" =
-    { device = "knight/safe/nix";
+    { device = "knight/safe/system/nix";
       fsType = "zfs";
     };
 
   fileSystems."/tmp" =
-    { device = "knight/safe/tmp";
+    { device = "knight/safe/system/tmp";
       fsType = "zfs";
     };
 
