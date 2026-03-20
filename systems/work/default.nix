@@ -102,9 +102,7 @@
 
   swapDevices = [{
     device = "/dev/disk/by-partuuid/cb8d5e6b-251f-4661-a31b-a2d925b90528";
-    randomEncryption = {
-      enable = true;
-    };
+    randomEncryption.enable = true;
   }];
 
   # Governor and arch
