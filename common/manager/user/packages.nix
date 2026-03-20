@@ -100,6 +100,7 @@
     soapysdr-with-plugins
 
     # Radio
+    readsb
     dump1090-fa
 
     # Input
