@@ -34,6 +34,9 @@
 
   ];
 
+  # Swappiness
+  boot.kernel.sysctl."vm.swappiness" = 10;
+
   # Disable fingerprint
   services.fprintd.enable = false;
 

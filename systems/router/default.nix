@@ -104,6 +104,9 @@ in {
   # Encryption
   boot.zfs.requestEncryptionCredentials = true;
 
+  # Swappiness
+  boot.kernel.sysctl."vm.swappiness" = 1;
+
   #######
   # Own #
   #######
@@ -605,12 +608,10 @@ in {
 
   # SWAP
 
-  swapDevices =
-    [ {
-        device = "/dev/disk/by-partuuid/63383757-a754-4c79-9754-5d4d8feab235";
-        randomEncryption.enable = true;
-      }
-    ];
+  swapDevices = [{
+    device = "/dev/disk/by-partuuid/63383757-a754-4c79-9754-5d4d8feab235";
+    randomEncryption.enable = true;
+  }];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

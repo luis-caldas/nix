@@ -127,6 +127,21 @@ in {
   # Encryption
   boot.zfs.requestEncryptionCredentials = true;
 
+  #########
+  # ZSwap #
+  #########
+
+  # ZSwap
+  boot.kernelParams = [
+    "zswap.enabled=1"
+    "zswap.max_pool_percent=20"
+    "zswap.shrinker_enabled=1"
+    "zswap.compressor=lz4"
+  ];
+
+  # Swappiness
+  boot.kernel.sysctl."vm.swappiness" = 10;
+
   #######
   # Own #
   #######

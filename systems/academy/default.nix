@@ -10,6 +10,16 @@
   # ZFS ask for password
   boot.zfs.requestEncryptionCredentials = true;
 
+  # ZSwap
+  boot.kernelParams = [
+    "zswap.enabled=1"
+    "zswap.max_pool_percent=20"
+    "zswap.shrinker_enabled=1"
+    "zswap.compressor=lz4"
+  ];
+  # Swappiness
+  boot.kernel.sysctl."vm.swappiness" = 10;
+
   # WiFi Regulatory Domain
   hardware.wirelessRegulatoryDatabase = true;
   boot.extraModprobeConfig = ''
@@ -83,12 +93,10 @@
       fsType = "zfs";
     };
 
-  swapDevices = [
-    {
-      device = "/dev/disk/by-partuuid/3eeb2625-47cf-4282-a8c2-cc8de9e5f874";
-      randomEncryption.enable = true;
-    }
-  ];
+  swapDevices = [{
+    device = "/dev/disk/by-partuuid/3eeb2625-47cf-4282-a8c2-cc8de9e5f874";
+    randomEncryption.enable = true;
+  }];
 
   # Governor and arch
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
