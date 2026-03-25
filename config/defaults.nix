@@ -355,31 +355,13 @@
       icon = mkOption {
         description = "Name of the preferred icon theme to use";
         type = str;
-        default = "Papirus-Light";
-      };
-
-      iconDark = mkOption {
-        description = "Name of the preferred icon theme to use when dark";
-        type = str;
-        default = "Papirus-Dark";
+        default = "Papirus";
       };
 
       theme = mkOption {
         description = "Name of the preferred system theme to use";
         type = str;
         default = "Adwaita";
-      };
-
-      themeDark = mkOption {
-        description = "Name of the preferred system theme to use when dark";
-        type = str;
-        default = "Adwaita-dark";
-      };
-
-      dark = mkOption {
-        description = "Enable dark mode by default";
-        type = bool;
-        default = true;
       };
 
       workspaces = mkOption {

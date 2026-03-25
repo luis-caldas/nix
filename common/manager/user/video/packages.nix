@@ -185,6 +185,7 @@ lib.mkIf osConfig.mine.graphics.enable
     gnomeExtensions.media-controls
     gnomeExtensions.desktop-icons-ng-ding
     gnomeExtensions.gtk4-desktop-icons-ng-ding
+    gnomeExtensions.legacy-gtk3-theme-scheme-auto-switcher
     gnomeExtensions.tray-icons-reloaded
     gnomeExtensions.panel-date-format
     gnomeExtensions.weather-oclock

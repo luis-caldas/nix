@@ -172,18 +172,9 @@ in {
       cursor-size = lib.mkForce osConfig.mine.graphics.cursor.size;
 
       # Theming
-      icon-theme = if osConfig.mine.graphics.dark then
-          osConfig.mine.graphics.iconDark
-        else
-          osConfig.mine.graphics.icon;
-      gtk-theme = if osConfig.mine.graphics.dark then
-          osConfig.mine.graphics.themeDark
-        else
-          osConfig.mine.graphics.theme;
-      color-scheme = if osConfig.mine.graphics.dark then
-          "prefer-dark"
-        else
-          "prefer-light";
+      icon-theme = osConfig.mine.graphics.icon;
+      gtk-theme = osConfig.mine.graphics.theme;
+      color-scheme = "default";  # We use the switch button
 
       # Colour
       accent-color = "slate";
@@ -221,9 +212,6 @@ in {
       picture-uri-dark = backgroundPaths.dark;
       show-desktop-icons = true;
     };
-    "org/gnome/desktop/screensaver" = {
-      picture-uri = backgroundPaths.dark;
-    };
     "org/gnome/settings-daemon/plugins/power" = {
       power-button-action = "nothing";
     };
@@ -249,6 +237,7 @@ in {
         "Vitals@CoreCoding.com"
         "dash-to-dock@micxgx.gmail.com"
         "CustomizeClockOnLockScreen@pratap.fastmail.fm"
+        "legacyschemeautoswitcher@joshimukul29.gmail.com"
         "appindicatorsupport@rgcjonas.gmail.com"
         "smart-home@chlumskyvaclav.gmail.com"
       ];
@@ -526,15 +515,12 @@ in {
   };
 
   # Add theming for qt
-  qt = {
+  qt = let
+    theme = "adwaita";
+  in {
     enable = true;
-    platformTheme.name = "adwaita";
-    style.name = lib.strings.toLower (
-      if osConfig.mine.graphics.dark then
-        osConfig.mine.graphics.themeDark
-      else
-        osConfig.mine.graphics.theme
-    );
+    platformTheme.name = theme;
+    style.name = theme;
   };
 
   # Add my own custom desktop files

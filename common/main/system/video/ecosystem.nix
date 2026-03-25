@@ -20,7 +20,7 @@ lib.mkIf config.mine.graphics.enable
     # Default sarch provider
     defaultSearchProviderSearchURL = "https://duckduckgo.com/" +
       "?kav=1&kp=-2&k1=-1&kk=-1&kaj=m&kak=-1&" +
-      "kax=-1&kaq=-1&kap=-1&kao=-1&kau=-1&kae=d&" +
+      "kax=-1&kaq=-1&kap=-1&kao=-1&kau=-1&" +
       "q={searchTerms}";
     defaultSearchProviderSuggestURL = "https://ac.duckduckgo.com" +
     "/ac/?q={searchTerms}&type=list";

@@ -136,6 +136,13 @@ in
       # Normal
       profiles.default = {
         extensions = with pkgs.vscode-extensions; [
+          # Theme
+          pkief.material-icon-theme
+          uloco.theme-bluloco-light
+          miguelsolorio.min-theme
+          github.github-vscode-theme
+          egirlcatnip.adwaita-github-theme
+          zhuangtongfa.material-theme
           # Code
           jnoortheen.nix-ide
           ms-python.python
@@ -147,8 +154,6 @@ in
           # IDE
           eamodio.gitlens
           gruntfuggly.todo-tree
-          pkief.material-icon-theme
-          zhuangtongfa.material-theme
           # Formatting
           xaver.clang-format
           esbenp.prettier-vscode
@@ -157,6 +162,13 @@ in
           # Typing
           valentjn.vscode-ltex
         # Custom
+        ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "vscode-theme-onelight";
+            publisher = "akamud";
+            version = "2.3.0";
+            sha256 = "sha256-CTD0s2lRMCi/WCGr6dP1Utrvtsdcbg4srRcrZJSFDqU=";
+          }
         ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
             name = "cisco";
