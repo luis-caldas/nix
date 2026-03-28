@@ -1,9 +1,15 @@
 { stdenv
 , python3
-, roboto
+, courier-prime
 , imagemagick
 , reference
 }:
+
+let
+
+  font = "${courier-prime}/share/fonts/truetype/CourierPrime-Bold.ttf";
+
+in
 
 defaultTheme: logoText:
 
@@ -31,12 +37,50 @@ stdenv.mkDerivation rec {
       -size 1024x1024 xc:transparent \
       -fill white \
       -background None \
-      -font ${roboto}/share/fonts/truetype/Roboto-Bold.ttf \
+      -font "${font}" \
       -gravity center \
       caption:"${logoText}" \
       -gravity Center \
       -composite -strip \
       logo.png
+
+    # Password text insertion
+    magick \
+      assets/extra/box.png \
+      -alpha set \
+      \( \
+        -background none \
+        -fill white \
+        -font "${font}" \
+        -pointsize 16 \
+        label:"PASSWORD" \
+        +repage \
+        -gravity center \
+        -background none \
+        -extent "%[fx:w+10]x%[fx:h+10]" \
+        +repage \
+        -write mpr:txt \
+        +delete \
+      \) \( \
+        mpr:txt \
+        -background white \
+        -alpha remove \
+        -alpha off \
+        +repage \
+      \) \
+        -gravity northwest \
+        -geometry +60+%[fx:30-h/2] \
+        -compose Dst_Out \
+        -composite \
+      mpr:txt \
+        -gravity northwest \
+        -geometry +60+%[fx:32-h/2] \
+        -compose Over \
+        -composite \
+        assets/extra/box.patched.png
+
+    # Overwrite
+    mv -f assets/extra/box.patched.png assets/extra/box.png
 
     # Compile the theme
     python scaler.py plymouth

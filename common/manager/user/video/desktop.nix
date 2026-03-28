@@ -174,7 +174,7 @@ in {
       # Theming
       icon-theme = osConfig.mine.graphics.icon;
       gtk-theme = osConfig.mine.graphics.theme;
-      color-scheme = "default";  # We use the switch button
+      # color-scheme = "default";  # We use the switch button
 
       # Colour
       accent-color = "slate";
@@ -190,7 +190,7 @@ in {
       font-hinting = "full";
       font-name = "Sans 10";
       document-font-name = "Sans 10";
-      monospace-font-name = "Mono 11";
+      monospace-font-name = "Mono 10";
 
     };
     "org/gnome/desktop/search-providers" = {
@@ -230,17 +230,18 @@ in {
       disable-extension-version-validation = false;
       disable-user-extensions = false;
       disabled-extensions = [];
-      enabled-extensions = [
+      enabled-extensions = map (x: x.extensionUuid) (with pkgs.gnomeExtensions; [
         # Others
-        "clipboard-indicator@tudmotu.com"
-        "panel-date-format@keiii.github.com"
-        "Vitals@CoreCoding.com"
-        "dash-to-dock@micxgx.gmail.com"
-        "CustomizeClockOnLockScreen@pratap.fastmail.fm"
-        "legacyschemeautoswitcher@joshimukul29.gmail.com"
-        "appindicatorsupport@rgcjonas.gmail.com"
-        "smart-home@chlumskyvaclav.gmail.com"
-      ];
+        clipboard-indicator
+        panel-date-format
+        vitals
+        dash-to-dock
+        customize-clock-on-lock-screen
+        appindicator
+        smart-home
+        # Mine
+        pkgs.custom.gnome-legacy-gtk
+      ]);
     };
 
     # Other programs

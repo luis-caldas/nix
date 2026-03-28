@@ -4,8 +4,8 @@
         "sha256": "1fzgpcm3ca9mvw196fk6a3i3q5gq0yniw1lqgwqki1wm9f9nv8wb"
     },
     "mybootanim": {
-        "commit": "94ca834a92a59bf258b77f0e0387cc8bd7f80d1a",
-        "sha256": "1d15vqpsvklv6y3h6g3qiqsjynrqzf2dha03wg9llcmrvq9wacv6"
+        "commit": "409d7cb47eca4bd15b0705383945070eaf93b41e",
+        "sha256": "024xjgh1fr4vz7l2fa72l48wqq3k4i166pgw0gqv57cmmm0d66j9"
     },
     "mycontainers": {
         "commit": "75ac8e8c32126c34c28655314d03cc7469440b93",
@@ -24,8 +24,8 @@
         "sha256": "10z2v5amvbi95lzgxy7676k9arafj287qi6qnn9601fyrmqb681f"
     },
     "myfonts": {
-        "commit": "e7b9460c9b305b2a881c8edccf839376f18f95f5",
-        "sha256": "0smg8scj5bqbrdg5ppzvnfz7kgx0rd8m41nwn0hvdn6d0qjs2hxf"
+        "commit": "013524be45e4c8d1304e5fa8fca3e31358b8d1d6",
+        "sha256": "0ha4lnpqxv5zcj5xfqcssdlkf6khsq24zrfgwccc207qffdf3wpi"
     },
     "myicons": {
         "commit": "fd4692ed166aab23865a45ee154bf23cadb843e9",
