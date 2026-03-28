@@ -5,13 +5,7 @@
 , reference
 }:
 
-let
-
-  font = "${courier-prime}/share/fonts/truetype/CourierPrime-Bold.ttf";
-
-in
-
-defaultTheme: logoText:
+defaultTheme: font: logoText:
 
 stdenv.mkDerivation rec {
 

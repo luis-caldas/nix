@@ -14,8 +14,8 @@ let
   src = fetchFromGitHub {
     owner = "luis-caldas";
     repo = "gnome-gtk-switcher";
-    rev = "91f4f378c8b4d1410c549505d4ebe7db422bd633";
-    sha256 = "sha256-A3fDd1L4wKTCDYlfINvaqyNcDcsigvPzY5uo2WS7sYM=";
+    rev = "47bc7fc8aa54208750c0e1d68357a0e33183af15";
+    sha256 = "sha256-TP6Hn2n0zjI6HD6WNj9fPpjB+RdH8y2Vy/DVBHPM6QM=";
   };
 
   # UUID

@@ -27,13 +27,15 @@ lib.mkIf config.mine.graphics.enable
   systemd.services."autovt@tty1".enable = false;
 
   # Enable plymouth
-  boot.plymouth = rec {
+  boot.plymouth = let
+    font = "${pkgs.courier-prime}/share/fonts/truetype/CourierPrime-Bold.ttf";
+  in rec {
     enable = true;
     theme = "main_custom";
     themePackages = let
       inputText = lib.strings.toUpper (lib.lists.last (lib.splitString "-" pkgs.reference.owner));
-    in [ (pkgs.custom.plymouth-mine theme inputText) ];
-    font = "${pkgs.roboto}/share/fonts/truetype/Roboto-Bold.ttf";
+    in [ (pkgs.custom.plymouth-mine theme font inputText) ];
+    inherit font;
   };
 
   # Fix for ZFS password asking
