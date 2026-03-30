@@ -158,6 +158,7 @@
     exiftool
 
     # Android
+    avbroot
     gitRepo
 
     # Android Video
