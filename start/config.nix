@@ -94,6 +94,13 @@ let
     builtins.filter (k: k != "")
       (lib.splitString "\n" (builtins.readFile all));
 
+  # Font configurations
+  fonts = rec {
+    package = pkgs.courier-prime;
+    file = "${package}/share/fonts/truetype/CourierPrime-Bold.ttf";
+    name = "Courier Prime";
+  };
+
   # Build the system path
   systemPath = ../systems + ("/" + systemName);
   # Save the name of the default file
@@ -143,7 +150,7 @@ in {
         id = systemId;
 
         # Extra configurations that are easier to set with specific files
-        more = extraConfigurations;
+        more = extraConfigurations // { inherit fonts; };
 
         # My projects
         projects = myProjects;

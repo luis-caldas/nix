@@ -28,7 +28,7 @@ lib.mkIf config.mine.graphics.enable
 
   # Enable plymouth
   boot.plymouth = let
-    font = "${pkgs.courier-prime}/share/fonts/truetype/CourierPrime-Bold.ttf";
+    font = pkgs.reference.more.fonts.file;
   in rec {
     enable = true;
     theme = "main_custom";

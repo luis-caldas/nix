@@ -1,6 +1,5 @@
 { stdenv
 , python3
-, courier-prime
 , imagemagick
 , reference
 }:
