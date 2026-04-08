@@ -394,6 +394,11 @@
           default = "org.gnome.TextEditor.desktop";
         };
 
+        notes = mkOption {
+          type = str;
+          default = "org.gnome.gitlab.somas.Apostrophe.desktop";
+        };
+
         audio = mkOption {
           type = str;
           default = "org.gnome.Decibels.desktop";
@@ -449,7 +454,7 @@
           "browser"
           "email"
           "codium.desktop"
-          "deck.desktop"
+          "notes"
           "chat"
           "de.haeckerfelix.Shortwave.desktop"
           "files"

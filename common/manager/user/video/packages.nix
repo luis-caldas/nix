@@ -99,6 +99,7 @@ lib.mkIf osConfig.mine.graphics.enable
     denaro
     gnome-graphs
     lorem
+    apostrophe
 
     # Disk
     impression

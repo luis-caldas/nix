@@ -41,7 +41,6 @@
     "text/csv",
     "text/english",
     "text/javascript",
-    "text/markdown",
     "text/mathml",
     "text/plain-bas",
     "text/plain",
@@ -82,7 +81,6 @@
     "text/x-js",
     "text/x-lua",
     "text/x-makefile",
-    "text/x-markdown",
     "text/x-moc",
     "text/x-pascal",
     "text/x-perl",
@@ -102,6 +100,10 @@
     "text/x-vcalendar",
     "text/xml",
     "text/yaml"
+  ],
+  "notes": [
+    "text/markdown",
+    "text/x-markdown"
   ],
   "audio": [
     "audio/mpeg",
