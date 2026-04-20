@@ -431,7 +431,7 @@
 
         pdf = mkOption {
           type = str;
-          default = "org.gnome.Evince.desktop";
+          default = "org.gnome.Papers.desktop";
         };
 
         calendar = mkOption {

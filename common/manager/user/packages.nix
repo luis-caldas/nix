@@ -315,6 +315,7 @@
 
     # AI
     ollama
+    whisper-ctranslate2
 
     # MitM
     mitmproxy

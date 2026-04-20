@@ -48,7 +48,7 @@ lib.mkIf osConfig.mine.graphics.enable
     snapshot
 
     # Organising
-    evince
+    papers
     gnome-clocks
     gnome-calendar
     gnome-contacts
@@ -304,6 +304,9 @@ lib.mkIf osConfig.mine.graphics.enable
       (hunDicts pkgs.hunspellDicts) ++
       (aspDicts pkgs.aspellDicts)
     )
+
+    # Documents
+    diffpdf
 
     # Grammar
     languagetool
