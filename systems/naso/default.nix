@@ -4,6 +4,9 @@
   # Containers #
   ##############
 
+  # Helpers
+  apps = [ "whats" "discord" "telegram" "slack" "signal" "meta" "line" "sms" ];
+
   # Shared information
   shared = {
 
@@ -43,11 +46,10 @@
         # Social
         social = {
           default = [ default "internal" "admin" ];
-          bridge = {
-            whats = [ default "internal" ];
-            sms = [ default "internal" ];
-            discord = [ default "internal" ];
-          };
+          bridge = builtins.listToAttrs (map (item: {
+            name = item;
+            value = [ default "internal" ];
+          });
         };
         # Workout
         workout = [ default "internal" "database" ];
@@ -96,9 +98,9 @@
       # Social
       matrix = {
         app = [ "app" "database" "admin" ];
-        bridge = rec {
-          app = [ "whats" "discord" "telegram" "slack" "signal" "meta" "line" "sms" ];
-          database = app;
+        bridge = {
+          app = apps;
+          database = apps;
         };
       };
       # Mail
