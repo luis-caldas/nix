@@ -17,6 +17,7 @@ let
     # Download
     networks.download.torrent
     networks.download.usenet
+    networks.download.clearnet
     networks.download.arr
     # Git
     networks.git.default
