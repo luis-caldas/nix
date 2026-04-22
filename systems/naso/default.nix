@@ -49,7 +49,7 @@
           bridge = builtins.listToAttrs (map (item: {
             name = item;
             value = [ default "internal" ];
-          });
+          }));
         };
         # Workout
         workout = [ default "internal" "database" ];
