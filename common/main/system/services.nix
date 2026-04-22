@@ -79,6 +79,14 @@
   virtualisation.oci-containers.backend = "docker";
   # Disable live restore
   virtualisation.docker.liveRestore = false;
+  # Networking
+  virtualisation.docker.daemon.settings = {
+    "default-address-pools" = [{
+      base = "172.16.0.0/12";
+      size = 24;
+    }];
+  };
+
 
   # libvirt config
   virtualisation.libvirtd = lib.mkIf config.mine.services.virtual.enable {
