@@ -83,7 +83,7 @@
       download = {
         app = [ "torrent" "usenet" "clearnet" "soulseek" ];
         arr = [
-          "fetch" "series" "films" "music" "subtitles"
+          "bypass" "fetch" "series" "films" "music" "subtitles"
         ];
       };
       # Workout

@@ -100,6 +100,19 @@ in {
     ];
   };
 
+       ########
+  ### # Byparr # ###
+       ########
+
+  services."${names.download.arr.bypass}".service = {
+    # Image
+    image = "ghcr.io/thephaseless/byparr:latest";
+    # Networking
+    networks = [
+      networks.download.arr
+    ];
+  };
+
        ##########
   ### # Prowlarr # ###
        ##########
