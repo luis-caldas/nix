@@ -33,7 +33,7 @@
         # Mail
         mail = [ default "web" ];
         # Download
-        download = [ "torrent" "usenet" "arr" ];
+        download = [ "torrent" "usenet" "clearnet" "arr" ];
         # Git
         git = [ default "internal" ];
         # Media
@@ -79,7 +79,7 @@
       front = [ "app" "access" ];
       # Download
       download = {
-        app = [ "torrent" "usenet" "soulseek" ];
+        app = [ "torrent" "usenet" "clearnet" "soulseek" ];
         arr = [
           "fetch" "series" "films" "music" "subtitles"
         ];

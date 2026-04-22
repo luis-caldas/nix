@@ -171,6 +171,29 @@ in {
     networks = builtins.attrValues networks.social.bridge.discord;
   };
 
+       ###############
+  ### # Bridge Signal # ###
+       ###############
+
+  services."${names.matrix.bridge.signal}".service = {
+    # Image
+    image = "dock.mau.dev/mautrix/signal:latest";
+    # Environment
+    environment = pkgs.functions.container.fixEnvironment {
+      TZ = config.mine.system.timezone;
+      UID = config.mine.user.uid;
+      GID = config.mine.user.gid;
+    };
+    # Depends
+    depends_on = [ names.matrix.app names.matrix.bridge.database.signal ];
+    # Volumes
+    volumes = [
+      "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.signal}/app:/data"
+    ];
+    # Networking
+    networks = builtins.attrValues networks.social.bridge.signal;
+  };
+
   #############################################################################
   #                                Databases                                  #
   #############################################################################
@@ -242,6 +265,29 @@ in {
     ];
     # Networking
     networks = [ networks.social.bridge.discord.internal ];
+  };
+
+       #################
+  ### # Signal Database # ###
+       #################
+
+  services."${names.matrix.bridge.database.signal}".service = {
+    # Image
+    image = "postgres:16";
+    # Environment
+    environment = pkgs.functions.container.fixEnvironment {
+      POSTGRES_USER = names.matrix.bridge.signal;
+      POSTGRES_DB = names.matrix.bridge.signal;
+    };
+    env_file = [
+      "${paths.local.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.signal}/env/database.env"
+    ];
+    # Volumes
+    volumes = [
+      "${paths.safe.bridge}/${pkgs.functions.container.getLastDash names.matrix.bridge.signal}/database:/var/lib/postgresql/data"
+    ];
+    # Networking
+    networks = [ networks.social.bridge.signal.internal ];
   };
 
 }

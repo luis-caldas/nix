@@ -57,7 +57,7 @@ in {
   ### # Aria # ###
        ######
 
-  services."${names.download.usenet}".service = {
+  services."${names.download.clearnet}".service = {
     # Image
     image = "hurlenko/aria2-ariang:latest";
     # Environment
@@ -72,7 +72,32 @@ in {
       "${paths.on.downloads}:/aria2/data"
     ];
     # Networking
-    networks = [ networks.download.usenet ];
+    networks = [ networks.download.clearnet ];
+  };
+
+       ########
+  ### # NZBGet # ###
+       ########
+
+  services."${names.download.usenet}".service = {
+    # Image
+    image = "lscr.io/linuxserver/nzbget:latest";
+    # Environment
+    environment = pkgs.functions.container.fixEnvironment {
+      TZ = config.mine.system.timezone;
+      PUID = config.mine.user.uid;
+      PGID = config.mine.user.gid;
+    };
+    # Volumes
+    volumes = [
+      "${paths.local}/nzbget:/config"
+      "${paths.on.downloads}:/downloads"
+    ];
+    # Networking
+    networks = [
+      networks.download.usenet
+      networks.download.arr
+    ];
   };
 
        ##########
