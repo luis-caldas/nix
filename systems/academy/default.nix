@@ -30,6 +30,44 @@
   services.monado.enable = true;
   services.monado.defaultRuntime = true;
 
+  # Display
+  hardware.display = let
+    file = ./nec-v72.bin;
+    port = "DVI-I-1";
+    target = "target.bin";
+  in {
+    edid.enable = true;
+    edid.packages = [
+      (pkgs.runCommand "nec-v72-edid" {} ''
+        mkdir -p "$out/lib/firmware/edid"
+        cp ${file} "$out/lib/firmware/edid/${target}"
+      '')
+    ];
+    outputs."${port}" = {
+      edid = target;
+    };
+  };
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  # Picking primaries
+  services.udev.extraRules = ''
+    SUBSYSTEM=="drm", KERNEL=="card[0-9]*", KERNELS=="0000:0d:00.0", TAG+="mutter-device-preferred-primary"
+  '';
+  services.xserver.extraConfig = lib.mkAfter ''
+    Section "OutputClass"
+      Identifier "Radeon primary"
+      MatchDriver "radeon"
+      Driver "radeon"
+      Option "PrimaryGPU" "true"
+    EndSection
+  '';
+
+  # Drivers
+  services.xserver.videoDrivers = [ "radeon" "amdgpu" ];
+
   # My specific configuration
   mine = {
     boot.secure = true;
@@ -51,6 +89,7 @@
     };
     graphics = {
       enable = true;
+      old = true;
       cloud = true;
     };
     production = {

@@ -324,6 +324,8 @@
 
       enable = mkEnableOption "Graphical Inteface";
 
+      old = mkEnableOption "X.org support";
+
       cloud = mkOption {
         description = "Enable NextCloud Client at Startup";
         type = bool;
