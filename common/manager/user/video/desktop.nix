@@ -246,6 +246,17 @@ in {
 
     # Other programs
 
+    "org/gnome/Console" = {
+      ignore-scrollback-limit = true;
+      theme = "auto";
+    };
+
+    "org/gnome/TextEditor" = {
+      highlight-current-line = true;
+      show-line-numbers = true;
+      tab-width = lib.hm.gvariant.mkUint32 4;
+    };
+
     "org/gnome/evolution/shell" = {
       prefer-symbolic-icons = "yes";
     };
@@ -534,6 +545,13 @@ in {
   };
   # Allow the file to be forced into place
   xdg.configFile."mimeapps.list".force = true;
+
+  # Terminal spacing
+  xdg.configFile."gtk-4.0/gtk.css".text = ''
+    vte-terminal {
+      padding: 2em;
+    }
+  '';
 
   # All the browser extensions links
   home.file = listBrowserExtensionFiles;

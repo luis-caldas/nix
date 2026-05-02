@@ -324,7 +324,9 @@
 
       enable = mkEnableOption "Graphical Inteface";
 
-      old = mkEnableOption "X.org support";
+      old = mkEnableOption "Xorg Interface";
+
+      simple = mkEnableOption "Simpler Interface";
 
       cloud = mkOption {
         description = "Enable NextCloud Client at Startup";
@@ -378,7 +380,7 @@
 
         terminal = mkOption {
           type = str;
-          default = "Alacritty.desktop";
+          default = "org.gnome.Console.desktop";
         };
 
         email = mkOption {
@@ -408,7 +410,7 @@
 
         video = mkOption {
           type = str;
-          default = "io.github.celluloid_player.Celluloid.desktop";
+          default = "org.gnome.Showtime.desktop";
         };
 
         image = mkOption {
@@ -446,6 +448,21 @@
           default = "gnome-disk-image-mounter.desktop";
         };
 
+        ide = mkOption {
+          type = str;
+          default = "codium.desktop";
+        };
+
+        music = mkOption {
+          type = str;
+          default = "spotify.desktop";
+        };
+
+        resources = mkOption {
+          type = str;
+          default = "net.nokyan.Resources.desktop";
+        };
+
       };
 
       favourites = mkOption {
@@ -455,12 +472,12 @@
           "terminal"
           "browser"
           "email"
-          "codium.desktop"
+          "ide"
           "notes"
           "chat"
-          "de.haeckerfelix.Shortwave.desktop"
+          "music"
           "files"
-          "net.nokyan.Resources.desktop"
+          "resources"
         ];
       };
 
@@ -468,8 +485,8 @@
         description = "Extra keybindings to launch applications, items can be a generic application name";
         type = attrsOf (oneOf [ str (attrsOf str) ]);
         default = {
-          terminal = "Return";
-          files = "E";
+          terminal = { key = "Return"; command = "kgx"; };
+          files = { key = "E"; command = "nautilus --new-window"; };
           screenshot = { key = "G"; command = "gradia --screenshot"; };
         };
       };
@@ -581,19 +598,11 @@
         type = listOf (attrsOf str);
         default = [
           { name = "deck"; icon = "plan"; url = "https://redirect.caldas.ie"; }
-          { name = "notes"; icon = "notes"; url = "https://redirect.caldas.ie"; }
-          { name = "files"; icon = "nextcloud"; url = "https://redirect.caldas.ie"; }
-          { name = "jellyfin-web"; icon = "jellyfin"; url = "https://redirect.caldas.ie"; }
-          { name = "whatsapp-web"; icon = "whatsapp"; url = "https://web.whatsapp.com"; }
-          { name = "discord-web"; icon = "discord"; url = "https://discord.com/app"; }
-          { name = "github-web"; icon = "github"; url = "https://github.com"; }
           { name = "chess-web"; icon = "chess"; url = "https://chess.com"; }
-          { name = "spotify-web"; icon = "spotify"; url = "https://open.spotify.com"; }
           { name = "youtube-web"; icon = "youtube"; url = "https://www.youtube.com"; }
           { name = "youtube-music-web"; icon = "youtube-music"; url = "https://music.youtube.com"; }
           { name = "suno"; icon = "atunes"; url = "https://suno.com/"; }
           { name = "defence-forces"; icon = "europa-universalis-IV"; url = "https://irishdefenceforces.workvivo.com"; }
-          { name = "canvas"; icon = "applications-education"; url = "https://cit.instructure.com"; }
         ];
       };
 

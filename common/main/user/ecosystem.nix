@@ -68,6 +68,7 @@ in
     # Configure XDG custom folders
     xdg.userDirs = let
       commonBase = "$HOME/home";
+      altBase = "$HOME/play";
     in {
       enable = true;
       desktop = "${commonBase}/desktop";
@@ -75,9 +76,10 @@ in
       download = "${commonBase}/downloads";
       music = "${commonBase}/mus";
       pictures = "${commonBase}/pics";
-      publicShare = "${commonBase}/pub";
-      templates = "${commonBase}/templates";
       videos = "${commonBase}/vids";
+      # projects = "${altBase}/projects";  # TODO 26.05
+      publicShare = "${altBase}/pub";
+      templates = "${altBase}/templates";
     };
 
     # Add ovmf path

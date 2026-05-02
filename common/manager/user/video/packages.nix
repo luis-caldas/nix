@@ -15,7 +15,6 @@ lib.mkIf osConfig.mine.graphics.enable
     file-roller
 
     # Terminal
-    gnome-terminal
     gnome-console
 
     # Text
@@ -29,7 +28,7 @@ lib.mkIf osConfig.mine.graphics.enable
     gnome-font-viewer
 
     # Movies
-    totem
+    showtime
 
     # Phone
     calls
@@ -257,6 +256,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Streaming
     streamlink
+    jellyfin-desktop
 
     # Remote Desktop
     remmina
@@ -472,9 +472,6 @@ lib.mkIf osConfig.mine.graphics.enable
 
   # Audio packages
   (if osConfig.mine.audio then [
-
-    # Player
-    amberol
 
     # Phone
     twinkle

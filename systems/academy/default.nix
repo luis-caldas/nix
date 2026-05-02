@@ -89,7 +89,7 @@
     };
     graphics = {
       enable = true;
-      old = true;
+      simple = true;
       cloud = true;
     };
     production = {
