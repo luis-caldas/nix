@@ -40,15 +40,15 @@
         "sha256": "0l25hn1il7c1pdpdlxj1jf59nlxn52j1f5zi85zjfjl8ybyg6h47"
     },
     "myshell": {
-        "commit": "60012c05c5a38071cc15b751d780c0a60485318a",
-        "sha256": "0yx5krydh6hyscig1cr3ijkvhq67vjwmxika688rjp3a2dh61hlj"
+        "commit": "895d8f6c8980cfcb9dc8304fb40271e9c62fa429",
+        "sha256": "08gq7ziaxvrm1y90ss97hqpang24yk84y6ah2mv4s5n3ln0a2z8f"
     },
     "mythemes": {
         "commit": "e55cec84f30af58e2aa36af3145167167cc9fce4",
         "sha256": "1kfwqwpai0yk2i4xq5zgvfy7s5gxbvy5ckqsq3ai6ppz5f4pb2is"
     },
     "myvim": {
-        "commit": "cc9907380c9dde57a0ed465b9fc93085c8e2eccb",
-        "sha256": "0ixxvhwzg435ildrz1x3n4w3lpxdwnl6qlz95z55zd2cypx1wlm8"
+        "commit": "1f5e2b6428894a01a5270d77b40dfe7a0ec9d78b",
+        "sha256": "1b04xzzr5jwvm92nvl9chqfb1fsvl4bhgyrlbj85va2snbpnld0p"
     }
 }

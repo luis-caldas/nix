@@ -27,6 +27,15 @@ let
       viAlias = true;
       vimAlias = true;
       vimdiffAlias = true;
+      plugins = with pkgs.vimPlugins; [
+        coc-nvim
+        vim-nix
+        vim-fugitive
+        vim-gitgutter
+        vim-surround
+        haskell-vim
+        vim-lsp
+      ];
     };
   };
 
