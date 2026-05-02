@@ -324,8 +324,6 @@
 
       enable = mkEnableOption "Graphical Inteface";
 
-      old = mkEnableOption "Xorg Interface";
-
       simple = mkEnableOption "Simpler Interface";
 
       cloud = mkOption {
