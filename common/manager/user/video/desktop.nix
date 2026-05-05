@@ -254,6 +254,7 @@ in {
     "org/gnome/TextEditor" = {
       highlight-current-line = true;
       show-line-numbers = true;
+      indent-style = "space";
       tab-width = lib.hm.gvariant.mkUint32 4;
     };
 

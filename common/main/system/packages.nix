@@ -51,6 +51,9 @@
     # Versioning
     git
 
+    # Diff
+    delta
+
     # Release
     lsb-release
 
