@@ -3,7 +3,7 @@
 
   # Kernel init
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "radeon" "amdgpu" ];
   boot.kernelModules = [ "kvm-amd" "kvmgt" "mdev" "vfio-iommu-type1" ];
   boot.extraModulePackages = [ ];
 
@@ -55,14 +55,6 @@
   # Picking primaries
   services.udev.extraRules = ''
     SUBSYSTEM=="drm", KERNEL=="card[0-9]*", KERNELS=="0000:0d:00.0", TAG+="mutter-device-preferred-primary"
-  '';
-  services.xserver.extraConfig = lib.mkAfter ''
-    Section "OutputClass"
-      Identifier "Radeon primary"
-      MatchDriver "radeon"
-      Driver "radeon"
-      Option "PrimaryGPU" "true"
-    EndSection
   '';
 
   # Drivers
