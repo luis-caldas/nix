@@ -3,9 +3,7 @@
 
   # Kernel init
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ "radeon" "amdgpu" ];
   boot.kernelModules = [ "kvm-amd" "kvmgt" "mdev" "vfio-iommu-type1" ];
-  boot.extraModulePackages = [ ];
 
   # ZFS ask for password
   boot.zfs.requestEncryptionCredentials = true;
@@ -30,35 +28,12 @@
   services.monado.enable = true;
   services.monado.defaultRuntime = true;
 
-  # Display
-  hardware.display = let
-    file = ./nec-v72.bin;
-    port = "DVI-I-1";
-    target = "target.bin";
-  in {
-    edid.enable = true;
-    edid.packages = [
-      (pkgs.runCommand "nec-v72-edid" {} ''
-        mkdir -p "$out/lib/firmware/edid"
-        cp ${file} "$out/lib/firmware/edid/${target}"
-      '')
-    ];
-    outputs."${port}" = {
-      edid = target;
-    };
-  };
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
-
-  # Picking primaries
+  # Graphics Cards
   services.udev.extraRules = ''
     SUBSYSTEM=="drm", KERNEL=="card[0-9]*", KERNELS=="0000:0d:00.0", TAG+="mutter-device-preferred-primary"
   '';
-
-  # Drivers
   services.xserver.videoDrivers = [ "radeon" "amdgpu" ];
+  boot.initrd.kernelModules = [ "radeon" "amdgpu" ];
 
   # My specific configuration
   mine = {
