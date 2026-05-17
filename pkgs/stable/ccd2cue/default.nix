@@ -12,8 +12,8 @@ stdenv.mkDerivation rec {
   pname = "ccd2cue";
   version = "0.5";
 
-  src = fetchGit {
-    url = "git://git.savannah.gnu.org/${pname}";
+  src = builtins.fetchGit {
+    url = "https://git.savannah.gnu.org/git/${pname}.git";
     ref = "refs/tags/${version}";
     rev = "1c78c36c7d220c8ce1ad5d91f14e8cc00995bda7";
   };

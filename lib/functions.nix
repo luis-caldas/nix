@@ -40,7 +40,9 @@ let
       filterFilesExtension (builtins.readDir directoryPath) extension;
 
     listAllSuffixFilesRecursive = directoryPath: extension:
-      filterFilesExtension (lib.filesystem.listFilesRecursive directoryPath) extension;
+      builtins.filter
+      (file: lib.strings.hasSuffix ".${extension}" (builtins.toString file))
+      (lib.filesystem.listFilesRecursive directoryPath);
 
     listFileNamesExtensionExcluded = path: excluded: extension: let
 
@@ -88,7 +90,7 @@ let
     safeGetAttr = wholeAttrSet: path: let
       # Manipulate the path list
       firstItem = builtins.head path;
-      dropped = pkgs.lib.lists.drop 1 path;
+      dropped = lib.lists.drop 1 path;
     in
       if builtins.hasAttr firstItem wholeAttrSet then
         if dropped == [] then

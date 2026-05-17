@@ -19,7 +19,7 @@ let
     };
 
     preConfigure = ''
-      cmakeFlags+=" -DQTONLY=TRUE -DBUILD_MARBLE_EXAMPLES=NO -DBUILD_INHIBIT_SCREENSAVER_PLUGIN=NO -DBUILD_MARBLE_APPS=NO -DBUILD_MARBLE_EXAMPLES=NO -DBUILD_MARBLE_TESTS=NO -DBUILD_MARBLE_TOOLS=NO -DBUILD_TESTING=NO -DBUILD_WITH_DBUS=NO -DMARBLE_EMPTY_MAPTHEME=YES -DMOBILE=NO -DWITH_DESIGNER_PLUGIN=NO -DWITH_Phonon=NO -DWITH_Qt5Location=NO -DWITH_Qt5Positioning=NO -DWITH_Qt5SerialPort=NO -DWITH_ZLIB=NO -DWITH_libgps=NO -DWITH_libshp=NO -DWITH_libwlocate=NO -Wno-deprecated-copy -Wno-deprecated -Wno-deprecated-declarations -DINCLUDE_INSTALL_DIR=''${!outputDev}/include"
+      cmakeFlags+=" -DQTONLY=TRUE -DBUILD_INHIBIT_SCREENSAVER_PLUGIN=NO -DBUILD_MARBLE_APPS=NO -DBUILD_MARBLE_EXAMPLES=NO -DBUILD_MARBLE_TESTS=NO -DBUILD_MARBLE_TOOLS=NO -DBUILD_TESTING=NO -DBUILD_WITH_DBUS=NO -DMARBLE_EMPTY_MAPTHEME=YES -DMOBILE=NO -DWITH_DESIGNER_PLUGIN=NO -DWITH_Phonon=NO -DWITH_Qt5Location=NO -DWITH_Qt5Positioning=NO -DWITH_Qt5SerialPort=NO -DWITH_ZLIB=NO -DWITH_libgps=NO -DWITH_libshp=NO -DWITH_libwlocate=NO -Wno-deprecated-copy -Wno-deprecated -Wno-deprecated-declarations -DINCLUDE_INSTALL_DIR=''${!outputDev}/include"
     '';
 
   });
@@ -59,7 +59,6 @@ in stdenv.mkDerivation rec {
   '';
 
   buildPhase = ''
-    cat desktop/Little\ Navmap.desktop
     runHook preBuild
     mkdir -p build
     cd build
@@ -79,7 +78,7 @@ in stdenv.mkDerivation rec {
     mv resources/icons/littlenavmap1024.png $out/share/icons/hicolor/1024x1024/apps/littlenavmap.png
     mv resources/icons/littlenavmap.svg $out/share/icons/hicolor/scalable/apps/.
     mv desktop/littlenavmap.desktop $out/share/applications/.
-    runHook postinstall
+    runHook postInstall
   '';
 
   meta = with lib; {

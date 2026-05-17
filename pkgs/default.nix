@@ -4,17 +4,22 @@ let
 
   # Get list of directories in folder
   listDirs = folderPath:
-    builtins.attrNames (
-      lib.attrsets.filterAttrs
-      (name: value: value == "directory")
-      (builtins.readDir folderPath)
-    );
+    if builtins.pathExists folderPath then
+      builtins.sort (left: right: left < right) (
+        builtins.attrNames (
+          lib.attrsets.filterAttrs
+          (_: value: value == "directory")
+          (builtins.readDir folderPath)
+        )
+      )
+    else
+      [ ];
 
   # Gets all the packages in the folder
   # Using a giving set of packages
   packageFiles = folderPath: packages:
     lib.genAttrs (listDirs folderPath) (
-      folderName: lib.callPackageWith packages (folderPath + ("/" + folderName)) { }
+      folderName: lib.callPackageWith packages (folderPath + "/${folderName}") { }
     );
 
   # Gets all the option files in a directory
@@ -32,8 +37,8 @@ let
   };
 
   # Concoction of packages
-  packagesStable = (pkgs // pkgs.xorg // stablePackages);
-  packagesUnstable = (pkgs.unstable // unstablePackages);
+  packagesStable = pkgs // (pkgs.xorg or { }) // stablePackages;
+  packagesUnstable = (pkgs.unstable or { }) // unstablePackages;
 
   # Create set of package names and calls
   stablePackages = packageFiles folders.stable packagesStable;
@@ -43,10 +48,9 @@ let
   options = optionFiles folders.options;
 
   # Join all the packages into single attr set
-  # Stable goes on top level and unstable on its own sub attr
-  packages = stablePackages //
-  # Unstable has its own sub attr
-  { unstable = unstablePackages; };
+  # stable goes on top level
+  # unstable has its own sub attr
+  packages = stablePackages // { unstable = unstablePackages; };
 
 in {
 

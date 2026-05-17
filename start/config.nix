@@ -13,9 +13,12 @@ let
   ownerName = "luis-caldas";
 
   # Get the unstable nixpkgs
-  unstable = import
-    (builtins.fetchGit { url = "https://github.com/NixOS/nixpkgs"; ref = "nixos-unstable"; })
-    { config = config.nixpkgs.config; };
+  unstable = import (builtins.fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
+  }) {
+    inherit (pkgs.stdenv.hostPlatform) system;
+    config = config.nixpkgs.config;
+  };
 
   # Get the system architecture and throw error if not supported
   systemArch = with pkgs.stdenv.hostPlatform; let
@@ -68,8 +71,12 @@ let
   in builtins.listToAttrs (map (
     eachProjectName: let
 
-      # Remove the my from the name to make it easier
-      fixedName = lib.replaceStrings [ "my" ] [ "" ] eachProjectName;
+      # Remove only a leading "my" from the name to make it easier
+      fixedName =
+        if lib.strings.hasPrefix "my" eachProjectName then
+          lib.strings.removePrefix "my" eachProjectName
+        else
+          eachProjectName;
 
     in {
       name = fixedName;
@@ -137,6 +144,9 @@ in {
   # Set the default hostname
   mine.system.hostname = lib.mkDefault systemName;
 
+  # Show the build banner
+  warnings = [ verboseString ];
+
   # Add all the configuration to an overlay
   nixpkgs.overlays = [
 
@@ -144,7 +154,7 @@ in {
     (final: prev: {
 
       # The new attribute with all the new information
-      reference = builtins.trace verboseString {
+      reference = {
 
         # System Id
         id = systemId;

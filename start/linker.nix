@@ -9,9 +9,8 @@ let
     builtins.elemAt versionList 1;
 
   # Home manager
-  homeManager = builtins.fetchGit {
-    url = "https://github.com/rycee/home-manager.git";
-    ref = "release-" + version;
+  homeManager = builtins.fetchTarball {
+    url = "https://github.com/nix-community/home-manager/archive/release-${version}.tar.gz";
   };
 
   # Lanzaboote
