@@ -595,7 +595,7 @@
         description = "Extra applications that use the browser";
         type = listOf (attrsOf str);
         default = [
-          { name = "deck"; icon = "plan"; url = "https://redirect.caldas.ie"; }
+          { name = "deck"; icon = "plan"; url = "https://luis-caldas.github.io/redirector"; }
           { name = "chess-web"; icon = "chess"; url = "https://chess.com"; }
           { name = "youtube-web"; icon = "youtube"; url = "https://www.youtube.com"; }
           { name = "youtube-music-web"; icon = "youtube-music"; url = "https://music.youtube.com"; }
