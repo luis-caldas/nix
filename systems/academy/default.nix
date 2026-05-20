@@ -3,17 +3,23 @@
 
   # Kernel init
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" "kvmgt" "mdev" "vfio-iommu-type1" ];
 
   # ZFS ask for password
   boot.zfs.requestEncryptionCredentials = true;
 
-  # ZSwap
   boot.kernelParams = [
+    # ZSwap
     "zswap.enabled=1"
     "zswap.max_pool_percent=20"
     "zswap.shrinker_enabled=1"
     "zswap.compressor=lz4"
+    # Graphics
+    "amdgpu.si_support=0"
+    "radeon.si_support=1"
+    "amdgpu.cik_support=0"
+    "radeon.cik_support=1"
   ];
   # Swappiness
   boot.kernel.sysctl."vm.swappiness" = 10;
@@ -29,11 +35,17 @@
   services.monado.defaultRuntime = true;
 
   # Graphics Cards
+  hardware.amdgpu.legacySupport.enable = false;
   services.udev.extraRules = ''
-    SUBSYSTEM=="drm", KERNEL=="card[0-9]*", KERNELS=="0000:0d:00.0", TAG+="mutter-device-preferred-primary"
+    SUBSYSTEM=="drm", ENV{DEVTYPE}=="drm_minor", ENV{DEVNAME}=="/dev/dri/card[0-9]", SUBSYSTEMS=="pci", ATTRS{vendor}=="0x1002", ATTRS{device}=="0x7480", TAG+="mutter-device-preferred-primary"
   '';
+  environment.sessionVariables = {
+    MUTTER_DEBUG_MULTI_GPU_FORCE_COPY_MODE = "primary-gpu-cpu";
+  };
+  systemd.services.display-manager.environment = {
+    MUTTER_DEBUG_MULTI_GPU_FORCE_COPY_MODE = "primary-gpu-cpu";
+  };
   services.xserver.videoDrivers = [ "radeon" "amdgpu" ];
-  boot.initrd.kernelModules = [ "radeon" "amdgpu" ];
 
   # My specific configuration
   mine = {
