@@ -332,6 +332,12 @@
         default = false;
       };
 
+      sunshine = mkOption {
+        description = "Remote access";
+        type = bool;
+        default = true;
+      };
+
       numlock = mkOption {
         description = "Startup system with NumLock enabled";
         type = bool;

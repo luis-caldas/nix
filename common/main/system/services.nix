@@ -20,6 +20,13 @@
     nssmdns4 = true;
   };
 
+  # Remote access
+  services.sunshine = lib.mkIf config.mine.graphics.sunshine {
+    enable = true;
+    autostart = true;
+    capSysAdmin = true;
+  };
+
   # Prometheus
   services.prometheus = let
     localConnection = "127.0.0.1";
