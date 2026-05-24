@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 
 lib.mkIf config.mine.audio
 
@@ -19,7 +19,7 @@ lib.mkIf config.mine.audio
 
     # Enable other audio systems support
     alsa.enable = true;
-    alsa.support32Bit = true;
+    alsa.support32Bit = pkgs.stdenv.hostPlatform.isx86_64;
     pulse.enable = true;
     jack.enable = true;
 

@@ -13,12 +13,12 @@ let
   ownerName = "luis-caldas";
 
   # Get the unstable nixpkgs
-  unstable = import (builtins.fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-  }) {
-    inherit (pkgs.stdenv.hostPlatform) system;
-    config = config.nixpkgs.config;
-  };
+  unstablePkgs = import
+    (builtins.fetchTarball { url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz"; })
+    {
+      inherit (pkgs.stdenv.hostPlatform) system;
+      config = config.nixpkgs.config;
+    };
 
   # Get the system architecture and throw error if not supported
   systemArch = with pkgs.stdenv.hostPlatform; let
@@ -174,7 +174,7 @@ in {
       };
 
       # Unstable packages
-      unstable = unstable.pkgs;
+      unstable = unstablePkgs;
 
     })
 

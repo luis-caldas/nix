@@ -2,32 +2,28 @@
 
 let
 
-  # Get list of directories in folder
+  # Get list of directories in a folder
   listDirs = folderPath:
     if builtins.pathExists folderPath then
       builtins.sort (left: right: left < right) (
         builtins.attrNames (
           lib.attrsets.filterAttrs
-          (_: value: value == "directory")
-          (builtins.readDir folderPath)
+            (_: value: value == "directory")
+            (builtins.readDir folderPath)
         )
       )
     else
-      [ ];
+      [];
 
-  # Gets all the packages in the folder
-  # Using a giving set of packages
-  packageFiles = folderPath: packages:
+  # Get all packages in a folder using the given package scope
+  packageFiles = folderPath: packageScope:
     lib.genAttrs (listDirs folderPath) (
-      folderName: lib.callPackageWith packages (folderPath + "/${folderName}") { }
+      folderName: lib.callPackageWith packageScope (folderPath + "/${folderName}") {}
     );
 
-  # Gets all the option files in a directory
-  optionFiles = givenFolder:
-    map
-    (folderName: givenFolder + ("/" + folderName))
-    (listDirs givenFolder);
-
+  # Get all option files in a directory
+  optionFiles = folderPath:
+    map (folderName: folderPath + "/${folderName}") (listDirs folderPath);
 
   # Folders
   folders = {
@@ -36,20 +32,19 @@ let
     options = ./options;
   };
 
-  # Concoction of packages
-  packagesStable = pkgs // (pkgs.xorg or { }) // stablePackages;
-  packagesUnstable = (pkgs.unstable or { }) // unstablePackages;
+  # Package scopes
+  packagesStable = pkgs // (pkgs.xorg or {}) // stablePackages;
+  packagesUnstable = (pkgs.unstable or {}) // unstablePackages;
 
-  # Create set of package names and calls
+  # Create sets of package names and calls
   stablePackages = packageFiles folders.stable packagesStable;
   unstablePackages = packageFiles folders.unstable packagesUnstable;
 
   # Get all the possible options
   options = optionFiles folders.options;
 
-  # Join all the packages into single attr set
-  # stable goes on top level
-  # unstable has its own sub attr
+  # Join all packages into a single attr set
+  # Stable goes on top level and unstable has its own sub attr
   packages = stablePackages // { unstable = unstablePackages; };
 
 in {
@@ -59,15 +54,9 @@ in {
 
   # Create an overlay with all our packages
   nixpkgs.overlays = [
-
-    # The overlay
-    (final: prev: {
-
-      # The new attribute with all the new packages
+    (_final: _prev: {
       custom = packages;
-
     })
-
   ];
 
 }

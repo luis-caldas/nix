@@ -146,9 +146,8 @@
   programs.system-config-printer.enable =
     config.mine.graphics.enable && config.mine.services.printing;
 
-  # Override service
+  # Keep sshd installed but do not auto start
   systemd.services.sshd = lib.mkIf (!config.mine.services.ssh) {
-    after = lib.mkForce [];
     wantedBy = lib.mkForce [];
     restartTriggers = lib.mkForce [];
   };

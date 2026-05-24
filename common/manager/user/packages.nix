@@ -1,169 +1,99 @@
-{ pkgs, osConfig, ... }:
-{
+{ pkgs, lib, osConfig, ... }:
+let
 
-  home.packages = with pkgs; [
-
-    ###########
-    # General #
-    ###########
-
+  basePackages = with pkgs; [
     # Binary
     flips
     xdelta
     geteltorito
     payload-dumper-go
-
     # Text
     recode
-
     # Usage
     duf
     ncdu
-
     # Mounting
     sshfs
     jmtpfs
     archivemount
-
     # Disk
     squashfsTools
     simg2img
     dmg2img
-
     # Disk Data
     pkgs.custom.bs
-
     # Disk Clearing
     zerofree
-
     # Disk Test
     f3
     testdisk
-
     # Rescue
     ddrescue
-
     # Boot
     ventoy-full
-
     # Bitlocker
     dislocker
-
     # Optical Disk Tools
     bchunk
     ccd2iso
     pkgs.custom.ccd2cue
-
     # Optical Writing
     cdrkit
     dvdplusrwtools
-
     # Duplicates
     jdupes
     rdfind
     rmlint
     rmtrash
     czkawka
-
     # Time
     libfaketime
-
     # Versioning
     subversion
-
-    # Flashing
-    avrdude
-    heimdall
-    dfu-programmer
-
-    # ESP
-    esphome
-
     # Running Programs
     steam-run
-
     # Tor
     tor
-
-    # NFC
-    mfoc
-    mfcuk
-    libnfc
-    (proxmark3.override { withGeneric = true; })
-
-    # Devices
-    ltunify  # Logitech
-    rtl-sdr  # RTL-SDR
-    rtl_433
-    # HackRF One
-    hackrf
-    soapysdr-with-plugins
-
-    # Radio
-    readsb
-    dump1090-fa
-
-    # Input
-    rlwrap
-    linuxConsoleTools
-
-    # Bluetooth
-    bluetooth_battery
-
     # Documents
     pdfgrep
     poppler-utils
-
     # Speed Test
     fast-cli
-
     # Web
     w3m
-
     # Download
     aria2
     bento4
-
     # Web Services
     frp
     ntp
     atftp
     samba
-
     # DNS
     bind
     knot-dns
-
     # Web Monitor
     nload
-
     # Password
     bitwarden-cli
-
     # Messaging
     iamb
     irssi
-
     # AI
     chatgpt-cli
-
     # Media Manipulation
     imagemagick
     potrace
     qrencode
     waifu2x-converter-cpp
     pywal
-
     # EXIF
     exiftool
-
     # Android
     avbroot
     gitRepo
-
     # Android Video
     scrcpy
-
     # ASCII
     jp2a
     boxes
@@ -173,85 +103,110 @@
     pipes
     cbonsai
     tty-clock
-
     # Terminal Recording
     vhs
     doitlive
     asciinema
     asciinema-agg
     asciinema-scenario
-
     # Chemistry
     element
-
     # Fetchers
     pfetch
     neofetch
     screenfetch
+  ];
 
-    #########################
-    # Development & Hacking #
-    #########################
+  hardwarePackages = with pkgs; [
+    # Flashing
+    avrdude
+    heimdall
+    dfu-programmer
+    # ESP
+    esphome
+    # NFC
+    mfoc
+    mfcuk
+    libnfc
+    (proxmark3.override { withGeneric = true; })
+    # Devices
+    ltunify  # Logitech
+    rtl-sdr  # RTL-SDR
+    rtl_433
+    # HackRF One
+    hackrf
+    soapysdr-with-plugins
+    # Radio
+    readsb
+    dump1090-fa
+    # Input
+    rlwrap
+    linuxConsoleTools
+    # Bluetooth
+    bluetooth_battery
+  ];
 
+  developmentPackages = with pkgs; [
     # Shell
     shellcheck
     shellharden
-
     # Windows
     powershell
-
     # Srcipting
     ghostscript
-
     # C
     gcc
     cmake
     gnumake
-
     # LLVM
     llvm
-
+    # Python
+    python3
+    # Ruby
+    ruby
+    # Javascript
+    nodejs
+    yarn
+    # Java
+    (jdk.override { enableJavaFX = true; })
     # Debug
     gdb
     gef
     valgrind
-
     # Fuzz
     ffuf
-
     # Analysis
     python3Packages.angr
-
     # XML & YAML
     libxml2
     yamllint
     python3Packages.yq
-
-    # Python
-    python3
-
-    # Ruby
-    ruby
-
-    # Javascript
-    nodejs
-    yarn
-
-    # Java
-    (jdk.override { enableJavaFX = true; })
-
+    # Reverse
+    pev
+    radare2
+    # Memory
+    volatility2-bin
+    volatility3
+    # Flashing
+    micronucleus
+    dfu-util
+    # CAN
+    can-utils
+    python3Packages.scapy
+    python3Packages.cantools
+    python3Packages.python-can
+    # UBI
+    ubi_reader
+    ubidump
     # Nix
     nixpkgs-review
-
     # Containers
     arion
     docker-compose
     hadolint
-
     # Markdown
     pandoc
     python3Packages.grip
-
     # Databases Clients
     mycli
     pgcli
@@ -259,171 +214,112 @@
     usql
     mongosh
     sqlitebrowser
-
     # Networking
     subnetcalc
-
     # Certificates
     certbot
     acme-sh
-
     # Password
     john
     hashcat
-
     # Brute
     ncrack
     sqlmap
     thc-hydra
-
     # Fuzz
     aflplusplus
-
     # Networking
     mtr
     inetutils
-
     # Web
     (lib.lowPrio gobuster)
-
     # Logger
     logkeys
-
-    # Reverse
-    pev
-    radare2
-
-    # Memory
-    volatility2-bin
-    volatility3
-
-    # Flashing
-    avrdude
-    micronucleus
-    dfu-util
-    dfu-programmer
-
-    # CAN
-    can-utils
-    python3Packages.scapy
-    python3Packages.cantools
-    python3Packages.python-can
-
-    # UBI
-    ubi_reader
-    ubidump
-
-    # AI
-    ollama
-    whisper-ctranslate2
-
     # MitM
     mitmproxy
-
     # Servers
     fileshare
     copyparty
     nodePackages.http-server
     (writeScriptBin "pyftp" "${python3.withPackages (ps: [ps.pyftpdlib])}/bin/python -m pyftpdlib \"$@\"")
+    # AI
+    ollama
+    whisper-ctranslate2
+  ];
 
-    #########################
-
-  ] ++
-
-  # Packages for a non minimal systems
-  (if (!osConfig.mine.minimal) then [
-
+  workstationPackages = with pkgs; [
     # Pentest
     metasploit
     steghide
     stegseek
     pwncat
-
     # Binary
     binwalk
-
-    # Haskell
-    ghc
-
     # Web
     browsh
     firefox
     yt-dlp
-
-    # KVM & Virtualisation
-    qemu_full
-
     # Video
     ffmpeg-full
-
-    ##### Compiled
-
-    # Input
-    pkgs.custom.x56linux
-
     # Download
     n-m3u8dl-re
-
-    #####
-
-    ##### Development
-
+    # KVM & Virtualisation
+    qemu_full
+    # Haskell
+    ghc
     # Rust
     rustup
+    # Input
+    pkgs.custom.x56linux
+  ];
 
-    #####
-
-
-  ] else []) ++
-
-  # Packages for non arm systems
-  (if (!pkgs.stdenv.hostPlatform.isAarch) then [
-
+  flashingTools = with pkgs; [
     # Flashing
     flashrom
+  ];
 
-  ] else []) ++
-
-  # Minimal and non arm
-  (if ((!pkgs.stdenv.hostPlatform.isAarch) && (!osConfig.mine.minimal)) then [
-
+  androidTools = with pkgs; [
     # Android Programs
     apktool
+  ];
 
-  ] else []) ++
-
-  # LaTeX support
-  (if osConfig.mine.tex then [
-
+  texPackages = with pkgs; [
     # Tex with medium scheme
     texlive.combined.scheme-medium
+  ];
 
-  ] else []) ++
-
-  # Audio support
-  (if osConfig.mine.audio then [
-
+  audioPackages = with pkgs; [
     # Local player
     cmus
-
     # Tools
     pipewire
     alsa-utils
     pulseaudio
-
     # Mixers
     pamixer
-
     # TUI mixer
     pamix
     ncpamixer
-
     # MPRIS controller
     playerctl
-
     # Morse code training
     aldo
+  ];
 
-  ] else []);
-
+in {
+  home.packages = lib.lists.flatten [
+    basePackages
+    hardwarePackages
+    developmentPackages
+    # Packages for a non minimal systems
+    (lib.optionals (!osConfig.mine.minimal) workstationPackages)
+    # Packages for non arm systems
+    (lib.optionals (!pkgs.stdenv.hostPlatform.isAarch) flashingTools)
+    # Minimal and non arm
+    (lib.optionals ((!pkgs.stdenv.hostPlatform.isAarch && !osConfig.mine.minimal)) androidTools)
+    # LaTeX support
+    (lib.optionals osConfig.mine.tex texPackages)
+    # Audio support
+    (lib.optionals osConfig.mine.audio audioPackages)
+  ];
 }
