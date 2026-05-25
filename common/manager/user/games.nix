@@ -7,7 +7,7 @@ lib.mkIf osConfig.mine.games
   # Games
   home.packages = with pkgs; [
   ] ++
-  # amd64 only games
+  # AMD64 only games
   (if (!pkgs.stdenv.hostPlatform.isAarch) then [
 
     # Dwarf Fortress

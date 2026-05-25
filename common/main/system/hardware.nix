@@ -8,7 +8,7 @@
     "nfc"
   ];
 
-  # The uaccess tags do not work above priority 73; these extra rules are 99.
+  # The uaccess tags do not work above priority 73, these extra rules are 99
   services.udev.extraRules = ''
 
     # ZFS scheduler fix

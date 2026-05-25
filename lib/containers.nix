@@ -6,17 +6,17 @@ let
     # Max retries for a container to be restarted
     maxRetries = 32;
 
-    # Keyword that will be simplified for the parents namin
+    # Keyword used to simplify parent naming
     # When used with dynamic naming
     simplifier = "app";
 
     # Default separator for the container naming
     containerNameSeparator = "-";
 
-    # Converts all the environment items to strings
+    # Convert all environment items to strings
     fixEnvironment = builtins.mapAttrs (name: value: builtins.toString value);
 
-    # Get last with separator
+    # Get the last item with the separator
     getLastDash = inputString:
       lib.lists.last (lib.strings.splitString containerNameSeparator inputString);
 
@@ -25,11 +25,11 @@ let
       # All the possible imports
       extension = "nix";
       possible = pkgs.functions.listFileNamesExtensionExcluded path [ "default" ] extension;
-      # The permanent configurations to all services
+      # Permanent configuration for all services
       permanent = {
         restart = "on-failure:${builtins.toString maxRetries}";
       };
-      # Configuration to be done if container is locally built
+      # Configuration used when the container is built locally
       # or not
       rawConfig = {
         local = { init = true; };
@@ -38,29 +38,29 @@ let
     in builtins.listToAttrs (
       # Map all the files to new format
       map (each: {
-        # Name of
+        # Name of the item
         name = each;
-        # The set
+        # The attribute set
         value = {
-          # Set the service name also
+          # Set the service name as well
           serviceName = each;
-          # Import the settings from specific file
+          # Import settings from the specific file
           settings = let
-            # The imported document
+            # Imported document
             imported = import (path + "/${each}.${extension}") (args // { inherit shared; });
             # Add the permanent options to each service
             sortedServices = builtins.mapAttrs
               (name: value: let
-                # Join the service with the permanent info
+                # Join the service with the permanent configuration
                 newServiceInfo = {
                   service = value.service // permanent // {
                     # Also manually set the container name
                     container_name = name;
                   };
                 };
-                # Check if we have already data to the raw section
+                # Check whether the raw section already has data
                 originalRaw = pkgs.functions.safeGetAttr value [ "out" "service" ];
-                # Check if there is a need to add the pull policy
+                # Check whether the pull policy is needed
                 newRaw = {
                   out.service = (if builtins.hasAttr "build" value then
                       rawConfig.local
@@ -77,12 +77,12 @@ let
       }) possible
     );
 
-    # Extract net network dependencies so that we can build the systemd
-    # dependencies after
-    # ! The network name must match the project name (file name)
+    # Extract native network dependencies for systemd
+    # Dependencies later
+    # The network name must match the project file name
     extractDependencies = arionProjects: let
 
-      # Gets list of all the native project networks
+      # Get all native project networks
       projectNetworks = projectIn:
         # Check if the project has networks
         if builtins.hasAttr "networks" projectIn.settings then
@@ -121,7 +121,7 @@ let
       in invertedList;
 
     in
-      # Join all the data to the wanted format
+      # Join all data into the target format
       lib.attrsets.zipAttrs (lib.lists.unique (builtins.concatLists
         # Iterate the data and filter the false entries
         (lib.attrsets.mapAttrsToList (name: value: let
@@ -133,18 +133,18 @@ let
         ) arionProjects)
       ));
 
-    # Create list of dependencies for systemd services
+    # Create dependency lists for systemd services
     createDependencies = dependencies: let
-      # Data to be added
+      # Data to add
       serviceData = {
         unitConfig = {
-          StartLimitBurst = 10;  # Block restart after 10 tries
+          StartLimitBurst = 10;  # Block restarts after 10 tries
           StartLimitInterval = 2 * 60 * 60;  # Reset after 2 hours
         };
         serviceConfig = {
           Restart = "on-failure";
           RestartSec = 10;  # Start waiting 10 seconds
-          RestartSteps = 5;  # Gradually grow restart time during each step
+          RestartSteps = 5;  # Increase restart delay at each step
           RestartMaxDelaySec = 2 * 60;  # Finish waiting 2 minutes
         };
       };
@@ -163,15 +163,15 @@ let
         }) dependencies;
     in lib.attrsets.mergeAttrsList updatedServices;
 
-    # Fix attr names
+    # Fix attribute names
     createNames = {
       dataIn,
       simplifierIn ? simplifier,
       previousPath ? []
     }: let
-      # Return variable when an error occurs
+      # Return value when an error occurs
       errorReturn = "unknown";
-      # Helper to cut simplifier
+      # Helper to remove the simplifier
       cutSimplifier = previousNames: finalName: let
         # Fix the list
         fixedPrevious =
@@ -185,14 +185,14 @@ let
       in
         lib.strings.concatStringsSep containerNameSeparator (fixedPrevious ++ extraName);
     in
-      # Iterate the attrset input
+      # Iterate the attribute set input
       lib.attrsets.concatMapAttrs (name: value: let
         # Fix the previous path
         oldPath = previousPath ++ [ name ];
       in
-        # If is an attrset
+        # If this is an attribute set
         if (builtins.typeOf value) == "set" then
-          # Send it to the start again
+          # Send it back to the start
           # But keep the reference
           {
             "${name}" = createNames {
@@ -201,7 +201,7 @@ let
               previousPath = oldPath;
             };
           }
-        # If we receive a list
+        # If this is a list
         else if (builtins.typeOf value) == "list" then
           # Check to see if we need to expand the simplifier
           if name == simplifierIn then
@@ -219,9 +219,9 @@ let
                   value = cutSimplifier oldPath each;
                 }) value);
             }
-        # If we dont know what we received
+        # If the received value is unknown
         else
-          # Throw error because we should not be here
+          # Throw an error because this path should be unreachable
           errorReturn
       ) dataIn;
 
@@ -239,9 +239,9 @@ let
       listItems
     );
 
-    # Create reverse proxy for https on the given container configuration
+    # Create an HTTPS reverse proxy for the given container configuration
     createProxy = info: let
-      # Container internal paths for keys and certificates
+      # Internal container paths for keys and certificates
       certPath = "/etc/ssl/custom/default.crt";
       keyPath = "/etc/ssl/custom/default.key";
       # The main configuration

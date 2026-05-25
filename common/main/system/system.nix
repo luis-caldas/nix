@@ -1,7 +1,7 @@
 { config, ... }:
 {
 
-  # Enable Gnome Virtual Filesystem to browse shares
+  # Enable GNOME Virtual File System to browse shares
   services.gvfs.enable = config.mine.graphics.enable;
 
   # My timezone
@@ -18,15 +18,15 @@
   zramSwap.enable = config.mine.zram;
   zramSwap.memoryPercent = 50;
 
-  # Hardware Switches
+  # Hardware switches
   services.logind.settings.Login = {
 
-    # Lid Lock
+    # Lid lock
     HandleLidSwitch = "lock";
     HandleLidSwitchDocked = "lock";
     HandleLidSwitchExternalPower = "lock";
 
-    # Buttons Ignore
+    # Button handling
     HandlePowerKey = "ignore";
     HandlePowerKeyLongPress = "ignore";
     HandleRebootKey = "ignore";

@@ -40,7 +40,7 @@
     nvme-cli
     smartmontools
 
-    # Paritioning
+    # Partitioning
     parted
 
     # iOS
@@ -60,7 +60,7 @@
     # Data
     pv
 
-    # Pring
+    # Printing
     ccze
 
     # Text
@@ -76,7 +76,7 @@
     htop
     gotop
 
-    # GPU Top
+    # GPU monitoring
     radeontop
 
     # OpenCL
@@ -126,10 +126,10 @@
     # Interfaces
     bridge-utils
 
-    # Network Speed
+    # Network speed
     iperf
 
-    # Network Tools
+    # Network tools
     iw
     ethtool
     iproute2
@@ -145,7 +145,7 @@
     # Compatibility
     envsubst
 
-    # System Monitor
+    # System monitoring
     lshw
     usbutils
     pciutils

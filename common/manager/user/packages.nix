@@ -50,7 +50,7 @@ let
     libfaketime
     # Versioning
     subversion
-    # Running Programs
+    # Running programs
     steam-run
     # Tor
     tor
@@ -131,7 +131,7 @@ let
     (proxmark3.override { withGeneric = true; })
     # Devices
     ltunify  # Logitech
-    rtl-sdr  # RTL-SDR
+    rtl-sdr  # RTL SDR
     rtl_433
     # HackRF One
     hackrf
@@ -152,7 +152,7 @@ let
     shellharden
     # Windows
     powershell
-    # Srcipting
+    # Scripting
     ghostscript
     # C
     gcc
@@ -207,7 +207,7 @@ let
     # Markdown
     pandoc
     python3Packages.grip
-    # Databases Clients
+    # Database clients
     mycli
     pgcli
     litecli
@@ -279,12 +279,12 @@ let
   ];
 
   androidTools = with pkgs; [
-    # Android Programs
+    # Android programs
     apktool
   ];
 
   texPackages = with pkgs; [
-    # Tex with medium scheme
+    # TeX with medium scheme
     texlive.combined.scheme-medium
   ];
 
@@ -311,11 +311,11 @@ in {
     basePackages
     hardwarePackages
     developmentPackages
-    # Packages for a non minimal systems
+    # Packages for non minimal systems
     (lib.optionals (!osConfig.mine.minimal) workstationPackages)
-    # Packages for non arm systems
+    # Packages for non ARM systems
     (lib.optionals (!pkgs.stdenv.hostPlatform.isAarch) flashingTools)
-    # Minimal and non arm
+    # Minimal and non ARM
     (lib.optionals ((!pkgs.stdenv.hostPlatform.isAarch && !osConfig.mine.minimal)) androidTools)
     # LaTeX support
     (lib.optionals osConfig.mine.tex texPackages)

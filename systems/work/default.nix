@@ -9,7 +9,7 @@
   # ZFS ask for password
   boot.zfs.requestEncryptionCredentials = true;
 
-  # Hardware from NixOS
+  # NixOS hardware configuration
   imports = [
     "${builtins.fetchGit "https://github.com/NixOS/nixos-hardware"}/framework/13-inch/7040-amd"
   ];
@@ -28,7 +28,7 @@
     "zswap.shrinker_enabled=1"
     "zswap.compressor=lz4"
 
-    # AMD Fix
+    # AMD fix
     "amdgpu.sg_display=0"
     "amdgpu.mcbp=0"
 

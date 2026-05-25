@@ -31,7 +31,7 @@
   services.prometheus = let
     localConnection = "127.0.0.1";
     # Create the web file
-    # Adding authentication and SSL
+    # Add authentication and SSL
     webFile = pkgs.writeText "web-config.yml" (builtins.toJSON {
       basic_auth_users = {
         user = lib.strings.fileContents config.mine.services.prometheus.password;
@@ -80,7 +80,7 @@
     };
   };
 
-  # Vitualisation
+  # Virtualisation
   virtualisation.docker.enable = config.mine.services.docker.enable;
   # Set default backend for containers
   virtualisation.oci-containers.backend = "docker";
@@ -95,7 +95,7 @@
   };
 
 
-  # libvirt config
+  # libvirt configuration
   virtualisation.libvirtd = lib.mkIf config.mine.services.virtual.enable {
     enable = true;
     onBoot = "start";
@@ -103,7 +103,7 @@
     qemu.swtpm.enable = config.mine.services.virtual.swtpm;
   };
 
-  # Enable vmware if wanted
+  # Enable VMware if wanted
   virtualisation.vmware.host.enable = config.mine.services.virtual.vmware;
   virtualisation.vmware.guest.enable = config.mine.services.virtual.vmware;
   virtualisation.vmware.guest.headless = !config.mine.graphics.enable;

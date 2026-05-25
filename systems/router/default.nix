@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: let
 
-  # Common Names
+  # Common names
   net = {
     # Interfaces
     one = "enp5s0";
@@ -52,7 +52,7 @@
         # Defaults
         "${default}" = [
           # Front
-          "front"  # Should only be used for proxy
+          "front"  # Only for proxy use
           # Manage
           "manage"
           # Asterisk
@@ -85,7 +85,7 @@
 
   };
 
-  # Build the projects
+  # Build projects
   builtProjects = pkgs.functions.container.projects ./containers shared;
 
 in {
@@ -94,7 +94,7 @@ in {
   # Boot #
   ########
 
-  # Modules for startup
+  # Startup modules
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "vfio-pci" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelParams = [ "pcie_aspm=off" "amd_iommu=on" "iommu=pt" "pci=noaer" ];
@@ -131,7 +131,7 @@ in {
   # === Networking === #
   ######################
 
-  # Enable SystemD
+  # Enable systemd
   networking.networkmanager.enable = lib.mkForce false;
 
   # Forwarding
@@ -162,7 +162,7 @@ in {
   # 8X - Networks - VRFs
   # 9X - Networks - VEths
 
-  # Main Settings
+  # Main settings
   systemd.network = lib.mkMerge ([
 
     {
@@ -336,7 +336,7 @@ in {
     # Virtual Ethernet #
     ####################
 
-    # Connects Input Bridge to VRF
+    # Connect the input bridge to the VRF
 
     # Device
     netdevs."3${number}-${net.ver}" = {
@@ -536,7 +536,7 @@ in {
   # Email #
   #########
 
-  # Configure email sender
+  # Configure the email sender
   programs.msmtp = {
     enable = true;
     setSendmail = true;

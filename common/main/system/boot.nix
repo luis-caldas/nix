@@ -2,7 +2,7 @@
 
 let
 
-  # GRUB Configuration
+  # GRUB configuration
   grubConfiguration = {
 
     # Basic
@@ -24,11 +24,11 @@ let
     # ZFS support
     zfsSupport = true;
 
-    # Force true text modes
+    # Force real text modes
     gfxpayloadBios = "text";
     gfxpayloadEfi = "text";
 
-    # Set grub to console mode
+    # Set GRUB to console mode
     extraConfig = "
       terminal_input console
       terminal_output console
@@ -36,7 +36,7 @@ let
     # Add a custom tune to the start if set
     (if config.mine.boot.tune then "play 600 440 1 220 1 880 1 0 1 880 2" else "");
 
-    # Which GRUB entry should be booted first
+    # Default GRUB entry
     default = config.mine.boot.default;
 
     # Eye candy
@@ -47,10 +47,10 @@ let
 
   };
 
-  # Set systemd-boot configuration
+  # systemd boot configuration
   systemDBootConfiguration = {
 
-    # Enable it and disable command line editing
+    # Enable systemd boot and disable command line editing
     enable = if config.mine.boot.secure then (lib.mkForce false) else true;
     editor = false;
 
@@ -72,24 +72,24 @@ in {
   # Main boot configuration
   boot = rec {
 
-    # All the supported filesystems
+    # All supported file systems
     supportedFilesystems = [ "xfs" "zfs" "exfat" "ext4" "ntfs" "btrfs" "autofs" "cifs" ];
     initrd.supportedFilesystems = supportedFilesystems;
 
-    # Don't force import zfs pool
+    # Don't force import the ZFS pool
     zfs = {
       forceImportRoot = false;
       forceImportAll = false;
     };
 
-    # Check if boot has to be ovewritten
+    # Check whether boot must be overwritten
     loader = if config.mine.boot.override then (lib.mkForce {}) else ({
 
       # Set the given timeout
       timeout = config.mine.boot.timeout;
 
     } //
-    # Check which type of bootloader we are using
+    # Check which bootloader is being used
     (if (config.mine.boot.efi && (!config.mine.boot.grub)) then
       { systemd-boot = systemDBootConfiguration; }
     else

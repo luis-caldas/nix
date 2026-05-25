@@ -3,11 +3,11 @@ let
 
   allFunctions = rec {
 
-    # Returns a list of the items inside a folder
+    # Return the items inside a folder
     listFilesInFolder = directorySource: builtins.attrNames (builtins.readDir directorySource);
 
-    # Lists the contents of a folder and creates
-    # a valid link for home manager
+    # List folder contents and create
+    # a valid link for Home Manager
     listCreateLinks = directorySource: directoryDest:
       let
         listFiles = listFilesInFolder directorySource;
@@ -19,14 +19,14 @@ let
         }) listFiles
       );
 
-    # List the regular files
+    # List regular files
     listRegularFiles = directory: (builtins.attrNames (
       lib.attrsets.filterAttrs
       (name: value: value == "regular")
       (builtins.readDir directory)
     ));
 
-    # Filters a list of file based on suffix
+    # Filter files by suffix
     filterFilesExtension = listFiles: extension:
       builtins.attrNames
         (lib.attrsets.filterAttrs
@@ -58,7 +58,7 @@ let
     in
       allCleanFileNames;
 
-    # Capitalises first and anything after a space
+    # Capitalise the first character and anything after a space
     capitaliseString = inputString: let
         splitChar = " ";
         listStrings = lib.strings.splitString splitChar inputString;
@@ -71,7 +71,7 @@ let
         properName = lib.strings.concatStringsSep splitChar capitalisedList;
       in properName;
 
-    # Function to check if item exists and then append to it if so
+    # Append an item only if it exists
     appendExists = where: attrName: dataIn: let
       returnFunction = itemIn: where // { "${attrName}" = itemIn; };
     in
@@ -86,7 +86,7 @@ let
       else
         returnFunction dataIn;
 
-    # Get a value from an attrset safely
+    # Get a value from an attribute set safely
     safeGetAttr = wholeAttrSet: path: let
       # Manipulate the path list
       firstItem = builtins.head path;
@@ -100,7 +100,7 @@ let
       else
         {};
 
-    # Generates SSL Key and Certificate
+    # Generate an SSL key and certificate
     generateUnsafeSSL = let
       duration = 365 * 10;
       names = {
@@ -116,7 +116,7 @@ let
             -subj "/CN=localhost" -addext "subjectAltName=DNS:localhost"
         '';
 
-    # Generate Spoofed MAC
+    # Generate a spoofed MAC
     spoofMAC = hostname: number: start: let
       hashInput = "${hostname}${builtins.toString number}";
       hashed = builtins.substring 0 6 (builtins.hashString "sha256" hashInput);
@@ -124,7 +124,7 @@ let
     in
       "${started}:${builtins.substring 0 2 hashed}:${builtins.substring 2 2 hashed}:${builtins.substring 4 2 hashed}";
 
-    # Power Function
+    # Power function
     pow = lib.fix (
       self: base: power:
         if power != 0

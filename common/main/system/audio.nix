@@ -7,13 +7,13 @@ lib.mkIf config.mine.audio
   # Enable rtkit for audio
   security.rtkit.enable = true;
 
-  # Disable pulseaudio
+  # Disable PulseAudio
   services.pulseaudio.enable = false;
 
-  # Pipewire config
+  # PipeWire configuration
   services.pipewire = {
 
-    # Enable pipewire
+    # Enable PipeWire
     enable = true;
     wireplumber.enable = true;
 
@@ -25,7 +25,7 @@ lib.mkIf config.mine.audio
 
   };
 
-  # Allow packages to compile with pulseaudio support
+  # Allow packages to compile with PulseAudio support
   nixpkgs.config.pulseaudio = true;
 
 }

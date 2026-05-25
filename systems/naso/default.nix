@@ -19,7 +19,7 @@
         # Defaults
         "${default}" = [
           # Front
-          "front"  # Should only be used for proxy
+          "front"  # Only for proxy use
           # Manage
           "manage"
           # Share
@@ -200,7 +200,7 @@ in {
   # UPS #
   #######
 
-  # UPS client
+  # UPS client configuration
   power.ups = {
 
     enable = true;
@@ -262,7 +262,7 @@ in {
     };
   };
 
-  # #NOTE We are our own mail server
+  # NOTE We are our own mail server
   networking.hosts = {
     "127.0.0.1" = [ (lib.strings.fileContents /data/local/mail/domain) ];
   };
@@ -297,7 +297,7 @@ in {
 
       ZED_EMAIL_ADDR = [ "root" ];
 
-      # Cat needed to get stdin
+      # cat is needed to read stdin
       ZED_EMAIL_PROG = "${pkgs.writeShellScript "zed-email" ''
         cat <(echo -e "Subject: ''${1}\r\n") - | "${pkgs.msmtp}/bin/msmtp" "''${2}"
       ''}";

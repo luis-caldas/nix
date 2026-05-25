@@ -21,7 +21,7 @@
 
     # Give extra groups to the user
     extraGroups = [ "networkmanager"  ] ++
-                  # Access to UDev ruled groups
+                  # Access to udev rule groups
                   [ "plugdev" "dialout" ]++
       (if config.mine.user.admin                 then [ "wheel"
                                                         "input"
@@ -38,7 +38,7 @@
       (if (!pkgs.stdenv.hostPlatform.isAarch)    then [ "adbusers" ]           else []) ++
       config.mine.user.groups;
 
-    # Set out custom uid
+    # Set the custom UID
     uid = config.mine.user.uid;
 
     # Keys
@@ -60,7 +60,7 @@
   services.getty.greetingLine = config.mine.system.getty.greeting;
   services.getty.helpLine = lib.mkForce ("\n" + config.mine.system.getty.help);
 
-  # Add my custom motd
+  # Add my custom MOTD
   users.motd = config.mine.system.motd;
 
 }

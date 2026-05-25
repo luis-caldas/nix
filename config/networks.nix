@@ -6,10 +6,10 @@ let
     # Hostname
     hostname = "MyRouter";
 
-    # VNP IP information
+    # VPN IP information
     vpn = {
 
-      # Network itself
+      # Network address
       network = "10.255.254.0";
 
       # Prefix of the network
@@ -25,7 +25,7 @@ let
 
       # Port (UDP) most commonly used by VoIP providers (Zoom, Skype)
       # Therefore high change of not being blocked
-      # Complete range is 3478 -> 3481
+      # Complete range is 3478 > 3481
       # Port needs also be opened on hosting side
       open = 3478;
 
@@ -46,13 +46,13 @@ let
 
     };
 
-    # Mac addresses for devices
+    # MAC addresses for devices
     mac = {
 
-      # Routers virtual bridge
+      # Router's virtual bridge
       firewall = "ff:54:ff:00:10:01";
 
-      # VPNs mac for its virtual bridge
+      # VPN's MAC for its virtual bridge
       vpn = "ff:54:ff:33:00:01";
 
       # Spoof
@@ -60,7 +60,7 @@ let
 
     };
 
-    # Most common DNSs
+    # Common DNS servers
     dns = [
       "1.1.1.1"  "1.0.0.1"
       "8.8.8.8"  "8.8.4.4"

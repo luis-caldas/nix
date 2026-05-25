@@ -11,13 +11,13 @@ lib.mkIf config.mine.graphics.enable
   programs.weylus.enable = true;
   programs.weylus.users = [ config.mine.user.name ];
 
-  # Enable chromium custom configs
+  # Enable Chromium custom configs
   programs.chromium = {
 
-    # Enable chromium
+    # Enable Chromium
     enable = true;
 
-    # Default sarch provider
+    # Default search provider
     defaultSearchProviderSearchURL = "https://duckduckgo.com/" +
       "?kav=1&kp=-2&k1=-1&kk=-1&kaj=m&kak=-1&" +
       "kax=-1&kaq=-1&kap=-1&kao=-1&kau=-1&" +
@@ -25,8 +25,8 @@ lib.mkIf config.mine.graphics.enable
     defaultSearchProviderSuggestURL = "https://ac.duckduckgo.com" +
     "/ac/?q={searchTerms}&type=list";
 
-    # Extensions all browsers
-    # All should be open source and researched
+    # Extensions for all browsers
+    # All extensions should be open source and checked
     extensions = config.mine.browser.common;
 
     # Extra options using policy
@@ -34,7 +34,7 @@ lib.mkIf config.mine.graphics.enable
 
   };
 
-  # Enable WideVine
+  # Enable Widevine
   environment.systemPackages = with pkgs; [
     (chromium.override { enableWideVine = true; })
   ];

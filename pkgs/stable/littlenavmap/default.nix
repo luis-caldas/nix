@@ -14,7 +14,7 @@ let
     src = fetchFromGitHub {
       owner = "albar965";
       repo = "marble";
-      rev = "722acf7f8d79023f6c6a761063645a1470bb3935"; # MUST be lnm/1.1 branch
+      rev = "722acf7f8d79023f6c6a761063645a1470bb3935"; # Must be the lnm/1.1 branch
       sha256 = "sha256-5GSa+xIQS9EgJXxMFUOA5jTtHJ6Dl4C9yAkFPIOrgo8=";
     };
 

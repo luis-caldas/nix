@@ -11,7 +11,7 @@
 }:
 let
 
-  # Build output folder
+  # Build output directory
   outputFolder = "out";
 
 in

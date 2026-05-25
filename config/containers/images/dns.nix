@@ -8,10 +8,10 @@
 
 let
 
-  # Original config gile
+  # Original configuration gile
   configPathOg = "${pkgs.reference.projects.containers}/build/dns/dns.toml";
 
-  # New config file path
+  # New configuration file path
   configPath = "/dns.toml";
 
 in pkgs.dockerTools.buildImage {

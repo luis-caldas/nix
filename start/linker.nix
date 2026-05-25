@@ -1,14 +1,14 @@
 { lib, config, pkgs, ... }:
 let
 
-  # Extract this version from NixPkgs
+  # Extract this version from Nixpkgs
   version = let
     versionList = lib.splitString "." lib.version;
   in builtins.elemAt versionList 0 +
     "." +
     builtins.elemAt versionList 1;
 
-  # Home manager
+  # Home Manager
   homeManager = builtins.fetchTarball {
     url = "https://github.com/nix-community/home-manager/archive/release-${version}.tar.gz";
   };
@@ -36,10 +36,10 @@ in {
     ../common/exceptions.nix
 
   ]
-  # All the remaining files
+  # Remaining files
   ++ (lib.filesystem.listFilesRecursive ../common/main);
 
-  # Set Home Manager to use global Pkgs
+  # Set Home Manager to use global pkgs
   home-manager.useGlobalPkgs = true;
 
   # Import the files needed for the Home Manager package

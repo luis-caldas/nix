@@ -8,7 +8,7 @@
 }:
 let
 
-  # Needed Package
+  # Needed package
   basicColormath = python3Packages.buildPythonPackage rec {
 
     # Info
@@ -122,7 +122,7 @@ in stdenv.mkDerivation rec {
       fi
     done
 
-    # Copy Over Everything
+    # Copy everything into place
     cp -r output/* "$tip/."
 
   '';

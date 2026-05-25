@@ -3,7 +3,7 @@
 
   boot.extraModulePackages = with config.boot.kernelPackages;
     lib.optionals (!config.mine.minimal) [
-      # Wifi
+      # WiFi
       rtw88
     ] ++ lib.optionals config.mine.graphics.enable [
       # Video loopback

@@ -7,7 +7,7 @@ let
   # Params to set the kernel to text mode
   textKernelParams = [ "vga=normal" "nomodeset" ];
 
-  # Config for text based system
+  # Configuration for text based system
   textConfig = {
     text.configuration = {
       boot.loader.grub.configurationName = "Text";
@@ -21,7 +21,7 @@ let
 in
 {
 
-  # Custom grub entry with text mode boot
+  # Custom GRUB entry with text mode boot
   specialisation = dynamicSpecialization;
 
   # Main boot configuration

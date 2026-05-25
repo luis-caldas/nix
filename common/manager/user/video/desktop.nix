@@ -4,21 +4,21 @@ lib.mkIf osConfig.mine.graphics.enable
 
 (let
 
-  # Get the main browser
+  # Get the default browser
   mainBrowser = (builtins.head osConfig.mine.browser.others).name;
 
-  # Create an object with all the new browser info so it can be referenced
+  # Create reusable browser metadata
   browsersNewInfo = map (eachBrowser: {
     name = "browser-${eachBrowser.name}";
     path = "${osConfig.mine.browser.name}-${eachBrowser.name}";
   }) osConfig.mine.browser.others;
 
-  # Join the default applications from config with our browser
+  # Join default applications with the browser configuration
   defaultApplications = osConfig.mine.graphics.applications // {
     browser = "${(builtins.head browsersNewInfo).name}.desktop";
   };
 
-  # Create the massive list of the default applications for everything
+  # Create the full default application list
   defaultMIMEs = lib.attrsets.zipAttrs (builtins.concatLists (lib.attrsets.mapAttrsToList
     (name: value:
       map
@@ -29,7 +29,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
   # Create the desktop entries for all the new browsers
   newBrowsersDesktops = (
-    # Automatically create the chromium applications from a list
+    # Create Chromium applications from a list
     builtins.listToAttrs (lib.lists.imap0 (index: eachBrowser: let
       extraBrowserInfo = builtins.elemAt browsersNewInfo index;
       features = let
@@ -68,7 +68,7 @@ lib.mkIf osConfig.mine.graphics.enable
   # Set all the custom extensions for the browsers
   listBrowserExtensionFiles = let
 
-    # Function for creating extensions for chromium based browsers
+    # Function for Chromium based browser extensions
     extensionJson = ext: browserName: let
       configDir = "${config.xdg.configHome}/${browserName}";
       updateUrl = (options.programs.chromium.extensions.type.getSubOptions []).updateUrl.default;
@@ -82,7 +82,7 @@ lib.mkIf osConfig.mine.graphics.enable
   in lib.listToAttrs (builtins.concatLists (lib.lists.imap0
     (index: eachExtendedBrowser: map (eachExtension:
       extensionJson eachExtension (builtins.elemAt browsersNewInfo index).path
-      # Add the default extensions to the per each system ones
+      # Add default extensions to the system specific extensions
     ) eachExtendedBrowser.extensions)
     (
       # Filter all the browsers with empty extension lists
@@ -92,7 +92,7 @@ lib.mkIf osConfig.mine.graphics.enable
     )
   ));
 
-  # Create custom electron applications for all my used websites
+  # Create Electron applications for frequently used websites
   customElectron = builtins.listToAttrs (map (eachEntry: {
     name = eachEntry.name;
     value = rec {
@@ -116,7 +116,7 @@ lib.mkIf osConfig.mine.graphics.enable
 
 in {
 
-  # All gnome configuration
+  # All GNOME configuration
   dconf.settings = let
 
     # My default background
@@ -128,7 +128,7 @@ in {
       };
       # Directory to all wallpapers
       wallpapersDir = "${pkgs.reference.projects.images}/wallpapers";
-      # Function to generate the file url
+      # Function to generate the file URL
       genUrlPath = imagePath: "file://${wallpapersDir}/${imagePath}";
     in
       { light = genUrlPath files.light;
@@ -137,7 +137,7 @@ in {
 
   in lib.mkMerge [
 
-  # All my configuration that can be easily set
+  # All easy to set configuration
   {
 
     "org/gnome/desktop/input-sources" = {

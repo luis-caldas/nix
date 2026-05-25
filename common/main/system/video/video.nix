@@ -4,7 +4,7 @@ lib.mkIf config.mine.graphics.enable
 
 {
 
-  # Display Manager
+  # Display manager
   services.displayManager = {
     defaultSession = "gnome";
     # Autologin
@@ -14,7 +14,7 @@ lib.mkIf config.mine.graphics.enable
     };
   };
 
-  # Desktop Manager
+  # Desktop manager
   services.xserver.enable = true;
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
@@ -38,7 +38,7 @@ lib.mkIf config.mine.graphics.enable
     inherit font;
   };
 
-  # Fix for ZFS password asking
+  # Fix ZFS password prompts
   boot.initrd = {
     systemd.enable = true;
     verbose = false;
@@ -54,13 +54,13 @@ lib.mkIf config.mine.graphics.enable
     };
   };
 
-  # Make kernel not show any text
+  # Hide kernel text output
   boot = {
     kernelParams = [ "quiet" "splash" ];
     consoleLogLevel = 0;
   };
 
-  # Set gnome packages to install
+  # Set GNOME packages to install
   services.gnome = {
     games.enable = false;
     gnome-keyring.enable = true;
@@ -70,10 +70,10 @@ lib.mkIf config.mine.graphics.enable
     core-developer-tools.enable = true;
   };
 
-  # Automatically unlock gnome keyring
+  # Automatically unlock GNOME keyring
   security.pam.services.gdm.enableGnomeKeyring = true;
 
-  # Add 32 bit support and other acceleration packages
+  # Add 32 bit support and acceleration packages
   hardware.graphics = {
     enable = true;
   } //

@@ -1,9 +1,9 @@
 { pkgs, lib, config, ... }:
 let
 
-  # Default path for the chosen system that was set on a file
+  # Default path for the chosen system file
   systemName = lib.replaceStrings ["\n" " "] ["" ""] (builtins.readFile ../system);
-  # Generate the net id from the system name
+  # Generate the network ID from the system name
   systemId = builtins.substring 0 8 (builtins.hashString "sha512" systemName);
 
   # Get the system version
@@ -20,7 +20,7 @@ let
       config = config.nixpkgs.config;
     };
 
-  # Get the system architecture and throw error if not supported
+  # Get the system architecture and throw an error if it is not supported
   systemArch = with pkgs.stdenv.hostPlatform; let
     # Test the supported systems
     supportedSystems = [
@@ -29,14 +29,14 @@ let
       # Test if arm
       isAarch
     ];
-    # Check if valid entry in the list
+    # Check whether the entry is valid
     valid = builtins.elem true supportedSystems;
   in if valid then
     parsed.cpu.arch
   else
     throw "The CPU architecture ${parsed.cpu.arch} is not supported";
 
-  # Import all the extra configurations present
+  # Import all extra configuration files
   extraConfigurations = let
 
     # Constants
@@ -48,7 +48,7 @@ let
       (name: value: value == "regular" && lib.strings.hasSuffix extensions name)
       (builtins.readDir configurationsFolder);
 
-    # Read all the files to a big set
+    # Read all files into a large attribute set
     allFilesContents = lib.attrsets.mapAttrs'
       (name: value:
         lib.attrsets.nameValuePair
@@ -63,15 +63,15 @@ let
   # Extract only the needed projects
   myProjects = let
 
-    # The list of the projects and hashes
+    # List of projects and hashes
     allProjects = builtins.fromJSON (builtins.readFile (../config/projects + "/hashes.json"));
-    # The list of project names
+    # List of project names
     allProjectNames = builtins.fromJSON (builtins.readFile (../config/projects + "/list.json"));
 
   in builtins.listToAttrs (map (
     eachProjectName: let
 
-      # Remove only a leading "my" from the name to make it easier
+      # Remove only a leading "my" from the name
       fixedName =
         if lib.strings.hasPrefix "my" eachProjectName then
           lib.strings.removePrefix "my" eachProjectName
@@ -130,7 +130,7 @@ in {
     # Containers
     ../config/containers
 
-    # Networking Information
+    # Networking information
     ../config/networks.nix
 
     # Extra packages and options
@@ -144,7 +144,7 @@ in {
   # Set the default hostname
   mine.system.hostname = lib.mkDefault systemName;
 
-  # Show the build banner
+  # Show the build message
   warnings = [ verboseString ];
 
   # Add all the configuration to an overlay
@@ -153,10 +153,10 @@ in {
     # The overlay
     (final: prev: {
 
-      # The new attribute with all the new information
+      # New attribute containing the generated information
       reference = {
 
-        # System Id
+        # System ID
         id = systemId;
 
         # Extra configurations that are easier to set with specific files

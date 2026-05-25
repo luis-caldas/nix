@@ -1,10 +1,10 @@
 { ... }:
 {
 
-  # Start point of everything
+  # Entry point for everything
   imports = [
 
-    # Import all the configuration needed for the building
+    # Import all configuration needed for the build
     start/config.nix
 
     # Link all the needed files and modules

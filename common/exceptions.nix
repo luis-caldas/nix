@@ -1,7 +1,7 @@
 { pkgs, lib, config, ... }:
 {
 
-  # Generate config for all packages
+  # Generate configuration for all packages
   options.exceptions = with lib; {
 
     # Add unfree exceptions on the fly
@@ -18,10 +18,10 @@
 
   };
 
-  # General config
+  # General configuration
   config = {
 
-    # Allow unfree stuff
+    # Allow unfree packages
     nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) (
       config.exceptions.unfree
     ++ [
@@ -105,7 +105,7 @@
     # Allow some insecure packages
     nixpkgs.config.permittedInsecurePackages = [
 
-      # BUG Unsafe
+      # BUG unsafe
 
       # For Davinci Resolve
       pkgs.python2.name

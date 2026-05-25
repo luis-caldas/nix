@@ -4,12 +4,12 @@ let
   allUps = rec {
 
     # Wait time for shutdown on client machines
-    shutdownWait = 3 * 60;  # In seconds
+    shutdownWait = 3 * 60;  # Seconds
 
     # Path to be used
     path = "/var/lib/nut";
 
-    # UPS Scheduler Script
+    # UPS scheduler script
     clientScript = pkgs.writeShellScript "client-script" ''
       case $1 in
         on-batt)
@@ -22,7 +22,7 @@ let
       esac
     '';
 
-    # UPS Scheduler Configuration
+    # UPS scheduler configuration
     clientSched = pkgs.writeText "client-schedule" ''
       CMDSCRIPT ${clientScript}
 
@@ -33,7 +33,7 @@ let
       AT ONLINE * CANCEL-TIMER on-batt
     '';
 
-    # Server Script
+    # Server script
     serverScript = pkgs.writeShellScript "server-script" ''
       time_now="$(date +"%Y/%m/%d @ %H:%M:%S")"
       {

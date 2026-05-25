@@ -55,7 +55,7 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
     # Simulator
     # flightgear  # Not needed
 
-    # Gnome
+    # GNOME
     aisleriot
     gnome-mines
     gnome-chess
@@ -78,7 +78,7 @@ lib.mkIf (osConfig.mine.graphics.enable && osConfig.mine.games)
 
   ] ++
 
-  # amd64 only games
+  # AMD64 only games
   (if (!pkgs.stdenv.hostPlatform.isAarch) then [
 
     # Minecraft

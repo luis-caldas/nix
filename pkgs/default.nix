@@ -43,8 +43,8 @@ let
   # Get all the possible options
   options = optionFiles folders.options;
 
-  # Join all packages into a single attr set
-  # Stable goes on top level and unstable has its own sub attr
+  # Join all packages into a single attribute set
+  # Stable packages go at the top level and unstable packages get their own attribute
   packages = stablePackages // { unstable = unstablePackages; };
 
 in {

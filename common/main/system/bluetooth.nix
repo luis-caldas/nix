@@ -4,7 +4,7 @@ lib.mkIf config.mine.bluetooth
 
 {
 
-  # Allow bluetooth
+  # Allow Bluetooth
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;

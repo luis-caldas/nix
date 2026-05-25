@@ -110,10 +110,10 @@ in
   # Add a service to manage mpris headset support
   services.mpris-proxy.enable = osConfig.mine.bluetooth;
 
-  # Home manager programs
+  # Home Manager programs
   programs = {
 
-    # Enable chromium
+    # Enable Chromium
     chromium = {
       enable = true;
       package = let
@@ -193,7 +193,7 @@ in
       };
     };
 
-    # Enable mpv with config
+    # Enable mpv with configuration
     mpv = {
       enable = true;
       config = pkgs.reference.more.mpv.settings;

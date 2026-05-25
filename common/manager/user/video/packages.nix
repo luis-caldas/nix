@@ -50,7 +50,7 @@ let
   ];
 
   gnomeExtraPackages = with pkgs; [
-    # System Monitor
+    # System monitoring
     resources
     # Files
     warp
@@ -221,7 +221,7 @@ let
     gource
     # Binary Visualiser
     binocle
-    # RISC-V
+    # RISC V
     rars
     # Analiser
     smuview
@@ -316,8 +316,8 @@ let
     # Maths
     octaveFull
     # Virtual
-    # vmware-horizon-client
-    # vmware-workstation
+    # VMware horizon client
+    # VMware workstation
   ];
 
   businessPackages = with pkgs; [
@@ -350,7 +350,7 @@ let
   audioPackages = with pkgs; [
     # Phone
     twinkle
-    # Pipewire
+    # PipeWire
     easyeffects
     # Audio Control
     paprefs

@@ -8,61 +8,61 @@
     boot = {
 
       secure = mkOption {
-        description = "Use Secure Boot";
+        description = "Use Secure Boot.";
         type = bool;
         default = false;
       };
 
       efi = mkOption {
-        description = "Use EFI for boot";
+        description = "Use EFI for boot.";
         type = bool;
         default = true;
       };
 
       grub = mkOption {
-        description = "Use GRUB for boot, otherwise systemd-boot is used";
+        description = "Use GRUB for boot, otherwise systemd boot is used.";
         type = bool;
         default = false;
       };
 
       timeout = mkOption {
-        description = "Timeout for the boot entry selection";
+        description = "Timeout for boot entry selection.";
         type = int;
         default = 1;
       };
 
       default = mkOption {
-        description = "Default entry to be picked when using GRUB";
+        description = "Default entry to pick when using GRUB.";
         type = int;
         default = 0;
       };
 
       devices = mkOption {
-        description = "Device to install MBR GRUB onto";
+        description = "Device to install MBR GRUB onto.";
         type = listOf str;
         default = [ "nodev" ];
       };
 
       prober = mkOption {
-        description = "Probe the disks for OSs on GRUB";
+        description = "Probe disks for operating systems in GRUB.";
         type = bool;
         default = false;
       };
 
       tune = mkOption {
-        description = "Play tune on GRUB";
+        description = "Play a tune in GRUB.";
         type = bool;
         default = false;
       };
 
       top = mkOption {
-        description = "Initilise `top` on TTY8";
+        description = "Initialise `top` on TTY8.";
         type = bool;
         default = false;
       };
 
       override = mkOption {
-        description = "Do not configure boot";
+        description = "Do not configure boot.";
         type = bool;
         default = false;
       };
@@ -73,13 +73,13 @@
     kernel = {
 
       text = mkOption {
-        description = "Extra text mode for the systems";
+        description = "Extra text mode for the systems.";
         type = bool;
         default = true;
       };
 
       params = mkOption {
-        description = "Extra parameters for the kernel line on boot";
+        description = "Extra parameters for the kernel command line at boot.";
         type = listOf str;
         default = [];
       };
@@ -90,49 +90,49 @@
     user = {
 
       name = mkOption {
-        description = "Name of the main user";
+        description = "Name of the main user.";
         type = str;
         default = "lu";
       };
 
       uid = mkOption {
-        description = "User ID of the main user";
+        description = "User ID of the main user.";
         type = int;
         default = 1000;
       };
 
       gid = mkOption {
-        description = "Group ID of the main users group";
+        description = "Group ID of the main user's group.";
         type = int;
         default = 1000;
       };
 
       desc = mkOption {
-        description = "Description / GECOS / Full Name";
+        description = "Description, GECOS, or full name.";
         type = str;
         default = "Luis";
       };
 
       groups = mkOption {
-        description = "Extra groups for the user";
+        description = "Extra groups for the user.";
         type = listOf str;
         default = [];
       };
 
       admin = mkOption {
-        description = "Enable `sudo` command for user";
+        description = "Enable the `sudo` command for the user.";
         type = bool;
         default = false;
       };
 
       pass = mkOption {
-        description = "Default password for the user";
+        description = "Default password for the user.";
         type = str;
         default = "functional";
       };
 
       autologin = mkOption {
-        description = "Enable TTY autologin for the user";
+        description = "Enable TTY autologin for the user.";
         type = bool;
         default = false;
       };
@@ -141,13 +141,13 @@
       git = {
 
         name = mkOption {
-          description = "Name shown for `git`";
+          description = "Name shown for `git`.";
           type = str;
           default = "Luis";
         };
 
         email = mkOption {
-          description = "Email shown for `git`";
+          description = "Email shown for `git`.";
           type = str;
           default = "luis@caldas.ie";
         };
@@ -160,25 +160,25 @@
     system = {
 
       hostname = mkOption {
-        description = "Hostname for this system";
+        description = "Hostname for this system.";
         type = str;
         default = "forgotten";
       };
 
       timezone = mkOption {
-        description = "Timezone for the system";
+        description = "Timezone for the system.";
         type = str;
         default = "Europe/Dublin";
       };
 
       locale = mkOption {
-        description = "System locale";
+        description = "System locale.";
         type = str;
         default = "en_IE.UTF-8";
       };
 
       layout = lib.mkOption {
-        description = "Preferred keyboard layouts in order";
+        description = "Preferred keyboard layouts in order.";
         type = listOf str;
         default = [ "ie" "us" ];
       };
@@ -187,13 +187,13 @@
       location = {
 
         latitude = mkOption {
-          description = "Positional latitude";
+          description = "Position latitude.";
           type = float;
           default = 53.3498;
         };
 
         longitude = mkOption {
-          description = "Positional longitude";
+          description = "Position longitude.";
           type = float;
           default = -6.2603;
         };
@@ -204,13 +204,13 @@
       getty = {
 
         greeting = mkOption {
-          description = "The greeting message on TTY login";
+          description = "Greeting message for TTY login.";
           type = str;
           default = "\\S{PRETTY_NAME} @ \\r \\m \\b \\l\nSystem initiated successfully";
         };
 
         help = mkOption {
-          description = "The help message on TTY login";
+          description = "Help message for TTY login.";
           type = str;
           default = "You shouldn't need help at this point";
         };
@@ -218,7 +218,7 @@
       };
 
       motd = mkOption {
-        description = "The message of the day";
+        description = "Message of the day.";
         type = str;
         default = "Welcome back";
       };
@@ -230,7 +230,7 @@
 
       # MAC configurations for NetworkManager
       mac = mkOption {
-        description = "How to set MAC addresses";
+        description = "How to set MAC addresses.";
         type = str;
         default = "stable";
       };
@@ -272,13 +272,13 @@
         enable = mkEnableOption "Prometheus";
 
         collectors = mkOption {
-          description = "Extra collectors for the Prometheus node exporter";
+          description = "Extra collectors for the Prometheus node exporter.";
           type = listOf str;
           default = [];
         };
 
         password = mkOption {
-          description = "Location of the Prometheus password file in bcrypt format";
+          description = "Location of the Prometheus password file in bcrypt format.";
           type = str;
           default = "";
         };
@@ -286,12 +286,12 @@
         ssl = {
 
           cert = mkOption {
-            description = "Location of the Prometheus SSL Cert file";
+            description = "Location of the Prometheus SSL certificate file.";
             type = str;
             default = "";
           };
           key = mkOption {
-            description = "Location of the Prometheus SSL Key file";
+            description = "Location of the Prometheus SSL key file.";
             type = str;
             default = "";
           };
@@ -327,19 +327,19 @@
       simple = mkEnableOption "Simpler Interface";
 
       cloud = mkOption {
-        description = "Enable NextCloud Client at Startup";
+        description = "Enable Nextcloud Client at startup.";
         type = bool;
         default = false;
       };
 
       sunshine = mkOption {
-        description = "Remote access";
+        description = "Remote access.";
         type = bool;
         default = true;
       };
 
       numlock = mkOption {
-        description = "Startup system with NumLock enabled";
+        description = "Start the system with NumLock enabled.";
         type = bool;
         default = true;
       };
@@ -347,13 +347,13 @@
       cursor = {
 
         name = mkOption {
-          description = "Name of the default cursor used";
+          description = "Name of the default cursor.";
           type = str;
           default = "Breeze_Hacked";
         };
 
         size = mkOption {
-          description = "Default size of the cursor";
+          description = "Default cursor size.";
           type = int;
           default = 24;
         };
@@ -361,19 +361,19 @@
       };
 
       icon = mkOption {
-        description = "Name of the preferred icon theme to use";
+        description = "Name of the preferred icon theme.";
         type = str;
         default = "Papirus";
       };
 
       theme = mkOption {
-        description = "Name of the preferred system theme to use";
+        description = "Name of the preferred system theme.";
         type = str;
         default = "Adwaita";
       };
 
       workspaces = mkOption {
-        description = "List of workspaces";
+        description = "List of workspaces.";
         type = listOf str;
         default = [
           "Main" "Browse" "Mail" "Docs" "Game" "Design" "Web" "Links" "Music"
@@ -383,86 +383,103 @@
       applications = {
 
         terminal = mkOption {
+          description = "Default terminal application desktop entry.";
           type = str;
           default = "org.gnome.Console.desktop";
         };
 
         email = mkOption {
+          description = "Default email application desktop entry.";
           type = str;
           default = "org.gnome.Evolution.desktop";
         };
 
         chat = mkOption {
+          description = "Default chat application desktop entry.";
           type = str;
           default = "org.gnome.Fractal.desktop";
         };
 
         text = mkOption {
+          description = "Default text editor application desktop entry.";
           type = str;
           default = "org.gnome.TextEditor.desktop";
         };
 
         notes = mkOption {
+          description = "Default notes application desktop entry.";
           type = str;
           default = "org.gnome.gitlab.somas.Apostrophe.desktop";
         };
 
         audio = mkOption {
+          description = "Default audio application desktop entry.";
           type = str;
           default = "org.gnome.Decibels.desktop";
         };
 
         video = mkOption {
+          description = "Default video application desktop entry.";
           type = str;
           default = "org.gnome.Showtime.desktop";
         };
 
         image = mkOption {
+          description = "Default image viewer application desktop entry.";
           type = str;
           default = "org.gnome.Loupe.desktop";
         };
 
         screenshot = mkOption {
+          description = "Default screenshot application desktop entry.";
           type = str;
           default = "be.alexandervanhee.gradia.desktop";
         };
 
         files = mkOption {
+          description = "Default file manager application desktop entry.";
           type = str;
           default = "org.gnome.Nautilus.desktop";
         };
 
         archive = mkOption {
+          description = "Default archive manager application desktop entry.";
           type = str;
           default = "org.gnome.FileRoller.desktop";
         };
 
         pdf = mkOption {
+          description = "Default PDF application desktop entry.";
           type = str;
           default = "org.gnome.Papers.desktop";
         };
 
         calendar = mkOption {
+          description = "Default calendar application desktop entry.";
           type = str;
           default = "org.gnome.Calendar.desktop";
         };
 
         iso = mkOption {
+          description = "Default ISO image application desktop entry.";
           type = str;
           default = "gnome-disk-image-mounter.desktop";
         };
 
         ide = mkOption {
+          description = "Default IDE application desktop entry.";
           type = str;
           default = "codium.desktop";
         };
 
         music = mkOption {
+          description = "Default music application desktop entry.";
           type = str;
           default = "spotify.desktop";
         };
 
         resources = mkOption {
+          description = "Default resources monitor application desktop entry.";
           type = str;
           default = "net.nokyan.Resources.desktop";
         };
@@ -470,7 +487,7 @@
       };
 
       favourites = mkOption {
-        description = "List of desktop items to be favourites, items can be a generic application name";
+        description = "List of favourite desktop items, which can be generic application names.";
         type = listOf str;
         default = [
           "terminal"
@@ -486,7 +503,7 @@
       };
 
       keybindings = mkOption {
-        description = "Extra keybindings to launch applications, items can be a generic application name";
+        description = "Extra keybindings to launch applications, which can be generic application names.";
         type = attrsOf (oneOf [ str (attrsOf str) ]);
         default = {
           terminal = { key = "Return"; command = "kgx"; };
@@ -518,20 +535,20 @@
     browser = {
 
       policies = mkOption {
-        description = "Extra policies to add to the default chromium installations";
+        description = "Extra policies to add to the default Chromium installations.";
         type = attrs;
         default = {};
       };
 
-      # Extension hashes for different chromium types
+      # Extension hashes for different Chromium types
       common = mkOption {
-        description = "Extensions for all the installations";
+        description = "Extensions for all installations.";
         type = listOf str;
         default = [
-          "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
-          "ddkjiahejlhfcafbddmgiahcphecmpfh" # ublock origin v3
-          "nngceckbapebfimnlniiiahkandclblb" # bitwarden client
-          "fnaicdffflnofjppbagibeoednhnbjhg" # floccus bookmarks manager
+          "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
+          "ddkjiahejlhfcafbddmgiahcphecmpfh" # uBlock Origin v3
+          "nngceckbapebfimnlniiiahkandclblb" # Bitwarden client
+          "fnaicdffflnofjppbagibeoednhnbjhg" # Floccus bookmark manager
           # "gbmdgpbipfallnflgajpaliibnhdgobh" # json viewer
           # "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # privacy badger
           # "padekgcemlokbadohgkifijomclgjgif" # switchy proxy omega
@@ -542,7 +559,7 @@
       };
 
       enableFlags = mkOption {
-        description = "Flags to be enabled";
+        description = "Flags to enable.";
         type = listOf str;
         default = [
           "enable-extension-autoupdate"
@@ -550,7 +567,7 @@
       };
 
       disableFlags = mkOption {
-        description = "Flags to be disabled";
+        description = "Flags to disable.";
         type = listOf str;
         default = [
           "global-shortcuts-portal"
@@ -560,25 +577,25 @@
       };
 
       name = mkOption {
-        description = "Browser name / command";
+        description = "Browser name or command.";
         type = str;
         default = "chromium";
       };
 
       icon = mkOption {
-        description = "Browser icon";
+        description = "Browser icon.";
         type = str;
         default = "browser360-beta";
       };
 
       others = mkOption {
-        description = "Extensions for specific installations";
+        description = "Extensions for specific installations.";
         type = listOf attrs;
         default = [
 
           # The main installation
           { name = "main";
-            extensions = [ "bjilljlpencdcpihofiobpnfgcakfdbe" ];  # clear browsing data
+            extensions = [ "bjilljlpencdcpihofiobpnfgcakfdbe" ];  # Clear Browsing Data
             key = "N";
           }
 
@@ -598,7 +615,7 @@
       };
 
       apps = mkOption {
-        description = "Extra applications that use the browser";
+        description = "Extra applications that use the browser.";
         type = listOf (attrsOf str);
         default = [
           { name = "deck"; icon = "plan"; url = "https://luis-caldas.github.io/redirector"; }
@@ -628,7 +645,7 @@
     # Enable audio
     audio = mkEnableOption "Audio";
 
-    # Enable bluetooth
+    # Enable Bluetooth
     bluetooth = mkEnableOption "Bluetooth";
 
   };

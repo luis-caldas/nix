@@ -14,7 +14,7 @@ let
     '';
   };
 
-  # Create the programs set for users
+  # Create the program set for users
   programsSet = {
     bash = {
       enable = true;
@@ -42,22 +42,22 @@ let
 in
 {
 
-  # Enable adb debugging
+  # Enable ADB debugging
   programs.adb.enable = !pkgs.stdenv.hostPlatform.isAarch;
 
-  # Add wireshark
+  # Add Wireshark
   programs.wireshark.enable = config.mine.graphics.enable;
 
   # Enable bash auto completion
   programs.bash.completion.enable = true;
 
-  # Enable gnupg
+  # Enable GnuPG
   programs.gnupg.agent.enable = true;
 
-  # Enable waydroid
+  # Enable Waydroid
   virtualisation.waydroid.enable = config.mine.services.virtual.android;
 
-  # Add packages that dont work with home manager
+  # Add packages that don't work with Home Manager
   users.users."${config.mine.user.name}".packages = if config.mine.graphics.enable then (with pkgs; [
 
     # Office package
@@ -91,14 +91,14 @@ in
       templates = "${altBase}/templates";
     };
 
-    # Add ovmf path
+    # Add OVMF path
     xdg.configFile =
-    # Full omvf files only if not minimal
+    # Full OVMF files when the system is not minimal
     (if ((!pkgs.stdenv.hostPlatform.isAarch) && (!config.mine.minimal)) then {
       "virt/ovmf".source = "${pkgs.OVMFFull.fd}";
     } else {}) //
 
-    # QEmu only linked if not minial
+    # Link QEMU only when the system is not minimal
     (if (!config.mine.minimal) then {
       "virt/qemu".source = "${pkgs.qemu}/share/qemu";
       "virt/win/qemu".source = "${pkgs.virtio-win}";
@@ -125,7 +125,7 @@ in
       ssh = {
         enable = true;
         enableDefaultConfig = false;
-        matchBlocks."*" = {  # All Servers
+        matchBlocks."*" = {  # All servers
           serverAliveInterval = 60;
           serverAliveCountMax = 5;
         };
@@ -143,7 +143,7 @@ in
       };
     } else {});
 
-    # Add arduino libraries
+    # Add Arduino libraries
     home.file = if (
       (!pkgs.stdenv.hostPlatform.isAarch) && (!config.mine.minimal)
     ) then {
