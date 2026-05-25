@@ -12,9 +12,11 @@ let
     lib.lists.drop 1 (lib.strings.splitString splitter fullHostname)
   );
 
-  extraHostnames = lib.strings.splitString "\n" (
-    lib.strings.fileContents /data/local/containers/mail/othernames
-  );
+  extraHostnames =
+    lib.lists.filter (x: x != "")
+      (lib.strings.splitString "\n" (
+        lib.strings.fileContents /data/local/containers/mail/othernames
+      ));
 
 in {
 
@@ -39,17 +41,36 @@ in {
 
     # Environment
     environment = pkgs.functions.container.fixEnvironment {
+
       # Security
       SPOOF_PROTECTION = 1;
+
+      # Rspamd stack
       ENABLE_RSPAMD = 1;
       ENABLE_CLAMAV = 1;
       ENABLE_FAIL2BAN = 1;
+
+      # Disable the legacy filtering stack
+      ENABLE_AMAVIS = 0;
+      ENABLE_SPAMASSASSIN = 0;
+      ENABLE_OPENDKIM = 0;
+      ENABLE_OPENDMARC = 0;
+      ENABLE_POLICYD_SPF = 0;
+      ENABLE_POSTGREY = 0;
+
+      # Accept spam, mark it and move to junk
+      MOVE_SPAM_TO_JUNK = 1;
+      MARK_SPAM_AS_READ = 1;
+      RSPAMD_GREYLISTING = 0;
+
       # Limits
       POSTFIX_MESSAGE_SIZE_LIMIT = 102400000;
+
       # SSL
       SSL_TYPE = "manual";
       SSL_KEY_PATH = "/ssl/main.key";
       SSL_CERT_PATH = "/ssl/main.crt";
+
     };
     # RELAY_HOST
     # RELAY_PORT
@@ -81,25 +102,8 @@ in {
       virtualFix = pkgs.writeText "postfix-main.cf" ''
         virtual_mailbox_domains = ${domainName}, ${lib.strings.concatStringsSep ", " extraHostnames}
       '';
-      amavis = pkgs.writeText "amavis.cf" ''
-        %final_destiny_by_ccat = (
-          CC_VIRUS,      D_DISCARD,
-          CC_SPAM,       D_DISCARD,
-          CC_BANNED,     D_BOUNCE,
-          CC_OVERSIZED,  D_BOUNCE,
-          CC_BADH.',1',  D_PASS,    # BAD HEADER: MIME error
-          CC_BADH.',2',  D_BOUNCE,  # BAD HEADER: nonencoded 8-bit character
-          CC_BADH.',3',  D_BOUNCE,  # BAD HEADER: contains invalid control character
-          CC_BADH.',4',  D_BOUNCE,  # BAD HEADER: line made up entirely of whitespace
-          CC_BADH.',5',  D_BOUNCE,  # BAD HEADER: line longer than RFC 5322 limit
-          CC_BADH.',6',  D_BOUNCE,  # BAD HEADER: syntax error
-          CC_BADH.',7',  D_BOUNCE,  # BAD HEADER: missing required header field
-          CC_BADH.',8',  D_PASS,    # BAD HEADER: duplicate header field
-          CC_BADH,       D_PASS,    # BAD HEADER
-          CC_UNCHECKED,  D_PASS,
-          CC_CLEAN,      D_PASS,
-          CC_CATCHALL,   D_PASS,
-        );
+      rspamdActions = pkgs.writeText "rspamd-actions.conf" ''
+        reject = null;
       '';
       configFolder = "/tmp/docker-mailserver";
     in [
@@ -110,8 +114,8 @@ in {
       "/data/bunker/data/containers/mail/config/:${configFolder}/"
       # Fix alias and relays
       "${virtualFix}:${configFolder}/postfix-main.cf:ro"
-      # Amavis configuration
-      "${amavis}:${configFolder}/amavis.cf:ro"
+      # Rspamd configuration
+      "${rspamdActions}:${configFolder}/rspamd/override.d/actions.conf:ro"
       # Locale
       "/etc/localtime:/etc/localtime:ro"
       # SSL
