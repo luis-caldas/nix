@@ -1,6 +1,6 @@
 { stdenv
 , inkscape
-, xorg
+, xcursorgen
 , reference
 , colours ? {
     accent = "#a0a0a0";
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     inkscape
-    xorg.xcursorgen
+    xcursorgen
   ];
 
   buildPhase = ''

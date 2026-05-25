@@ -4,9 +4,6 @@ lib.mkIf config.mine.graphics.enable
 
 {
 
-  # Set program to change backlight
-  programs.light.enable = true;
-
   # Enable weylus
   programs.weylus.enable = true;
   programs.weylus.users = [ config.mine.user.name ];

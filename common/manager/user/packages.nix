@@ -113,7 +113,7 @@ let
     element
     # Fetchers
     pfetch
-    neofetch
+    fastfetch
     screenfetch
   ];
 
@@ -240,7 +240,7 @@ let
     # Servers
     fileshare
     copyparty
-    nodePackages.http-server
+    http-server
     (writeScriptBin "pyftp" "${python3.withPackages (ps: [ps.pyftpdlib])}/bin/python -m pyftpdlib \"$@\"")
     # AI
     ollama

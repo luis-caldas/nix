@@ -39,7 +39,7 @@ in pkgs.dockerTools.buildImage {
   # Needed packages
   copyToRoot = with pkgs; [
     # HTTP Server
-    nodePackages.http-server
+    http-server
   ];
 
   # Build the project with this script
@@ -61,7 +61,7 @@ in pkgs.dockerTools.buildImage {
 
   # The start command
   config.Cmd = [
-    "${pkgs.nodePackages.http-server}/bin/http-server" "${projectFolder}" "-p" "${builtins.toString port}" "-i" "--log-ip" "-r" "--no-dotfiles"
+    "${pkgs.http-server}/bin/http-server" "${projectFolder}" "-p" "${builtins.toString port}" "-i" "--log-ip" "-r" "--no-dotfiles"
   ];
 
 }

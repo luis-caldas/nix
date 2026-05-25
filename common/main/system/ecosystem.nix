@@ -7,4 +7,10 @@
     mv = "mv -i";
   };
 
+  # Experimental features
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
 }

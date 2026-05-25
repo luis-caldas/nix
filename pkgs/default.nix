@@ -33,7 +33,7 @@ let
   };
 
   # Package scopes
-  packagesStable = pkgs // (pkgs.xorg or {}) // stablePackages;
+  packagesStable = pkgs // stablePackages;
   packagesUnstable = (pkgs.unstable or {}) // unstablePackages;
 
   # Create sets of package names and calls

@@ -358,7 +358,7 @@ let
     pwvucontrol
     # Patchers
     carla
-    helvum
+    helvum  # TODO 26.05 crosspipe
   ];
 
   streamingMusicPackages = with pkgs; [

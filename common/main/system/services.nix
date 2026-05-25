@@ -23,7 +23,7 @@
   # Remote access
   services.sunshine = lib.mkIf config.mine.graphics.sunshine {
     enable = true;
-    autostart = true;
+    autoStart = true;
     capSysAdmin = true;
   };
 
