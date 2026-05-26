@@ -549,6 +549,7 @@
           "ddkjiahejlhfcafbddmgiahcphecmpfh" # uBlock Origin v3
           "nngceckbapebfimnlniiiahkandclblb" # Bitwarden client
           "fnaicdffflnofjppbagibeoednhnbjhg" # Floccus bookmark manager
+          "edibdbjcniadpccecjdfdjjppcpchdlm" # I still don't care about cookies
           # "gbmdgpbipfallnflgajpaliibnhdgobh" # json viewer
           # "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # privacy badger
           # "padekgcemlokbadohgkifijomclgjgif" # switchy proxy omega
