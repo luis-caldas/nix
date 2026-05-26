@@ -132,6 +132,7 @@ in
       package = pkgs.vscodium-fhsWithPackages (ps: with ps; [
         rustup zlib openssl.dev pkg-config
         clang-tools
+        nixd nixfmt-rfc-style
       ]);
       # Normal
       profiles.default = {
