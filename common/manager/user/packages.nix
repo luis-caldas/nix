@@ -140,13 +140,14 @@ let
     readsb
     dump1090-fa
     # Input
-    rlwrap
     linuxConsoleTools
     # Bluetooth
     bluetooth_battery
   ];
 
   developmentPackages = with pkgs; [
+    # Input
+    rlwrap
     # Shell
     shellcheck
     shellharden
@@ -309,14 +310,14 @@ let
 in {
   home.packages = lib.lists.flatten [
     basePackages
-    hardwarePackages
     developmentPackages
     # Packages for non minimal systems
+    (lib.optionals (!osConfig.mine.minimal) hardwarePackages)
     (lib.optionals (!osConfig.mine.minimal) workstationPackages)
     # Packages for non ARM systems
     (lib.optionals (!pkgs.stdenv.hostPlatform.isAarch) flashingTools)
     # Minimal and non ARM
-    (lib.optionals ((!pkgs.stdenv.hostPlatform.isAarch && !osConfig.mine.minimal)) androidTools)
+    (lib.optionals (!pkgs.stdenv.hostPlatform.isAarch && !osConfig.mine.minimal) androidTools)
     # LaTeX support
     (lib.optionals osConfig.mine.tex texPackages)
     # Audio support

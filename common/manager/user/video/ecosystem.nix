@@ -1,4 +1,4 @@
-{ pkgs, lib, osConfig, config, ... }:
+{ pkgs, lib, osConfig, ... }:
 
 lib.mkIf osConfig.mine.graphics.enable
 
