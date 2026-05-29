@@ -84,6 +84,7 @@
 
       # Work
       "zoom"
+      "webex"
       "omnissa-horizon-client"
       "vmware-workstation"
 

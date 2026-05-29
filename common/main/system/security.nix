@@ -44,12 +44,11 @@
   services.gnome.gcr-ssh-agent.enable = lib.mkForce false;
 
   # Add my custom certificate authorities
-  security.pki.certificateFiles = pkgs.functions.listAllSuffixFiles "${pkgs.reference.projects.pub}/ssl" "pem";
+  security.pki.certificateFiles = pkgs.functions.listAllSuffixFilesRecursive "${pkgs.reference.projects.pub}/ssl" "pem";
 
   # Also set the paths for all the certificates so they stick
   environment.sessionVariables = {
     SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt";
   };
-
 
 }

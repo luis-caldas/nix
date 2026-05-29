@@ -36,8 +36,8 @@
         "sha256": "0f7s3yn42gmvizc83nv938b99gqgi9a7h366w9mradnkhf3sdyq1"
     },
     "mypub": {
-        "commit": "fda769b78d15ba5422fc8157dd3b71c85baac3dd",
-        "sha256": "0l25hn1il7c1pdpdlxj1jf59nlxn52j1f5zi85zjfjl8ybyg6h47"
+        "commit": "50a980ef6b052e45c6c1d679a56a112fd262cb87",
+        "sha256": "0nlg523fz32544dhmqsx89fmfzq21q4s6m0b3w930a6mwf7z4g4c"
     },
     "myshell": {
         "commit": "f84d5a8eb3018780d3798f5550d63f9ae5f17874",
