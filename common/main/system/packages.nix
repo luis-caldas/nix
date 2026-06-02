@@ -4,6 +4,9 @@
   # Simple packages to get any user going
   environment.systemPackages = with pkgs; [
 
+    # Default
+    util-linux
+
     # File
     tree
     file
@@ -37,6 +40,7 @@
     # Disks
     hdparm
     hddtemp
+    gptfdisk
     nvme-cli
     smartmontools
 
