@@ -37,13 +37,14 @@ lib.mkIf osConfig.mine.graphics.enable
 
     # Fonts
     fontsList = with pkgs; [
-      # Defaults
-      roboto roboto-slab roboto-serif roboto-mono roboto-flex
-      fira-code fira-code-symbols
-      # Mine
+      # Default
       courier-prime
+      # Mine
       apl386 bqn386
       atkinson-hyperlegible-next atkinson-hyperlegible-mono
+      # Sane
+      roboto roboto-slab roboto-serif roboto-mono roboto-flex
+      fira-code fira-code-symbols
       # Japanese
       sarasa-gothic
       # Needed
@@ -52,7 +53,7 @@ lib.mkIf osConfig.mine.graphics.enable
       corefonts vista-fonts liberation_ttf
       cascadia-code
       meslo-lg
-      roboto aileron
+      aileron
     ];
 
     # Icons
