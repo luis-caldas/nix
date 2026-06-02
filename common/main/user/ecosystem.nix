@@ -127,8 +127,8 @@ in
         enable = true;
         enableDefaultConfig = false;
         settings."*" = {  # All servers
-          serverAliveInterval = 60;
-          serverAliveCountMax = 5;
+          ServerAliveInterval = 60;
+          ServerAliveCountMax = 5;
         };
       };
 
