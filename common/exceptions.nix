@@ -114,9 +114,6 @@
       # For ESPHome, John & Scapy
       pkgs.python3Packages.ecdsa.name
 
-      # For Dolphin, Dislocker & RetroArch
-      pkgs.mbedtls_2.name
-
       # JDK & Switch USB Loader
       pkgs.gradle_7.name
 

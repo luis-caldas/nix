@@ -196,8 +196,6 @@ let
     moonlight-qt
     # Maintenance
     winbox4
-    # Web
-    electron
     # Chat
     discord
     signal-desktop
@@ -278,11 +276,6 @@ let
     gqrx
   ];
 
-  passwordManagerPackages = with pkgs; [
-    # Password manager
-    bitwarden-desktop
-  ];
-
   compatibilityApplications = with pkgs; [
     # IDE
     arduino
@@ -353,12 +346,12 @@ let
     # PipeWire
     easyeffects
     # Audio Control
+    coppwr
     paprefs
-    pipecontrol
     pwvucontrol
     # Patchers
     carla
-    helvum  # TODO 26.05 crosspipe
+    crosspipe
   ];
 
   streamingMusicPackages = with pkgs; [
@@ -403,8 +396,6 @@ in
       dictionaryPackages
       # Non minimal system packages
       (lib.optionals (!osConfig.mine.minimal) fullDesktopPackages)
-      # 64 bit only applications
-      (lib.optionals (pkgs.stdenv.hostPlatform.isx86_64) passwordManagerPackages)
       # Packages that do not work on arm
       (lib.optionals (!pkgs.stdenv.hostPlatform.isAarch) compatibilityApplications)
       # Software production software

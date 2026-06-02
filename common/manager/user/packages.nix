@@ -58,7 +58,7 @@ let
     pdfgrep
     poppler-utils
     # Speed Test
-    fast-cli
+    fast-cli-zig
     # Web
     w3m
     # Download
@@ -282,6 +282,8 @@ let
   androidTools = with pkgs; [
     # Android programs
     apktool
+    # ADB
+    android-tools
   ];
 
   texPackages = with pkgs; [

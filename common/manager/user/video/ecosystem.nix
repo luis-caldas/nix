@@ -128,12 +128,12 @@ in
     };
 
     # Enable vscode
-    vscode = {
+    vscodium = {
       enable = true;
       package = pkgs.vscodium-fhsWithPackages (ps: with ps; [
         rustup zlib openssl.dev pkg-config
         clang-tools
-        nixd nixfmt-rfc-style
+        nixd nixfmt
       ]);
       # Normal
       profiles.default = {
@@ -188,10 +188,6 @@ in
         ];
         # User settings
         userSettings = pkgs.reference.more.codium.settings;
-      };
-      haskell = {
-        enable = true;
-        hie.enable = false;
       };
     };
 

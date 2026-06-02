@@ -24,7 +24,7 @@
   networking.enableIPv6 = lib.mkForce false;
 
   # Handle resolved if it is enabled
-  services.resolved.fallbackDns = lib.mkForce [];
+  services.resolved.settings.Resolve.FallbackDNS = lib.mkForce [];
 
   # Firewall configuration
   networking.firewall.enable = config.mine.network.firewall.enable;

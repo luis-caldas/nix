@@ -69,7 +69,6 @@
     unixtools.xxd
 
     # Editor
-    neovim
     hexedit
 
     # Monitor
@@ -86,7 +85,7 @@
     lsof
     psmisc
     sysstat
-    # witr  # TODO 26.05
+    witr
 
     # Stress
     stress

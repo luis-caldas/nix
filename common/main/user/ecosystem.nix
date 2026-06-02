@@ -27,6 +27,8 @@ let
       viAlias = true;
       vimAlias = true;
       vimdiffAlias = true;
+      withRuby = true;
+      withPython3 = true;
       plugins = with pkgs.vimPlugins; [
         coc-nvim
         vim-nix
@@ -41,9 +43,6 @@ let
 
 in
 {
-
-  # Enable ADB debugging
-  programs.adb.enable = !pkgs.stdenv.hostPlatform.isAarch;
 
   # Add Wireshark
   programs.wireshark.enable = config.mine.graphics.enable;
@@ -80,13 +79,15 @@ in
       altBase = "$HOME/play";
     in {
       enable = true;
+      setSessionVariables = true;
+      #
       desktop = "${commonBase}/desktop";
       documents = "${commonBase}/docs";
       download = "${commonBase}/downloads";
       music = "${commonBase}/mus";
       pictures = "${commonBase}/pics";
       videos = "${commonBase}/vids";
-      # projects = "${altBase}/projects";  # TODO 26.05
+      projects = "${altBase}/projects";
       publicShare = "${altBase}/pub";
       templates = "${altBase}/templates";
     };
@@ -125,7 +126,7 @@ in
       ssh = {
         enable = true;
         enableDefaultConfig = false;
-        matchBlocks."*" = {  # All servers
+        settings."*" = {  # All servers
           serverAliveInterval = 60;
           serverAliveCountMax = 5;
         };
