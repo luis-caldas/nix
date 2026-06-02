@@ -10,16 +10,16 @@ lib.mkIf osConfig.mine.games
   # AMD64 only games
   (if (!pkgs.stdenv.hostPlatform.isAarch) then [
 
-    # Dwarf Fortress
-    (pkgs.dwarf-fortress-packages.dwarf-fortress-full.override {
-      theme = null;
-      enableIntro = false;
-      enableFPS = true;
-      enableDFHack = false;
-      enableStoneSense = false;
-      enableTWBT = false;
-      enableTextMode = true;
-    })
+    # Dwarf Fortress  # BUG Broken
+    # (pkgs.dwarf-fortress-packages.dwarf-fortress-full.override {
+    #   theme = null;
+    #   enableIntro = false;
+    #   enableFPS = true;
+    #   enableDFHack = false;
+    #   enableStoneSense = false;
+    #   enableTWBT = false;
+    #   enableTextMode = true;
+    # })
 
   ] else []);
 

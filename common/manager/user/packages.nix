@@ -177,7 +177,7 @@ let
     # Fuzz
     ffuf
     # Analysis
-    python3Packages.angr
+    # python3Packages.angr  # BUG Broken
     # XML & YAML
     libxml2
     yamllint
