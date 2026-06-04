@@ -69,6 +69,9 @@ in {
   # Unset the default console font
   console.font = "";
 
+  # Keyboard
+  console.keyMap = lib.mkForce "uk";
+
   # Main boot configuration
   boot = rec {
 
