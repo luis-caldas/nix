@@ -333,6 +333,7 @@ in {
     { device = "into/safe/keys";
       fsType = "zfs";
       neededForBoot = true;
+      options = [ "ro" "nodev" "nosuid" "noexec" ];
     };
 
   # System
