@@ -10,13 +10,10 @@ let
     networks.front
   ];
   externalNetworks = [
-    # Portainer
-    networks.manage
     # Asterisk
     networks.asterisk
     # Monitor
-    networks.monitor.grafana
-    networks.monitor.kuma
+    networks.monitor
   ];
 
 in {

@@ -10,8 +10,6 @@ let
     networks.front
   ];
   externalNetworks = [
-    # Manage
-    networks.manage
     # Cloud
     networks.cloud.default
     # Download
