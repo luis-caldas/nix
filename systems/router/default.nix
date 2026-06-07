@@ -5,8 +5,8 @@
     # Interfaces
     one = "enp5s0";
     ten = {
-      outside = "enp6s0f0";
-      inside = "enp6s0f1";
+      outside = "enp6s0f0np0";
+      inside = "enp6s0f1np1";
     };
     # Bridges
     bridges = {
@@ -53,13 +53,11 @@
         "${default}" = [
           # Front
           "front"  # Only for proxy use
-          # Manage
-          "manage"
+          # Monitor
+          "monitor"
           # Asterisk
           "asterisk"
         ];
-        # Monitor
-        monitor = [ "grafana" "kuma" ];
       };
     });
 
@@ -69,12 +67,8 @@
       app = [
         # Front
         "front"
-        # Portainer
-        "portainer"
-        # Time
-        "time"
         # Monitoring
-        "monitor" "kuma"
+        "monitor"
       ];
       # Asterisk
       asterisk = {

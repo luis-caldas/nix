@@ -20,8 +20,6 @@
         "${default}" = [
           # Front
           "front"  # Only for proxy use
-          # Manage
-          "manage"
           # Share
           "share"
           # List
@@ -41,8 +39,6 @@
         git = [ default "internal" ];
         # Media
         media = [ "jellyfin" "komga" "navidrome" "simple" ];
-        # Recipe
-        recipe = [ default "internal" ];
         # Social
         social = {
           default = [ default "internal" "admin" ];
@@ -51,8 +47,6 @@
             value = [ default "internal" ];
           }) apps);
         };
-        # Workout
-        workout = [ default "internal" "database" ];
       };
     });
 
@@ -60,8 +54,6 @@
     names = pkgs.functions.container.createNames { dataIn = {
       # Non split containers
       app = [
-        # Manage
-        "portainer"
         # Share
         "samba" "shout"
         # Media
@@ -70,8 +62,6 @@
         "list"
         # News
         "fresh"
-        # Gaming
-        "emulator"
         # Music
         "music"
         # Vault
@@ -86,13 +76,6 @@
           "bypass" "fetch" "series" "films" "music" "subtitles"
         ];
       };
-      # Workout
-      wger = {
-        app = [ "app" "cache" "database" "web" ];
-        celery = [ "worker" "beat" "flower" ];
-      };
-      # Recipe
-      tandoor = [ "app" "database" ];
       # Git
       gitea = [ "app" "database" ];
       # Social

@@ -35,34 +35,7 @@ with shared;
     ];
 
     # Networking
-    networks = [ networks.monitor.grafana ];
-
-  };
-
-       #############
-  ### # Uptime Kuma # ###
-       #############
-
-  services."${names.kuma}".service = {
-
-    # Image
-    image = "louislam/uptime-kuma:latest";
-
-    # Hostname
-    hostname = names.kuma;
-
-    # Environment
-    environment = {
-      TZ = config.mine.system.timezone;
-    };
-
-    # Volumes
-    volumes = [
-      "/data/local/containers/kuma/config:/app/data"
-    ];
-
-    # Networking
-    networks = [ networks.monitor.kuma ];
+    networks = [ networks.monitor ];
 
   };
 
