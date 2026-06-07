@@ -139,10 +139,6 @@ in {
       ssh = true;
       snapshot = true;
       docker.enable = true;
-      prometheus = {
-        enable = true;
-        password = "/data/local/prometheus/pass";
-      };
     };
   };
 

@@ -53,8 +53,6 @@
         "${default}" = [
           # Front
           "front"  # Only for proxy use
-          # Monitor
-          "monitor"
           # Asterisk
           "asterisk"
         ];
@@ -67,8 +65,6 @@
       app = [
         # Front
         "front"
-        # Monitoring
-        "monitor"
       ];
       # Asterisk
       asterisk = {
@@ -114,10 +110,6 @@ in {
       docker.enable = true;
       virtual.enable = true;
       virtual.remote = true;
-      prometheus = {
-        enable = true;
-        password = "/data/local/prometheus/pass";
-      };
     };
   };
 

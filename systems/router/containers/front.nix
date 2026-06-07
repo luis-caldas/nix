@@ -12,8 +12,6 @@ let
   externalNetworks = [
     # Asterisk
     networks.asterisk
-    # Monitor
-    networks.monitor
   ];
 
 in {
