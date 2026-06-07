@@ -267,39 +267,6 @@
 
       fwupd = mkEnableOption "Firmware Update";
 
-      prometheus = {
-
-        enable = mkEnableOption "Prometheus";
-
-        collectors = mkOption {
-          description = "Extra collectors for the Prometheus node exporter.";
-          type = listOf str;
-          default = [];
-        };
-
-        password = mkOption {
-          description = "Location of the Prometheus password file in bcrypt format.";
-          type = str;
-          default = "";
-        };
-
-        ssl = {
-
-          cert = mkOption {
-            description = "Location of the Prometheus SSL certificate file.";
-            type = str;
-            default = "";
-          };
-          key = mkOption {
-            description = "Location of the Prometheus SSL key file.";
-            type = str;
-            default = "";
-          };
-
-        };
-
-      };
-
       # Virtualisation configuration
       virtual = {
 
