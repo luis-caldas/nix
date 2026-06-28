@@ -180,7 +180,7 @@ let
     # QR Code
     zbar
     # Music
-    feishin
+    # feishin  # BUG Broken
     # Video player
     vlc
     mpv
@@ -197,7 +197,7 @@ let
     winbox4
     # Chat
     discord
-    signal-desktop
+    # signal-desktop  # BUG Broken
     element-desktop
     # Voice
     mumble
