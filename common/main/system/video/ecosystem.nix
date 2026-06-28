@@ -8,6 +8,12 @@ lib.mkIf config.mine.graphics.enable
   programs.weylus.enable = true;
   programs.weylus.users = [ config.mine.user.name ];
 
+  # Email
+  programs.evolution = {
+    enable = true;
+    plugins = [ pkgs.evolution-ews ];
+  };
+
   # Enable Chromium custom configs
   programs.chromium = {
 
@@ -30,11 +36,6 @@ lib.mkIf config.mine.graphics.enable
     extraOpts = pkgs.reference.more.chromium.policies.managed // config.mine.browser.policies;
 
   };
-
-  # Enable Widevine
-  environment.systemPackages = with pkgs; [
-    (chromium.override { enableWideVine = true; })
-  ];
 
   # Add recommended policies as well
   environment.etc."chromium/policies/recommended/default.json".text = builtins.toJSON {};

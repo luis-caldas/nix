@@ -117,14 +117,7 @@ in
     # Enable Chromium
     chromium = {
       enable = true;
-      package = let
-        name = osConfig.mine.browser.name;
-      in if builtins.hasAttr name pkgs.custom then
-        pkgs.custom.${name}
-      else if builtins.hasAttr name pkgs.unstable then
-        pkgs.unstable.${name}
-      else
-        pkgs.${name};
+      package = pkgs."${osConfig.mine.browser.name}".override { enableWideVine = true; };
     };
 
     # Enable vscode

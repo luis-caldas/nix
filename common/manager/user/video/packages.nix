@@ -59,7 +59,6 @@ let
     collision
     # Email
     geary
-    evolution
     # Organising
     citations
     dialect
