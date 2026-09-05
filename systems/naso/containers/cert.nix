@@ -19,9 +19,6 @@ with shared;
     # Image
     image = "certimate/certimate:latest";
 
-    # DNS
-    dns = pkgs.networks.dns;
-
     # Volumes
     volumes = [
       # Application data

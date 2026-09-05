@@ -68,8 +68,8 @@ in {
 
       # SSL
       SSL_TYPE = "manual";
-      SSL_KEY_PATH = "/ssl/main.key";
-      SSL_CERT_PATH = "/ssl/main.crt";
+      SSL_KEY_PATH = "/certificates/cert.key";
+      SSL_CERT_PATH = "/certificates/cert.crt";
 
     };
     # RELAY_HOST
@@ -119,7 +119,7 @@ in {
       # Locale
       "/etc/localtime:/etc/localtime:ro"
       # SSL
-      "/data/local/containers/mail/ssl:/ssl:ro"
+      "/data/local/containers/cert/ssl/mail:/certificates:ro"
     ];
 
     # Internal routing to web
