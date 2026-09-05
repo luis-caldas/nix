@@ -20,6 +20,8 @@
         "${default}" = [
           # Front
           "front"  # Only for proxy use
+          # Cert
+          "cert"
           # Share
           "share"
           # List
@@ -54,6 +56,8 @@
     names = pkgs.functions.container.createNames { dataIn = {
       # Non split containers
       app = [
+        # Certificates
+        "cert"
         # Share
         "samba" "shout"
         # Media

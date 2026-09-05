@@ -10,6 +10,8 @@ let
     networks.front
   ];
   externalNetworks = [
+    # Certificate
+    networks.cert
     # Cloud
     networks.cloud.default
     # Download
