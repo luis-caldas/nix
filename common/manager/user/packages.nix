@@ -70,7 +70,6 @@ let
     atftp
     samba
     # DNS
-    bind
     knot-dns
     # Web Monitor
     nload

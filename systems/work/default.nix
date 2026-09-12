@@ -66,7 +66,6 @@
     production = {
       audio = true;
       models = true;
-      software = true;
       business = true;
       electronics = true;
     };

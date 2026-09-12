@@ -120,6 +120,7 @@
     wget
 
     # Networking
+    ldns
     nmap
     hping
     socat
