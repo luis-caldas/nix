@@ -512,11 +512,11 @@
         description = "Extensions for all installations.";
         type = listOf str;
         default = [
-          "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
-          "ddkjiahejlhfcafbddmgiahcphecmpfh" # uBlock Origin v3
           "nngceckbapebfimnlniiiahkandclblb" # Bitwarden client
-          "fnaicdffflnofjppbagibeoednhnbjhg" # Floccus bookmark manager
           "edibdbjcniadpccecjdfdjjppcpchdlm" # I still don't care about cookies
+          # "fnaicdffflnofjppbagibeoednhnbjhg" # Floccus bookmark manager
+          # "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
+          # "ddkjiahejlhfcafbddmgiahcphecmpfh" # uBlock Origin v3
           # "gbmdgpbipfallnflgajpaliibnhdgobh" # json viewer
           # "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # privacy badger
           # "padekgcemlokbadohgkifijomclgjgif" # switchy proxy omega
@@ -530,7 +530,7 @@
         description = "Flags to enable.";
         type = listOf str;
         default = [
-          "enable-extension-autoupdate"
+          # "enable-extension-autoupdate" # ungoogled-chromium
         ];
       };
 
@@ -547,13 +547,13 @@
       name = mkOption {
         description = "Browser name or command.";
         type = str;
-        default = "chromium";
+        default = "brave";
       };
 
       icon = mkOption {
         description = "Browser icon.";
         type = str;
-        default = "browser360-beta";
+        default = "brave-browser";
       };
 
       others = mkOption {
@@ -563,7 +563,7 @@
 
           # The main installation
           { name = "main";
-            extensions = [ "bjilljlpencdcpihofiobpnfgcakfdbe" ];  # Clear Browsing Data
+            extensions = [ ];  # Clear Browsing Data
             key = "N";
           }
 

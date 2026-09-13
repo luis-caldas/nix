@@ -4,8 +4,29 @@
 
     "managed": {
 
-      "SyncDisabled": true,
-      "BrowserSignin": 0,
+
+      "DefaultBrowserSettingEnabled": false,
+
+      "ExtensionSettings": {
+        "nngceckbapebfimnlniiiahkandclblb": {
+          "toolbar_pin": "force_pinned"
+        }
+      },
+
+      "BraveRewardsDisabled": true,
+      "BraveWalletDisabled": true,
+      "BraveVPNDisabled": true,
+      "BraveAIChatEnabled": false,
+      "BraveNewsDisabled": true,
+      "BraveTalkDisabled": true,
+      "BravePlaylistEnabled": false,
+      "TorDisabled": true,
+      "BraveSpeedreaderEnabled": false,
+      "BraveWaybackMachineEnabled": false,
+      "BraveP3AEnabled": false,
+      "BraveStatsPingEnabled": false,
+      "BraveWebDiscoveryEnabled": false,
+
       "BackgroundModeEnabled": false,
 
       "AllowDinosaurEasterEgg": false,
@@ -27,6 +48,8 @@
       "AutofillCreditCardEnabled": false,
       "AutofillAddressEnabled": false,
       "MetricsReportingEnabled": false,
+      "SafeBrowsingExtendedReportingEnabled": false,
+      "UrlKeyedAnonymizedDataCollectionEnabled": false,
       "PaymentMethodQueryEnabled": false,
 
       "CAPlatformIntegrationEnabled": true,
@@ -60,7 +83,12 @@
     },
 
     "recommended": {
-      "SpellcheckEnabled": true
+
+      "SpellcheckEnabled": true,
+
+      "SyncDisabled": false,
+      "BrowserSignin": 1
+
     }
 
   },
