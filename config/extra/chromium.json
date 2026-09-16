@@ -26,6 +26,7 @@
       "BraveP3AEnabled": false,
       "BraveStatsPingEnabled": false,
       "BraveWebDiscoveryEnabled": false,
+      "DefaultBraveAdblockSetting": 2,
 
       "BackgroundModeEnabled": false,
 
