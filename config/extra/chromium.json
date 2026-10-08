@@ -77,7 +77,7 @@
         "autofill"
       ],
 
-      "ComponentUpdatesEnabled": false,
+      "ComponentUpdatesEnabled": true,
 
       "ExtensionManifestV2Availability": 2
 
