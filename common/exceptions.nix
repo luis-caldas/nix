@@ -89,7 +89,7 @@
       "vmware-workstation"
 
       # Fonts
-      "corefonts" "vista-fonts"
+      "corefonts" "vista-fonts" "helvetica-neue-lt-std"
 
       # Office
       "aspell-dict-en-science"

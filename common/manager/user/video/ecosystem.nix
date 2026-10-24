@@ -50,6 +50,7 @@ lib.mkIf osConfig.mine.graphics.enable
       # Needed
       noto-fonts noto-fonts-color-emoji
       # Extra
+      helvetica-neue-lt-std
       corefonts vista-fonts liberation_ttf
       cascadia-code
       meslo-lg
