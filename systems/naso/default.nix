@@ -84,7 +84,7 @@
       gitea = [ "app" "database" ];
       # Social
       matrix = {
-        app = [ "app" "database" "admin" ];
+        app = [ "app" "database" "admin" "jwt" ];
         bridge = {
           app = apps;
           database = apps;

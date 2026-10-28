@@ -50,6 +50,7 @@ in {
     volumes = [
       "${paths.safe.matrix}/main:/data"
       "${paths.local.bridge}:/bridge"
+      "${paths.local.matrix}/jwt:/jwt"
     ];
     # Networking
     networks = [
@@ -83,6 +84,29 @@ in {
     ];
     # Networking
     networks = [ networks.social.internal ];
+  };
+
+       #####
+  ### # JWT # ###
+       #####
+
+  services."${names.matrix.jwt}".service = {
+    # Image
+    image = "ghcr.io/element-hq/lk-jwt-service:latest";
+    # Dependency
+    depends_on = [ names.matrix.app ];
+    # Secrets
+    env_file = [
+      "${paths.local.matrix}/jwt/environment.env"
+    ];
+    # Configuration
+    volumes = [
+      "${paths.local.matrix}/jwt:/jwt:ro"
+    ];
+    # Networking
+    networks = [
+      networks.social.default
+    ];
   };
 
        #################
