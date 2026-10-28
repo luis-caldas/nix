@@ -92,6 +92,10 @@ in {
   services."${names.cloud.maria}".service = {
     # Image
     image = "mariadb:lts";
+    # Options
+    command = [
+      "--innodb-log-file-size=256M"
+    ];
     # Environment
     environment = {
       TZ = config.mine.system.timezone;
