@@ -132,17 +132,7 @@ in
         };
       };
 
-    } //
-    # Configure ncspot
-    (if config.mine.audio then {
-      ncspot = {
-        enable = true;
-        settings = {
-          gapless = true;
-          notify = true;
-        };
-      };
-    } else {});
+    };
 
     # Add Arduino libraries
     home.file = if (

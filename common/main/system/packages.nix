@@ -63,6 +63,7 @@
 
     # Data
     pv
+    ripgrep
 
     # Printing
     ccze
