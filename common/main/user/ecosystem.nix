@@ -113,6 +113,7 @@ in
       # Configure Git
       git = {
         enable = true;
+        delta.enable = true;
         settings = {
           user.name = config.mine.user.git.name;
           user.email = config.mine.user.git.email;
