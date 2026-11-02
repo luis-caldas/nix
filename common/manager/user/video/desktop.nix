@@ -501,19 +501,28 @@ in {
       switch-windows = [ "<Alt>Tab" ];
       switch-windows-backward = [ "<Shift><Alt>Tab" ];
     } //
+    # Arrows movement
+    {
+      # Switch
+      switch-to-workspace-left = [ "<Control><Super>Left" ];
+      switch-to-workspace-right = [ "<Control><Super>Right" ];
+      # Move
+      move-to-workspace-left = [ "<Control><Shift><Super>Left" ];
+      move-to-workspace-right = [ "<Control><Shift><Super>Right" ];
+    } //
     # Workspace specific parts
     builtins.listToAttrs (
 
       # Switching workspaces
       (map (eachIndex:
         { name = "switch-to-workspace-${eachIndex}"; value = [
-          "<Super>${eachIndex}" "<Super><Alt>${eachIndex}" "<Control><Alt>${eachIndex}"
+          "<Super>${eachIndex}"
         ]; }
       ) (genStrRange (builtins.length osConfig.mine.graphics.workspaces))) ++
       # Moving workspaces
       (map (eachIndex:
         { name = "move-to-workspace-${eachIndex}"; value = [
-          "<Super><Shift>${eachIndex}" "<Super><Shift><Alt>${eachIndex}" "<Control><Shift><Alt>${eachIndex}"
+          "<Super><Shift>${eachIndex}"
         ]; }
       ) (genStrRange (builtins.length osConfig.mine.graphics.workspaces)))
     );
