@@ -34,7 +34,7 @@ let
     gnome-contacts
     gnome-calculator
     epiphany
-    errands
+    # errands  # BUG Broken
     # Monitor
     gnome-system-monitor
     # Web
@@ -179,8 +179,6 @@ let
     inkscape
     # QR Code
     zbar
-    # Music
-    # feishin  # BUG Broken
     # Video player
     vlc
     mpv
@@ -196,8 +194,6 @@ let
     # Maintenance
     winbox4
     # Chat
-    discord
-    # signal-desktop  # BUG Broken
     element-desktop
     # Voice
     mumble

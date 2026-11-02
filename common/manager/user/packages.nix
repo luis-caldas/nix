@@ -239,7 +239,7 @@ let
     mitmproxy
     # Servers
     fileshare
-    copyparty
+    # copyparty  # BUG Broken
     http-server
     (writeScriptBin "pyftp" "${python3.withPackages (ps: [ps.pyftpdlib])}/bin/python -m pyftpdlib \"$@\"")
     # AI
