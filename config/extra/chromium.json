@@ -104,10 +104,10 @@
 
     "webkit": {
       "webprefs": {
-        "default_fixed_font_size": 12,
-        "default_font_size": 12,
+        "default_fixed_font_size": 13,
+        "default_font_size": 16,
         "fonts": {
-          "fixed": { "Zyyy": "Mono" },
+          "fixed": { "Zyyy": "Monospace" },
           "sansserif": { "Zyyy": "Sans" },
           "serif": { "Zyyy": "Serif" },
           "standard": { "Zyyy": "Sans" }
