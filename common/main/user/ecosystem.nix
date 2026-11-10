@@ -113,7 +113,6 @@ in
       # Configure Git
       git = {
         enable = true;
-        delta.enable = true;
         settings = {
           user.name = config.mine.user.git.name;
           user.email = config.mine.user.git.email;
@@ -121,6 +120,12 @@ in
           init.defaultBranch = "master";
         };
         package = pkgs.gitFull;
+      };
+
+      # Delta
+      delta = {
+        enable = true;
+        enableGitIntegration = true;
       };
 
       # SSH configuration
