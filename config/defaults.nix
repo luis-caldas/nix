@@ -514,9 +514,9 @@
         default = [
           "nngceckbapebfimnlniiiahkandclblb" # Bitwarden client
           "edibdbjcniadpccecjdfdjjppcpchdlm" # I still don't care about cookies
-          # "fnaicdffflnofjppbagibeoednhnbjhg" # Floccus bookmark manager
+          "fnaicdffflnofjppbagibeoednhnbjhg" # Floccus bookmark manager
+          "ddkjiahejlhfcafbddmgiahcphecmpfh" # uBlock Origin v3
           # "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
-          # "ddkjiahejlhfcafbddmgiahcphecmpfh" # uBlock Origin v3
           # "gbmdgpbipfallnflgajpaliibnhdgobh" # json viewer
           # "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # privacy badger
           # "padekgcemlokbadohgkifijomclgjgif" # switchy proxy omega
@@ -538,22 +538,22 @@
         description = "Flags to disable.";
         type = listOf str;
         default = [
-          "global-shortcuts-portal"
-          "restrict-gamepad-access"
-          "system-keyboard-protection"
+          "global-shortcuts-portal"     # Gnome
+          # "restrict-gamepad-access"     # Cromite
+          # "system-keyboard-protection"  # Cromite
         ];
       };
 
       name = mkOption {
         description = "Browser name or command.";
         type = str;
-        default = "brave";
+        default = "chromium";
       };
 
       icon = mkOption {
         description = "Browser icon.";
         type = str;
-        default = "brave-browser";
+        default = "browser360-beta";
       };
 
       others = mkOption {
@@ -563,7 +563,9 @@
 
           # The main installation
           { name = "main";
-            extensions = [ ];  # Clear Browsing Data
+            extensions = [
+              "bjilljlpencdcpihofiobpnfgcakfdbe"  # Clear Browsing Data
+            ];
             key = "N";
           }
 

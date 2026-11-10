@@ -118,7 +118,7 @@ in
     # Enable Chromium
     chromium = {
       enable = true;
-      package = pkgs.brave;
+      package = pkgs."${osConfig.mine.browser.name}".override { enableWideVine = true; };
     };
 
     # Enable vscode
