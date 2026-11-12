@@ -32,24 +32,12 @@ lib.mkIf osConfig.mine.graphics.enable
     # Create Chromium applications from a list
     builtins.listToAttrs (lib.lists.imap0 (index: eachBrowser: let
       extraBrowserInfo = builtins.elemAt browsersNewInfo index;
-      features = let
-        flag = {
-          enable = "--enable-features";
-          disable = "--disable-features";
-        };
-        build = inFlag: listItems:
-          "${inFlag}=${
-            lib.strings.concatStringsSep "," (
-              map (inString:
-                (builtins.replaceStrings [" "] [""]
-                  (pkgs.functions.capitaliseString
-                    (builtins.replaceStrings ["-"] [" "] inString)))
-              ) listItems
-            )
-          }";
-      in lib.strings.concatStringsSep " " (
-        [(build flag.enable osConfig.mine.browser.enableFlags)
-        (build flag.disable osConfig.mine.browser.disableFlags)]
+      features = lib.concatStringsSep " " (
+        (lib.optional (osConfig.mine.browser.enableFlags != [])
+          "--enable-features=${lib.concatStringsSep "," osConfig.mine.browser.enableFlags}")
+        ++
+        (lib.optional (osConfig.mine.browser.disableFlags != [])
+          "--disable-features=${lib.concatStringsSep "," osConfig.mine.browser.disableFlags}")
       );
     in {
       name = extraBrowserInfo.name;

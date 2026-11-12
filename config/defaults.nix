@@ -529,18 +529,18 @@
       enableFlags = mkOption {
         description = "Flags to enable.";
         type = listOf str;
-        default = [
-          # "enable-extension-autoupdate" # ungoogled-chromium
-        ];
+        default = [];
       };
 
       disableFlags = mkOption {
         description = "Flags to disable.";
         type = listOf str;
         default = [
-          "global-shortcuts-portal"     # Gnome
-          # "restrict-gamepad-access"     # Cromite
-          # "system-keyboard-protection"  # Cromite
+          "GlobalShortcutsPortal"       # GNOME
+          "WebUIOmniboxPopup"           # Font mismatch
+          "SessionRestoreInfobar"       # Session restore suggestion
+          # "RestrictGamepadAccess"     # Cromite
+          # "SystemKeyboardProtection"  # Cromite
         ];
       };
 
