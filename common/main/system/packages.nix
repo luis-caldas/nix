@@ -121,6 +121,7 @@
     wget
 
     # Networking
+    dig
     ldns
     nmap
     hping

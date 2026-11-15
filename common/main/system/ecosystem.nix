@@ -6,8 +6,6 @@
     # Simple
     cp = "cp -i";
     mv = "mv -i";
-    # Extra
-    dig = "drill";
   };
 
   # Experimental features
