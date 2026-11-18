@@ -227,6 +227,7 @@ in {
         customize-clock-on-lock-screen
         appindicator
         smart-home
+        tiling-assistant
         # Mine
         pkgs.custom.gnome-legacy-gtk
       ]);

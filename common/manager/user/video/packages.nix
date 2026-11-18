@@ -143,6 +143,7 @@ let
     gnomeExtensions.customize-clock-on-lock-screen
     gnomeExtensions.appindicator
     gnomeExtensions.smart-home
+    gnomeExtensions.tiling-assistant
     #
     custom.gnome-legacy-gtk
   ];
