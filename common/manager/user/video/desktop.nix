@@ -145,7 +145,7 @@ in {
         builtins.getAttr each defaultApplications
       else
         each
-    ) osConfig.mine.graphics.favourites;
+    ) (osConfig.mine.graphics.favourites ++ osConfig.mine.graphics.favoured);
     "org/gnome/mutter" = {
       dynamic-workspaces = false;
       edge-tiling = true;

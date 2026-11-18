@@ -469,6 +469,12 @@
         ];
       };
 
+      favoured = mkOption {
+        description = "Extra favourites to add.";
+        type = listOf str;
+        default = [];
+      };
+
       keybindings = mkOption {
         description = "Extra keybindings to launch applications, which can be generic application names.";
         type = attrsOf (oneOf [ str (attrsOf str) ]);
