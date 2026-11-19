@@ -71,7 +71,6 @@
     };
     audio = true;
     bluetooth = true;
-    games = true;
   };
 
   # File systems
