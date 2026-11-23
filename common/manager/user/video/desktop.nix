@@ -111,17 +111,35 @@ in {
     backgroundPaths = let
       # Naming of files
       files = {
-        light = "main-light.png";
-        dark = "main-dark.png";
+        light = "main-tiled-light.png";
+        dark = "main-tiled-dark.png";
       };
+
       # Directory to all wallpapers
       wallpapersDir = "${pkgs.reference.projects.images}/wallpapers";
+
       # Function to generate the file URL
-      genUrlPath = imagePath: "file://${wallpapersDir}/${imagePath}";
-    in
-      { light = genUrlPath files.light;
-        dark  = genUrlPath files.dark;
-      };
+      genUrlPath = imagePath: let
+        # Original wallpaper path
+        source = "${wallpapersDir}/${imagePath}";
+
+        # Generate a wallpaper if the image is tiled
+        path =
+          if pkgs.lib.hasInfix "tiled" imagePath then
+            pkgs.runCommand "wallpaper-${imagePath}" {
+              nativeBuildInputs = [pkgs.imagemagick];
+            } ''
+              magick -size 5120x2880 \
+                "tile:${source}" "PNG:$out"
+            ''
+          else
+            source;
+      in
+        "file://${path}";
+    in {
+      light = genUrlPath files.light;
+      dark = genUrlPath files.dark;
+    };
 
   in lib.mkMerge [
 
