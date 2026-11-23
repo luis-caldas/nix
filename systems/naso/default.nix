@@ -41,14 +41,6 @@
         git = [ default "internal" ];
         # Media
         media = [ "jellyfin" "komga" "navidrome" "simple" ];
-        # Social
-        social = {
-          default = [ default "internal" "admin" ];
-          bridge = builtins.listToAttrs (map (item: {
-            name = item;
-            value = [ default "internal" ];
-          }) apps);
-        };
       };
     });
 
@@ -82,14 +74,6 @@
       };
       # Git
       gitea = [ "app" "database" ];
-      # Social
-      matrix = {
-        app = [ "app" "database" "admin" "jwt" ];
-        bridge = {
-          app = apps;
-          database = apps;
-        };
-      };
       # Mail
       mail = [ "app" "web" ];
       # Cloud

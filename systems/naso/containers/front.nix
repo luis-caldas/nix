@@ -28,9 +28,6 @@ let
     networks.media.simple
     # List
     networks.list
-    # Social
-    networks.social.default
-    networks.social.admin
     # News
     networks.news
     # Mail
