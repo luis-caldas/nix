@@ -76,7 +76,6 @@ let
     # Password
     bitwarden-cli
     # Messaging
-    iamb
     irssi
     # AI
     chatgpt-cli

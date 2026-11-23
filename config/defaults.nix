@@ -364,7 +364,7 @@
         chat = mkOption {
           description = "Default chat application desktop entry.";
           type = str;
-          default = "org.gnome.Fractal.desktop";
+          default = "com.github.dagmoller.whatsapp-electron.desktop";
         };
 
         text = mkOption {
@@ -598,7 +598,7 @@
           { name = "chess-web"; icon = "chess"; url = "https://chess.com"; }
           { name = "youtube-web"; icon = "youtube"; url = "https://www.youtube.com"; }
           { name = "youtube-music-web"; icon = "youtube-music"; url = "https://music.youtube.com"; }
-          { name = "chat"; icon = "internet-chat"; url = "https://chatgpt.com/"; }
+          { name = "chat"; icon = "utools"; url = "https://chatgpt.com/"; }
           { name = "suno"; icon = "atunes"; url = "https://suno.com/"; }
           { name = "defence-forces"; icon = "europa-universalis-IV"; url = "https://irishdefenceforces.workvivo.com"; }
         ];

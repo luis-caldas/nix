@@ -196,6 +196,7 @@ let
     winbox4
     # Chat
     element-desktop
+    whatsapp-electron
     # Voice
     mumble
     # Documents
