@@ -3,9 +3,6 @@ let
 
   allUps = rec {
 
-    # Wait time for shutdown on client machines
-    shutdownWait = 3 * 60;  # Seconds
-
     # Path to be used
     path = "/var/lib/nut";
 
@@ -23,7 +20,7 @@ let
     '';
 
     # UPS scheduler configuration
-    clientSched = pkgs.writeText "client-schedule" ''
+    clientSched = shutdownWait: pkgs.writeText "client-schedule" ''
       CMDSCRIPT ${clientScript}
 
       PIPEFN ${path}/upssched.pipe

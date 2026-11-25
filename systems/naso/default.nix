@@ -172,7 +172,7 @@ in {
 
     enable = true;
     mode = "netclient";
-    schedulerRules = "${pkgs.functions.ups.clientSched}";
+    schedulerRules = "${pkgs.functions.ups.clientSched (20 * 60)}";  # In seconds
 
     # UPS Monitor
     upsmon = {
