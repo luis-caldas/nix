@@ -23,6 +23,9 @@
     # Override tty group to use plugdev and create a static symlink to my serial usb
     SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", SYMLINK+="ttyRECOVER", MODE="0660", GROUP="plugdev"
 
+    # STM32 DFU bootloader
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", GROUP="plugdev", MODE="0660"
+
     # XGecu programmer
     SUBSYSTEM=="usb", ATTR{idVendor}=="a466", ATTR{idProduct}=="0a53", GROUP="plugdev", MODE="0660"
 
