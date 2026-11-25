@@ -364,7 +364,7 @@
         chat = mkOption {
           description = "Default chat application desktop entry.";
           type = str;
-          default = "com.github.dagmoller.whatsapp-electron.desktop";
+          default = "whatsapp.desktop";
         };
 
         text = mkOption {
@@ -595,6 +595,7 @@
         type = listOf (attrsOf str);
         default = [
           { name = "deck"; icon = "plan"; url = "https://luis-caldas.github.io/redirector"; }
+          { name = "whatsapp"; icon = "whatsapp"; url = "https://web.whatsapp.com"; }
           { name = "chess-web"; icon = "chess"; url = "https://chess.com"; }
           { name = "youtube-web"; icon = "youtube"; url = "https://www.youtube.com"; }
           { name = "youtube-music-web"; icon = "youtube-music"; url = "https://music.youtube.com"; }
