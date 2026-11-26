@@ -129,7 +129,7 @@ in {
             pkgs.runCommand "wallpaper-${imagePath}" {
               nativeBuildInputs = [pkgs.imagemagick];
             } ''
-              magick -size 5120x2880 \
+              magick -size 4608x4608 \
                 "tile:${source}" "PNG:$out"
             ''
           else
