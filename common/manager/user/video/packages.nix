@@ -98,9 +98,6 @@ let
     wike
     # Cast
     gnome-network-displays
-    # Chat
-    fractal
-    polari
     # CW
     telegraph
     # Encoding
@@ -195,8 +192,8 @@ let
     # Maintenance
     winbox4
     # Chat
-    element-desktop
     whatsapp-electron
+    polari
     # Voice
     mumble
     # Documents
